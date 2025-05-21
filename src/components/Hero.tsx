@@ -25,10 +25,11 @@ const Hero = () => {
         </div>
         <div className="relative">
           <div className="aspect-[4/5] bg-slate-200 rounded-lg overflow-hidden shadow-xl">
-            {/* Placeholder for Thomas' photo */}
-            <div className="h-full w-full bg-gradient-to-br from-blue-400/40 to-blue-600/40 flex items-center justify-center">
-              <span className="text-white/80 font-medium">Photo de Thomas Bourque</span>
-            </div>
+            <img 
+              src="/lovable-uploads/03f2c8ca-2bf4-487b-bd8b-b48cbd6f44e9.png" 
+              alt="Thomas Bourque, courtier hypothécaire" 
+              className="h-full w-full object-cover"
+            />
           </div>
           <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-primary/10 rounded-full -z-10"></div>
           <div className="absolute -top-6 -left-6 w-24 h-24 bg-primary/10 rounded-full -z-10"></div>
