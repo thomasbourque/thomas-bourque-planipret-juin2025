@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -19,6 +20,11 @@ const Testimonials = () => {
       name: "Sophie Lavoie",
       position: "Propriétaire",
       content: "Le renouvellement de mon prêt hypothécaire s'approchait et je voulais obtenir les meilleures conditions. Thomas a négocié un taux bien inférieur à ce que ma banque m'offrait. Je suis très satisfaite !",
+    },
+    {
+      name: "Olivier Nadeau",
+      position: "Nouveau propriétaire",
+      content: "Thomas m'a aidé à financer ma nouvelle maison sur la rive sud, à proximité des ponts. Cela me permet d'accéder plus facilement aux restaurants 'Apportez Votre Vin' situés sur la rive nord de Québec. Son expertise a été déterminante dans la réalisation de mon projet.",
     },
   ];
 
