@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -7,9 +6,9 @@ const Testimonials = () => {
   
   const testimonials = [
     {
-      name: "Marie Tremblay",
-      position: "Première acheteur",
-      content: "En tant que premier acheteur, j'étais complètement perdu dans le processus d'achat d'une maison. Thomas m'a guidé étape par étape et m'a aidé à obtenir un taux incroyable. Je recommande ses services à tous mes amis !",
+      name: "Alexis Drouin",
+      position: "Propriétaire",
+      content: "Grâce à l'expertise exceptionnelle de M. Bourque, j'ai pu financer ma maison de rêve à Breakeyville dans des conditions très avantageuses. Son dévouement et ses connaissances du marché hypothécaire m'ont permis de concrétiser mon projet. Je le recommande vivement !",
     },
     {
       name: "Jean Gagnon",
