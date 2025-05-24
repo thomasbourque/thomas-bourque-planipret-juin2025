@@ -5,8 +5,19 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 const Services = () => {
   const services = [
     {
-      title: "Premier achat",
-      description: "Conseils spécialisés pour les premiers acheteurs, exploration des programmes d'aide gouvernementaux et accompagnement pas à pas.",
+      title: "Préqualification",
+      description: "Évaluation de votre capacité d'emprunt et analyse de votre situation financière pour déterminer le montant de financement accessible.",
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
+          <path d="M9 12l2 2 4-4"></path>
+          <path d="M21 12c.552 0 1-.448 1-1V5c0-.552-.448-1-1-1H3c-.552 0-1 .448-1 1v6c0 .552.448 1 1 1"></path>
+          <path d="M3 10h18"></path>
+        </svg>
+      ),
+    },
+    {
+      title: "Achat",
+      description: "Financement pour l'acquisition de votre résidence principale ou secondaire avec les meilleures conditions du marché.",
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
           <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
@@ -15,18 +26,17 @@ const Services = () => {
       ),
     },
     {
-      title: "Refinancement",
-      description: "Optimisez votre hypothèque actuelle pour obtenir de meilleures conditions ou libérer des fonds pour d'autres projets.",
+      title: "Achat-rénovation",
+      description: "Solutions de financement combinant l'achat d'une propriété et les coûts de rénovation dans un seul prêt hypothécaire.",
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
-          <path d="M12 2v20"></path>
-          <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+          <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
         </svg>
       ),
     },
     {
       title: "Renouvellement",
-      description: "Négociation des meilleurs taux et conditions lors du renouvellement de votre prêt hypothécaire.",
+      description: "Négociation des meilleurs taux et conditions lors du renouvellement de votre prêt hypothécaire existant.",
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
           <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
@@ -37,8 +47,29 @@ const Services = () => {
       ),
     },
     {
+      title: "Refinancement",
+      description: "Optimisation de votre hypothèque actuelle pour obtenir de meilleures conditions ou libérer des fonds pour d'autres projets.",
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
+          <path d="M12 2v20"></path>
+          <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+        </svg>
+      ),
+    },
+    {
+      title: "Consolidation de dettes",
+      description: "Regroupement de vos dettes existantes dans votre prêt hypothécaire pour réduire vos paiements mensuels et taux d'intérêt.",
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
+          <path d="M12 2v20"></path>
+          <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+          <path d="M2 12h20"></path>
+        </svg>
+      ),
+    },
+    {
       title: "Investissement immobilier",
-      description: "Stratégies de financement pour les propriétés locatives et les investissements immobiliers.",
+      description: "Stratégies de financement spécialisées pour l'acquisition de propriétés locatives et la constitution d'un portfolio immobilier.",
       icon: (
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
           <path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"></path>
@@ -48,31 +79,6 @@ const Services = () => {
           <path d="M9 7v1"></path>
           <path d="M19 7v1"></path>
           <path d="M12 18a2 2 0 0 0 2-2v-1h-4v1a2 2 0 0 0 2 2z"></path>
-        </svg>
-      ),
-    },
-    {
-      title: "Prêt hypothécaire commerciale",
-      description: "Solutions de financement pour l'achat ou le refinancement de propriétés commerciales.",
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
-          <path d="M3 21h18"></path>
-          <path d="M3 7v14"></path>
-          <path d="M21 7v14"></path>
-          <path d="M7 21v-4"></path>
-          <path d="M17 21v-4"></path>
-          <path d="M7 7v4"></path>
-          <path d="M17 7v4"></path>
-          <path d="M4 4h16a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1Z"></path>
-        </svg>
-      ),
-    },
-    {
-      title: "Conseil et planification",
-      description: "Consultation complète pour planifier votre avenir financier et optimiser vos investissements immobiliers.",
-      icon: (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
-          <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
         </svg>
       ),
     },
