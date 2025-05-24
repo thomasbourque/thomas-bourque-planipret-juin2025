@@ -18,11 +18,11 @@ const Hero = () => {
           <div className="bg-white/80 backdrop-blur-sm rounded-lg p-4 border border-primary/20">
             <div className="flex items-center mb-2">
               <span className="bg-primary text-white text-sm font-semibold px-3 py-1 rounded-full">
-                100% GRATUIT
+                Service 100% GRATUIT
               </span>
             </div>
             <p className="text-slate-700 text-sm leading-relaxed">
-              Je magasine pour vous les meilleurs produits hypothécaires auprès d'une <strong>vingtaine de banques et d'institutions financières</strong> pour vous garantir les meilleures conditions.
+              Je magasine pour vous les meilleurs produits hypothécaires auprès d'une <strong>vingtaine de banques et d'institutions financières</strong> pour vous garantir les meilleures conditions d'emprunt sur le marché.
             </p>
           </div>
           
