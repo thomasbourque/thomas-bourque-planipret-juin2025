@@ -9,7 +9,7 @@ const Hero = () => {
       <div className="container grid md:grid-cols-2 gap-12 items-center">
         <div className="flex flex-col space-y-6 max-w-xl animate-fade-in">
           <h1 className="heading-xl text-slate-900">
-            Votre conseiller hypothécaire de confiance
+            Votre courtier hypothécaire de confiance
           </h1>
           <p className="body-lg text-slate-700">
             Je vous accompagne dans l'obtention du meilleur financement hypothécaire adapté à votre situation, à Québec et ses environs.
