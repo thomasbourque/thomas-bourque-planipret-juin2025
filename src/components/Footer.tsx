@@ -54,22 +54,10 @@ const Footer = () => {
           </div>
         </div>
         
-        <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-slate-400 text-center md:text-left">
+        <div className="border-t border-slate-800 pt-8 text-center">
+          <p className="text-slate-400">
             © {currentYear} Thomas Bourque, Courtier hypothécaire. Tous droits réservés.
           </p>
-          <a 
-            href="https://www.planipret.com/fr/courtier/thomas-bourque" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="hover:opacity-80 transition-opacity"
-          >
-            <img 
-              src="/lovable-uploads/b4f91d0a-9255-40cc-bfec-c67b07ffaf9a.png" 
-              alt="Planiprêt - Cabinet en courtage hypothécaire" 
-              className="h-12 opacity-70"
-            />
-          </a>
         </div>
       </div>
     </footer>
