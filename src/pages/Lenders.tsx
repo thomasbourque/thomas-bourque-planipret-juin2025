@@ -8,67 +8,53 @@ const Lenders = () => {
   const lenders = [
     {
       name: "Banque Nationale",
-      logo: "/lovable-uploads/placeholder-logo.png",
-      category: "Banques"
+      logo: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=200&h=100&fit=crop"
     },
     {
       name: "RBC Banque Royale",
-      logo: "/lovable-uploads/placeholder-logo.png",
-      category: "Banques"
+      logo: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=200&h=100&fit=crop"
     },
     {
       name: "TD Canada Trust",
-      logo: "/lovable-uploads/placeholder-logo.png",
-      category: "Banques"
+      logo: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=200&h=100&fit=crop"
     },
     {
       name: "Banque Scotia",
-      logo: "/lovable-uploads/placeholder-logo.png",
-      category: "Banques"
+      logo: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=200&h=100&fit=crop"
     },
     {
       name: "BMO Banque de Montréal",
-      logo: "/lovable-uploads/placeholder-logo.png",
-      category: "Banques"
+      logo: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=200&h=100&fit=crop"
     },
     {
       name: "CIBC",
-      logo: "/lovable-uploads/placeholder-logo.png",
-      category: "Banques"
+      logo: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=200&h=100&fit=crop"
     },
     {
       name: "Desjardins",
-      logo: "/lovable-uploads/placeholder-logo.png",
-      category: "Institutions coopératives"
+      logo: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=200&h=100&fit=crop"
     },
     {
       name: "Laurentienne Banque",
-      logo: "/lovable-uploads/placeholder-logo.png",
-      category: "Banques"
+      logo: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=200&h=100&fit=crop"
     },
     {
       name: "MCAP",
-      logo: "/lovable-uploads/placeholder-logo.png",
-      category: "Prêteurs privés"
+      logo: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=200&h=100&fit=crop"
     },
     {
       name: "First National",
-      logo: "/lovable-uploads/placeholder-logo.png",
-      category: "Prêteurs privés"
+      logo: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=200&h=100&fit=crop"
     },
     {
       name: "Paradigm Quest",
-      logo: "/lovable-uploads/placeholder-logo.png",
-      category: "Prêteurs privés"
+      logo: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=200&h=100&fit=crop"
     },
     {
       name: "CMLS Financial",
-      logo: "/lovable-uploads/placeholder-logo.png",
-      category: "Prêteurs privés"
+      logo: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=200&h=100&fit=crop"
     }
   ];
-
-  const categories = [...new Set(lenders.map(lender => lender.category))];
 
   return (
     <div className="min-h-screen bg-background">
@@ -100,28 +86,27 @@ const Lenders = () => {
         {/* Lenders Grid */}
         <section className="section">
           <div className="container">
-            {categories.map(category => (
-              <div key={category} className="mb-12">
-                <h2 className="heading-md text-slate-900 mb-8 text-center">
-                  {category}
-                </h2>
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                  {lenders
-                    .filter(lender => lender.category === category)
-                    .map((lender, index) => (
-                      <Card key={index} className="group hover:shadow-lg transition-shadow duration-300">
-                        <CardContent className="p-6 flex items-center justify-center h-32">
-                          <img
-                            src={lender.logo}
-                            alt={`Logo ${lender.name}`}
-                            className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300"
-                          />
-                        </CardContent>
-                      </Card>
-                    ))}
-                </div>
-              </div>
-            ))}
+            <h2 className="heading-md text-slate-900 mb-12 text-center">
+              Nos partenaires financiers
+            </h2>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              {lenders.map((lender, index) => (
+                <Card key={index} className="group hover:shadow-lg transition-shadow duration-300">
+                  <CardContent className="p-6 flex items-center justify-center h-32">
+                    <div className="w-full h-full flex items-center justify-center">
+                      <img
+                        src={lender.logo}
+                        alt={`Logo ${lender.name}`}
+                        className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                        onError={(e) => {
+                          e.currentTarget.src = "https://via.placeholder.com/200x100?text=" + encodeURIComponent(lender.name);
+                        }}
+                      />
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
         </section>
 
