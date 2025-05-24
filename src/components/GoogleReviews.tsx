@@ -6,40 +6,39 @@ import { Star } from "lucide-react";
 const GoogleReviews = () => {
   const reviews = [
     {
-      name: "Marie-Claude Dubois",
+      name: "Dominic Latour",
       rating: 5,
-      comment: "Service exceptionnel ! Thomas a su nous guider à travers tout le processus d'achat de notre première maison. Très professionnel et à l'écoute de nos besoins.",
-      date: "Il y a 2 semaines"
+      comment: "Excellent service from A to Z!!!",
+      date: "Il y a 4 jours",
+      reviewCount: "5 avis"
     },
     {
-      name: "Patrick Lemieux",
+      name: "Elyse Busque",
       rating: 5,
-      comment: "Je recommande fortement Thomas Bourque. Il a négocié un excellent taux pour mon refinancement et m'a fait économiser beaucoup d'argent. Merci !",
-      date: "Il y a 1 mois"
+      comment: "",
+      date: "Il y a 4 jours",
+      reviewCount: "1 avis"
     },
     {
-      name: "Julie Tremblay",
+      name: "Mélanie Beauvais",
       rating: 5,
-      comment: "Courtier très compétent et disponible. Thomas a répondu à toutes mes questions rapidement et m'a aidée à obtenir un financement pour mon investissement immobilier.",
-      date: "Il y a 2 mois"
+      comment: "",
+      date: "Il y a 4 jours",
+      reviewCount: ""
     },
     {
-      name: "François Bélanger",
+      name: "Odile Paquin",
       rating: 5,
-      comment: "Excellent service client ! Thomas est très professionnel et connaît bien le marché hypothécaire de Québec. Je le recommande sans hésitation.",
-      date: "Il y a 3 mois"
+      comment: "",
+      date: "Il y a 4 jours",
+      reviewCount: "1 avis"
     },
     {
-      name: "Sylvie Gagnon",
+      name: "Sophie Boucher-Morel",
       rating: 5,
-      comment: "Thomas nous a accompagnés dans notre projet d'achat-rénovation. Son expertise nous a permis d'obtenir le meilleur financement possible. Très satisfaits !",
-      date: "Il y a 4 mois"
-    },
-    {
-      name: "David Lapointe",
-      rating: 4,
-      comment: "Bon service, Thomas est à l'écoute et trouve des solutions adaptées. Le processus s'est bien déroulé pour notre renouvellement hypothécaire.",
-      date: "Il y a 5 mois"
+      comment: "",
+      date: "Il y a 4 jours",
+      reviewCount: "2 avis"
     }
   ];
 
@@ -59,8 +58,8 @@ const GoogleReviews = () => {
     );
   };
 
-  const averageRating = reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length;
-  const totalReviews = reviews.length;
+  const averageRating = 5.0; // Tous les avis sont 5 étoiles
+  const totalReviews = 5;
 
   return (
     <section className="section bg-slate-50">
@@ -75,19 +74,21 @@ const GoogleReviews = () => {
             <span className="text-lg font-medium text-slate-700">Avis Google</span>
           </div>
           <h2 className="heading-lg text-slate-900 mb-4">Avis de nos clients sur Google</h2>
+          <div className="mb-4">
+            <p className="text-lg font-semibold text-slate-900">Thomas Bourque - Courtier hypothécaire - Planiprêt</p>
+            <p className="text-sm text-slate-600">5055 Bd Wilfrid-Hamel #250, Québec, QC G2E 2G6, Canada</p>
+          </div>
           <div className="flex items-center justify-center mb-6">
             <div className="flex items-center">
               {[...Array(5)].map((_, i) => (
                 <Star
                   key={i}
-                  className={`w-6 h-6 ${
-                    i < Math.floor(averageRating) ? "fill-yellow-400 text-yellow-400" : "text-gray-300"
-                  }`}
+                  className="w-6 h-6 fill-yellow-400 text-yellow-400"
                 />
               ))}
             </div>
             <span className="ml-3 text-xl font-semibold text-slate-900">
-              {averageRating.toFixed(1)}/5
+              {averageRating}/5
             </span>
             <span className="ml-2 text-slate-600">({totalReviews} avis)</span>
           </div>
@@ -104,11 +105,19 @@ const GoogleReviews = () => {
                   <div className="flex items-start justify-between">
                     <div>
                       <h4 className="font-medium text-slate-900">{review.name}</h4>
+                      {review.reviewCount && (
+                        <p className="text-xs text-slate-400">{review.reviewCount}</p>
+                      )}
                       <p className="text-sm text-slate-500">{review.date}</p>
                     </div>
                     {renderStars(review.rating)}
                   </div>
-                  <p className="text-slate-700 leading-relaxed">{review.comment}</p>
+                  {review.comment && (
+                    <p className="text-slate-700 leading-relaxed">{review.comment}</p>
+                  )}
+                  {!review.comment && (
+                    <div className="text-slate-400 italic text-sm">Aucun commentaire écrit</div>
+                  )}
                 </div>
               </CardContent>
             </Card>
