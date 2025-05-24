@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import Logo from "./Logo";
+import TBLogo from "./TBLogo";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -28,7 +29,8 @@ const Navbar = () => {
     >
       <div className="container flex items-center justify-between">
         <div className="flex items-center gap-6">
-          <a href="#" className="flex items-center">
+          <a href="#" className="flex items-center gap-3">
+            <TBLogo />
             <Logo />
           </a>
           <div className="h-8 w-px bg-slate-300"></div>
