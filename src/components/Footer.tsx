@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <footer className="bg-slate-900 text-white py-12">
       <div className="container">
-        <div className="grid md:grid-cols-4 gap-8 mb-8">
+        <div className="grid md:grid-cols-3 gap-8 mb-8">
           <div>
             <h3 className="font-serif text-xl font-bold mb-4">Thomas Bourque</h3>
             <p className="text-slate-300 mb-4">
@@ -40,31 +40,6 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-
-          <div className="flex justify-center items-start">
-            <svg 
-              className="h-16 w-auto opacity-80" 
-              viewBox="0 0 200 60" 
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <text 
-                x="10" 
-                y="25" 
-                className="fill-white" 
-                style={{ fontSize: '20px', fontWeight: 'bold', fontFamily: 'serif' }}
-              >
-                Planiprêt
-              </text>
-              <text 
-                x="10" 
-                y="45" 
-                className="fill-slate-300" 
-                style={{ fontSize: '12px', fontFamily: 'sans-serif' }}
-              >
-                Cabinet en courtage hypothécaire
-              </text>
-            </svg>
-          </div>
           
           <div>
             <h3 className="font-medium text-lg mb-4">Contact</h3>
@@ -93,10 +68,32 @@ const Footer = () => {
           </div>
         </div>
         
-        <div className="border-t border-slate-800 pt-8 text-center">
-          <p className="text-slate-400">
+        <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-slate-400 text-center md:text-left">
             © {currentYear} Thomas Bourque, Courtier hypothécaire. Tous droits réservés.
           </p>
+          <svg 
+            className="h-8 w-auto opacity-70" 
+            viewBox="0 0 200 60" 
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <text 
+              x="10" 
+              y="25" 
+              className="fill-white" 
+              style={{ fontSize: '20px', fontWeight: 'bold', fontFamily: 'serif' }}
+            >
+              Planiprêt
+            </text>
+            <text 
+              x="10" 
+              y="45" 
+              className="fill-slate-300" 
+              style={{ fontSize: '12px', fontFamily: 'sans-serif' }}
+            >
+              Cabinet en courtage hypothécaire
+            </text>
+          </svg>
         </div>
       </div>
     </footer>
