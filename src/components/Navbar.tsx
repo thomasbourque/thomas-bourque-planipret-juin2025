@@ -55,7 +55,7 @@ const Navbar = () => {
           </a>
           <Button asChild size="sm">
             <a href="https://calendly.com/tbourque-planipret" target="_blank" rel="noopener noreferrer">
-              Prendre Rendez-vous
+              Planifier un appel
             </a>
           </Button>
         </nav>
@@ -119,7 +119,7 @@ const Navbar = () => {
               rel="noopener noreferrer"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              Prendre Rendez-vous
+              Planifier un appel
             </a>
           </Button>
         </div>

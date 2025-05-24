@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Button } from "@/components/ui/button";
 
@@ -29,7 +30,7 @@ const Hero = () => {
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
             <Button size="lg" asChild>
               <a href="https://calendly.com/tbourque-planipret" target="_blank" rel="noopener noreferrer">
-                Prendre rendez-vous
+                Planifier un appel
               </a>
             </Button>
             <Button size="lg" variant="outline" asChild>
