@@ -39,7 +39,7 @@ const Hero = () => {
           </div>
         </div>
         <div className="relative">
-          <div className="aspect-[4/5] bg-slate-200 rounded-lg overflow-hidden shadow-xl">
+          <div className="aspect-[4/5] bg-slate-200 rounded-lg overflow-hidden shadow-xl w-4/5 mx-auto">
             <img 
               src="/lovable-uploads/e890eb15-6fc3-48da-a825-ef289e0a40df.png" 
               alt="Thomas Bourque, courtier hypothécaire" 

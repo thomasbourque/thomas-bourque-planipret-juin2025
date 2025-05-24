@@ -83,7 +83,7 @@ const Contact = () => {
           <div className="flex flex-col justify-center">
             <div className="space-y-8">
               <div>
-                <h3 className="heading-md text-slate-900 mb-6">Vous avez des questions? Contactez-moi!</h3>
+                <h3 className="heading-md text-slate-900 mb-6">Vous avez des questions?</h3>
                 <p className="body-md text-slate-700 mb-8">
                   N'hésitez pas à me contacter par téléphone, courriel ou texto pour discuter de votre projet.
                 </p>
