@@ -32,11 +32,18 @@ const Navbar = () => {
             <Logo />
           </a>
           <div className="h-8 w-px bg-slate-300"></div>
-          <img 
-            src="/lovable-uploads/b4f91d0a-9255-40cc-bfec-c67b07ffaf9a.png" 
-            alt="Planiprêt - Cabinet en courtage hypothécaire" 
-            className="h-10"
-          />
+          <a 
+            href="https://www.planipret.com/fr/courtier/thomas-bourque" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="hover:opacity-80 transition-opacity"
+          >
+            <img 
+              src="/lovable-uploads/b4f91d0a-9255-40cc-bfec-c67b07ffaf9a.png" 
+              alt="Planiprêt - Cabinet en courtage hypothécaire" 
+              className="h-12"
+            />
+          </a>
         </div>
 
         {/* Desktop Navigation */}
@@ -81,7 +88,6 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Mobile Navigation */}
       {isMobileMenuOpen && (
         <div className="md:hidden absolute top-full left-0 right-0 bg-white shadow-md p-4 flex flex-col space-y-4">
           <a
