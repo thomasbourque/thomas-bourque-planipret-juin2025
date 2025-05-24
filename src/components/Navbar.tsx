@@ -27,9 +27,17 @@ const Navbar = () => {
       }`}
     >
       <div className="container flex items-center justify-between">
-        <a href="#" className="flex items-center">
-          <Logo />
-        </a>
+        <div className="flex items-center gap-6">
+          <a href="#" className="flex items-center">
+            <Logo />
+          </a>
+          <div className="h-8 w-px bg-slate-300"></div>
+          <img 
+            src="/lovable-uploads/b4f91d0a-9255-40cc-bfec-c67b07ffaf9a.png" 
+            alt="Planiprêt - Cabinet en courtage hypothécaire" 
+            className="h-10"
+          />
+        </div>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-8">
