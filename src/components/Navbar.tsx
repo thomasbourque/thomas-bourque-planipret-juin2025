@@ -29,7 +29,7 @@ const Navbar = () => {
     >
       <div className="container flex items-center justify-between">
         <div className="flex items-center gap-6">
-          <a href="#" className="flex items-center gap-3">
+          <a href="/" className="flex items-center gap-3">
             <TBLogo />
             <Logo />
           </a>
@@ -50,16 +50,19 @@ const Navbar = () => {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-8">
-          <a href="#about" className="text-sm font-medium hover:text-primary transition-colors">
+          <a href="/#about" className="text-sm font-medium hover:text-primary transition-colors">
             À propos
           </a>
-          <a href="#services" className="text-sm font-medium hover:text-primary transition-colors">
+          <a href="/#services" className="text-sm font-medium hover:text-primary transition-colors">
             Services
           </a>
-          <a href="#testimonials" className="text-sm font-medium hover:text-primary transition-colors">
+          <a href="/preteurs" className="text-sm font-medium hover:text-primary transition-colors">
+            Prêteurs
+          </a>
+          <a href="/#testimonials" className="text-sm font-medium hover:text-primary transition-colors">
             Témoignages
           </a>
-          <a href="#contact" className="text-sm font-medium hover:text-primary transition-colors">
+          <a href="/#contact" className="text-sm font-medium hover:text-primary transition-colors">
             Contact
           </a>
           <Button asChild size="sm">
@@ -93,28 +96,35 @@ const Navbar = () => {
       {isMobileMenuOpen && (
         <div className="md:hidden absolute top-full left-0 right-0 bg-white shadow-md p-4 flex flex-col space-y-4">
           <a
-            href="#about"
+            href="/#about"
             className="px-4 py-2 hover:bg-secondary rounded-md transition-colors"
             onClick={() => setIsMobileMenuOpen(false)}
           >
             À propos
           </a>
           <a
-            href="#services"
+            href="/#services"
             className="px-4 py-2 hover:bg-secondary rounded-md transition-colors"
             onClick={() => setIsMobileMenuOpen(false)}
           >
             Services
           </a>
           <a
-            href="#testimonials"
+            href="/preteurs"
+            className="px-4 py-2 hover:bg-secondary rounded-md transition-colors"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Prêteurs
+          </a>
+          <a
+            href="/#testimonials"
             className="px-4 py-2 hover:bg-secondary rounded-md transition-colors"
             onClick={() => setIsMobileMenuOpen(false)}
           >
             Témoignages
           </a>
           <a
-            href="#contact"
+            href="/#contact"
             className="px-4 py-2 hover:bg-secondary rounded-md transition-colors"
             onClick={() => setIsMobileMenuOpen(false)}
           >
