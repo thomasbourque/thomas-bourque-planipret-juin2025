@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import Logo from "./Logo";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -26,8 +27,8 @@ const Navbar = () => {
       }`}
     >
       <div className="container flex items-center justify-between">
-        <a href="#" className="text-xl font-serif font-bold">
-          Thomas Bourque
+        <a href="#" className="flex items-center">
+          <Logo />
         </a>
 
         {/* Desktop Navigation */}
