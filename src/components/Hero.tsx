@@ -26,7 +26,7 @@ const Hero = () => {
         <div className="relative">
           <div className="aspect-[4/5] bg-slate-200 rounded-lg overflow-hidden shadow-xl">
             <img 
-              src="/lovable-uploads/03f2c8ca-2bf4-487b-bd8b-b48cbd6f44e9.png" 
+              src="/lovable-uploads/e890eb15-6fc3-48da-a825-ef289e0a40df.png" 
               alt="Thomas Bourque, courtier hypothécaire" 
               className="h-full w-full object-cover"
             />
