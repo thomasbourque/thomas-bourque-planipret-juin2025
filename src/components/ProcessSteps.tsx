@@ -9,11 +9,11 @@ const ProcessSteps = () => {
     },
     {
       number: "2", 
-      title: "Évaluation de vos besoins",
+      title: "Évaluation de votre situation et de vos besoins",
     },
     {
       number: "3",
-      title: "Recherche du meilleur produit sur le marché", 
+      title: "Recherche du meilleur produit hypothécaire sur le marché", 
     },
     {
       number: "4",
@@ -26,7 +26,7 @@ const ProcessSteps = () => {
       <div className="container">
         <div className="max-w-4xl mx-auto">
           <h2 className="heading-lg text-white text-center mb-12">
-            Mon processus en 4 étapes
+            Mon approche en 4 étapes
           </h2>
           
           <div className="relative">
@@ -38,8 +38,8 @@ const ProcessSteps = () => {
               {steps.map((step, index) => (
                 <div key={index} className="relative text-center">
                   {/* Circle with number */}
-                  <div className="relative z-10 mx-auto w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mb-6">
-                    <span className="text-2xl font-bold text-slate-900">
+                  <div className="relative z-10 mx-auto w-16 h-16 bg-primary rounded-full flex items-center justify-center mb-6">
+                    <span className="text-2xl font-bold text-primary-foreground">
                       {step.number}
                     </span>
                   </div>
