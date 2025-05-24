@@ -1,9 +1,9 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { Facebook } from "lucide-react";
 
 const Contact = () => {
   const { toast } = useToast();
@@ -146,6 +146,23 @@ const Contact = () => {
                       className="text-primary hover:text-primary/80 transition-colors"
                     >
                       Planifier une consultation
+                    </a>
+                  </div>
+                </div>
+
+                <div className="flex items-start">
+                  <div className="mt-1 bg-primary/10 p-2 rounded-full mr-4">
+                    <Facebook className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-slate-900">Facebook</h4>
+                    <a 
+                      href="https://www.facebook.com/thomasbourque.planipret/" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-primary hover:text-primary/80 transition-colors"
+                    >
+                      Suivez ma page professionnelle
                     </a>
                   </div>
                 </div>
