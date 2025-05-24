@@ -5,6 +5,7 @@ import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Services from "@/components/Services";
 import Testimonials from "@/components/Testimonials";
+import GoogleReviews from "@/components/GoogleReviews";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import { useToast } from "@/components/ui/use-toast";
@@ -57,6 +58,7 @@ const Index = () => {
         <About />
         <Services />
         <Testimonials />
+        <GoogleReviews />
         <Contact />
       </main>
       <Footer />
