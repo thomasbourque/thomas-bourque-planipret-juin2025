@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 
@@ -14,6 +13,19 @@ const Hero = () => {
           <p className="body-lg text-slate-700">
             Je vous accompagne dans l'obtention du meilleur financement hypothécaire adapté à votre situation, à Québec et ses environs.
           </p>
+          
+          {/* Service gratuit et magasinage highlight */}
+          <div className="bg-white/80 backdrop-blur-sm rounded-lg p-4 border border-primary/20">
+            <div className="flex items-center mb-2">
+              <span className="bg-primary text-white text-sm font-semibold px-3 py-1 rounded-full">
+                100% GRATUIT
+              </span>
+            </div>
+            <p className="text-slate-700 text-sm leading-relaxed">
+              Je magasine pour vous les meilleurs produits hypothécaires auprès d'une <strong>vingtaine de banques et d'institutions financières</strong> pour vous garantir les meilleures conditions.
+            </p>
+          </div>
+          
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
             <Button size="lg" asChild>
               <a href="https://calendly.com/tbourque-planipret" target="_blank" rel="noopener noreferrer">
