@@ -5,24 +5,12 @@ const Logo = () => {
   return (
     <div className="flex items-center">
       <div className="relative mr-3">
-        {/* Logo maison moderne */}
-        <div className="relative">
-          {/* Toit principal avec angle plus doux */}
-          <div className="w-0 h-0 border-l-[18px] border-r-[18px] border-b-[14px] border-l-transparent border-r-transparent border-b-primary mx-auto relative z-10"></div>
-          
-          {/* Corps de la maison avec les initiales */}
-          <div className="bg-primary text-primary-foreground w-9 h-7 flex items-center justify-center font-serif font-bold text-xs relative -mt-0.5 mx-auto">
-            TB
-          </div>
-          
-          {/* Base/fondation de la maison */}
-          <div className="bg-primary/80 w-9 h-1 mx-auto"></div>
-          
-          {/* Détails architecturaux - petite cheminée */}
-          <div className="absolute -top-1 right-1 w-1 h-2 bg-primary/70"></div>
-          
-          {/* Porte d'entrée stylisée */}
-          <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-1.5 h-3 bg-primary-foreground/30 rounded-t-sm"></div>
+        {/* Simple triangle roof above the square */}
+        <div className="w-0 h-0 border-l-[12px] border-r-[12px] border-b-[10px] border-l-transparent border-r-transparent border-b-primary mx-auto mb-1"></div>
+        
+        {/* Original square with TB initials */}
+        <div className="bg-primary text-primary-foreground w-8 h-8 flex items-center justify-center font-bold text-sm">
+          TB
         </div>
       </div>
       <div className="flex flex-col">
