@@ -8,7 +8,7 @@ const About = () => {
         <div className="max-w-3xl mx-auto text-center mb-16">
           <h2 className="heading-lg text-slate-900 mb-6">À propos de moi</h2>
           <p className="body-md text-slate-700">
-            Spécialiste des prêts hypothécaires à Québec avec plus de 10 ans d'expérience dans le secteur financier.
+            En tant que courtier hypothécaire Planiprêt, je travaille avec une vingtaine d'institutions financières pour vous proposer la solution de financement répondant le mieux à vos besoins. Mes services sont sans frais et vous assurent d'obtenir les meilleures conditions d'emprunt et le taux d'intérêt le plus avantageux sur le marché. Basé à Québec, je peux vous servir à distance où que vous soyez au Québec. Prenons quelques minutes pour discuter ensemble de votre projet. Un simple appel de quelques minutes peut parfois mener à des économies de plusieurs milliers de dollars sur vos paiements.
           </p>
         </div>
 
