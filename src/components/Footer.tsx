@@ -17,7 +17,7 @@ const Footer = () => {
           
           <div className="flex justify-center">
             <img 
-              src="/lovable-uploads/03f2c8ca-2bf4-487b-bd8b-b48cbd6f44e9.png" 
+              src="/lovable-uploads/e68b4b44-21cc-4489-b34e-27d8d6e467c8.png" 
               alt="Logo Planiprêt" 
               className="h-32 w-auto"
             />
