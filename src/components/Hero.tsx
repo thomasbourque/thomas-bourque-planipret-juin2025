@@ -15,14 +15,14 @@ const Hero = () => {
             Je vous accompagne dans l'obtention du meilleur financement hypothécaire adapté à votre situation, à Québec et ses environs.
           </p>
           
-          {/* Service gratuit et magasinage highlight */}
-          <div className="bg-white/80 backdrop-blur-sm rounded-lg p-4 border border-primary/20">
-            <div className="flex items-center mb-2">
+          {/* Service gratuit et magasinage highlight - sans encadré */}
+          <div className="space-y-3">
+            <div className="flex items-center">
               <span className="bg-primary text-white text-sm font-semibold px-3 py-1 rounded-full">
                 Service 100% GRATUIT
               </span>
             </div>
-            <p className="text-slate-700 text-sm leading-relaxed">
+            <p className="text-slate-700 body-md leading-relaxed">
               Je magasine pour vous les meilleurs produits hypothécaires auprès d'une <strong>vingtaine de banques et d'institutions financières</strong> pour vous garantir les meilleures conditions d'emprunt sur le marché.
             </p>
           </div>
