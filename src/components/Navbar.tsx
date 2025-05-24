@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import Logo from "./Logo";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -28,10 +29,7 @@ const Navbar = () => {
       <div className="container flex items-center justify-between">
         <div className="flex items-center gap-6">
           <a href="#" className="flex items-center">
-            <div className="flex flex-col">
-              <span className="text-lg font-serif font-bold leading-tight text-primary">Thomas Bourque</span>
-              <span className="text-xs text-primary font-sans leading-tight">Courtier Hypothécaire</span>
-            </div>
+            <Logo />
           </a>
           <div className="h-8 w-px bg-slate-300"></div>
           <img 

@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <footer className="bg-slate-900 text-white py-12">
       <div className="container">
-        <div className="grid md:grid-cols-4 gap-8 mb-8">
+        <div className="grid md:grid-cols-3 gap-8 mb-8">
           <div>
             <h3 className="font-serif text-xl font-bold mb-4">Thomas Bourque</h3>
             <p className="text-slate-300 mb-4">
@@ -39,14 +39,6 @@ const Footer = () => {
                 </a>
               </li>
             </ul>
-          </div>
-
-          <div className="flex justify-center items-start">
-            <img 
-              src="/lovable-uploads/b4f91d0a-9255-40cc-bfec-c67b07ffaf9a.png" 
-              alt="Planiprêt - Cabinet en courtage hypothécaire" 
-              className="h-16 brightness-0 invert"
-            />
           </div>
           
           <div>
