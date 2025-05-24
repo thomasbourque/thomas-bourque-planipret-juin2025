@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -111,7 +112,12 @@ const Contact = () => {
                   </div>
                   <div>
                     <h4 className="font-medium text-slate-900">Courriel</h4>
-                    <p className="text-slate-700">tbourque@planipret.com</p>
+                    <a 
+                      href="mailto:tbourque@planipret.com"
+                      className="text-primary hover:text-primary/80 transition-colors"
+                    >
+                      tbourque@planipret.com
+                    </a>
                   </div>
                 </div>
 
@@ -122,9 +128,23 @@ const Contact = () => {
                       <circle cx="12" cy="10" r="3"></circle>
                     </svg>
                   </div>
-                  <div>
-                    <h4 className="font-medium text-slate-900">Bureau</h4>
-                    <p className="text-slate-700">5055 Bd Wilfrid-Hamel #250, Québec, QC G2E 2G6</p>
+                  <div className="flex-1">
+                    <h4 className="font-medium text-slate-900 mb-2">Bureau</h4>
+                    <p className="text-slate-700 mb-3">5055 Bd Wilfrid-Hamel #250, Québec, QC G2E 2G6</p>
+                    
+                    {/* Google Maps Preview */}
+                    <div className="rounded-lg overflow-hidden shadow-sm border">
+                      <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2745.123456789!2d-71.38246632471925!3d46.79584964391625!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cb8a3f4f4f4f4f4%3A0x4f4f4f4f4f4f4f4f!2s5055%20Bd%20Wilfrid-Hamel%20%23250%2C%20Qu%C3%A9bec%2C%20QC%20G2E%202G6!5e0!3m2!1sfr!2sca!4v1234567890123!5m2!1sfr!2sca"
+                        width="100%"
+                        height="150"
+                        style={{ border: 0 }}
+                        allowFullScreen={false}
+                        loading="lazy"
+                        referrerPolicy="no-referrer-when-downgrade"
+                        title="Carte de notre bureau"
+                      />
+                    </div>
                   </div>
                 </div>
 
@@ -145,7 +165,7 @@ const Contact = () => {
                       rel="noopener noreferrer"
                       className="text-primary hover:text-primary/80 transition-colors"
                     >
-                      Planifier une consultation
+                      Planifier un appel
                     </a>
                   </div>
                 </div>
