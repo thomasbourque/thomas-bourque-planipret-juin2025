@@ -45,7 +45,9 @@ const Navbar = () => {
             Contact
           </a>
           <Button asChild size="sm">
-            <a href="#contact">Prendre Rendez-vous</a>
+            <a href="https://calendly.com/tbourque-planipret" target="_blank" rel="noopener noreferrer">
+              Prendre Rendez-vous
+            </a>
           </Button>
         </nav>
 
@@ -102,7 +104,12 @@ const Navbar = () => {
             Contact
           </a>
           <Button asChild size="sm" className="mt-2">
-            <a href="#contact" onClick={() => setIsMobileMenuOpen(false)}>
+            <a 
+              href="https://calendly.com/tbourque-planipret" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
               Prendre Rendez-vous
             </a>
           </Button>

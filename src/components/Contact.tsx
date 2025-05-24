@@ -3,7 +3,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 
 const Contact = () => {
   const { toast } = useToast();
@@ -98,7 +98,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <h4 className="font-medium text-slate-900">Téléphone</h4>
-                    <p className="text-slate-700">(418) 123-4567</p>
+                    <p className="text-slate-700">418-569-6482</p>
                   </div>
                 </div>
 
@@ -111,7 +111,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <h4 className="font-medium text-slate-900">Courriel</h4>
-                    <p className="text-slate-700">thomas@bourquehypothèque.ca</p>
+                    <p className="text-slate-700">tbourque@planipret.com</p>
                   </div>
                 </div>
 
@@ -124,7 +124,29 @@ const Contact = () => {
                   </div>
                   <div>
                     <h4 className="font-medium text-slate-900">Bureau</h4>
-                    <p className="text-slate-700">1234 Rue St-Jean, Québec, QC G1R 1P9</p>
+                    <p className="text-slate-700">5055 Bd Wilfrid-Hamel #250, Québec, QC G2E 2G6</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start">
+                  <div className="mt-1 bg-primary/10 p-2 rounded-full mr-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                      <line x1="16" y1="2" x2="16" y2="6"></line>
+                      <line x1="8" y1="2" x2="8" y2="6"></line>
+                      <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-slate-900">Prendre rendez-vous</h4>
+                    <a 
+                      href="https://calendly.com/tbourque-planipret" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-primary hover:text-primary/80 transition-colors"
+                    >
+                      Planifier une consultation
+                    </a>
                   </div>
                 </div>
               </div>

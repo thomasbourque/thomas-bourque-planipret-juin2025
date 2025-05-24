@@ -16,7 +16,9 @@ const Hero = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
             <Button size="lg" asChild>
-              <a href="#contact">Prendre rendez-vous</a>
+              <a href="https://calendly.com/tbourque-planipret" target="_blank" rel="noopener noreferrer">
+                Prendre rendez-vous
+              </a>
             </Button>
             <Button size="lg" variant="outline" asChild>
               <a href="#services">Découvrir mes services</a>
