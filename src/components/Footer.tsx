@@ -15,30 +15,12 @@ const Footer = () => {
             <h3 className="font-serif text-xl font-bold">Thomas Bourque</h3>
           </div>
           
-          <div>
-            <h3 className="font-medium text-lg mb-4">Liens rapides</h3>
-            <ul className="space-y-2">
-              <li>
-                <a href="#about" className="text-slate-300 hover:text-white transition-colors">
-                  À propos
-                </a>
-              </li>
-              <li>
-                <a href="#services" className="text-slate-300 hover:text-white transition-colors">
-                  Services
-                </a>
-              </li>
-              <li>
-                <a href="#testimonials" className="text-slate-300 hover:text-white transition-colors">
-                  Témoignages
-                </a>
-              </li>
-              <li>
-                <a href="#contact" className="text-slate-300 hover:text-white transition-colors">
-                  Contact
-                </a>
-              </li>
-            </ul>
+          <div className="flex justify-center">
+            <img 
+              src="/lovable-uploads/11c466e8-16b5-4a1e-a735-07c7799ace2a.png" 
+              alt="Logo Planiprêt" 
+              className="h-24 w-auto"
+            />
           </div>
           
           <div>
