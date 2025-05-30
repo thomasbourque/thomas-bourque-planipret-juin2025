@@ -16,11 +16,18 @@ const Footer = () => {
           </div>
           
           <div className="flex justify-center">
-            <img 
-              src="/lovable-uploads/e68b4b44-21cc-4489-b34e-27d8d6e467c8.png" 
-              alt="Logo Planiprêt" 
-              className="h-32 w-auto"
-            />
+            <a 
+              href="https://www.planipret.com/fr/courtier/thomas-bourque" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="hover:opacity-80 transition-opacity"
+            >
+              <img 
+                src="/lovable-uploads/b4f91d0a-9255-40cc-bfec-c67b07ffaf9a.png" 
+                alt="Planiprêt - Cabinet en courtage hypothécaire" 
+                className="h-32 w-auto"
+              />
+            </a>
           </div>
           
           <div>
