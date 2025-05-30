@@ -12,18 +12,18 @@ const Testimonials = () => {
       content: "L'accompagnement et les conseils de Thomas tout au long de notre processus d'achat a été exceptionnel. Il nous a évité des mauvaises surprises et nous a permis d'économiser des milliers de dollars par rapport à l'offre reçue de notre banque.",
     },
     {
-      name: "Marie-Claude Beaulieu",
-      position: "Sainte-Foy",
+      name: "Simon Cassista",
+      position: "Lebourgneuf",
       content: "Thomas a simplifié tout le processus hypothécaire pour nous. Ses conseils nous ont fait économiser plus de 8 000$ sur notre prêt et son service professionnel nous a évité bien des tracas. Je le recommande sans hésitation !",
     },
     {
-      name: "Jean-François Leblanc",
-      position: "Lévis",
+      name: "Léo Gendron",
+      position: "Cap-Rouge",
       content: "Grâce à Thomas, notre refinancement s'est déroulé sans complications. Il a négocié un taux bien inférieur à ce que notre banque nous proposait. Son expertise nous a permis d'économiser des milliers de dollars annuellement.",
     },
     {
-      name: "Sophie Tremblay",
-      position: "Cap-Rouge",
+      name: "Jean-Michel Provencher",
+      position: "Sillery",
       content: "Le service de Thomas est exceptionnel. Il a rendu notre première expérience d'achat immobilier simple et transparente. Ses conseils avisés nous ont permis d'obtenir des conditions avantageuses que nous n'aurions jamais eues seuls.",
     },
     {

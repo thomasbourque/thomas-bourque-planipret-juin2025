@@ -41,26 +41,29 @@ const Hero = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-blue-100 -z-10"></div>
         <div className="container grid md:grid-cols-2 gap-12 items-center">
           <div className="flex flex-col space-y-6 max-w-xl animate-fade-in">
-            <h2 className="heading-lg text-slate-900">
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-slate-900">
               Thomas Bourque
             </h2>
-            <p className="text-lg font-medium text-slate-600 mb-4">
+            <p className="text-xl font-medium text-slate-600 mb-4">
               Courtier hypothécaire, B.A.A.
             </p>
-            <p className="body-lg text-slate-700">
-              Je vous accompagne dans l'obtention du meilleur financement hypothécaire adapté à votre situation, à Québec et ses environs.
-            </p>
             
-            {/* Service gratuit et magasinage highlight - sans encadré */}
+            <div className="space-y-4">
+              <p className="body-md text-slate-700 mb-4">
+                En tant que courtier hypothécaire Planiprêt, je travaille avec une vingtaine d'institutions financières pour vous proposer la solution de financement répondant le mieux à vos besoins. Mes services sont sans frais et vous assurent d'obtenir les meilleures conditions d'emprunt et le taux d'intérêt le plus avantageux sur le marché.
+              </p>
+              <p className="body-md text-slate-700">
+                Basé à Québec, je peux vous servir à distance où que vous soyez au Québec. Prenons quelques minutes pour discuter ensemble de votre projet. Un simple appel de quelques minutes peut parfois mener à des économies de plusieurs milliers de dollars.
+              </p>
+            </div>
+            
+            {/* Service gratuit highlight */}
             <div className="space-y-3">
               <div className="flex items-center">
                 <span className="bg-primary text-white text-sm font-semibold px-3 py-1 rounded-full">
                   Service 100% GRATUIT
                 </span>
               </div>
-              <p className="text-slate-700 body-md leading-relaxed">
-                Je magasine pour vous les meilleurs produits hypothécaires auprès d'une <strong>vingtaine de banques et d'institutions financières</strong> pour vous garantir les meilleures conditions d'emprunt sur le marché.
-              </p>
             </div>
             
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
@@ -79,7 +82,7 @@ const Hero = () => {
               <img 
                 src="/lovable-uploads/e890eb15-6fc3-48da-a825-ef289e0a40df.png" 
                 alt="Thomas Bourque, courtier hypothécaire" 
-                className="h-full w-full object-cover brightness-75 contrast-110"
+                className="h-full w-full object-cover brightness-75 contrast-110 saturate-75"
               />
             </div>
             <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-primary/10 rounded-full -z-10"></div>
