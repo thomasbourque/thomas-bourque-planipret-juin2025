@@ -41,7 +41,7 @@ const MortgageCalculator = () => {
             </p>
           </div>
 
-          <div className="bg-white rounded-xl shadow-lg p-8 md:p-12 relative pb-16 md:pb-12">
+          <div className="bg-white rounded-xl shadow-lg p-8 md:p-12 relative pb-20 md:pb-12">
             <div className="grid md:grid-cols-2 gap-8 md:gap-12">
               <div className="space-y-8">
                 <div>
@@ -102,7 +102,7 @@ const MortgageCalculator = () => {
                   </p>
                 </div>
 
-                <div className="text-center pt-4">
+                <div className="text-center pt-4 mb-8 md:mb-0">
                   <p className="text-sm text-slate-600 mb-4">
                     Ces économies représentent la différence que pourrait faire un meilleur taux sur votre hypothèque.
                   </p>
@@ -119,7 +119,7 @@ const MortgageCalculator = () => {
             </div>
             
             {/* Disclaimer repositionné pour éviter l'overlap sur mobile */}
-            <div className="absolute bottom-4 left-4 right-4 md:right-auto text-xs text-slate-500 max-w-xs">
+            <div className="absolute bottom-2 left-4 right-4 text-xs text-slate-500">
               *Le calcul approximatif est basé sur une économie moyenne de 15$ par mois pour chaque variation de 0,25 % du taux d'intérêt par tranche de 100 000$ d'hypothèque.
             </div>
           </div>
