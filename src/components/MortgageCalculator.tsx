@@ -41,7 +41,7 @@ const MortgageCalculator = () => {
             </p>
           </div>
 
-          <div className="bg-white rounded-xl shadow-lg p-8 md:p-12 relative">
+          <div className="bg-white rounded-xl shadow-lg p-8 md:p-12 relative pb-16 md:pb-12">
             <div className="grid md:grid-cols-2 gap-8 md:gap-12">
               <div className="space-y-8">
                 <div>
@@ -118,8 +118,8 @@ const MortgageCalculator = () => {
               </div>
             </div>
             
-            {/* Disclaimer en bas à gauche */}
-            <div className="absolute bottom-4 left-4 text-xs text-slate-500 max-w-xs">
+            {/* Disclaimer repositionné pour éviter l'overlap sur mobile */}
+            <div className="absolute bottom-4 left-4 right-4 md:right-auto text-xs text-slate-500 max-w-xs">
               *Le calcul approximatif est basé sur une économie moyenne de 15$ par mois pour chaque variation de 0,25 % du taux d'intérêt par tranche de 100 000$ d'hypothèque.
             </div>
           </div>

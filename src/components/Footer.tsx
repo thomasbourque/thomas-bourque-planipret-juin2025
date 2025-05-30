@@ -26,7 +26,7 @@ const Footer = () => {
               <img 
                 src="/lovable-uploads/b4f91d0a-9255-40cc-bfec-c67b07ffaf9a.png" 
                 alt="Planiprêt - Cabinet en courtage hypothécaire" 
-                className="h-32 w-auto filter brightness-0 invert"
+                className="h-20 w-auto filter brightness-0 invert"
               />
             </a>
           </div>

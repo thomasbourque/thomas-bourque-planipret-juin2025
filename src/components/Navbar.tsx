@@ -1,11 +1,15 @@
-
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import BourqueHypothequesLogo from "./BourqueHypothequesLogo";
+import { useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
+  
+  // Check if we're on the FAQ page
+  const isFAQPage = location.pathname === '/faq';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,34 +24,45 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // On FAQ page, always use dark colors. On other pages, use conditional colors based on scroll
+  const getTextColor = () => {
+    if (isFAQPage) return 'text-slate-900';
+    return isScrolled ? 'text-slate-900' : 'text-white';
+  };
+
+  const getLogoColor = () => {
+    if (isFAQPage) return 'text-slate-900';
+    return isScrolled ? 'text-slate-900' : 'text-white';
+  };
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-white/90 backdrop-blur-md shadow-sm py-3" : "bg-transparent py-5"
+        isScrolled || isFAQPage ? "bg-white/90 backdrop-blur-md shadow-sm py-3" : "bg-transparent py-5"
       }`}
     >
       <div className="container flex items-center justify-between">
         <div className="flex items-center gap-6">
-          <a href="/" className={`flex items-center gap-3 ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
+          <a href="/" className={`flex items-center gap-3 ${getLogoColor()}`}>
             <BourqueHypothequesLogo />
           </a>
         </div>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-8">
-          <a href="/#thomas-bourque" className={`text-sm font-medium hover:opacity-80 transition-opacity ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
+          <a href="/#thomas-bourque" className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
             À propos
           </a>
-          <a href="/#fonctionnement" className={`text-sm font-medium hover:opacity-80 transition-opacity ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
+          <a href="/#fonctionnement" className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
             Approche
           </a>
-          <a href="/#services" className={`text-sm font-medium hover:opacity-80 transition-opacity ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
+          <a href="/#services" className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
             Services
           </a>
-          <a href="/faq" className={`text-sm font-medium hover:opacity-80 transition-opacity ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
+          <a href="/faq" className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
             FAQ
           </a>
-          <a href="/#contact" className={`text-sm font-medium hover:opacity-80 transition-opacity ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
+          <a href="/#contact" className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
             Contact
           </a>
           <Button asChild size="sm" className="rounded-full">
@@ -59,7 +74,7 @@ const Navbar = () => {
 
         {/* Mobile Menu Button */}
         <button
-          className={`md:hidden ${isScrolled ? 'text-slate-900' : 'text-white'}`}
+          className={`md:hidden ${getTextColor()}`}
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label="Toggle menu"
         >
