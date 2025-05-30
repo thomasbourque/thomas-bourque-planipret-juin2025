@@ -35,7 +35,7 @@ const Navbar = () => {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-8">
-          <a href="/#about" className={`text-sm font-medium hover:opacity-80 transition-opacity ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
+          <a href="/#thomas-bourque" className={`text-sm font-medium hover:opacity-80 transition-opacity ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
             À propos
           </a>
           <a href="/#fonctionnement" className={`text-sm font-medium hover:opacity-80 transition-opacity ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
@@ -47,7 +47,7 @@ const Navbar = () => {
           <a href="/#contact" className={`text-sm font-medium hover:opacity-80 transition-opacity ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
             Contact
           </a>
-          <Button asChild size="sm">
+          <Button asChild size="sm" className="rounded-full">
             <a href="https://calendly.com/tbourque-planipret" target="_blank" rel="noopener noreferrer">
               Planifier un appel
             </a>
@@ -78,7 +78,7 @@ const Navbar = () => {
       {isMobileMenuOpen && (
         <div className="md:hidden absolute top-full left-0 right-0 bg-white shadow-md p-4 flex flex-col space-y-4">
           <a
-            href="/#about"
+            href="/#thomas-bourque"
             className="px-4 py-2 hover:bg-secondary rounded-md transition-colors"
             onClick={() => setIsMobileMenuOpen(false)}
           >
@@ -105,7 +105,7 @@ const Navbar = () => {
           >
             Contact
           </a>
-          <Button asChild size="sm" className="mt-2">
+          <Button asChild size="sm" className="mt-2 rounded-full">
             <a 
               href="https://calendly.com/tbourque-planipret" 
               target="_blank" 

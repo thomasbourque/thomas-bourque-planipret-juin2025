@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Slider } from "@/components/ui/slider";
 
@@ -44,7 +45,7 @@ const MortgageCalculator = () => {
               <div className="space-y-8">
                 <div>
                   <label className="block text-lg font-medium text-slate-900 mb-4">
-                    Solde de votre hypothèque
+                    Montant de financement
                   </label>
                   <div className="space-y-4">
                     <Slider
@@ -65,7 +66,7 @@ const MortgageCalculator = () => {
 
                 <div>
                   <label className="block text-lg font-medium text-slate-900 mb-4">
-                    Variation de taux possible
+                    Réduction de taux obtenue
                   </label>
                   <div className="space-y-4">
                     <Slider
@@ -108,7 +109,7 @@ const MortgageCalculator = () => {
                     href="https://calendly.com/tbourque-planipret" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="inline-flex items-center px-6 py-3 bg-primary text-white font-medium rounded-lg hover:bg-primary/90 transition-colors"
+                    className="inline-flex items-center px-6 py-3 bg-primary text-white font-medium rounded-full hover:bg-primary/90 transition-colors"
                   >
                     Planifier un appel gratuit
                   </a>

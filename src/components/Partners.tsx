@@ -3,18 +3,18 @@ import React from "react";
 
 const Partners = () => {
   const partners = [
-    { name: "Banque Nationale", logo: "https://www.patricenoelcourtierhypothecaire.com/wp-content/uploads/2023/05/bn.png" },
-    { name: "TD Canada Trust", logo: "https://www.patricenoelcourtierhypothecaire.com/wp-content/uploads/2023/05/td.png" },
-    { name: "BMO", logo: "https://www.patricenoelcourtierhypothecaire.com/wp-content/uploads/2023/05/bmo.png" },
-    { name: "RBC", logo: "https://www.patricenoelcourtierhypothecaire.com/wp-content/uploads/2023/05/rbc.png" },
-    { name: "Scotiabank", logo: "https://www.patricenoelcourtierhypothecaire.com/wp-content/uploads/2023/05/scotia.png" },
-    { name: "CIBC", logo: "https://www.patricenoelcourtierhypothecaire.com/wp-content/uploads/2023/05/cibc.png" },
-    { name: "Desjardins", logo: "https://www.patricenoelcourtierhypothecaire.com/wp-content/uploads/2023/05/desjardins.png" },
-    { name: "Laurentienne", logo: "https://www.patricenoelcourtierhypothecaire.com/wp-content/uploads/2023/05/laurentienne.png" },
-    { name: "HSBC", logo: "https://www.patricenoelcourtierhypothecaire.com/wp-content/uploads/2023/05/hsbc.png" },
-    { name: "Équitable", logo: "https://www.patricenoelcourtierhypothecaire.com/wp-content/uploads/2023/05/equitable.png" },
-    { name: "First National", logo: "https://www.patricenoelcourtierhypothecaire.com/wp-content/uploads/2023/05/first-national.png" },
-    { name: "MCAP", logo: "https://www.patricenoelcourtierhypothecaire.com/wp-content/uploads/2023/05/mcap.png" },
+    { name: "Banque Nationale", logo: "https://cdn.ca.yapla.com/company/CPYAmmuWRF6PVm7N6OwFYgwN/asset/files/Logo_BNCD_horizontal_CMYK.jpg" },
+    { name: "TD Canada Trust", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Toronto-Dominion_Bank_logo.svg/1280px-Toronto-Dominion_Bank_logo.svg.png" },
+    { name: "BMO", logo: "https://logos-world.net/wp-content/uploads/2021/02/BMO-Logo.png" },
+    { name: "RBC", logo: "https://logos-world.net/wp-content/uploads/2021/02/RBC-Royal-Bank-Logo.png" },
+    { name: "Scotiabank", logo: "https://logos-world.net/wp-content/uploads/2021/02/Scotiabank-Logo.png" },
+    { name: "CIBC", logo: "https://logos-world.net/wp-content/uploads/2021/02/CIBC-Logo.png" },
+    { name: "Desjardins", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Desjardins_logo.svg/1280px-Desjardins_logo.svg.png" },
+    { name: "Laurentienne", logo: "https://upload.wikimedia.org/wikipedia/fr/thumb/9/9d/Logo_Banque_Laurentienne.svg/1200px-Logo_Banque_Laurentienne.svg.png" },
+    { name: "HSBC", logo: "https://logos-world.net/wp-content/uploads/2020/12/HSBC-Logo.png" },
+    { name: "Équitable", logo: "https://www.equitablebank.ca/images/logo-main.svg" },
+    { name: "First National", logo: "https://fnf.ca/wp-content/uploads/2020/08/fnf-logo-blue.png" },
+    { name: "MCAP", logo: "https://www.mcap.com/application/files/cache/thumbnails/9715/4337/8919/mcap_logo_blue_rgb.png" },
   ];
 
   return (
