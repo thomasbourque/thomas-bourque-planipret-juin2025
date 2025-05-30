@@ -42,8 +42,11 @@ const Hero = () => {
         <div className="container grid md:grid-cols-2 gap-12 items-center">
           <div className="flex flex-col space-y-6 max-w-xl animate-fade-in">
             <h2 className="heading-lg text-slate-900">
-              Votre courtier hypothécaire de confiance
+              Thomas Bourque
             </h2>
+            <p className="text-lg font-medium text-slate-600 mb-4">
+              Courtier hypothécaire, B.A.A.
+            </p>
             <p className="body-lg text-slate-700">
               Je vous accompagne dans l'obtention du meilleur financement hypothécaire adapté à votre situation, à Québec et ses environs.
             </p>
@@ -76,7 +79,7 @@ const Hero = () => {
               <img 
                 src="/lovable-uploads/e890eb15-6fc3-48da-a825-ef289e0a40df.png" 
                 alt="Thomas Bourque, courtier hypothécaire" 
-                className="h-full w-full object-cover"
+                className="h-full w-full object-cover brightness-75 contrast-110"
               />
             </div>
             <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-primary/10 rounded-full -z-10"></div>

@@ -1,6 +1,6 @@
 
 import React from "react";
-import ProcessSteps from "./ProcessSteps";
+import Fonctionnement from "./Fonctionnement";
 
 const About = () => {
   return (
@@ -60,7 +60,7 @@ const About = () => {
         </div>
       </section>
       
-      <ProcessSteps />
+      <Fonctionnement />
     </>
   );
 };

@@ -38,14 +38,14 @@ const Navbar = () => {
           <a href="/#about" className={`text-sm font-medium hover:opacity-80 transition-opacity ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
             À propos
           </a>
+          <a href="/#fonctionnement" className={`text-sm font-medium hover:opacity-80 transition-opacity ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
+            Fonctionnement
+          </a>
           <a href="/#services" className={`text-sm font-medium hover:opacity-80 transition-opacity ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
             Services
           </a>
           <a href="/preteurs" className={`text-sm font-medium hover:opacity-80 transition-opacity ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
             Prêteurs
-          </a>
-          <a href="/#testimonials" className={`text-sm font-medium hover:opacity-80 transition-opacity ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
-            Témoignages
           </a>
           <a href="/#contact" className={`text-sm font-medium hover:opacity-80 transition-opacity ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
             Contact
@@ -88,6 +88,13 @@ const Navbar = () => {
             À propos
           </a>
           <a
+            href="/#fonctionnement"
+            className="px-4 py-2 hover:bg-secondary rounded-md transition-colors"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Fonctionnement
+          </a>
+          <a
             href="/#services"
             className="px-4 py-2 hover:bg-secondary rounded-md transition-colors"
             onClick={() => setIsMobileMenuOpen(false)}
@@ -100,13 +107,6 @@ const Navbar = () => {
             onClick={() => setIsMobileMenuOpen(false)}
           >
             Prêteurs
-          </a>
-          <a
-            href="/#testimonials"
-            className="px-4 py-2 hover:bg-secondary rounded-md transition-colors"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            Témoignages
           </a>
           <a
             href="/#contact"
