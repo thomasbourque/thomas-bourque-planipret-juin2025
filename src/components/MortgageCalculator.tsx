@@ -94,9 +94,9 @@ const MortgageCalculator = () => {
                   </p>
                 </div>
 
-                <div className="text-center p-6 bg-blue-50 rounded-lg border border-blue-200">
-                  <p className="text-sm text-blue-700 mb-2">Économies totales sur 5 ans</p>
-                  <p className="text-3xl font-bold text-blue-600">
+                <div className="text-center p-6 bg-primary/10 rounded-lg border border-primary/20">
+                  <p className="text-sm text-primary mb-2">Économies totales sur 5 ans</p>
+                  <p className="text-3xl font-bold text-primary">
                     {savings.fiveYear.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
                   </p>
                 </div>

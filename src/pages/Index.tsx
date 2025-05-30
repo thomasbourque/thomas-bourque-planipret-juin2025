@@ -6,6 +6,7 @@ import Partners from "@/components/Partners";
 import Services from "@/components/Services";
 import MortgageCalculator from "@/components/MortgageCalculator";
 import Testimonials from "@/components/Testimonials";
+import FAQ from "@/components/FAQ";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import Fonctionnement from "@/components/Fonctionnement";
@@ -50,6 +51,7 @@ const Index = () => {
         <Services />
         <MortgageCalculator />
         <Testimonials />
+        <FAQ />
         <Contact />
       </main>
       <Footer />

@@ -1,7 +1,7 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Mail, Linkedin, Facebook, Instagram } from "lucide-react";
+import { Mail, Linkedin, Facebook, Instagram, Phone } from "lucide-react";
 
 const Hero = () => {
   return (
@@ -41,7 +41,7 @@ const Hero = () => {
       <section className="relative pt-24 pb-24 md:pt-32 md:pb-32 overflow-hidden" id="thomas-bourque">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-blue-100 -z-10"></div>
         <div className="container grid md:grid-cols-2 gap-12 items-center">
-          <div className="flex flex-col space-y-6 max-w-xl animate-fade-in">
+          <div className="flex flex-col space-y-6 max-w-xl animate-fade-in order-2 md:order-1">
             <h2 className="text-5xl md:text-6xl font-serif font-bold text-slate-900">
               Thomas Bourque
             </h2>
@@ -86,6 +86,16 @@ const Hero = () => {
                 <Instagram className="w-5 h-5" />
               </a>
             </div>
+
+            {/* Numéro de cellulaire */}
+            <div className="flex items-center gap-3 mb-6">
+              <div className="flex items-center justify-center w-10 h-10 bg-green-600 text-white rounded-full">
+                <Phone className="w-5 h-5" />
+              </div>
+              <a href="tel:418-569-6482" className="text-lg font-medium text-slate-700 hover:text-primary transition-colors">
+                418-569-6482
+              </a>
+            </div>
             
             <div className="space-y-4">
               <p className="body-md text-slate-700 mb-4">
@@ -116,7 +126,7 @@ const Hero = () => {
               </Button>
             </div>
           </div>
-          <div className="relative">
+          <div className="relative order-1 md:order-2">
             <div className="aspect-[4/5] bg-slate-200 rounded-full overflow-hidden shadow-xl w-4/5 mx-auto">
               <img 
                 src="/lovable-uploads/e890eb15-6fc3-48da-a825-ef289e0a40df.png" 

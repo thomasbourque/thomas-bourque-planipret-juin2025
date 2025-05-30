@@ -25,7 +25,7 @@ const Partners = () => {
   ];
 
   return (
-    <section className="section bg-slate-50">
+    <section className="section bg-primary/5">
       <div className="container">
         <div className="text-center mb-12">
           <h2 className="heading-lg text-slate-900 mb-6">Nos partenaires</h2>
@@ -64,7 +64,7 @@ const Partners = () => {
           }
           
           .animate-scroll {
-            animation: scroll 15s linear infinite;
+            animation: scroll 8s linear infinite;
           }
           
           .animate-scroll:hover {
