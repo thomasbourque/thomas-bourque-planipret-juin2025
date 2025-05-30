@@ -7,9 +7,7 @@ const Partners = () => {
     { name: "TD Canada Trust", logo: "/lovable-uploads/d0b615ee-b5fe-461f-8eea-9864af16fdce.png" },
     { name: "Banque Nationale", logo: "/lovable-uploads/46afe0ab-f2da-4dce-9580-2abdedfb96b7.png" },
     { name: "RBC", logo: "/lovable-uploads/3626800e-914e-43ba-ad92-b6cb1bf0563b.png" },
-    { name: "BMO", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/BMO_Logo.svg/320px-BMO_Logo.svg.png" },
     { name: "Scotiabank", logo: "/lovable-uploads/1d6ba3f1-0247-4367-99cf-8b1f02452cd5.png" },
-    { name: "CIBC", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/CIBC_logo.svg/320px-CIBC_logo.svg.png" },
     { name: "Caisse Alterna", logo: "/lovable-uploads/9d2e371a-d9bb-4900-881d-7bd2e6cdea6f.png" },
     { name: "Canada Guaranty", logo: "/lovable-uploads/11a31022-5658-4a44-aab3-94a9d18df466.png" },
     { name: "Capital Express", logo: "/lovable-uploads/0b6b86f9-5ec8-4083-90e2-98092b29efa4.png" },
@@ -66,7 +64,7 @@ const Partners = () => {
           }
           
           .animate-scroll {
-            animation: scroll 30s linear infinite;
+            animation: scroll 15s linear infinite;
           }
           
           .animate-scroll:hover {

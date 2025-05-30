@@ -1,7 +1,7 @@
 
 import React from "react";
 import BourqueHypothequesLogo from "./BourqueHypothequesLogo";
-import { Facebook, Linkedin, Instagram } from "lucide-react";
+import { Facebook, Linkedin, Instagram, Phone, Mail } from "lucide-react";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -10,9 +10,21 @@ const Footer = () => {
     <footer className="bg-slate-900 text-white py-12">
       <div className="container">
         <div className="grid md:grid-cols-3 gap-8 mb-8">
-          <div className="flex items-center justify-center md:justify-start">
-            <div className="text-white scale-150">
+          <div className="flex flex-col items-center md:items-start">
+            <div className="text-white scale-150 mb-4">
               <BourqueHypothequesLogo />
+            </div>
+            <div className="text-center md:text-left space-y-2">
+              <div className="flex items-center justify-center md:justify-start text-sm text-slate-300">
+                <Phone className="w-4 h-4 mr-2" />
+                <span>581-983-8282</span>
+              </div>
+              <div className="flex items-center justify-center md:justify-start text-sm text-slate-300">
+                <Mail className="w-4 h-4 mr-2" />
+                <a href="mailto:thomas.bourque@planipret.com" className="hover:text-white transition-colors">
+                  thomas.bourque@planipret.com
+                </a>
+              </div>
             </div>
           </div>
           
