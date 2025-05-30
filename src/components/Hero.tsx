@@ -1,5 +1,7 @@
+
 import React from "react";
 import { Button } from "@/components/ui/button";
+import { Mail, Linkedin, Facebook, Instagram } from "lucide-react";
 
 const Hero = () => {
   return (
@@ -46,6 +48,44 @@ const Hero = () => {
             <p className="text-xl font-medium text-slate-600 mb-4">
               Courtier hypothécaire, B.A.A.
             </p>
+            
+            {/* Liens vers les réseaux sociaux */}
+            <div className="flex items-center gap-4 mb-6">
+              <a 
+                href="mailto:thomas.bourque@planipret.com" 
+                className="flex items-center justify-center w-10 h-10 bg-primary text-white rounded-full hover:bg-primary/80 transition-colors"
+                title="Courriel"
+              >
+                <Mail className="w-5 h-5" />
+              </a>
+              <a 
+                href="https://www.linkedin.com/in/thomas-bourque" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center justify-center w-10 h-10 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors"
+                title="LinkedIn"
+              >
+                <Linkedin className="w-5 h-5" />
+              </a>
+              <a 
+                href="https://www.facebook.com/thomasbourque.planipret/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center justify-center w-10 h-10 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors"
+                title="Facebook"
+              >
+                <Facebook className="w-5 h-5" />
+              </a>
+              <a 
+                href="https://www.instagram.com/thomasbourque.courtier/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center justify-center w-10 h-10 bg-pink-500 text-white rounded-full hover:bg-pink-600 transition-colors"
+                title="Instagram"
+              >
+                <Instagram className="w-5 h-5" />
+              </a>
+            </div>
             
             <div className="space-y-4">
               <p className="body-md text-slate-700 mb-4">

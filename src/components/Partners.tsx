@@ -3,17 +3,17 @@ import React from "react";
 
 const Partners = () => {
   const partners = [
-    { name: "Banque Nationale", logo: "https://logos-world.net/wp-content/uploads/2021/02/National-Bank-of-Canada-Logo.png" },
-    { name: "TD Canada Trust", logo: "https://logos-world.net/wp-content/uploads/2021/02/TD-Bank-Logo.png" },
-    { name: "BMO", logo: "https://logos-world.net/wp-content/uploads/2021/02/BMO-Logo.png" },
-    { name: "RBC", logo: "https://logos-world.net/wp-content/uploads/2021/02/RBC-Royal-Bank-Logo.png" },
-    { name: "Scotiabank", logo: "https://logos-world.net/wp-content/uploads/2021/02/Scotiabank-Logo.png" },
-    { name: "CIBC", logo: "https://logos-world.net/wp-content/uploads/2021/02/CIBC-Logo.png" },
-    { name: "Desjardins", logo: "https://logos-world.net/wp-content/uploads/2021/02/Desjardins-Logo.png" },
-    { name: "Banque Laurentienne", logo: "https://www.laurentianbank.ca/content/dam/lbc/images/logos/logo-lbc-header-fr.svg" },
-    { name: "HSBC", logo: "https://logos-world.net/wp-content/uploads/2020/12/HSBC-Logo.png" },
-    { name: "Équitable", logo: "https://www.equitablebank.ca/images/logo-main.svg" },
-    { name: "First National", logo: "https://www.fnf.ca/application/files/8116/2845/5324/fnf-logo-blue.png" },
+    { name: "Desjardins", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Desjardins_logo.svg/320px-Desjardins_logo.svg.png" },
+    { name: "TD Canada Trust", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Toronto-Dominion_Bank_logo.svg/320px-Toronto-Dominion_Bank_logo.svg.png" },
+    { name: "Banque Nationale", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/National_Bank_of_Canada_logo.svg/320px-National_Bank_of_Canada_logo.svg.png" },
+    { name: "RBC", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/RBC_Logo.svg/320px-RBC_Logo.svg.png" },
+    { name: "BMO", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/BMO_Logo.svg/320px-BMO_Logo.svg.png" },
+    { name: "Scotiabank", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Scotiabank_Logo.svg/320px-Scotiabank_Logo.svg.png" },
+    { name: "CIBC", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/CIBC_logo.svg/320px-CIBC_logo.svg.png" },
+    { name: "Banque Laurentienne", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Laurentian_Bank_logo.svg/320px-Laurentian_Bank_logo.svg.png" },
+    { name: "HSBC", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/HSBC_logo_%282018%29.svg/320px-HSBC_logo_%282018%29.svg.png" },
+    { name: "Équitable", logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Equitable_Bank_logo.svg/320px-Equitable_Bank_logo.svg.png" },
+    { name: "First National", logo: "https://logos-world.net/wp-content/uploads/2020/11/First-National-Bank-Logo.png" },
     { name: "MCAP", logo: "https://www.mcap.com/application/files/cache/thumbnails/9715/4337/8919/mcap_logo_blue_rgb.png" },
   ];
 
