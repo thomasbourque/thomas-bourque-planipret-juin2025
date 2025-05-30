@@ -1,3 +1,4 @@
+
 import React from "react";
 import ProcessSteps from "./ProcessSteps";
 
@@ -20,15 +21,15 @@ const About = () => {
             <div className="bg-slate-50 p-8 rounded-lg hover:shadow-md transition-shadow">
               <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-6">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
-                  <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"></path>
-                  <path d="M13 5v2"></path>
-                  <path d="M13 17v2"></path>
-                  <path d="M13 11v2"></path>
+                  <path d="M3 3v5h5"></path>
+                  <path d="M3 8l4-4 4 4 8-8"></path>
+                  <path d="M21 21v-5h-5"></path>
+                  <path d="M21 16l-4 4-4-4-8 8"></path>
                 </svg>
               </div>
-              <h3 className="heading-sm text-slate-900 mb-4">Expertise</h3>
+              <h3 className="heading-sm text-slate-900 mb-4">Rapidité</h3>
               <p className="text-slate-700">
-                Fort d'une décennie d'expérience dans le secteur financier, j'ai aidé des centaines de clients à réaliser leur rêve de propriété.
+                Des réponses rapides et un traitement efficace de votre dossier pour concrétiser votre projet dans les meilleurs délais.
               </p>
             </div>
 
@@ -47,15 +48,12 @@ const About = () => {
             <div className="bg-slate-50 p-8 rounded-lg hover:shadow-md transition-shadow">
               <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-6">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
-                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
-                  <circle cx="9" cy="7" r="4"></circle>
-                  <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
-                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                  <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
                 </svg>
               </div>
-              <h3 className="heading-sm text-slate-900 mb-4">Personnalisé</h3>
+              <h3 className="heading-sm text-slate-900 mb-4">Simplicité</h3>
               <p className="text-slate-700">
-                Chaque situation est unique. J'offre des conseils personnalisés et des solutions sur mesure pour répondre à vos besoins spécifiques.
+                Un processus clair et simplifié pour rendre votre expérience hypothécaire aussi fluide et compréhensible que possible.
               </p>
             </div>
           </div>
