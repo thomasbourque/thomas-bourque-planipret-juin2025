@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -14,22 +13,17 @@ const Testimonials = () => {
     {
       name: "Simon Cassista",
       position: "Lebourgneuf",
-      content: "Thomas a simplifié tout le processus hypothécaire pour nous. Ses conseils nous ont fait économiser plus de 8 000$ sur notre prêt et son service professionnel nous a évité bien des tracas. Je le recommande sans hésitation !",
+      content: "Thomas nous a accompagnés avec professionnalisme du début à la fin. Ses explications claires nous ont aidés à comprendre toutes les étapes et à prendre les bonnes décisions pour notre projet immobilier.",
     },
     {
       name: "Léo Gendron",
       position: "Cap-Rouge",
-      content: "Grâce à Thomas, notre refinancement s'est déroulé sans complications. Il a négocié un taux bien inférieur à ce que notre banque nous proposait. Son expertise nous a permis d'économiser des milliers de dollars annuellement.",
+      content: "Les conseils personnalisés de Thomas ont fait toute la différence. Il a pris le temps de bien analyser notre situation et nous a guidés vers la solution la plus adaptée à nos besoins.",
     },
     {
       name: "Jean-Michel Provencher",
       position: "Sillery",
-      content: "Le service de Thomas est exceptionnel. Il a rendu notre première expérience d'achat immobilier simple et transparente. Ses conseils avisés nous ont permis d'obtenir des conditions avantageuses que nous n'aurions jamais eues seuls.",
-    },
-    {
-      name: "Martin Gosselin",
-      position: "Drummondville",
-      content: "Thomas a transformé ce qui semblait être un processus complexe en quelque chose de simple et efficace. Ses négociations ont abouti à des économies substantielles et son suivi personnalisé nous a rassurés à chaque étape.",
+      content: "Thomas nous a accompagnés avec patience et expertise lors de notre premier achat. Son approche rassurante et ses conseils avisés nous ont permis de naviguer sereinement dans ce processus complexe.",
     },
   ];
 

@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 
@@ -19,11 +18,8 @@ const Hero = () => {
           <h1 className="heading-xl mb-6">
             L'hypothèque, sans les maux de tête
           </h1>
-          <p className="body-lg mb-4 max-w-2xl mx-auto">
+          <p className="body-lg mb-8 max-w-2xl mx-auto">
             Pour un accompagnement hypothécaire complet où que vous soyez au Québec.
-          </p>
-          <p className="body-md mb-8 max-w-2xl mx-auto text-white/90">
-            Un service rapide, clair et 100 % gratuit.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
