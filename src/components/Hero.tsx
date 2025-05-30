@@ -17,7 +17,7 @@ const Hero = () => {
         
         <div className="container relative z-10 text-center text-white">
           <h1 className="heading-xl mb-6">
-            Moins de stress, plus d'économies.
+            L'hypothèque, sans les maux de tête
           </h1>
           <p className="body-lg mb-8 max-w-2xl mx-auto">
             Pour un accompagnement hypothécaire complet où que vous soyez au Québec.

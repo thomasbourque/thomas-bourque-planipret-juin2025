@@ -1,6 +1,6 @@
 
 import React from "react";
-import TBLogo from "./TBLogo";
+import BourqueHypothequesLogo from "./BourqueHypothequesLogo";
 import { Facebook, Linkedin, Instagram } from "lucide-react";
 
 const Footer = () => {
@@ -11,8 +11,7 @@ const Footer = () => {
       <div className="container">
         <div className="grid md:grid-cols-3 gap-8 mb-8">
           <div className="flex items-center gap-4">
-            <TBLogo />
-            <h3 className="font-serif text-xl font-bold">Thomas Bourque</h3>
+            <BourqueHypothequesLogo />
           </div>
           
           <div className="flex justify-center">

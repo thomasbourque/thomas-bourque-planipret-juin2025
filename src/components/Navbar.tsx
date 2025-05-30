@@ -1,8 +1,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import Logo from "./Logo";
-import TBLogo from "./TBLogo";
+import BourqueHypothequesLogo from "./BourqueHypothequesLogo";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -29,27 +28,26 @@ const Navbar = () => {
     >
       <div className="container flex items-center justify-between">
         <div className="flex items-center gap-6">
-          <a href="/" className="flex items-center gap-3">
-            <TBLogo />
-            <Logo />
+          <a href="/" className={`flex items-center gap-3 ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
+            <BourqueHypothequesLogo />
           </a>
         </div>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-8">
-          <a href="/#about" className="text-sm font-medium hover:text-primary transition-colors">
+          <a href="/#about" className={`text-sm font-medium hover:opacity-80 transition-opacity ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
             À propos
           </a>
-          <a href="/#services" className="text-sm font-medium hover:text-primary transition-colors">
+          <a href="/#services" className={`text-sm font-medium hover:opacity-80 transition-opacity ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
             Services
           </a>
-          <a href="/preteurs" className="text-sm font-medium hover:text-primary transition-colors">
+          <a href="/preteurs" className={`text-sm font-medium hover:opacity-80 transition-opacity ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
             Prêteurs
           </a>
-          <a href="/#testimonials" className="text-sm font-medium hover:text-primary transition-colors">
+          <a href="/#testimonials" className={`text-sm font-medium hover:opacity-80 transition-opacity ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
             Témoignages
           </a>
-          <a href="/#contact" className="text-sm font-medium hover:text-primary transition-colors">
+          <a href="/#contact" className={`text-sm font-medium hover:opacity-80 transition-opacity ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
             Contact
           </a>
           <Button asChild size="sm">
@@ -61,7 +59,7 @@ const Navbar = () => {
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-foreground"
+          className={`md:hidden ${isScrolled ? 'text-slate-900' : 'text-white'}`}
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label="Toggle menu"
         >
