@@ -10,8 +10,10 @@ const Footer = () => {
     <footer className="bg-slate-900 text-white py-12">
       <div className="container">
         <div className="grid md:grid-cols-3 gap-8 mb-8">
-          <div className="flex items-center gap-4">
-            <BourqueHypothequesLogo />
+          <div className="flex items-center justify-center md:justify-start">
+            <div className="text-white scale-150">
+              <BourqueHypothequesLogo />
+            </div>
           </div>
           
           <div className="flex justify-center">
@@ -24,13 +26,13 @@ const Footer = () => {
               <img 
                 src="/lovable-uploads/b4f91d0a-9255-40cc-bfec-c67b07ffaf9a.png" 
                 alt="Planiprêt - Cabinet en courtage hypothécaire" 
-                className="h-32 w-auto"
+                className="h-32 w-auto filter brightness-0 invert"
               />
             </a>
           </div>
           
           <div>
-            <h3 className="font-medium text-lg mb-4">Trouvez-moi sur les réseaux sociaux</h3>
+            <h3 className="font-medium text-lg mb-4">Suivez-moi sur les réseaux sociaux</h3>
             <div className="flex gap-4">
               <a 
                 href="https://www.linkedin.com/in/thomas-bourque" 
@@ -49,7 +51,7 @@ const Footer = () => {
                 <Facebook className="w-5 h-5 text-white" />
               </a>
               <a 
-                href="https://www.instagram.com/thomas.bourque.planipret" 
+                href="https://www.instagram.com/thomasbourque.courtier/" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="bg-primary/10 p-3 rounded-full hover:bg-primary/20 transition-colors"

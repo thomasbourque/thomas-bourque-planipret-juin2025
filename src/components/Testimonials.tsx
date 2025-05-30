@@ -8,23 +8,28 @@ const Testimonials = () => {
   const testimonials = [
     {
       name: "Alexis Drouin",
-      position: "Propriétaire",
-      content: "Grâce à l'expertise exceptionnelle de M. Bourque, j'ai pu financer ma maison de rêve à Breakeyville dans des conditions très avantageuses. Son dévouement et ses connaissances du marché hypothécaire m'ont permis de concrétiser mon projet. Je le recommande vivement !",
+      position: "Breakeyville",
+      content: "L'accompagnement et les conseils de Thomas tout au long de notre processus d'achat a été exceptionnel. Il nous a évité des mauvaises surprises et nous a permis d'économiser des milliers de dollars par rapport à l'offre reçue de notre banque.",
     },
     {
-      name: "Jean Gagnon",
-      position: "Investisseur immobilier",
-      content: "Grâce à l'expertise de Thomas, j'ai pu refinancer ma propriété locative dans des conditions très avantageuses. Son professionnalisme et sa connaissance du marché sont impressionnants.",
+      name: "Marie-Claude Beaulieu",
+      position: "Sainte-Foy",
+      content: "Thomas a simplifié tout le processus hypothécaire pour nous. Ses conseils nous ont fait économiser plus de 8 000$ sur notre prêt et son service professionnel nous a évité bien des tracas. Je le recommande sans hésitation !",
     },
     {
-      name: "Sophie Lavoie",
-      position: "Propriétaire",
-      content: "Le renouvellement de mon prêt hypothécaire s'approchait et je voulais obtenir les meilleures conditions. Thomas a négocié un taux bien inférieur à ce que ma banque m'offrait. Je suis très satisfaite !",
+      name: "Jean-François Leblanc",
+      position: "Lévis",
+      content: "Grâce à Thomas, notre refinancement s'est déroulé sans complications. Il a négocié un taux bien inférieur à ce que notre banque nous proposait. Son expertise nous a permis d'économiser des milliers de dollars annuellement.",
     },
     {
-      name: "Olivier Nadeau",
-      position: "Nouveau propriétaire",
-      content: "Thomas m'a aidé à financer ma nouvelle maison sur la rive sud, à proximité des ponts. Cela me permet d'accéder plus facilement aux restaurants 'Apportez Votre Vin' situés sur la rive nord de Québec. Son expertise a été déterminante dans la réalisation de mon projet.",
+      name: "Sophie Tremblay",
+      position: "Cap-Rouge",
+      content: "Le service de Thomas est exceptionnel. Il a rendu notre première expérience d'achat immobilier simple et transparente. Ses conseils avisés nous ont permis d'obtenir des conditions avantageuses que nous n'aurions jamais eues seuls.",
+    },
+    {
+      name: "Martin Gosselin",
+      position: "Drummondville",
+      content: "Thomas a transformé ce qui semblait être un processus complexe en quelque chose de simple et efficace. Ses négociations ont abouti à des économies substantielles et son suivi personnalisé nous a rassurés à chaque étape.",
     },
   ];
 
