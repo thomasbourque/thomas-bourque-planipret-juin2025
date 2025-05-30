@@ -10,13 +10,14 @@ const MortgageCalculator = () => {
     const balance = mortgageBalance[0];
     const variation = rateVariation[0];
     
-    // 180$ par année pour chaque 0.25% de variation sur chaque 100k
-    const baseSavings = 180;
+    // 15$ par mois pour chaque 0.25% de variation sur chaque 100k
+    const baseSavings = 15;
     const baseVariation = 0.25;
     const baseAmount = 100000;
     
-    const yearlyPer100k = (variation / baseVariation) * baseSavings;
-    const yearlyTotal = (balance / baseAmount) * yearlyPer100k;
+    const monthlyPer100k = (variation / baseVariation) * baseSavings;
+    const monthlyTotal = (balance / baseAmount) * monthlyPer100k;
+    const yearlyTotal = monthlyTotal * 12;
     const fiveYearTotal = yearlyTotal * 5;
     
     return {
@@ -40,7 +41,7 @@ const MortgageCalculator = () => {
             </p>
           </div>
 
-          <div className="bg-white rounded-xl shadow-lg p-8 md:p-12">
+          <div className="bg-white rounded-xl shadow-lg p-8 md:p-12 relative">
             <div className="grid md:grid-cols-2 gap-8 md:gap-12">
               <div className="space-y-8">
                 <div>
@@ -95,7 +96,7 @@ const MortgageCalculator = () => {
                 </div>
 
                 <div className="text-center p-6 bg-primary/10 rounded-lg border border-primary/20">
-                  <p className="text-sm text-primary mb-2">Économies totales sur 5 ans</p>
+                  <p className="text-sm text-primary mb-2">Économies totales sur 5 ans*</p>
                   <p className="text-3xl font-bold text-primary">
                     {savings.fiveYear.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
                   </p>
@@ -115,6 +116,11 @@ const MortgageCalculator = () => {
                   </a>
                 </div>
               </div>
+            </div>
+            
+            {/* Disclaimer en bas à gauche */}
+            <div className="absolute bottom-4 left-4 text-xs text-slate-500 max-w-xs">
+              *Le calcul approximatif est basé sur une économie moyenne de 15$ par mois pour chaque variation de 0,25 % du taux d'intérêt par tranche de 100 000$ d'hypothèque.
             </div>
           </div>
         </div>

@@ -20,8 +20,8 @@ const Hero = () => {
           <h1 className="heading-xl mb-6">
             L'hypothèque, sans les maux de tête
           </h1>
-          <p className="body-lg mb-8 max-w-2xl mx-auto">
-            Pour un accompagnement hypothécaire complet où que vous soyez au Québec.
+          <p className="body-lg mb-8 max-w-3xl mx-auto">
+            Pourquoi faire compliqué quand on peut faire simple? Un accompagnement hypothécaire complet pour vos projets immobiliers partout au Québec.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -48,6 +48,17 @@ const Hero = () => {
             <p className="text-xl font-medium text-slate-600 mb-4">
               Courtier hypothécaire, B.A.A.
             </p>
+            
+            {/* Photo pour mobile - s'affiche ici sur mobile */}
+            <div className="relative md:hidden mb-6">
+              <div className="aspect-[4/5] bg-slate-200 rounded-full overflow-hidden shadow-xl w-64 mx-auto">
+                <img 
+                  src="/lovable-uploads/e890eb15-6fc3-48da-a825-ef289e0a40df.png" 
+                  alt="Thomas Bourque, courtier hypothécaire" 
+                  className="h-full w-full object-cover brightness-75 contrast-110 saturate-75"
+                />
+              </div>
+            </div>
             
             {/* Liens vers les réseaux sociaux */}
             <div className="flex items-center gap-4 mb-6">
@@ -89,7 +100,7 @@ const Hero = () => {
 
             {/* Numéro de cellulaire */}
             <div className="flex items-center gap-3 mb-6">
-              <div className="flex items-center justify-center w-10 h-10 bg-green-600 text-white rounded-full">
+              <div className="flex items-center justify-center w-10 h-10 bg-slate-600 text-white rounded-full">
                 <Phone className="w-5 h-5" />
               </div>
               <a href="tel:418-569-6482" className="text-lg font-medium text-slate-700 hover:text-primary transition-colors">
@@ -126,7 +137,7 @@ const Hero = () => {
               </Button>
             </div>
           </div>
-          <div className="relative order-1 md:order-2">
+          <div className="relative order-1 md:order-2 hidden md:block">
             <div className="aspect-[4/5] bg-slate-200 rounded-full overflow-hidden shadow-xl w-4/5 mx-auto">
               <img 
                 src="/lovable-uploads/e890eb15-6fc3-48da-a825-ef289e0a40df.png" 
