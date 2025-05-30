@@ -39,8 +39,8 @@ const Fonctionnement = () => {
     <section className="py-12 bg-slate-900" id="fonctionnement">
       <div className="container">
         <div className="max-w-6xl mx-auto">
-          <h2 className="heading-lg text-white text-center mb-12">
-            Fonctionnement
+          <h2 className="heading-lg text-white text-center mb-4">
+            Notre approche simplifiée
           </h2>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">

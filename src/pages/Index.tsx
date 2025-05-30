@@ -10,11 +10,8 @@ import Testimonials from "@/components/Testimonials";
 import GoogleReviewsPopup from "@/components/GoogleReviewsPopup";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import { useToast } from "@/hooks/use-toast";
 
 const Index = () => {
-  const { toast } = useToast();
-
   useEffect(() => {
     // Animation on scroll logic
     const animateElements = () => {
@@ -43,14 +40,6 @@ const Index = () => {
       window.removeEventListener('scroll', animateElements);
     };
   }, []);
-
-  // For demo purposes, showing a welcome toast
-  useEffect(() => {
-    toast({
-      title: "Bienvenue",
-      description: "Découvrez comment je peux vous aider avec votre prêt hypothécaire.",
-    });
-  }, [toast]);
 
   return (
     <div className="min-h-screen bg-background">

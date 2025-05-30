@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Slider } from "@/components/ui/slider";
 
@@ -35,8 +34,8 @@ const MortgageCalculator = () => {
             <h2 className="heading-lg text-slate-900 mb-6">
               Économisez gros en trouvant le taux le plus bas
             </h2>
-            <p className="body-md text-slate-700">
-              Découvrez combien vous pourriez économiser en obtenant un meilleur taux hypothécaire
+            <p className="body-md text-slate-700 max-w-3xl mx-auto">
+              Je magasine pour vous trouver le meilleur taux parmi ceux offerts dans une vingtaine d'institutions financières. Découvrez combien une baisse de taux, aussi minime soit-elle, peut vous faire économiser!
             </p>
           </div>
 

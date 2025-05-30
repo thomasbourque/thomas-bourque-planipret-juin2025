@@ -39,13 +39,10 @@ const Navbar = () => {
             À propos
           </a>
           <a href="/#fonctionnement" className={`text-sm font-medium hover:opacity-80 transition-opacity ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
-            Fonctionnement
+            Approche
           </a>
           <a href="/#services" className={`text-sm font-medium hover:opacity-80 transition-opacity ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
             Services
-          </a>
-          <a href="/preteurs" className={`text-sm font-medium hover:opacity-80 transition-opacity ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
-            Prêteurs
           </a>
           <a href="/#contact" className={`text-sm font-medium hover:opacity-80 transition-opacity ${isScrolled ? 'text-slate-900' : 'text-white'}`}>
             Contact
@@ -92,7 +89,7 @@ const Navbar = () => {
             className="px-4 py-2 hover:bg-secondary rounded-md transition-colors"
             onClick={() => setIsMobileMenuOpen(false)}
           >
-            Fonctionnement
+            Approche
           </a>
           <a
             href="/#services"
@@ -100,13 +97,6 @@ const Navbar = () => {
             onClick={() => setIsMobileMenuOpen(false)}
           >
             Services
-          </a>
-          <a
-            href="/preteurs"
-            className="px-4 py-2 hover:bg-secondary rounded-md transition-colors"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            Prêteurs
           </a>
           <a
             href="/#contact"
