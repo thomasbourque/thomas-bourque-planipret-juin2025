@@ -39,31 +39,42 @@ const Fonctionnement = () => {
     <section className="py-12 bg-slate-900" id="fonctionnement">
       <div className="container">
         <div className="max-w-6xl mx-auto">
-          <h2 className="heading-lg text-white text-center mb-4">
+          <h2 className="heading-lg text-white text-center mb-16">
             Notre approche simplifiée
           </h2>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {steps.map((step, index) => (
-              <div key={index} className="bg-slate-800 p-6 rounded-lg">
-                {/* Circle with number */}
-                <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mb-4">
-                  <span className="text-lg font-bold text-primary-foreground">
-                    {step.number}
-                  </span>
+          <div className="relative">
+            {/* Timeline line - hidden on mobile, visible on desktop */}
+            <div className="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-1 bg-primary/30 h-full"></div>
+            
+            {/* Steps */}
+            <div className="space-y-12 lg:space-y-16">
+              {steps.map((step, index) => (
+                <div key={index} className={`relative flex flex-col lg:flex-row items-center ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'}`}>
+                  {/* Content */}
+                  <div className={`flex-1 ${index % 2 === 0 ? 'lg:pr-12 lg:text-right' : 'lg:pl-12 lg:text-left'} text-center lg:text-inherit`}>
+                    <div className="bg-slate-800 p-6 rounded-lg max-w-md mx-auto lg:mx-0">
+                      <h3 className="text-white font-semibold text-lg mb-3">
+                        {step.title}
+                      </h3>
+                      <p className="text-slate-300 text-sm leading-relaxed">
+                        {step.description}
+                      </p>
+                    </div>
+                  </div>
+                  
+                  {/* Circle with number - positioned on the timeline */}
+                  <div className="relative z-10 w-16 h-16 bg-primary rounded-full flex items-center justify-center my-6 lg:my-0 flex-shrink-0">
+                    <span className="text-xl font-bold text-primary-foreground">
+                      {step.number}
+                    </span>
+                  </div>
+                  
+                  {/* Spacer for opposite side */}
+                  <div className="flex-1 hidden lg:block"></div>
                 </div>
-                
-                {/* Step title */}
-                <h3 className="text-white font-semibold text-lg mb-3">
-                  {step.title}
-                </h3>
-                
-                {/* Step description */}
-                <p className="text-slate-300 text-sm leading-relaxed">
-                  {step.description}
-                </p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>

@@ -14,6 +14,13 @@ const InterestRates = () => {
     { term: "10 ans", bankRate: "6.30%", planipretRate: "5.70%" },
   ];
 
+  // Get current date in French format
+  const currentDate = new Date().toLocaleDateString('fr-CA', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+
   return (
     <section className="section bg-white">
       <div className="container">
@@ -22,8 +29,11 @@ const InterestRates = () => {
             <h2 className="heading-lg text-slate-900 mb-6">
               Taux d'intérêt du jour
             </h2>
-            <p className="body-md text-slate-700 max-w-3xl mx-auto">
+            <p className="body-md text-slate-700 max-w-3xl mx-auto mb-4">
               Comparez les taux offerts par les institutions financières traditionnelles avec ceux que je peux vous obtenir grâce à mon réseau Planiprêt.
+            </p>
+            <p className="text-sm text-slate-600 font-medium">
+              Mise à jour du {currentDate}
             </p>
           </div>
 
