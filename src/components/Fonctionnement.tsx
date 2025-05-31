@@ -1,4 +1,3 @@
-
 import React from "react";
 
 const Fonctionnement = () => {
@@ -43,32 +42,20 @@ const Fonctionnement = () => {
             Notre approche simplifiée
           </h2>
           
-          <div className="relative">
-            {/* Lignes de connexion subtiles entre les encadrés */}
-            <div className="hidden lg:block absolute top-1/2 left-0 w-full h-0.5 bg-slate-300 -translate-y-1/2 z-0"></div>
-            
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
-              {steps.map((step, index) => (
-                <div key={index} className="bg-slate-100 border border-slate-200 p-6 rounded-lg shadow-sm">
-                  {/* Circle with number */}
-                  <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mb-4 mx-auto">
-                    <span className="text-lg font-bold text-white">
-                      {step.number}
-                    </span>
-                  </div>
-                  
-                  {/* Step title */}
-                  <h3 className="text-primary font-semibold text-lg mb-3 text-center">
-                    {step.title}
-                  </h3>
-                  
-                  {/* Step description */}
-                  <p className="text-slate-700 text-sm leading-relaxed text-center">
-                    {step.description}
-                  </p>
-                </div>
-              ))}
-            </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {steps.map((step, index) => (
+              <div key={index} className="bg-slate-50 border border-slate-200 p-6 rounded-lg shadow-sm">
+                {/* Step title */}
+                <h3 className="text-primary font-semibold text-lg mb-3 text-center">
+                  {step.title}
+                </h3>
+                
+                {/* Step description */}
+                <p className="text-slate-700 text-sm leading-relaxed text-center">
+                  {step.description}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
