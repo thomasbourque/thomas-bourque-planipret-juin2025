@@ -10,8 +10,8 @@ const MortgageCalculator = () => {
     const balance = mortgageBalance[0];
     const variation = rateVariation[0];
     
-    // 15$ par mois pour chaque 0.25% de variation sur chaque 100k
-    const baseSavings = 15;
+    // 14$ par mois pour chaque 0.25% de variation sur chaque 100k
+    const baseSavings = 14;
     const baseVariation = 0.25;
     const baseAmount = 100000;
     
@@ -52,8 +52,8 @@ const MortgageCalculator = () => {
                     <Slider
                       value={mortgageBalance}
                       onValueChange={setMortgageBalance}
-                      max={1000000}
-                      min={150000}
+                      max={1500000}
+                      min={100000}
                       step={50000}
                       className="w-full"
                     />
@@ -73,7 +73,7 @@ const MortgageCalculator = () => {
                     <Slider
                       value={rateVariation}
                       onValueChange={setRateVariation}
-                      max={1}
+                      max={2}
                       min={0.05}
                       step={0.05}
                       className="w-full"
@@ -120,7 +120,7 @@ const MortgageCalculator = () => {
             
             {/* Disclaimer repositionné pour éviter l'overlap sur mobile */}
             <div className="absolute bottom-2 left-4 right-4 text-xs text-slate-500">
-              *Le calcul approximatif est basé sur une économie moyenne de 15$ par mois pour chaque variation de 0,25 % du taux d'intérêt par tranche de 100 000$ d'hypothèque.
+              *Le calcul approximatif est basé sur une économie moyenne de 14$ par mois pour chaque variation de 0,25 % du taux d'intérêt par tranche de 100 000$ d'hypothèque.
             </div>
           </div>
         </div>
