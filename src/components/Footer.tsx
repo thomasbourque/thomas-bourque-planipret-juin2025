@@ -11,7 +11,7 @@ const Footer = () => {
       <div className="container">
         <div className="grid md:grid-cols-3 gap-8 mb-8">
           <div className="flex flex-col items-center md:items-start">
-            <div className="text-white transform scale-75 sm:scale-100 md:scale-150 mb-4">
+            <div className="text-white scale-150 mb-4">
               <BourqueHypothequesLogo />
             </div>
           </div>
