@@ -92,4 +92,12 @@
     opacity: 1;
     transform: translateY(0);
   }
+
+  /* Fix for mobile navigation offset */
+  #thomas-bourque,
+  #fonctionnement,
+  #services,
+  #contact {
+    scroll-margin-top: 80px;
+  }
 }
