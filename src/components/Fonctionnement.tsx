@@ -1,3 +1,4 @@
+
 import React from "react";
 
 const Fonctionnement = () => {
@@ -45,6 +46,13 @@ const Fonctionnement = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {steps.map((step, index) => (
               <div key={index} className="bg-slate-50 border border-slate-200 p-6 rounded-lg shadow-sm">
+                {/* Numéro de l'étape */}
+                <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center mb-4 mx-auto">
+                  <span className="text-sm font-bold text-white">
+                    {step.number}
+                  </span>
+                </div>
+                
                 {/* Step title */}
                 <h3 className="text-primary font-semibold text-lg mb-3 text-center">
                   {step.title}
