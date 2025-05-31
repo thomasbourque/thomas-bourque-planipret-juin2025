@@ -12,7 +12,7 @@ const BourqueHypothequesLogo = () => {
       />
       
       <div className="flex flex-col">
-        <span className="text-lg md:text-3xl font-serif font-bold leading-tight text-inherit whitespace-nowrap">Thomas Bourque</span>
+        <span className="text-lg md:text-3xl font-serif font-bold leading-tight text-yellow-500 whitespace-nowrap">100 % gratuit</span>
         <span className="text-xs md:text-base font-serif font-medium leading-tight text-inherit opacity-90">courtier hypothécaire</span>
       </div>
     </div>
