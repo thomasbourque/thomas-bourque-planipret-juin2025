@@ -9,7 +9,6 @@ import Testimonials from "@/components/Testimonials";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import Fonctionnement from "@/components/Fonctionnement";
-import InterestRates from "@/components/InterestRates";
 
 const Index = () => {
   useEffect(() => {
@@ -49,7 +48,6 @@ const Index = () => {
         <Partners />
         <Fonctionnement />
         <Services />
-        <InterestRates />
         <MortgageCalculator />
         <Testimonials />
         <Contact />

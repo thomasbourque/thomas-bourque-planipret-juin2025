@@ -37,7 +37,7 @@ const Partners = () => {
         <div className="relative overflow-hidden">
           <div className="flex animate-scroll space-x-12 items-center">
             {[...partners, ...partners].map((partner, index) => (
-              <div key={`${partner.name}-${index}`} className="flex-shrink-0 h-16 w-32 flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-300">
+              <div key={`${partner.name}-${index}`} className="flex-shrink-0 h-16 w-32 flex items-center justify-center hover:scale-105 transition-transform duration-300">
                 <img 
                   src={partner.logo} 
                   alt={partner.name}
