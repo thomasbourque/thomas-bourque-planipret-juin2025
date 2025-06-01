@@ -1,7 +1,10 @@
 
-import React from "react";
+import React, { useState } from "react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 
 const Fonctionnement = () => {
+  const [expandedStep, setExpandedStep] = useState<number | null>(null);
+  
   const steps = [
     {
       number: "1",
@@ -35,17 +38,21 @@ const Fonctionnement = () => {
     }
   ];
 
+  const toggleStep = (index: number) => {
+    setExpandedStep(expandedStep === index ? null : index);
+  };
+
   return (
     <section className="py-12 bg-slate-50" id="fonctionnement">
       <div className="container">
         <div className="max-w-6xl mx-auto">
           <h2 className="heading-lg text-slate-900 text-center mb-16">
-            Notre approche simplifiée
+            Mon approche
           </h2>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {steps.map((step, index) => (
-              <div key={index} className="bg-slate-50 border border-slate-200 p-6 rounded-lg shadow-sm">
+              <div key={index} className="bg-white border border-slate-200 p-6 rounded-lg shadow-sm">
                 {/* Numéro de l'étape */}
                 <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center mb-4 mx-auto">
                   <span className="text-sm font-bold text-white">
@@ -53,15 +60,29 @@ const Fonctionnement = () => {
                   </span>
                 </div>
                 
-                {/* Step title */}
-                <h3 className="text-primary font-semibold text-lg mb-3 text-center">
-                  {step.title}
-                </h3>
+                {/* Step title et bouton toggle */}
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-primary font-semibold text-lg text-center flex-1">
+                    {step.title}
+                  </h3>
+                  <button
+                    onClick={() => toggleStep(index)}
+                    className="ml-2 flex items-center justify-center w-6 h-6 bg-primary/10 rounded-full hover:bg-primary/20 transition-colors"
+                  >
+                    {expandedStep === index ? (
+                      <ChevronUp className="w-4 h-4 text-primary" />
+                    ) : (
+                      <ChevronDown className="w-4 h-4 text-primary" />
+                    )}
+                  </button>
+                </div>
                 
-                {/* Step description */}
-                <p className="text-slate-700 text-sm leading-relaxed text-center">
-                  {step.description}
-                </p>
+                {/* Step description - conditionnellement affiché */}
+                {expandedStep === index && (
+                  <p className="text-slate-700 text-sm leading-relaxed text-center">
+                    {step.description}
+                  </p>
+                )}
               </div>
             ))}
           </div>

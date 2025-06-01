@@ -26,7 +26,7 @@ const MortgageCalculator = () => {
               Économisez gros en trouvant le taux le plus bas
             </h2>
             <p className="body-md text-slate-700 max-w-3xl mx-auto">
-              Je magasine pour vous trouver le meilleur taux parmi ceux offerts dans une vingtaine d'institutions financières. Découvrez combien une baisse de taux, aussi minime soit-elle, peut vous faire économiser!
+              Je magasine pour vous trouver le meilleur taux parmi ceux offerts dans une vingtaine d'institutions financières. Découvrez combien une différence de taux peut vous faire économiser!
             </p>
           </div>
 

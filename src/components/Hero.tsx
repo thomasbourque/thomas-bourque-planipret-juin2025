@@ -55,7 +55,7 @@ const Hero = () => {
                 <img 
                   src="/lovable-uploads/e890eb15-6fc3-48da-a825-ef289e0a40df.png" 
                   alt="Thomas Bourque, courtier hypothécaire" 
-                  className="h-full w-full object-cover brightness-75 contrast-110 saturate-75"
+                  className="h-full w-full object-cover brightness-90 contrast-110 saturate-75"
                 />
               </div>
             </div>
@@ -122,7 +122,7 @@ const Hero = () => {
                 Mes services sont complètement sans frais et vous assurent d'obtenir les meilleures conditions d'emprunt et le taux d'intérêt le plus avantageux sur le marché parmi une vingtaine d'institutions financières.
               </p>
               <p className="body-md text-slate-700">
-                Basé à Québec, je peux vous servir à distance où que vous soyez au Québec. Prenons quelques minutes pour discuter ensemble de votre projet. Vous serez surpris, un simple appel de quelques minutes peut souvent mener à des économies substantielles. Comme quoi les meilleures choses sont parfois gratuites!
+                Basé à Québec, je peux vous servir à distance où que vous soyez au Québec. Prenons quelques minutes pour discuter ensemble de votre projet. Vous serez surpris, un simple appel de quelques minutes peut souvent mener à des économies substantielles.
               </p>
             </div>
             
@@ -151,7 +151,7 @@ const Hero = () => {
               <img 
                 src="/lovable-uploads/e890eb15-6fc3-48da-a825-ef289e0a40df.png" 
                 alt="Thomas Bourque, courtier hypothécaire" 
-                className="h-full w-full object-cover brightness-75 contrast-110 saturate-75"
+                className="h-full w-full object-cover brightness-90 contrast-110 saturate-75"
               />
             </div>
             <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-primary/10 rounded-full -z-10"></div>

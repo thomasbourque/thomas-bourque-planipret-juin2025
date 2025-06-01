@@ -42,42 +42,69 @@ const Testimonials = () => {
           </p>
         </div>
 
-        <div className="max-w-4xl mx-auto">
-          <Card className="border-none shadow-md bg-slate-50">
-            <CardContent className="p-8 md:p-12">
-              <div className="flex flex-col space-y-6">
-                <div className="flex items-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="text-primary/30">
-                    <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path>
-                    <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"></path>
-                  </svg>
-                </div>
-                
-                <p className="text-lg md:text-xl text-slate-800 font-medium italic">
-                  {testimonials[activeTestimonial].content}
-                </p>
-                
-                <div className="pt-4">
-                  <h4 className="font-serif text-lg font-medium text-slate-900">
-                    {testimonials[activeTestimonial].name}
-                  </h4>
-                  <p className="text-slate-600">{testimonials[activeTestimonial].position}</p>
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+          {/* Image TB stylisée */}
+          <div className="relative flex justify-center lg:justify-end">
+            <div className="relative w-80 h-80">
+              {/* Image de fond représentant l'achat de maison */}
+              <div 
+                className="absolute inset-0 bg-cover bg-center rounded-lg"
+                style={{
+                  backgroundImage: `url('/lovable-uploads/dace8e51-4edc-447d-900b-93723b99dc08.png')`,
+                  clipPath: `polygon(
+                    10% 0%, 40% 0%, 40% 25%, 50% 25%, 50% 0%, 90% 0%, 90% 15%, 95% 15%, 95% 30%, 90% 30%, 90% 45%, 85% 45%, 85% 60%, 90% 60%, 90% 75%, 95% 75%, 95% 90%, 90% 90%, 90% 100%, 50% 100%, 50% 75%, 40% 75%, 40% 100%, 10% 100%, 10% 85%, 5% 85%, 5% 70%, 10% 70%, 10% 55%, 15% 55%, 15% 40%, 10% 40%, 10% 25%, 5% 25%, 5% 10%, 10% 10%
+                  )`
+                }}
+              >
+                <div className="absolute inset-0 bg-primary/20 rounded-lg"></div>
+              </div>
+              {/* Lettres TB en overlay */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="text-6xl font-bold text-white bg-black/50 px-4 py-2 rounded-lg backdrop-blur-sm">
+                  TB
                 </div>
               </div>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
 
-          <div className="flex justify-center mt-8 space-x-2">
-            {testimonials.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setActiveTestimonial(index)}
-                className={`w-3 h-3 rounded-full transition-colors ${
-                  activeTestimonial === index ? "bg-primary" : "bg-slate-300"
-                }`}
-                aria-label={`Voir le témoignage ${index + 1}`}
-              />
-            ))}
+          {/* Section témoignages */}
+          <div className="max-w-2xl">
+            <Card className="border-none shadow-md bg-slate-50">
+              <CardContent className="p-8 md:p-12">
+                <div className="flex flex-col space-y-6">
+                  <div className="flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="text-primary/30">
+                      <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"></path>
+                      <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"></path>
+                    </svg>
+                  </div>
+                  
+                  <p className="text-lg md:text-xl text-slate-800 font-medium italic">
+                    {testimonials[activeTestimonial].content}
+                  </p>
+                  
+                  <div className="pt-4">
+                    <h4 className="font-serif text-lg font-medium text-slate-900">
+                      {testimonials[activeTestimonial].name}
+                    </h4>
+                    <p className="text-slate-600">{testimonials[activeTestimonial].position}</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            <div className="flex justify-center mt-8 space-x-2">
+              {testimonials.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setActiveTestimonial(index)}
+                  className={`w-3 h-3 rounded-full transition-colors ${
+                    activeTestimonial === index ? "bg-primary" : "bg-slate-300"
+                  }`}
+                  aria-label={`Voir le témoignage ${index + 1}`}
+                />
+              ))}
+            </div>
           </div>
         </div>
 
