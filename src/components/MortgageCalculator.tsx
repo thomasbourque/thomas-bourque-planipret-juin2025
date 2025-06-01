@@ -6,14 +6,13 @@ const MortgageCalculator = () => {
   const [mortgageBalance, setMortgageBalance] = useState([400000]);
   const [term, setTerm] = useState([5]);
   const [bankRate, setBankRate] = useState([4.5]);
-  const [brokerDiscount, setBrokerDiscount] = useState([0.20]);
+  const [brokerRate, setBrokerRate] = useState([4.2]);
 
   const calculateMortgagePayments = () => {
     const balance = mortgageBalance[0];
     const termYears = term[0];
     const bankRateValue = bankRate[0] / 100;
-    const discountValue = brokerDiscount[0] / 100;
-    const brokerRate = bankRateValue - discountValue;
+    const brokerRateValue = brokerRate[0] / 100;
     
     const amortizationMonths = 25 * 12; // 25 ans standard
     const termMonths = termYears * 12;
@@ -40,18 +39,17 @@ const MortgageCalculator = () => {
     
     // Paiements mensuels
     const bankMonthlyPayment = calculateMonthlyPayment(balance, bankRateValue, amortizationMonths);
-    const brokerMonthlyPayment = calculateMonthlyPayment(balance, brokerRate, amortizationMonths);
+    const brokerMonthlyPayment = calculateMonthlyPayment(balance, brokerRateValue, amortizationMonths);
     
-    // Économie mensuelle et annuelle
+    // Économie mensuelle
     const monthlyPaymentSavings = bankMonthlyPayment - brokerMonthlyPayment;
-    const yearlyPaymentSavings = monthlyPaymentSavings * 12;
     
     // Économies de paiement durant le terme
     const termPaymentSavings = monthlyPaymentSavings * termMonths;
     
     // Soldes en capital à la fin du terme
     const bankBalanceAtTermEnd = calculateRemainingBalance(balance, bankRateValue, amortizationMonths, termMonths);
-    const brokerBalanceAtTermEnd = calculateRemainingBalance(balance, brokerRate, amortizationMonths, termMonths);
+    const brokerBalanceAtTermEnd = calculateRemainingBalance(balance, brokerRateValue, amortizationMonths, termMonths);
     
     // Différence du solde en capital
     const principalBalanceDifference = bankBalanceAtTermEnd - brokerBalanceAtTermEnd;
@@ -60,7 +58,6 @@ const MortgageCalculator = () => {
     const totalTermSavings = termPaymentSavings + principalBalanceDifference;
     
     return {
-      yearlyPaymentSavings: Math.round(yearlyPaymentSavings),
       termPaymentSavings: Math.round(termPaymentSavings),
       principalBalanceDifference: Math.round(principalBalanceDifference),
       totalTermSavings: Math.round(totalTermSavings)
@@ -150,20 +147,20 @@ const MortgageCalculator = () => {
 
                 <div>
                   <label className="block text-lg font-medium text-slate-900 mb-4">
-                    Réduction de taux obtenue avec un courtier
+                    Taux obtenu par un courtier hypothécaire
                   </label>
                   <div className="space-y-4">
                     <Slider
-                      value={brokerDiscount}
-                      onValueChange={setBrokerDiscount}
-                      max={2}
-                      min={0.05}
+                      value={brokerRate}
+                      onValueChange={setBrokerRate}
+                      max={6}
+                      min={3}
                       step={0.05}
                       className="w-full"
                     />
                     <div className="text-center">
                       <span className="text-xl font-semibold text-slate-700">
-                        {brokerDiscount[0].toFixed(2)}%
+                        {brokerRate[0].toFixed(2)}%
                       </span>
                     </div>
                   </div>
@@ -171,15 +168,8 @@ const MortgageCalculator = () => {
               </div>
 
               <div className="flex flex-col justify-center space-y-6">
-                <div className="text-center p-6 bg-green-50 rounded-lg border border-green-200">
-                  <p className="text-sm text-green-700 mb-2">Vous pourriez avoir ce montant de plus dans vos poches chaque année</p>
-                  <p className="text-3xl font-bold text-green-600">
-                    {savings.yearlyPaymentSavings.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
-                  </p>
-                </div>
-
                 <div className="text-center p-6 bg-primary/10 rounded-lg border border-primary/20">
-                  <p className="text-sm text-primary mb-2">Économies de paiement durant le terme</p>
+                  <p className="text-sm text-primary mb-2">Économies réalisées sur vos paiements mensuels durant votre terme de {term[0]} {term[0] === 1 ? 'an' : 'ans'}</p>
                   <p className="text-3xl font-bold text-primary">
                     {savings.termPaymentSavings.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
                   </p>
@@ -193,7 +183,7 @@ const MortgageCalculator = () => {
                 </div>
 
                 <div className="text-center p-6 bg-yellow-50 rounded-lg border border-yellow-200">
-                  <p className="text-sm text-yellow-700 mb-2">Économies totales durant le terme</p>
+                  <p className="text-sm text-yellow-700 mb-2">Économies totales à la fin de votre terme de {term[0]} {term[0] === 1 ? 'an' : 'ans'}</p>
                   <p className="text-3xl font-bold text-yellow-600">
                     {savings.totalTermSavings.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
                   </p>
@@ -201,7 +191,7 @@ const MortgageCalculator = () => {
 
                 <div className="text-center pt-4 mb-8 md:mb-0">
                   <p className="text-sm text-slate-600 mb-4">
-                    Ces économies représentent la différence que pourrait faire un meilleur taux sur votre hypothèque.
+                    Ça vous parle d'avoir tout cet argent en plus dans vos poches? Prenons le temps de valider les calculs ensemble.
                   </p>
                   <a 
                     href="https://calendly.com/tbourque-planipret" 
