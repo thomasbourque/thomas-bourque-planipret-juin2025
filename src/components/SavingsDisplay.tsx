@@ -26,11 +26,11 @@ const SavingsDisplay = ({ savings, termYears }: SavingsDisplayProps) => {
         </p>
       </div>
 
-      <div className="text-center p-6 bg-green-600 rounded-lg border border-green-500">
-        <p className="text-sm text-white mb-2">
+      <div className="text-center p-6 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-lg border border-yellow-500 shadow-lg">
+        <p className="text-sm text-slate-800 mb-2 font-medium">
           Économies totales à la fin de votre terme de {termYears} {termYears === 1 ? 'an' : 'ans'}
         </p>
-        <p className="text-3xl font-bold text-white">
+        <p className="text-3xl font-bold text-slate-800">
           {savings.totalTermSavings.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
         </p>
       </div>

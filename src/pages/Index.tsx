@@ -5,6 +5,7 @@ import Hero from "@/components/Hero";
 import Partners from "@/components/Partners";
 import Services from "@/components/Services";
 import MortgageCalculator from "@/components/MortgageCalculator";
+import WhyBroker from "@/components/WhyBroker";
 import Testimonials from "@/components/Testimonials";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
@@ -49,6 +50,7 @@ const Index = () => {
         <Fonctionnement />
         <Services />
         <MortgageCalculator />
+        <WhyBroker />
         <Testimonials />
         <Contact />
       </main>
