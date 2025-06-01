@@ -29,8 +29,11 @@ const Partners = () => {
       <div className="container">
         <div className="text-center mb-12">
           <h2 className="heading-lg text-slate-900 mb-6">Nos partenaires</h2>
-          <p className="body-md text-slate-700 max-w-2xl mx-auto">
+          <p className="body-md text-slate-700 max-w-2xl mx-auto mb-6">
             Je travaille avec une vingtaine d'institutions financières reconnues pour vous offrir les meilleures conditions d'emprunt.
+          </p>
+          <p className="body-md text-slate-700 max-w-3xl mx-auto">
+            Imaginez un instant devoir contacter chacune de ses institutions pour comparer leurs offres! En passant par un courtier hypothécaire, vous n'avez qu'un seul point de contact unique qui vous donne accès à tous ces prêteurs. Vous m'envoyez vos documents, je m'occupe du reste!
           </p>
         </div>
         

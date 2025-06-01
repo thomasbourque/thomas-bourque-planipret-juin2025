@@ -26,7 +26,7 @@ const MortgageCalculator = () => {
               Économisez gros en trouvant le taux le plus bas
             </h2>
             <p className="body-md text-slate-700 max-w-3xl mx-auto">
-              Je magasine pour vous trouver le meilleur taux parmi ceux offerts dans une vingtaine d'institutions financières. Découvrez combien une différence de taux peut vous faire économiser!
+              L'offre de financement reçue par votre banque est rarement la meilleure. Cessez de laisser de l'argent sur la table et découvrez combien un taux plus avantageux trouvé par votre courtier hypothécaire peut vous faire économiser!
             </p>
           </div>
 
@@ -80,7 +80,7 @@ const MortgageCalculator = () => {
             </div>
             
             <div className="absolute bottom-2 left-4 right-4 text-xs text-slate-500">
-              *Calculs basés sur un amortissement de 25 ans. Les économies varient selon votre profil de crédit et les conditions du marché.
+              *Calculs basés sur un amortissement de 25 ans.
             </div>
           </div>
         </div>

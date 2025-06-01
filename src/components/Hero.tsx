@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Mail, Linkedin, Facebook, Instagram, Phone } from "lucide-react";
@@ -42,6 +41,9 @@ const Hero = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-blue-100 -z-10"></div>
         <div className="container grid md:grid-cols-2 gap-12 items-center">
           <div className="flex flex-col space-y-6 max-w-xl animate-fade-in order-2 md:order-1">
+            {/* Ligne dorée au-dessus du nom */}
+            <div className="w-16 h-0.5 bg-yellow-500 mb-2"></div>
+            
             <h2 className="text-5xl md:text-6xl font-serif font-bold text-slate-900">
               Thomas Bourque
             </h2>
@@ -55,7 +57,7 @@ const Hero = () => {
                 <img 
                   src="/lovable-uploads/e890eb15-6fc3-48da-a825-ef289e0a40df.png" 
                   alt="Thomas Bourque, courtier hypothécaire" 
-                  className="h-full w-full object-cover brightness-90 contrast-110 saturate-75"
+                  className="h-full w-full object-cover brightness-100 contrast-110 saturate-75"
                 />
               </div>
             </div>
@@ -126,10 +128,10 @@ const Hero = () => {
               </p>
             </div>
             
-            {/* Service gratuit highlight */}
+            {/* Service gratuit highlight avec couleur dorée */}
             <div className="space-y-3">
               <div className="flex items-center">
-                <span className="bg-primary text-white text-sm font-semibold px-3 py-1 rounded-full">
+                <span className="bg-yellow-500 text-slate-900 text-sm font-semibold px-3 py-1 rounded-full">
                   Service 100% GRATUIT
                 </span>
               </div>
@@ -151,7 +153,7 @@ const Hero = () => {
               <img 
                 src="/lovable-uploads/e890eb15-6fc3-48da-a825-ef289e0a40df.png" 
                 alt="Thomas Bourque, courtier hypothécaire" 
-                className="h-full w-full object-cover brightness-90 contrast-110 saturate-75"
+                className="h-full w-full object-cover brightness-100 contrast-110 saturate-75"
               />
             </div>
             <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-primary/10 rounded-full -z-10"></div>

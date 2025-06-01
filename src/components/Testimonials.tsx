@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Star } from "lucide-react";
@@ -38,7 +37,7 @@ const Testimonials = () => {
         <div className="max-w-3xl mx-auto text-center mb-16">
           <h2 className="heading-lg text-slate-900 mb-6">Ce que disent mes clients</h2>
           <p className="body-md text-slate-700">
-            La satisfaction de mes clients est ma priorité. Voici quelques témoignages de personnes que j'ai eu le plaisir d'accompagner.
+            La satisfaction de mes clients est ma priorité absolue. Voici quelques témoignages de personnes que j'ai eu le plaisir d'accompagner.
           </p>
         </div>
 

@@ -20,7 +20,9 @@ const SavingsDisplay = ({ savings, termYears }: SavingsDisplayProps) => {
       </div>
 
       <div className="text-center p-6 bg-slate-800 rounded-lg border border-slate-700">
-        <p className="text-sm text-white mb-2">Différence du solde en capital à la fin du terme</p>
+        <p className="text-sm text-white mb-2">
+          Différence sur le solde en capital de votre hypothèque à la fin du terme de {termYears} {termYears === 1 ? 'an' : 'année'}
+        </p>
         <p className="text-3xl font-bold text-white">
           {savings.principalBalanceDifference.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
         </p>

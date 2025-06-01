@@ -11,18 +11,18 @@ const WhyBroker = () => {
     },
     {
       icon: DollarSign,
-      title: "Économies garanties",
-      description: "Accès aux meilleurs taux du marché parmi plus de 20 institutions financières."
+      title: "Économies potentielles",
+      description: "Accès instantané aux meilleurs taux du marché parmi plus de 20 institutions financières."
     },
     {
       icon: Users,
       title: "Conseils et accompagnement",
-      description: "Support personnalisé tout au long du processus, de A à Z."
+      description: "Support personnalisé tout au long du processus. Disponibilités le soir et la fin de semaine pour une réactivité rapide."
     },
     {
       icon: Network,
       title: "Réseau de professionnels",
-      description: "Références vers des notaires, inspecteurs, évaluateurs et autres experts de confiance."
+      description: "Références vers des courtiers immobiliers, conseillers financiers, comptables, notaires, inspecteurs, évaluateurs et autres experts de confiance."
     },
     {
       icon: Phone,
@@ -41,12 +41,12 @@ const WhyBroker = () => {
       <div className="container">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
+            <p className="body-md text-slate-700 max-w-3xl mx-auto mb-6">
+              Encore souvent méconnu au Québec, le rôle du courtier hypothécaire est pourtant crucial. Découvrez les avantages de travailler avec un courtier hypothécaire indépendant pour votre financement.
+            </p>
             <h2 className="heading-lg text-slate-900 mb-6">
               Pourquoi faire appel à un courtier hypothécaire?
             </h2>
-            <p className="body-md text-slate-700 max-w-3xl mx-auto">
-              Découvrez tous les avantages de travailler avec un courtier hypothécaire indépendant pour votre financement immobilier.
-            </p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
