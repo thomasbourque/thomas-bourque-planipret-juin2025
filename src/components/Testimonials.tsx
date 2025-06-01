@@ -10,17 +10,22 @@ const Testimonials = () => {
     {
       name: "Alexis Drouin",
       position: "Breakeyville",
-      content: "L'accompagnement et les conseils de Thomas tout au long de notre processus d'achat a été exceptionnel. Il nous a évité des mauvaises surprises et nous a permis d'économiser des milliers de dollars par rapport à l'offre reçue de notre banque.",
+      content: "Nous avons eu une expérience exceptionnelle avec Thomas. Son service était impeccable du début à la fin du processus. Thomas a fait preuve de professionnalisme en plus d'avoir une réactivité exemplaire. Il a su répondre à toutes nos questions avec clarté et patience, nous guidant à chaque étape. Grâce à lui, nous avons pu obtenir un prêt hypothécaire pour l'achat de notre première maison. Nous recommandons vivement Thomas à tous ceux qui recherchent un courtier accessible et dévoué.",
     },
     {
       name: "Simon Cassista",
       position: "Lebourgneuf",
-      content: "Thomas nous a accompagnés avec professionnalisme du début à la fin. Ses explications claires nous ont aidés à comprendre toutes les étapes et à prendre les bonnes décisions pour notre projet immobilier.",
+      content: "Wow! Quel excellent service reçu par Thomas. Il nous a guidé de façon honnête et transparente dans notre renouvellement hypothécaire en plus de nous dénicher un taux bien meilleur que celui offert par notre banque. Ses conseils judicieux nous ont permis de prendre des décisions éclairées. Je recommande définitivement ses services.",
     },
     {
       name: "Léo Gendron",
       position: "Cap-Rouge",
-      content: "Les conseils personnalisés de Thomas ont fait toute la différence. Il a pris le temps de bien analyser notre situation et nous a guidés vers la solution la plus adaptée à nos besoins.",
+      content: "En tant que premiers acheteurs, on avait plein de questions et on avait clairement besoin d'accompagnement. Une chance que Thomas était là! Il est compétent, informé, à l'écoute et super sympathique. N'hésitez pas à le contacter!",
+    },
+    {
+      name: "Mélanie Beauvais",
+      position: "Sainte-Foy",
+      content: "Je conseille sans hésiter Thomas à tous ceux qui veulent acheter, vendre ou refinancer leur maison. C'est une personne qui est toujours à l'écoute de ses clients et qui cherche toutes les options possibles pour vous satisfaire. Je suis très satisfait du service et de la patience dont il a fait preuve. Plus jamais je ne passerai par la banque directement dans le futur!",
     },
   ];
 
