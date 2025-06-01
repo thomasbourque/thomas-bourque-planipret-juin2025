@@ -4,29 +4,70 @@ import { Slider } from "@/components/ui/slider";
 
 const MortgageCalculator = () => {
   const [mortgageBalance, setMortgageBalance] = useState([400000]);
-  const [rateVariation, setRateVariation] = useState([0.25]);
+  const [term, setTerm] = useState([5]);
+  const [bankRate, setBankRate] = useState([4.5]);
+  const [brokerDiscount, setBrokerDiscount] = useState([0.20]);
 
-  const calculateSavings = () => {
+  const calculateMortgagePayments = () => {
     const balance = mortgageBalance[0];
-    const variation = rateVariation[0];
+    const termYears = term[0];
+    const bankRateValue = bankRate[0] / 100;
+    const discountValue = brokerDiscount[0] / 100;
+    const brokerRate = bankRateValue - discountValue;
     
-    // 14$ par mois pour chaque 0.25% de variation sur chaque 100k
-    const baseSavings = 14;
-    const baseVariation = 0.25;
-    const baseAmount = 100000;
+    const amortizationMonths = 25 * 12; // 25 ans standard
+    const termMonths = termYears * 12;
     
-    const monthlyPer100k = (variation / baseVariation) * baseSavings;
-    const monthlyTotal = (balance / baseAmount) * monthlyPer100k;
-    const yearlyTotal = monthlyTotal * 12;
-    const fiveYearTotal = yearlyTotal * 5;
+    // Calcul du paiement mensuel
+    const calculateMonthlyPayment = (principal, annualRate, months) => {
+      const monthlyRate = annualRate / 12;
+      if (monthlyRate === 0) return principal / months;
+      return principal * (monthlyRate * Math.pow(1 + monthlyRate, months)) / (Math.pow(1 + monthlyRate, months) - 1);
+    };
+    
+    // Calcul du solde restant après un certain nombre de paiements
+    const calculateRemainingBalance = (principal, annualRate, totalMonths, paymentsMade) => {
+      const monthlyRate = annualRate / 12;
+      const monthlyPayment = calculateMonthlyPayment(principal, annualRate, totalMonths);
+      
+      if (monthlyRate === 0) {
+        return principal - (monthlyPayment * paymentsMade);
+      }
+      
+      return principal * Math.pow(1 + monthlyRate, paymentsMade) - 
+             monthlyPayment * ((Math.pow(1 + monthlyRate, paymentsMade) - 1) / monthlyRate);
+    };
+    
+    // Paiements mensuels
+    const bankMonthlyPayment = calculateMonthlyPayment(balance, bankRateValue, amortizationMonths);
+    const brokerMonthlyPayment = calculateMonthlyPayment(balance, brokerRate, amortizationMonths);
+    
+    // Économie mensuelle et annuelle
+    const monthlyPaymentSavings = bankMonthlyPayment - brokerMonthlyPayment;
+    const yearlyPaymentSavings = monthlyPaymentSavings * 12;
+    
+    // Économies de paiement durant le terme
+    const termPaymentSavings = monthlyPaymentSavings * termMonths;
+    
+    // Soldes en capital à la fin du terme
+    const bankBalanceAtTermEnd = calculateRemainingBalance(balance, bankRateValue, amortizationMonths, termMonths);
+    const brokerBalanceAtTermEnd = calculateRemainingBalance(balance, brokerRate, amortizationMonths, termMonths);
+    
+    // Différence du solde en capital
+    const principalBalanceDifference = bankBalanceAtTermEnd - brokerBalanceAtTermEnd;
+    
+    // Économies totales durant le terme
+    const totalTermSavings = termPaymentSavings + principalBalanceDifference;
     
     return {
-      yearly: Math.round(yearlyTotal),
-      fiveYear: Math.round(fiveYearTotal)
+      yearlyPaymentSavings: Math.round(yearlyPaymentSavings),
+      termPaymentSavings: Math.round(termPaymentSavings),
+      principalBalanceDifference: Math.round(principalBalanceDifference),
+      totalTermSavings: Math.round(totalTermSavings)
     };
   };
 
-  const savings = calculateSavings();
+  const savings = calculateMortgagePayments();
 
   return (
     <section className="section bg-primary/5">
@@ -67,12 +108,54 @@ const MortgageCalculator = () => {
 
                 <div>
                   <label className="block text-lg font-medium text-slate-900 mb-4">
-                    Réduction de taux obtenue
+                    Terme
                   </label>
                   <div className="space-y-4">
                     <Slider
-                      value={rateVariation}
-                      onValueChange={setRateVariation}
+                      value={term}
+                      onValueChange={setTerm}
+                      max={7}
+                      min={1}
+                      step={1}
+                      className="w-full"
+                    />
+                    <div className="text-center">
+                      <span className="text-xl font-semibold text-slate-700">
+                        {term[0]} {term[0] === 1 ? 'an' : 'ans'}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-lg font-medium text-slate-900 mb-4">
+                    Taux proposé par votre banque
+                  </label>
+                  <div className="space-y-4">
+                    <Slider
+                      value={bankRate}
+                      onValueChange={setBankRate}
+                      max={6}
+                      min={3}
+                      step={0.05}
+                      className="w-full"
+                    />
+                    <div className="text-center">
+                      <span className="text-xl font-semibold text-slate-700">
+                        {bankRate[0].toFixed(2)}%
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-lg font-medium text-slate-900 mb-4">
+                    Réduction de taux obtenue avec un courtier
+                  </label>
+                  <div className="space-y-4">
+                    <Slider
+                      value={brokerDiscount}
+                      onValueChange={setBrokerDiscount}
                       max={2}
                       min={0.05}
                       step={0.05}
@@ -80,7 +163,7 @@ const MortgageCalculator = () => {
                     />
                     <div className="text-center">
                       <span className="text-xl font-semibold text-slate-700">
-                        {rateVariation[0].toFixed(2)}%
+                        {brokerDiscount[0].toFixed(2)}%
                       </span>
                     </div>
                   </div>
@@ -91,14 +174,28 @@ const MortgageCalculator = () => {
                 <div className="text-center p-6 bg-green-50 rounded-lg border border-green-200">
                   <p className="text-sm text-green-700 mb-2">Vous pourriez avoir ce montant de plus dans vos poches chaque année</p>
                   <p className="text-3xl font-bold text-green-600">
-                    {savings.yearly.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
+                    {savings.yearlyPaymentSavings.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
                   </p>
                 </div>
 
                 <div className="text-center p-6 bg-primary/10 rounded-lg border border-primary/20">
-                  <p className="text-sm text-primary mb-2">Économies totales sur 5 ans*</p>
+                  <p className="text-sm text-primary mb-2">Économies de paiement durant le terme</p>
                   <p className="text-3xl font-bold text-primary">
-                    {savings.fiveYear.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
+                    {savings.termPaymentSavings.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
+                  </p>
+                </div>
+
+                <div className="text-center p-6 bg-blue-50 rounded-lg border border-blue-200">
+                  <p className="text-sm text-blue-700 mb-2">Différence du solde en capital à la fin du terme</p>
+                  <p className="text-3xl font-bold text-blue-600">
+                    {savings.principalBalanceDifference.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
+                  </p>
+                </div>
+
+                <div className="text-center p-6 bg-yellow-50 rounded-lg border border-yellow-200">
+                  <p className="text-sm text-yellow-700 mb-2">Économies totales durant le terme</p>
+                  <p className="text-3xl font-bold text-yellow-600">
+                    {savings.totalTermSavings.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
                   </p>
                 </div>
 
@@ -118,9 +215,8 @@ const MortgageCalculator = () => {
               </div>
             </div>
             
-            {/* Disclaimer repositionné pour éviter l'overlap sur mobile */}
             <div className="absolute bottom-2 left-4 right-4 text-xs text-slate-500">
-              *Le calcul approximatif est basé sur une économie moyenne de 14$ par mois pour chaque variation de 0,25 % du taux d'intérêt par tranche de 100 000$ d'hypothèque.
+              *Calculs basés sur un amortissement de 25 ans. Les économies varient selon votre profil de crédit et les conditions du marché.
             </div>
           </div>
         </div>
