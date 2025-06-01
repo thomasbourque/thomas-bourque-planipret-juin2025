@@ -37,23 +37,23 @@ const WhyBroker = () => {
   ];
 
   return (
-    <section className="py-16 bg-white">
+    <section className="py-16 bg-slate-50">
       <div className="container">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <p className="body-md text-slate-700 max-w-3xl mx-auto mb-6">
-              Encore souvent méconnu au Québec, le rôle du courtier hypothécaire est pourtant crucial. Découvrez les avantages de travailler avec un courtier hypothécaire indépendant pour votre financement.
-            </p>
             <h2 className="heading-lg text-slate-900 mb-6">
               Pourquoi faire appel à un courtier hypothécaire?
             </h2>
+            <p className="body-md text-slate-700 max-w-3xl mx-auto mb-6">
+              Encore souvent méconnu au Québec, le rôle du courtier hypothécaire est pourtant crucial. Découvrez les avantages de travailler avec un courtier hypothécaire indépendant pour votre financement.
+            </p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {advantages.map((advantage, index) => {
               const IconComponent = advantage.icon;
               return (
-                <div key={index} className="bg-slate-50 rounded-xl p-6 border border-slate-200 hover:shadow-lg transition-shadow">
+                <div key={index} className="bg-white rounded-xl p-6 border border-slate-200 hover:shadow-lg transition-shadow">
                   <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center mb-4">
                     <IconComponent className="w-6 h-6 text-white" />
                   </div>
