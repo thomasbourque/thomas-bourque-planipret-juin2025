@@ -11,42 +11,43 @@ export const calculateMortgagePayments = (
   bankRate: number,
   brokerRate: number
 ): MortgageSavings => {
-  const bankRateValue = bankRate / 100;
-  const brokerRateValue = brokerRate / 100;
-  
   const amortizationMonths = 25 * 12; // 25 ans standard
   const termMonths = termYears * 12;
   
-  // Calcul du paiement mensuel selon la formule canadienne standard
+  // Calcul du paiement mensuel selon la formule canadienne (composition semi-annuelle)
   const calculateMonthlyPayment = (principal: number, annualRate: number, amortizationMonths: number) => {
     if (annualRate === 0) return principal / amortizationMonths;
     
-    const monthlyRate = annualRate / 12;
-    const numerator = principal * monthlyRate * Math.pow(1 + monthlyRate, amortizationMonths);
-    const denominator = Math.pow(1 + monthlyRate, amortizationMonths) - 1;
+    // Conversion du taux annuel composé semi-annuellement en taux mensuel équivalent
+    const semiAnnualRate = annualRate / 2;
+    const monthlyEquivalentRate = Math.pow(1 + semiAnnualRate / 100, 2/12) - 1;
+    
+    const numerator = principal * monthlyEquivalentRate * Math.pow(1 + monthlyEquivalentRate, amortizationMonths);
+    const denominator = Math.pow(1 + monthlyEquivalentRate, amortizationMonths) - 1;
     
     return numerator / denominator;
   };
   
   // Calcul du solde restant après un certain nombre de paiements
   const calculateRemainingBalance = (principal: number, annualRate: number, totalMonths: number, paymentsMade: number) => {
-    const monthlyRate = annualRate / 12;
+    const semiAnnualRate = annualRate / 2;
+    const monthlyEquivalentRate = Math.pow(1 + semiAnnualRate / 100, 2/12) - 1;
     const monthlyPayment = calculateMonthlyPayment(principal, annualRate, totalMonths);
     
     if (annualRate === 0) {
       return principal - (monthlyPayment * paymentsMade);
     }
     
-    const compoundFactor = Math.pow(1 + monthlyRate, paymentsMade);
+    const compoundFactor = Math.pow(1 + monthlyEquivalentRate, paymentsMade);
     const balanceGrowth = principal * compoundFactor;
-    const paymentSum = monthlyPayment * ((compoundFactor - 1) / monthlyRate);
+    const paymentSum = monthlyPayment * ((compoundFactor - 1) / monthlyEquivalentRate);
     
     return balanceGrowth - paymentSum;
   };
   
   // Paiements mensuels
-  const bankMonthlyPayment = calculateMonthlyPayment(mortgageBalance, bankRateValue, amortizationMonths);
-  const brokerMonthlyPayment = calculateMonthlyPayment(mortgageBalance, brokerRateValue, amortizationMonths);
+  const bankMonthlyPayment = calculateMonthlyPayment(mortgageBalance, bankRate, amortizationMonths);
+  const brokerMonthlyPayment = calculateMonthlyPayment(mortgageBalance, brokerRate, amortizationMonths);
   
   // Économie mensuelle
   const monthlyPaymentSavings = bankMonthlyPayment - brokerMonthlyPayment;
@@ -55,8 +56,8 @@ export const calculateMortgagePayments = (
   const termPaymentSavings = monthlyPaymentSavings * termMonths;
   
   // Soldes en capital à la fin du terme
-  const bankBalanceAtTermEnd = calculateRemainingBalance(mortgageBalance, bankRateValue, amortizationMonths, termMonths);
-  const brokerBalanceAtTermEnd = calculateRemainingBalance(mortgageBalance, brokerRateValue, amortizationMonths, termMonths);
+  const bankBalanceAtTermEnd = calculateRemainingBalance(mortgageBalance, bankRate, amortizationMonths, termMonths);
+  const brokerBalanceAtTermEnd = calculateRemainingBalance(mortgageBalance, brokerRate, amortizationMonths, termMonths);
   
   // Différence du solde en capital
   const principalBalanceDifference = bankBalanceAtTermEnd - brokerBalanceAtTermEnd;
