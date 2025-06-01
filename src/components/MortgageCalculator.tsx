@@ -17,11 +17,15 @@ const MortgageCalculator = () => {
     const amortizationMonths = 25 * 12; // 25 ans standard
     const termMonths = termYears * 12;
     
-    // Calcul du paiement mensuel
-    const calculateMonthlyPayment = (principal, annualRate, months) => {
+    // Calcul du paiement mensuel selon la formule canadienne standard
+    const calculateMonthlyPayment = (principal, annualRate, amortizationMonths) => {
+      if (annualRate === 0) return principal / amortizationMonths;
+      
       const monthlyRate = annualRate / 12;
-      if (monthlyRate === 0) return principal / months;
-      return principal * (monthlyRate * Math.pow(1 + monthlyRate, months)) / (Math.pow(1 + monthlyRate, months) - 1);
+      const numerator = principal * monthlyRate * Math.pow(1 + monthlyRate, amortizationMonths);
+      const denominator = Math.pow(1 + monthlyRate, amortizationMonths) - 1;
+      
+      return numerator / denominator;
     };
     
     // Calcul du solde restant après un certain nombre de paiements
@@ -29,12 +33,15 @@ const MortgageCalculator = () => {
       const monthlyRate = annualRate / 12;
       const monthlyPayment = calculateMonthlyPayment(principal, annualRate, totalMonths);
       
-      if (monthlyRate === 0) {
+      if (annualRate === 0) {
         return principal - (monthlyPayment * paymentsMade);
       }
       
-      return principal * Math.pow(1 + monthlyRate, paymentsMade) - 
-             monthlyPayment * ((Math.pow(1 + monthlyRate, paymentsMade) - 1) / monthlyRate);
+      const compoundFactor = Math.pow(1 + monthlyRate, paymentsMade);
+      const balanceGrowth = principal * compoundFactor;
+      const paymentSum = monthlyPayment * ((compoundFactor - 1) / monthlyRate);
+      
+      return balanceGrowth - paymentSum;
     };
     
     // Paiements mensuels
