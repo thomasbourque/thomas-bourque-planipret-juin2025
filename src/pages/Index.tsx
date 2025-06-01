@@ -5,6 +5,7 @@ import Hero from "@/components/Hero";
 import Partners from "@/components/Partners";
 import Services from "@/components/Services";
 import MortgageCalculator from "@/components/MortgageCalculator";
+import BorrowingCapacityCalculator from "@/components/BorrowingCapacityCalculator";
 import WhyBroker from "@/components/WhyBroker";
 import Testimonials from "@/components/Testimonials";
 import Contact from "@/components/Contact";

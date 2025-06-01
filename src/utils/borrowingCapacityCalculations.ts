@@ -69,10 +69,12 @@ export const calculateBorrowingCapacity = (input: BorrowingCapacityInput): Borro
   const fixedHousingCosts = heatingCosts + propertyTaxes + condoFees;
 
   // Calcul basé sur le ratio ABD (39% max)
+  // ABD = (Paiement hypothécaire + chauffage + taxes + condo) / revenu mensuel brut
   const maxABDPayment = (monthlyIncome * 0.39) - fixedHousingCosts;
   const maxBorrowingABD = maxABDPayment > 0 ? calculateMaxPrincipal(maxABDPayment, interestRate, amortization) : 0;
 
   // Calcul basé sur le ratio ATD (44% max)
+  // ATD = (Paiement hypothécaire + chauffage + taxes + condo + dettes) / revenu mensuel brut
   const maxATDPayment = (monthlyIncome * 0.44) - fixedHousingCosts - monthlyDebts;
   const maxBorrowingATD = maxATDPayment > 0 ? calculateMaxPrincipal(maxATDPayment, interestRate, amortization) : 0;
 
@@ -80,13 +82,16 @@ export const calculateBorrowingCapacity = (input: BorrowingCapacityInput): Borro
   const maxBorrowingAmount = Math.min(maxBorrowingABD, maxBorrowingATD);
   const maxPurchasePrice = maxBorrowingAmount + downPayment;
 
-  // Calcul des ratios actuels
+  // Calcul des ratios actuels avec le montant maximal
   const actualMonthlyPayment = calculateMonthlyPayment(maxBorrowingAmount, interestRate, amortization);
   const totalHousingCosts = actualMonthlyPayment + fixedHousingCosts;
   const totalDebtService = totalHousingCosts + monthlyDebts;
 
-  const abdRatio = (totalHousingCosts / monthlyIncome) * 100;
-  const atdRatio = (totalDebtService / monthlyIncome) * 100;
+  // Calcul des ratios selon vos formules
+  // ABD = (Paiement hypothécaire + chauffage + taxes) / revenu brut total
+  const abdRatio = ((actualMonthlyPayment + heatingCosts + propertyTaxes + condoFees) / monthlyIncome) * 100;
+  // ATD = (Paiement hypothécaire + chauffage + taxes + dettes) / revenu brut total
+  const atdRatio = ((actualMonthlyPayment + heatingCosts + propertyTaxes + condoFees + monthlyDebts) / monthlyIncome) * 100;
 
   return {
     maxBorrowingAmount: Math.max(0, Math.round(maxBorrowingAmount)),
