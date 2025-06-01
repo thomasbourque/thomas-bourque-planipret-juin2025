@@ -50,6 +50,7 @@ const Index = () => {
         <Fonctionnement />
         <Services />
         <MortgageCalculator />
+        <BorrowingCapacityCalculator />
         <WhyBroker />
         <Testimonials />
         <Contact />
