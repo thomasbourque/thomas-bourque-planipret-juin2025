@@ -1,15 +1,24 @@
+
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import BourqueHypothequesLogo from "./BourqueHypothequesLogo";
 import { useLocation } from "react-router-dom";
+import { 
+  DropdownMenu, 
+  DropdownMenuContent, 
+  DropdownMenuItem, 
+  DropdownMenuTrigger 
+} from "@/components/ui/dropdown-menu";
+import { ChevronDown } from "lucide-react";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
   
-  // Check if we're on the FAQ page
+  // Check if we're on the FAQ page or Calculatrices page
   const isFAQPage = location.pathname === '/faq';
+  const isCalculatricesPage = location.pathname === '/calculatrices';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,21 +33,21 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // On FAQ page, always use dark colors. On other pages, use conditional colors based on scroll
+  // On FAQ page or Calculatrices page, always use dark colors. On other pages, use conditional colors based on scroll
   const getTextColor = () => {
-    if (isFAQPage) return 'text-slate-900';
+    if (isFAQPage || isCalculatricesPage) return 'text-slate-900';
     return isScrolled ? 'text-slate-900' : 'text-white';
   };
 
   const getLogoColor = () => {
-    if (isFAQPage) return 'text-slate-900';
+    if (isFAQPage || isCalculatricesPage) return 'text-slate-900';
     return isScrolled ? 'text-slate-900' : 'text-white';
   };
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled || isFAQPage ? "bg-white/90 backdrop-blur-md shadow-sm py-3" : "bg-transparent py-5"
+        isScrolled || isFAQPage || isCalculatricesPage ? "bg-white/90 backdrop-blur-md shadow-sm py-3" : "bg-transparent py-5"
       }`}
     >
       <div className="container flex items-center justify-between">
@@ -59,6 +68,32 @@ const Navbar = () => {
           <a href="/#services" className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
             Services
           </a>
+          
+          {/* Calculatrices Dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger className={`flex items-center gap-1 text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
+              Calculatrices
+              <ChevronDown className="w-4 h-4" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="bg-white border border-slate-200 shadow-lg">
+              <DropdownMenuItem asChild>
+                <a href="/calculatrices#payment" className="w-full cursor-pointer">
+                  Paiement hypothécaire
+                </a>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <a href="/calculatrices#capacity" className="w-full cursor-pointer">
+                  Capacité d'emprunt
+                </a>
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild>
+                <a href="/calculatrices#savings" className="w-full cursor-pointer">
+                  Taux plus bas
+                </a>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          
           <a href="/faq" className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
             FAQ
           </a>
@@ -115,6 +150,13 @@ const Navbar = () => {
             onClick={() => setIsMobileMenuOpen(false)}
           >
             Services
+          </a>
+          <a
+            href="/calculatrices"
+            className="px-4 py-2 hover:bg-secondary rounded-md transition-colors"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Calculatrices
           </a>
           <a
             href="/faq"
