@@ -5,7 +5,7 @@ export interface MortgagePaymentInput {
   amortization: number;
   term: number;
   interestRate: number;
-  paymentFrequency: 'monthly' | 'biweekly' | 'weekly';
+  paymentFrequency: 'monthly' | 'biweekly' | 'biweekly-accelerated' | 'weekly';
   extraPayment?: number;
   extraPaymentFrequency?: 'monthly' | 'yearly' | 'one-time';
 }
@@ -45,8 +45,26 @@ export const calculateMortgagePayment = (input: MortgagePaymentInput): MortgageP
   const mortgageAmount = purchasePrice - downPayment;
   
   // Fréquence des paiements par année
-  const paymentsPerYear = paymentFrequency === 'monthly' ? 12 : 
-                         paymentFrequency === 'biweekly' ? 26 : 52;
+  let paymentsPerYear: number;
+  let isAccelerated = false;
+  
+  switch (paymentFrequency) {
+    case 'monthly':
+      paymentsPerYear = 12;
+      break;
+    case 'biweekly':
+      paymentsPerYear = 26;
+      break;
+    case 'biweekly-accelerated':
+      paymentsPerYear = 26;
+      isAccelerated = true;
+      break;
+    case 'weekly':
+      paymentsPerYear = 52;
+      break;
+    default:
+      paymentsPerYear = 12;
+  }
   
   // Calcul du taux périodique selon la capitalisation semi-annuelle canadienne
   const semiAnnualRate = interestRate / 2;
@@ -66,7 +84,16 @@ export const calculateMortgagePayment = (input: MortgagePaymentInput): MortgageP
     return numerator / denominator;
   };
   
-  const regularPayment = calculateRegularPayment(mortgageAmount, periodicRate, totalAmortizationPayments);
+  let regularPayment: number;
+  
+  if (isAccelerated) {
+    // Pour les paiements accélérés, on calcule d'abord le paiement mensuel
+    const monthlyPeriodicRate = Math.pow(1 + semiAnnualRate / 100, 2 / 12) - 1;
+    const monthlyPayment = calculateRegularPayment(mortgageAmount, monthlyPeriodicRate, amortization * 12);
+    regularPayment = monthlyPayment / 2; // Diviser par 2 pour avoir le paiement aux 2 semaines
+  } else {
+    regularPayment = calculateRegularPayment(mortgageAmount, periodicRate, totalAmortizationPayments);
+  }
   
   // Calcul du solde restant après un certain nombre de paiements
   const calculateRemainingBalance = (principal: number, rate: number, totalPayments: number, paymentsMade: number, payment: number) => {

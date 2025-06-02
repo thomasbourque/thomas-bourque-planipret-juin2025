@@ -51,50 +51,59 @@ const BorrowingCapacityForm = ({
   return (
     <div className="space-y-6">
       <div>
-        <Label htmlFor="annualIncome" className="block text-lg font-medium text-slate-900 mb-2">
+        <Label htmlFor="annualIncome" className="block text-base md:text-lg font-medium text-slate-900 mb-2">
           Revenu brut annuel
         </Label>
-        <Input
-          id="annualIncome"
-          type="number"
-          value={annualIncome}
-          onChange={(e) => setAnnualIncome(Number(e.target.value))}
-          className="text-lg"
-        />
+        <div className="relative">
+          <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500">$</span>
+          <Input
+            id="annualIncome"
+            type="number"
+            value={annualIncome}
+            onChange={(e) => setAnnualIncome(Number(e.target.value))}
+            className="text-base md:text-lg pl-8"
+          />
+        </div>
       </div>
 
       <div>
-        <Label htmlFor="coborrowersIncome" className="block text-lg font-medium text-slate-900 mb-2">
+        <Label htmlFor="coborrowersIncome" className="block text-base md:text-lg font-medium text-slate-900 mb-2">
           Revenu brut annuel des coemprunteurs (optionnel)
         </Label>
-        <Input
-          id="coborrowersIncome"
-          type="number"
-          value={coborrowersIncome}
-          onChange={(e) => setCoborrowersIncome(Number(e.target.value))}
-          className="text-lg"
-        />
+        <div className="relative">
+          <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500">$</span>
+          <Input
+            id="coborrowersIncome"
+            type="number"
+            value={coborrowersIncome}
+            onChange={(e) => setCoborrowersIncome(Number(e.target.value))}
+            className="text-base md:text-lg pl-8"
+          />
+        </div>
       </div>
 
       <div>
-        <Label htmlFor="downPayment" className="block text-lg font-medium text-slate-900 mb-2">
+        <Label htmlFor="downPayment" className="block text-base md:text-lg font-medium text-slate-900 mb-2">
           Mise de fonds
         </Label>
-        <Input
-          id="downPayment"
-          type="number"
-          value={downPayment}
-          onChange={(e) => setDownPayment(Number(e.target.value))}
-          className="text-lg"
-        />
+        <div className="relative">
+          <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500">$</span>
+          <Input
+            id="downPayment"
+            type="number"
+            value={downPayment}
+            onChange={(e) => setDownPayment(Number(e.target.value))}
+            className="text-base md:text-lg pl-8"
+          />
+        </div>
       </div>
 
       <div>
-        <Label htmlFor="amortization" className="block text-lg font-medium text-slate-900 mb-2">
+        <Label htmlFor="amortization" className="block text-base md:text-lg font-medium text-slate-900 mb-2">
           Période d'amortissement (années)
         </Label>
         <Select value={amortization.toString()} onValueChange={(value) => setAmortization(Number(value))}>
-          <SelectTrigger className="text-lg">
+          <SelectTrigger className="text-base md:text-lg">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -106,8 +115,8 @@ const BorrowingCapacityForm = ({
       </div>
 
       <div>
-        <Label className="block text-lg font-medium text-slate-900 mb-4">
-          Taux d'intérêt
+        <Label className="block text-base md:text-lg font-medium text-slate-900 mb-4">
+          Taux de qualification
         </Label>
         <div className="space-y-4">
           <Slider
@@ -119,7 +128,7 @@ const BorrowingCapacityForm = ({
             className="w-full"
           />
           <div className="text-center">
-            <span className="text-xl font-semibold text-slate-700">
+            <span className="text-lg md:text-xl font-semibold text-slate-700">
               {interestRate[0].toFixed(2)}%
             </span>
           </div>
@@ -127,13 +136,13 @@ const BorrowingCapacityForm = ({
       </div>
 
       <div>
-        <Label htmlFor="monthlyDebts" className="flex items-center gap-2 text-lg font-medium text-slate-900 mb-2">
+        <Label htmlFor="monthlyDebts" className="flex items-center gap-2 text-base md:text-lg font-medium text-slate-900 mb-2">
           Dettes mensuelles
           <Popover>
             <PopoverTrigger asChild>
               <Info className="w-4 h-4 text-slate-500 cursor-help" />
             </PopoverTrigger>
-            <PopoverContent className="w-80">
+            <PopoverContent className="w-80 p-4 bg-white border shadow-lg z-[70]" side="top">
               <div className="space-y-2">
                 <p className="text-sm">
                   Le total de vos paiements ou remboursements mensuels actuels pour vos cartes de crédit, vos prêts personnels, vos prêts auto (ou frais de location d'auto) et vos marges de crédit.
@@ -148,52 +157,64 @@ const BorrowingCapacityForm = ({
             </PopoverContent>
           </Popover>
         </Label>
-        <Input
-          id="monthlyDebts"
-          type="number"
-          value={monthlyDebts}
-          onChange={(e) => setMonthlyDebts(Number(e.target.value))}
-          className="text-lg"
-        />
+        <div className="relative">
+          <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500">$</span>
+          <Input
+            id="monthlyDebts"
+            type="number"
+            value={monthlyDebts}
+            onChange={(e) => setMonthlyDebts(Number(e.target.value))}
+            className="text-base md:text-lg pl-8"
+          />
+        </div>
       </div>
 
       <div>
-        <Label htmlFor="heatingCosts" className="block text-lg font-medium text-slate-900 mb-2">
+        <Label htmlFor="heatingCosts" className="block text-base md:text-lg font-medium text-slate-900 mb-2">
           Coût de chauffage mensuel
         </Label>
-        <Input
-          id="heatingCosts"
-          type="number"
-          value={heatingCosts}
-          onChange={(e) => setHeatingCosts(Number(e.target.value))}
-          className="text-lg"
-        />
+        <div className="relative">
+          <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500">$</span>
+          <Input
+            id="heatingCosts"
+            type="number"
+            value={heatingCosts}
+            onChange={(e) => setHeatingCosts(Number(e.target.value))}
+            className="text-base md:text-lg pl-8"
+          />
+        </div>
       </div>
 
       <div>
-        <Label htmlFor="propertyTaxes" className="block text-lg font-medium text-slate-900 mb-2">
+        <Label htmlFor="propertyTaxes" className="block text-base md:text-lg font-medium text-slate-900 mb-2">
           Taxes résidentielles mensuelles
         </Label>
-        <Input
-          id="propertyTaxes"
-          type="number"
-          value={propertyTaxes}
-          onChange={(e) => setPropertyTaxes(Number(e.target.value))}
-          className="text-lg"
-        />
+        <div className="relative">
+          <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500">$</span>
+          <Input
+            id="propertyTaxes"
+            type="number"
+            value={propertyTaxes}
+            onChange={(e) => setPropertyTaxes(Number(e.target.value))}
+            className="text-base md:text-lg pl-8"
+          />
+        </div>
       </div>
 
       <div>
-        <Label htmlFor="condoFees" className="block text-lg font-medium text-slate-900 mb-2">
+        <Label htmlFor="condoFees" className="block text-base md:text-lg font-medium text-slate-900 mb-2">
           Frais de copropriété mensuels
         </Label>
-        <Input
-          id="condoFees"
-          type="number"
-          value={condoFees}
-          onChange={(e) => setCondoFees(Number(e.target.value))}
-          className="text-lg"
-        />
+        <div className="relative">
+          <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500">$</span>
+          <Input
+            id="condoFees"
+            type="number"
+            value={condoFees}
+            onChange={(e) => setCondoFees(Number(e.target.value))}
+            className="text-base md:text-lg pl-8"
+          />
+        </div>
       </div>
     </div>
   );

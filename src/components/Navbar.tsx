@@ -9,7 +9,6 @@ import {
   DropdownMenuItem, 
   DropdownMenuTrigger 
 } from "@/components/ui/dropdown-menu";
-import { ChevronDown } from "lucide-react";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -71,11 +70,18 @@ const Navbar = () => {
           
           {/* Calculatrices Dropdown */}
           <DropdownMenu>
-            <DropdownMenuTrigger className={`flex items-center gap-1 text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
-              Calculatrices
-              <ChevronDown className="w-4 h-4" />
+            <DropdownMenuTrigger asChild>
+              <a 
+                href="/calculatrices" 
+                className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}
+              >
+                Calculatrices
+              </a>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-white border border-slate-200 shadow-lg">
+            <DropdownMenuContent 
+              className="bg-white border border-slate-200 shadow-lg z-[60]" 
+              onOpenAutoFocus={(e) => e.preventDefault()}
+            >
               <DropdownMenuItem asChild>
                 <a href="/calculatrices#payment" className="w-full cursor-pointer">
                   Paiement hypothécaire
@@ -88,7 +94,7 @@ const Navbar = () => {
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <a href="/calculatrices#savings" className="w-full cursor-pointer">
-                  Taux plus bas
+                  Écart de taux
                 </a>
               </DropdownMenuItem>
             </DropdownMenuContent>
