@@ -69,36 +69,27 @@ const Navbar = () => {
           </a>
           
           {/* Calculatrices Dropdown */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <a 
-                href="/calculatrices" 
-                className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}
-              >
-                Calculatrices
-              </a>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent 
-              className="bg-white border border-slate-200 shadow-lg z-[60]" 
-              onOpenAutoFocus={(e) => e.preventDefault()}
+          <div className="relative group">
+            <a 
+              href="/calculatrices" 
+              className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}
             >
-              <DropdownMenuItem asChild>
-                <a href="/calculatrices#payment" className="w-full cursor-pointer">
-                  Paiement hypothécaire
-                </a>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <a href="/calculatrices#capacity" className="w-full cursor-pointer">
-                  Capacité d'emprunt
-                </a>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <a href="/calculatrices#savings" className="w-full cursor-pointer">
-                  Écart de taux
-                </a>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+              Calculatrices
+            </a>
+            
+            {/* Dropdown Menu */}
+            <div className="absolute top-full left-0 mt-1 w-56 bg-white border border-slate-200 shadow-lg rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-[60]">
+              <a href="/calculatrices#payment" className="block px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 transition-colors">
+                Paiement hypothécaire
+              </a>
+              <a href="/calculatrices#capacity" className="block px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 transition-colors">
+                Capacité d'emprunt
+              </a>
+              <a href="/calculatrices#savings" className="block px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 transition-colors">
+                Écart de taux
+              </a>
+            </div>
+          </div>
           
           <a href="/faq" className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
             FAQ
