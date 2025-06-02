@@ -61,30 +61,9 @@ const Navbar = () => {
           <a href="/#services" className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
             Services
           </a>
-          
-          {/* Calculatrices Dropdown */}
-          <div className="relative group">
-            <a 
-              href="/calculatrices" 
-              className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}
-            >
-              Calculatrices
-            </a>
-            
-            {/* Dropdown Menu */}
-            <div className="absolute top-full left-0 mt-1 w-56 bg-white border border-slate-200 shadow-lg rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-[60]">
-              <a href="/calculatrices#payment" className="block px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 transition-colors">
-                Paiement hypothécaire
-              </a>
-              <a href="/calculatrices#capacity" className="block px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 transition-colors">
-                Capacité d'emprunt
-              </a>
-              <a href="/calculatrices#savings" className="block px-4 py-3 text-sm text-slate-700 hover:bg-slate-50 transition-colors">
-                Écart de taux
-              </a>
-            </div>
-          </div>
-          
+          <a href="/calculatrices" className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
+            Calculatrices
+          </a>
           <a href="/faq" className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
             FAQ
           </a>
