@@ -1,4 +1,3 @@
-
 export interface MortgagePaymentInput {
   purchasePrice: number;
   downPayment: number;
@@ -28,6 +27,12 @@ export interface MortgagePaymentResult {
     totalInterest: number;
     totalPrincipal: number;
   };
+  amortizationSchedule?: Array<{
+    year: number;
+    interest: number;
+    principal: number;
+    balance: number;
+  }>;
 }
 
 export const calculateMortgagePayment = (input: MortgagePaymentInput): MortgagePaymentResult => {
@@ -125,6 +130,40 @@ export const calculateMortgagePayment = (input: MortgagePaymentInput): MortgageP
   const totalAmortizationCost = regularPayment * totalAmortizationPayments;
   const totalInterestAmortization = totalAmortizationCost - mortgageAmount;
   
+  // Générer le calendrier d'amortissement pour le graphique
+  const generateAmortizationSchedule = () => {
+    let remainingBalance = mortgageAmount;
+    const schedule = [];
+    
+    for (let year = 0; year <= amortization; year++) {
+      const paymentsThisYear = year === 0 ? 0 : paymentsPerYear;
+      let yearlyInterest = 0;
+      let yearlyPrincipal = 0;
+      
+      if (year > 0 && remainingBalance > 0) {
+        for (let payment = 0; payment < paymentsThisYear && remainingBalance > 0; payment++) {
+          const interestPayment = remainingBalance * periodicRate;
+          const principalPayment = Math.min(regularPayment - interestPayment, remainingBalance);
+          
+          yearlyInterest += interestPayment;
+          yearlyPrincipal += principalPayment;
+          remainingBalance -= principalPayment;
+          
+          if (remainingBalance <= 0) break;
+        }
+      }
+
+      schedule.push({
+        year,
+        interest: Math.round(yearlyInterest),
+        principal: Math.round(yearlyPrincipal),
+        balance: Math.round(Math.max(0, remainingBalance))
+      });
+    }
+
+    return schedule;
+  };
+
   return {
     mortgageAmount: Math.round(mortgageAmount),
     regularPayment: Math.round(regularPayment),
@@ -142,6 +181,7 @@ export const calculateMortgagePayment = (input: MortgagePaymentInput): MortgageP
       totalPayments: Math.round(totalAmortizationCost),
       totalInterest: Math.round(totalInterestAmortization),
       totalPrincipal: Math.round(mortgageAmount)
-    }
+    },
+    amortizationSchedule: generateAmortizationSchedule()
   };
 };
