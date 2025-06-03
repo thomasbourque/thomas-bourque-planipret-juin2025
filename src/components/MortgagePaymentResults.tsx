@@ -20,6 +20,16 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
     }
   };
 
+  const getPaymentsPerYear = (frequency: string) => {
+    switch (frequency) {
+      case 'monthly': return 12;
+      case 'biweekly': return 26;
+      case 'biweekly-accelerated': return 26;
+      case 'weekly': return 52;
+      default: return 12;
+    }
+  };
+
   const formatAmortization = (years: number) => {
     const wholeYears = Math.floor(years);
     const remainingMonths = Math.round((years - wholeYears) * 12);
@@ -30,6 +40,10 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
     
     return `${wholeYears} ${wholeYears === 1 ? 'an' : 'ans'} et ${remainingMonths} mois`;
   };
+
+  const paymentsPerYear = getPaymentsPerYear(paymentFrequency);
+  const totalTermPayments = term * paymentsPerYear;
+  const totalAmortizationPayments = amortization * paymentsPerYear;
 
   return (
     <div className="space-y-6">
@@ -53,7 +67,7 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
         </div>
 
         {/* Montant total financé */}
-        <div className="bg-slate-100 p-6 rounded-xl">
+        <div className="bg-white border border-slate-200 p-6 rounded-xl">
           <div className="text-sm font-medium text-slate-600 mb-2">
             Montant total financé
           </div>
@@ -67,13 +81,22 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
         </div>
 
         {/* Encadré pour la durée du terme */}
-        <div className="bg-gradient-to-r from-blue-50 to-blue-100 p-6 rounded-xl border border-blue-200">
-          <h4 className="text-lg font-semibold text-blue-900 mb-4 text-center">
+        <div className="bg-white border border-slate-200 p-6 rounded-xl">
+          <h4 className="text-lg font-semibold text-slate-800 mb-4 text-center">
             Pendant le terme de {term} {term === 1 ? 'an' : 'ans'}
           </h4>
           
           <div className="grid grid-cols-2 gap-4">
-            <div className="bg-blue-500 p-4 rounded-lg text-white text-center">
+            <div className="bg-slate-700 p-4 rounded-lg text-white text-center">
+              <div className="text-sm font-medium mb-1">
+                Nombre de versements
+              </div>
+              <div className="text-lg font-bold">
+                {totalTermPayments}
+              </div>
+            </div>
+
+            <div className="bg-yellow-500 p-4 rounded-lg text-slate-900 text-center">
               <div className="text-sm font-medium mb-1">
                 Solde à la fin du terme
               </div>
@@ -86,7 +109,7 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
               </div>
             </div>
 
-            <div className="bg-yellow-500 p-4 rounded-lg text-slate-900 text-center">
+            <div className="bg-slate-700 p-4 rounded-lg text-white text-center">
               <div className="text-sm font-medium mb-1">
                 Intérêts payés
               </div>
@@ -99,7 +122,7 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
               </div>
             </div>
 
-            <div className="bg-blue-600 p-4 rounded-lg text-white text-center">
+            <div className="bg-yellow-500 p-4 rounded-lg text-slate-900 text-center">
               <div className="text-sm font-medium mb-1">
                 Capital payé
               </div>
@@ -112,7 +135,7 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
               </div>
             </div>
 
-            <div className="bg-yellow-600 p-4 rounded-lg text-white text-center">
+            <div className="col-span-2 bg-slate-800 p-4 rounded-lg text-white text-center">
               <div className="text-sm font-medium mb-1">
                 Coût total durant le terme
               </div>
@@ -128,13 +151,35 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
         </div>
 
         {/* Encadré pour la durée totale de l'amortissement */}
-        <div className="bg-gradient-to-r from-yellow-50 to-yellow-100 p-6 rounded-xl border border-yellow-200">
-          <h4 className="text-lg font-semibold text-yellow-900 mb-4 text-center">
+        <div className="bg-white border border-slate-200 p-6 rounded-xl">
+          <h4 className="text-lg font-semibold text-slate-800 mb-4 text-center">
             Pendant l'amortissement complet de {formatAmortization(amortization)}
           </h4>
           
           <div className="grid grid-cols-2 gap-4">
-            <div className="bg-blue-500 p-4 rounded-lg text-white text-center">
+            <div className="bg-slate-700 p-4 rounded-lg text-white text-center">
+              <div className="text-sm font-medium mb-1">
+                Nombre de versements
+              </div>
+              <div className="text-lg font-bold">
+                {Math.round(totalAmortizationPayments)}
+              </div>
+            </div>
+
+            <div className="bg-yellow-500 p-4 rounded-lg text-slate-900 text-center">
+              <div className="text-sm font-medium mb-1">
+                Capital payé
+              </div>
+              <div className="text-lg font-bold">
+                {results.amortizationResults.totalPrincipal.toLocaleString('fr-CA', { 
+                  style: 'currency', 
+                  currency: 'CAD',
+                  minimumFractionDigits: 0 
+                })}
+              </div>
+            </div>
+
+            <div className="bg-slate-700 p-4 rounded-lg text-white text-center">
               <div className="text-sm font-medium mb-1">
                 Intérêts payés
               </div>
@@ -147,7 +192,7 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
               </div>
             </div>
 
-            <div className="bg-yellow-600 p-4 rounded-lg text-white text-center">
+            <div className="bg-yellow-500 p-4 rounded-lg text-slate-900 text-center">
               <div className="text-sm font-medium mb-1">
                 Coût total de l'amortissement
               </div>
