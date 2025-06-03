@@ -37,7 +37,8 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
         Résultats du calcul
       </h3>
       
-      <div className="space-y-4">
+      <div className="space-y-6">
+        {/* Paiement principal */}
         <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 p-6 rounded-xl border text-slate-900">
           <div className="text-sm font-medium mb-2">
             Paiement {getPaymentFrequencyText(paymentFrequency)}
@@ -51,6 +52,7 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
           </div>
         </div>
 
+        {/* Montant total financé */}
         <div className="bg-slate-100 p-6 rounded-xl">
           <div className="text-sm font-medium text-slate-600 mb-2">
             Montant total financé
@@ -64,64 +66,98 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-            <div className="text-sm font-medium text-blue-700 mb-1">
-              Coût total pendant le terme
+        {/* Encadré pour la durée du terme */}
+        <div className="bg-gradient-to-r from-blue-50 to-blue-100 p-6 rounded-xl border border-blue-200">
+          <h4 className="text-lg font-semibold text-blue-900 mb-4 text-center">
+            Pendant le terme de {term} {term === 1 ? 'an' : 'ans'}
+          </h4>
+          
+          <div className="grid grid-cols-2 gap-4">
+            <div className="bg-blue-500 p-4 rounded-lg text-white text-center">
+              <div className="text-sm font-medium mb-1">
+                Solde à la fin du terme
+              </div>
+              <div className="text-lg font-bold">
+                {results.termResults.remainingBalance.toLocaleString('fr-CA', { 
+                  style: 'currency', 
+                  currency: 'CAD',
+                  minimumFractionDigits: 0 
+                })}
+              </div>
             </div>
-            <div className="text-lg font-bold text-blue-900">
-              {results.termResults.totalPayments.toLocaleString('fr-CA', { 
-                style: 'currency', 
-                currency: 'CAD',
-                minimumFractionDigits: 0 
-              })}
-            </div>
-            <div className="text-xs text-blue-600 mt-1">
-              Terme de {term} {term === 1 ? 'an' : 'ans'}
-            </div>
-          </div>
 
-          <div className="bg-green-50 p-4 rounded-lg border border-green-200">
-            <div className="text-sm font-medium text-green-700 mb-1">
-              Coût total sur l'amortissement complet
+            <div className="bg-yellow-500 p-4 rounded-lg text-slate-900 text-center">
+              <div className="text-sm font-medium mb-1">
+                Intérêts payés
+              </div>
+              <div className="text-lg font-bold">
+                {results.termResults.totalInterest.toLocaleString('fr-CA', { 
+                  style: 'currency', 
+                  currency: 'CAD',
+                  minimumFractionDigits: 0 
+                })}
+              </div>
             </div>
-            <div className="text-lg font-bold text-green-900">
-              {results.amortizationResults.totalPayments.toLocaleString('fr-CA', { 
-                style: 'currency', 
-                currency: 'CAD',
-                minimumFractionDigits: 0 
-              })}
+
+            <div className="bg-blue-600 p-4 rounded-lg text-white text-center">
+              <div className="text-sm font-medium mb-1">
+                Capital payé
+              </div>
+              <div className="text-lg font-bold">
+                {results.termResults.totalPrincipal.toLocaleString('fr-CA', { 
+                  style: 'currency', 
+                  currency: 'CAD',
+                  minimumFractionDigits: 0 
+                })}
+              </div>
             </div>
-            <div className="text-xs text-green-600 mt-1">
-              Amortissement de {formatAmortization(amortization)}
+
+            <div className="bg-yellow-600 p-4 rounded-lg text-white text-center">
+              <div className="text-sm font-medium mb-1">
+                Coût total durant le terme
+              </div>
+              <div className="text-lg font-bold">
+                {results.termResults.totalPayments.toLocaleString('fr-CA', { 
+                  style: 'currency', 
+                  currency: 'CAD',
+                  minimumFractionDigits: 0 
+                })}
+              </div>
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-orange-50 p-4 rounded-lg border border-orange-200">
-            <div className="text-sm font-medium text-orange-700 mb-1">
-              Intérêts pendant le terme
+        {/* Encadré pour la durée totale de l'amortissement */}
+        <div className="bg-gradient-to-r from-yellow-50 to-yellow-100 p-6 rounded-xl border border-yellow-200">
+          <h4 className="text-lg font-semibold text-yellow-900 mb-4 text-center">
+            Pendant l'amortissement complet de {formatAmortization(amortization)}
+          </h4>
+          
+          <div className="grid grid-cols-2 gap-4">
+            <div className="bg-blue-500 p-4 rounded-lg text-white text-center">
+              <div className="text-sm font-medium mb-1">
+                Intérêts payés
+              </div>
+              <div className="text-lg font-bold">
+                {results.amortizationResults.totalInterest.toLocaleString('fr-CA', { 
+                  style: 'currency', 
+                  currency: 'CAD',
+                  minimumFractionDigits: 0 
+                })}
+              </div>
             </div>
-            <div className="text-lg font-bold text-orange-900">
-              {results.termResults.totalInterest.toLocaleString('fr-CA', { 
-                style: 'currency', 
-                currency: 'CAD',
-                minimumFractionDigits: 0 
-              })}
-            </div>
-          </div>
 
-          <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
-            <div className="text-sm font-medium text-purple-700 mb-1">
-              Intérêts sur l'amortissement complet
-            </div>
-            <div className="text-lg font-bold text-purple-900">
-              {results.amortizationResults.totalInterest.toLocaleString('fr-CA', { 
-                style: 'currency', 
-                currency: 'CAD',
-                minimumFractionDigits: 0 
-              })}
+            <div className="bg-yellow-600 p-4 rounded-lg text-white text-center">
+              <div className="text-sm font-medium mb-1">
+                Coût total de l'amortissement
+              </div>
+              <div className="text-lg font-bold">
+                {results.amortizationResults.totalPayments.toLocaleString('fr-CA', { 
+                  style: 'currency', 
+                  currency: 'CAD',
+                  minimumFractionDigits: 0 
+                })}
+              </div>
             </div>
           </div>
         </div>
