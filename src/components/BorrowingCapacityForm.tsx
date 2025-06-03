@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -205,25 +204,8 @@ const BorrowingCapacityForm = ({
       </div>
 
       <div>
-        <Label htmlFor="propertyTaxes" className="flex items-center gap-2 text-base md:text-lg font-medium text-slate-900 mb-2">
-          Taxes résidentielles mensuelles
-          <Popover>
-            <PopoverTrigger asChild>
-              <button type="button" className="focus:outline-none">
-                <Info className="w-4 h-4 text-slate-500 cursor-help" />
-              </button>
-            </PopoverTrigger>
-            <PopoverContent className="w-80 p-4 bg-white border shadow-lg z-[70]" side="top">
-              <div className="space-y-2">
-                <p className="text-sm">
-                  Valeur par défaut : 1% du prix d'achat annuellement, divisé par 12 mois.
-                </p>
-                <p className="text-sm font-medium">
-                  Vous pouvez ajuster cette valeur selon les taxes réelles de votre municipalité.
-                </p>
-              </div>
-            </PopoverContent>
-          </Popover>
+        <Label htmlFor="propertyTaxes" className="block text-base md:text-lg font-medium text-slate-900 mb-2">
+          Taxes résidentielles annuelles
         </Label>
         <div className="relative">
           <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500">$</span>

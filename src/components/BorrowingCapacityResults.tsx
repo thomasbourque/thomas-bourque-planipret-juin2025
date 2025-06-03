@@ -37,6 +37,24 @@ const BorrowingCapacityResults = ({ results }: BorrowingCapacityResultsProps) =>
         </p>
       </div>
 
+      {results.cmhcPremium > 0 && (
+        <div className="text-center p-4 bg-orange-50 rounded-lg border border-orange-200">
+          <p className="text-sm text-orange-700 mb-1">
+            Prime d'assurance hypothécaire SCHL
+          </p>
+          <p className="text-lg font-bold text-orange-900">
+            {results.cmhcPremium.toLocaleString('fr-CA', { 
+              style: 'currency', 
+              currency: 'CAD', 
+              minimumFractionDigits: 0 
+            })}
+          </p>
+          <p className="text-xs text-orange-600 mt-1">
+            Incluse dans le financement
+          </p>
+        </div>
+      )}
+
       <div className="grid grid-cols-2 gap-4">
         <div className="text-center p-4 bg-slate-100 rounded-lg">
           <div className="flex items-center justify-center gap-1 mb-1">
@@ -97,6 +115,9 @@ const BorrowingCapacityResults = ({ results }: BorrowingCapacityResultsProps) =>
           <p>Paiement hypothécaire mensuel : {results.monthlyPayment.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}</p>
           <p>Charges de logement totales : {results.housingCosts.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}</p>
           <p>Revenu mensuel brut : {results.monthlyIncome.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}</p>
+          {results.cmhcPremium > 0 && (
+            <p>Montant total financé (avec prime SCHL) : {results.totalMortgageAmount.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}</p>
+          )}
         </div>
       </div>
 

@@ -38,8 +38,8 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
       </h3>
       
       <div className="space-y-4">
-        <div className="bg-primary text-white p-6 rounded-xl">
-          <div className="text-sm font-medium mb-2 opacity-90">
+        <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 p-6 rounded-xl border text-slate-900">
+          <div className="text-sm font-medium mb-2">
             Paiement {getPaymentFrequencyText(paymentFrequency)}
           </div>
           <div className="text-3xl font-bold">

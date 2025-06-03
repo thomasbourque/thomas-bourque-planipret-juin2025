@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { calculateBorrowingCapacity } from "@/utils/borrowingCapacityCalculations";
 import BorrowingCapacityForm from "./BorrowingCapacityForm";
 import BorrowingCapacityResults from "./BorrowingCapacityResults";
@@ -12,7 +12,7 @@ const BorrowingCapacityCalculator = () => {
   const [interestRate, setInterestRate] = useState([4.5]);
   const [monthlyDebts, setMonthlyDebts] = useState(0);
   const [heatingCosts, setHeatingCosts] = useState(150);
-  const [propertyTaxes, setPropertyTaxes] = useState(333); // Default based on ~$400k property (1% annually / 12)
+  const [propertyTaxes, setPropertyTaxes] = useState(4000); // Base annuelle
   const [condoFees, setCondoFees] = useState(0);
 
   const results = calculateBorrowingCapacity({
@@ -26,16 +26,6 @@ const BorrowingCapacityCalculator = () => {
     propertyTaxes,
     condoFees
   });
-
-  // Update property taxes default when the max purchase price changes significantly
-  useEffect(() => {
-    if (results.maxPurchasePrice > 0) {
-      const suggestedTaxes = Math.round((results.maxPurchasePrice * 0.01) / 12);
-      if (Math.abs(propertyTaxes - suggestedTaxes) > 50) {
-        setPropertyTaxes(suggestedTaxes);
-      }
-    }
-  }, [results.maxPurchasePrice]);
 
   return (
     <section className="section bg-slate-50">
