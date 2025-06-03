@@ -64,6 +64,9 @@ const Navbar = () => {
           <a href="/calculatrices" className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
             Calculatrices
           </a>
+          <a href="/#boussole-hypothecaire" className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
+            Boussole hypothécaire
+          </a>
           <a href="/faq" className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
             FAQ
           </a>
@@ -99,59 +102,70 @@ const Navbar = () => {
       </div>
 
       {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-white shadow-md p-4 flex flex-col space-y-4">
-          <a
-            href="/#thomas-bourque"
-            className="px-4 py-2 hover:bg-secondary rounded-md transition-colors"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            À propos
-          </a>
-          <a
-            href="/#fonctionnement"
-            className="px-4 py-2 hover:bg-secondary rounded-md transition-colors"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            Approche
-          </a>
-          <a
-            href="/#services"
-            className="px-4 py-2 hover:bg-secondary rounded-md transition-colors"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            Services
-          </a>
-          <a
-            href="/calculatrices"
-            className="px-4 py-2 hover:bg-secondary rounded-md transition-colors"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            Calculatrices
-          </a>
-          <a
-            href="/faq"
-            className="px-4 py-2 hover:bg-secondary rounded-md transition-colors"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            FAQ
-          </a>
-          <a
-            href="/#contact"
-            className="px-4 py-2 hover:bg-secondary rounded-md transition-colors"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            Contact
-          </a>
-          <Button asChild size="sm" className="mt-2 rounded-full">
-            <a 
-              href="https://calendly.com/tbourque-planipret" 
-              target="_blank" 
-              rel="noopener noreferrer"
+        <div className="md:hidden absolute top-full left-0 right-0 bg-gradient-to-br from-primary to-primary/90 backdrop-blur-md shadow-lg border-t border-white/20">
+          <div className="p-6 space-y-4">
+            <a
+              href="/#thomas-bourque"
+              className="block px-4 py-3 text-white font-medium hover:bg-white/10 rounded-lg transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              Planifier un appel
+              À propos
             </a>
-          </Button>
+            <a
+              href="/#fonctionnement"
+              className="block px-4 py-3 text-white font-medium hover:bg-white/10 rounded-lg transition-colors"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Approche
+            </a>
+            <a
+              href="/#services"
+              className="block px-4 py-3 text-white font-medium hover:bg-white/10 rounded-lg transition-colors"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Services
+            </a>
+            <a
+              href="/calculatrices"
+              className="block px-4 py-3 text-white font-medium hover:bg-white/10 rounded-lg transition-colors"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Calculatrices
+            </a>
+            <a
+              href="/#boussole-hypothecaire"
+              className="block px-4 py-3 text-white font-medium hover:bg-white/10 rounded-lg transition-colors"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Boussole hypothécaire
+            </a>
+            <a
+              href="/faq"
+              className="block px-4 py-3 text-white font-medium hover:bg-white/10 rounded-lg transition-colors"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              FAQ
+            </a>
+            <a
+              href="/#contact"
+              className="block px-4 py-3 text-white font-medium hover:bg-white/10 rounded-lg transition-colors"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Contact
+            </a>
+            <div className="pt-4">
+              <Button asChild size="sm" className="w-full rounded-full bg-white text-primary hover:bg-white/90">
+                <a 
+                  href="https://calendly.com/tbourque-planipret" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Planifier un appel
+                </a>
+              </Button>
+            </div>
+          </div>
         </div>
       )}
     </header>

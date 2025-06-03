@@ -12,7 +12,7 @@ const Calculatrices = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
       <main className="pt-20">
-        <div className="container py-8 md:py-12">
+        <div className="container py-8 md:py-12 px-4 md:px-6 lg:px-8">
           <div className="text-center mb-8 md:mb-12">
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 mb-4 md:mb-6">
               Calculatrices hypothécaires
@@ -22,23 +22,35 @@ const Calculatrices = () => {
             </p>
           </div>
 
-          <Tabs defaultValue="payment" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-6 md:mb-8">
-              <TabsTrigger value="payment" className="text-xs md:text-sm">Paiement hypothécaire</TabsTrigger>
-              <TabsTrigger value="capacity" className="text-xs md:text-sm">Capacité d'emprunt</TabsTrigger>
-              <TabsTrigger value="savings" className="text-xs md:text-sm">Écart de taux</TabsTrigger>
+          <Tabs defaultValue="payment" className="w-full max-w-6xl mx-auto">
+            <TabsList className="grid w-full grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-0 mb-6 md:mb-8 h-auto sm:h-10 p-1">
+              <TabsTrigger value="payment" className="text-xs md:text-sm py-3 sm:py-2 w-full">
+                Paiement hypothécaire
+              </TabsTrigger>
+              <TabsTrigger value="capacity" className="text-xs md:text-sm py-3 sm:py-2 w-full">
+                Capacité d'emprunt
+              </TabsTrigger>
+              <TabsTrigger value="savings" className="text-xs md:text-sm py-3 sm:py-2 w-full">
+                Écart de taux
+              </TabsTrigger>
             </TabsList>
             
-            <TabsContent value="payment" className="mt-4 md:mt-8">
-              <MortgagePaymentCalculator />
+            <TabsContent value="payment" className="mt-4 md:mt-8 w-full">
+              <div className="w-full">
+                <MortgagePaymentCalculator />
+              </div>
             </TabsContent>
             
-            <TabsContent value="capacity" className="mt-4 md:mt-8">
-              <BorrowingCapacityCalculator />
+            <TabsContent value="capacity" className="mt-4 md:mt-8 w-full">
+              <div className="w-full">
+                <BorrowingCapacityCalculator />
+              </div>
             </TabsContent>
             
-            <TabsContent value="savings" className="mt-4 md:mt-8">
-              <MortgageCalculator />
+            <TabsContent value="savings" className="mt-4 md:mt-8 w-full">
+              <div className="w-full">
+                <MortgageCalculator />
+              </div>
             </TabsContent>
           </Tabs>
         </div>

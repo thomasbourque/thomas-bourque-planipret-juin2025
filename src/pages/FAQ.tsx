@@ -53,7 +53,7 @@ const FAQ = () => {
     },
     {
       question: "Comment puis-je vous contacter?",
-      answer: "Vous pouvez me joindre par téléphone au 418-569-6482, par courriel à thomas.bourque@planipret.com, ou planifier un appel gratuit via mon calendrier en ligne."
+      answer: "Vous pouvez me joindre par téléphone au 418-569-6482, par courriel à tbourque@planipret.com, ou planifier un appel gratuit via mon calendrier en ligne."
     }
   ];
 
@@ -104,7 +104,7 @@ const FAQ = () => {
                     Planifier un appel
                   </a>
                   <a 
-                    href="mailto:thomas.bourque@planipret.com"
+                    href="mailto:tbourque@planipret.com"
                     className="inline-flex items-center px-6 py-3 border border-primary text-primary font-medium rounded-full hover:bg-primary hover:text-white transition-colors"
                   >
                     Envoyer un courriel

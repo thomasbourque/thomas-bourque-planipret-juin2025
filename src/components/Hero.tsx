@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Mail, Linkedin, Facebook, Instagram, Phone } from "lucide-react";
@@ -65,7 +66,7 @@ const Hero = () => {
             {/* Liens vers les réseaux sociaux */}
             <div className="flex items-center gap-4 mb-6">
               <a 
-                href="mailto:thomas.bourque@planipret.com" 
+                href="mailto:tbourque@planipret.com" 
                 className="flex items-center justify-center w-10 h-10 bg-primary text-white rounded-full hover:bg-primary/80 transition-colors"
                 title="Courriel"
               >
@@ -112,7 +113,7 @@ const Hero = () => {
             
             <div className="space-y-4">
               <p className="body-md text-slate-700 mb-4">
-                <strong>En tant que courtier hypothécaire Planiprêt, je travaille pour vos intérêts, pas ceux de la banque!</strong>
+                <strong>Je travaille pour vos intérêts, pas ceux de la banque!</strong>
               </p>
               <p className="body-md text-slate-700 mb-4">
                 Après 7 ans à œuvrer en analyse quantitative, j'ai fait le saut comme courtier hypothécaire pour retrouver le contact avec la clientèle et aider les gens à y voir plus clair dans la jungle du financement résidentiel, un domaine trop souvent mal compris. J'ai la conviction que l'obtention d'un prêt hypothécaire devrait toujours demeurer un processus clair, facile et agréable sans devenir une charge mentale accablante.
