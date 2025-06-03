@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -212,9 +213,10 @@ const BorrowingCapacityForm = ({
           <Input
             id="propertyTaxes"
             type="number"
-            value={propertyTaxes}
-            onChange={(e) => setPropertyTaxes(Number(e.target.value))}
+            value={propertyTaxes || ''}
+            onChange={(e) => setPropertyTaxes(Number(e.target.value) || 0)}
             className="text-base md:text-lg pl-8"
+            placeholder="Entrez le montant annuel"
           />
         </div>
       </div>
