@@ -1,7 +1,6 @@
 
 import React from "react";
 import { MortgagePaymentResult } from "@/utils/mortgagePaymentCalculations";
-import AmortizationChart from "./AmortizationChart";
 
 interface MortgagePaymentResultsProps {
   results: MortgagePaymentResult;
@@ -53,7 +52,7 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
       </h3>
       
       <div className="space-y-3 w-full max-w-4xl">
-        {/* Paiement principal */}
+        {/* Paiement principal - en couleur */}
         <div className="bg-gradient-to-r from-blue-900 to-blue-800 p-3 rounded-lg border text-white text-center">
           <div className="text-sm font-medium mb-1">
             Paiement {getPaymentFrequencyText(paymentFrequency)}
@@ -67,8 +66,8 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
           </div>
         </div>
 
-        {/* Montant total financé */}
-        <div className="bg-gradient-to-r from-yellow-500 to-yellow-600 p-3 rounded-lg text-white text-center">
+        {/* Montant total financé - style formulaire */}
+        <div className="bg-slate-50 border border-slate-300 p-3 rounded-lg text-slate-700 text-center">
           <div className="text-sm font-medium mb-1">
             Montant total financé
           </div>
@@ -81,8 +80,8 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
           </div>
         </div>
 
-        {/* Encadré pour la durée du terme - style discret */}
-        <div className="bg-white border border-slate-300 p-3 rounded-lg shadow-sm">
+        {/* Encadré pour la durée du terme - style formulaire */}
+        <div className="bg-slate-50 border border-slate-300 p-3 rounded-lg shadow-sm">
           <h4 className="text-md font-semibold text-slate-700 mb-2 text-center">
             Pendant le terme de {term} {term === 1 ? 'an' : 'ans'}
           </h4>
@@ -90,7 +89,7 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
           <div className="space-y-2">
             {/* Première ligne: Nombre de versements et Solde */}
             <div className="grid grid-cols-2 gap-2">
-              <div className="bg-gradient-to-r from-blue-500 to-blue-600 p-2.5 rounded-lg text-white text-center">
+              <div className="bg-white border border-slate-200 p-2.5 rounded-lg text-slate-700 text-center">
                 <div className="text-xs font-medium mb-1">
                   Nombre de versements
                 </div>
@@ -99,7 +98,7 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
                 </div>
               </div>
 
-              <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 p-2.5 rounded-lg text-white text-center">
+              <div className="bg-white border border-slate-200 p-2.5 rounded-lg text-slate-700 text-center">
                 <div className="text-xs font-medium mb-1">
                   Solde à la fin du terme
                 </div>
@@ -115,7 +114,7 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
 
             {/* Deuxième ligne: Capital payé et Intérêts payés */}
             <div className="grid grid-cols-2 gap-2">
-              <div className="bg-gradient-to-r from-blue-700 to-blue-800 p-2.5 rounded-lg text-white text-center">
+              <div className="bg-white border border-slate-200 p-2.5 rounded-lg text-slate-700 text-center">
                 <div className="text-xs font-medium mb-1">
                   Capital payé
                 </div>
@@ -128,7 +127,7 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
                 </div>
               </div>
 
-              <div className="bg-gradient-to-r from-yellow-600 to-yellow-700 p-2.5 rounded-lg text-white text-center">
+              <div className="bg-white border border-slate-200 p-2.5 rounded-lg text-slate-700 text-center">
                 <div className="text-xs font-medium mb-1">
                   Intérêts payés
                 </div>
@@ -142,8 +141,8 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
               </div>
             </div>
 
-            {/* Troisième ligne: Coût total en évidence */}
-            <div className="bg-slate-100 border border-slate-300 p-2.5 rounded-lg text-slate-700 text-center">
+            {/* Troisième ligne: Coût total */}
+            <div className="bg-white border border-slate-200 p-2.5 rounded-lg text-slate-700 text-center">
               <div className="text-xs font-medium mb-1">
                 Coût total durant le terme
               </div>
@@ -158,8 +157,8 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
           </div>
         </div>
 
-        {/* Encadré pour la durée totale de l'amortissement - style discret */}
-        <div className="bg-white border border-slate-300 p-3 rounded-lg shadow-sm">
+        {/* Encadré pour la durée totale de l'amortissement - style formulaire */}
+        <div className="bg-slate-50 border border-slate-300 p-3 rounded-lg shadow-sm">
           <h4 className="text-md font-semibold text-slate-700 mb-2 text-center">
             Pendant l'amortissement complet de {formatAmortization(amortization)}
           </h4>
@@ -167,7 +166,7 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
           <div className="space-y-2">
             {/* Première ligne: Nombre de versements et Solde */}
             <div className="grid grid-cols-2 gap-2">
-              <div className="bg-gradient-to-r from-blue-500 to-blue-600 p-2.5 rounded-lg text-white text-center">
+              <div className="bg-white border border-slate-200 p-2.5 rounded-lg text-slate-700 text-center">
                 <div className="text-xs font-medium mb-1">
                   Nombre de versements
                 </div>
@@ -176,7 +175,7 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
                 </div>
               </div>
 
-              <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 p-2.5 rounded-lg text-white text-center">
+              <div className="bg-white border border-slate-200 p-2.5 rounded-lg text-slate-700 text-center">
                 <div className="text-xs font-medium mb-1">
                   Solde à la fin de l'amortissement
                 </div>
@@ -188,7 +187,7 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
 
             {/* Deuxième ligne: Capital payé et Intérêts payés */}
             <div className="grid grid-cols-2 gap-2">
-              <div className="bg-gradient-to-r from-blue-700 to-blue-800 p-2.5 rounded-lg text-white text-center">
+              <div className="bg-white border border-slate-200 p-2.5 rounded-lg text-slate-700 text-center">
                 <div className="text-xs font-medium mb-1">
                   Capital payé
                 </div>
@@ -201,7 +200,7 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
                 </div>
               </div>
 
-              <div className="bg-gradient-to-r from-yellow-600 to-yellow-700 p-2.5 rounded-lg text-white text-center">
+              <div className="bg-white border border-slate-200 p-2.5 rounded-lg text-slate-700 text-center">
                 <div className="text-xs font-medium mb-1">
                   Intérêts payés
                 </div>
@@ -215,8 +214,8 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
               </div>
             </div>
 
-            {/* Troisième ligne: Coût total en évidence */}
-            <div className="bg-slate-100 border border-slate-300 p-2.5 rounded-lg text-slate-700 text-center">
+            {/* Troisième ligne: Coût total */}
+            <div className="bg-white border border-slate-200 p-2.5 rounded-lg text-slate-700 text-center">
               <div className="text-xs font-medium mb-1">
                 Coût total de l'amortissement
               </div>
@@ -229,19 +228,6 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
               </div>
             </div>
           </div>
-        </div>
-
-        {/* Graphique d'amortissement */}
-        <div className="bg-white border border-slate-300 p-6 rounded-lg shadow-sm">
-          <h4 className="text-md font-semibold text-slate-700 mb-4 text-center">
-            Évolution Capital vs Intérêts
-          </h4>
-          <AmortizationChart 
-            mortgageAmount={results.mortgageAmount}
-            regularPayment={results.regularPayment}
-            amortization={amortization}
-            paymentFrequency={paymentFrequency}
-          />
         </div>
       </div>
     </div>
