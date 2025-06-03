@@ -9,9 +9,8 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
   
-  // Check if we're on the FAQ page or Calculatrices page
-  const isFAQPage = location.pathname === '/faq';
-  const isCalculatricesPage = location.pathname === '/calculatrices';
+  // Check if we're on pages that should always have dark colors
+  const isDarkPage = ['/faq', '/calculatrices', '/boussole-hypothecaire'].includes(location.pathname);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,21 +25,21 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // On FAQ page or Calculatrices page, always use dark colors. On other pages, use conditional colors based on scroll
+  // On specific pages, always use dark colors. On other pages, use conditional colors based on scroll
   const getTextColor = () => {
-    if (isFAQPage || isCalculatricesPage) return 'text-slate-900';
+    if (isDarkPage) return 'text-slate-900';
     return isScrolled ? 'text-slate-900' : 'text-white';
   };
 
   const getLogoColor = () => {
-    if (isFAQPage || isCalculatricesPage) return 'text-slate-900';
+    if (isDarkPage) return 'text-slate-900';
     return isScrolled ? 'text-slate-900' : 'text-white';
   };
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled || isFAQPage || isCalculatricesPage ? "bg-white/90 backdrop-blur-md shadow-sm py-3" : "bg-transparent py-5"
+        isScrolled || isDarkPage ? "bg-white/90 backdrop-blur-md shadow-sm py-3" : "bg-transparent py-5"
       }`}
     >
       <div className="container flex items-center justify-between">
@@ -64,7 +63,7 @@ const Navbar = () => {
           <a href="/calculatrices" className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
             Calculatrices
           </a>
-          <a href="/#boussole-hypothecaire" className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
+          <a href="/boussole-hypothecaire" className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
             Boussole hypothécaire
           </a>
           <a href="/faq" className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
@@ -102,8 +101,8 @@ const Navbar = () => {
       </div>
 
       {isMobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-gradient-to-br from-primary to-primary/90 backdrop-blur-md shadow-lg border-t border-white/20">
-          <div className="p-6 space-y-4">
+        <div className="md:hidden absolute top-full left-0 right-0 bg-gradient-to-br from-primary via-primary/95 to-primary/90 backdrop-blur-md shadow-xl border-t border-white/20">
+          <div className="p-6 space-y-2">
             <a
               href="/#thomas-bourque"
               className="block px-4 py-3 text-white font-medium hover:bg-white/10 rounded-lg transition-colors"
@@ -133,7 +132,7 @@ const Navbar = () => {
               Calculatrices
             </a>
             <a
-              href="/#boussole-hypothecaire"
+              href="/boussole-hypothecaire"
               className="block px-4 py-3 text-white font-medium hover:bg-white/10 rounded-lg transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
             >

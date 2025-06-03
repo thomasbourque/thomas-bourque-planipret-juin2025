@@ -4,7 +4,6 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Partners from "@/components/Partners";
 import Services from "@/components/Services";
-import BoussoleHypothecaire from "@/components/BoussoleHypothecaire";
 import WhyBroker from "@/components/WhyBroker";
 import Testimonials from "@/components/Testimonials";
 import Contact from "@/components/Contact";
@@ -49,7 +48,6 @@ const Index = () => {
         <Partners />
         <Fonctionnement />
         <Services />
-        <BoussoleHypothecaire />
         <WhyBroker />
         <Testimonials />
         <Contact />
