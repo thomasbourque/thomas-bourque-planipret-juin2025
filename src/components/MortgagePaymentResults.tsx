@@ -43,7 +43,7 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
             Paiement {getPaymentFrequencyText(paymentFrequency)}
           </div>
           <div className="text-3xl font-bold">
-            {results.payment.toLocaleString('fr-CA', { 
+            {results.regularPayment.toLocaleString('fr-CA', { 
               style: 'currency', 
               currency: 'CAD',
               minimumFractionDigits: 0 
@@ -56,7 +56,7 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
             Montant total financé
           </div>
           <div className="text-2xl font-bold text-slate-900">
-            {results.loanAmount.toLocaleString('fr-CA', { 
+            {results.mortgageAmount.toLocaleString('fr-CA', { 
               style: 'currency', 
               currency: 'CAD',
               minimumFractionDigits: 0 
@@ -70,7 +70,7 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
               Coût total pendant le terme
             </div>
             <div className="text-lg font-bold text-blue-900">
-              {results.totalCostTerm.toLocaleString('fr-CA', { 
+              {results.termResults.totalPayments.toLocaleString('fr-CA', { 
                 style: 'currency', 
                 currency: 'CAD',
                 minimumFractionDigits: 0 
@@ -86,7 +86,7 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
               Coût total sur l'amortissement complet
             </div>
             <div className="text-lg font-bold text-green-900">
-              {results.totalCostAmortization.toLocaleString('fr-CA', { 
+              {results.amortizationResults.totalPayments.toLocaleString('fr-CA', { 
                 style: 'currency', 
                 currency: 'CAD',
                 minimumFractionDigits: 0 
@@ -104,7 +104,7 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
               Intérêts pendant le terme
             </div>
             <div className="text-lg font-bold text-orange-900">
-              {results.totalInterestTerm.toLocaleString('fr-CA', { 
+              {results.termResults.totalInterest.toLocaleString('fr-CA', { 
                 style: 'currency', 
                 currency: 'CAD',
                 minimumFractionDigits: 0 
@@ -117,7 +117,7 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
               Intérêts sur l'amortissement complet
             </div>
             <div className="text-lg font-bold text-purple-900">
-              {results.totalInterestAmortization.toLocaleString('fr-CA', { 
+              {results.amortizationResults.totalInterest.toLocaleString('fr-CA', { 
                 style: 'currency', 
                 currency: 'CAD',
                 minimumFractionDigits: 0 
