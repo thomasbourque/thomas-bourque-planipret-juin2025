@@ -46,12 +46,12 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
   const totalAmortizationPayments = amortization * paymentsPerYear;
 
   return (
-    <div className="space-y-4 flex flex-col items-center">
+    <div className="space-y-3 flex flex-col items-center">
       <h3 className="text-lg font-semibold text-slate-900 mb-2 text-center">
         Résultats du calcul
       </h3>
       
-      <div className="space-y-4 w-full max-w-4xl">
+      <div className="space-y-3 w-full max-w-4xl">
         {/* Paiement principal */}
         <div className="bg-gradient-to-r from-blue-600 to-blue-700 p-3 rounded-lg border text-white text-center">
           <div className="text-sm font-medium mb-1">
@@ -67,7 +67,7 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
         </div>
 
         {/* Montant total financé */}
-        <div className="bg-gradient-to-r from-amber-500 to-amber-600 p-3 rounded-lg text-white text-center">
+        <div className="bg-gradient-to-r from-yellow-500 to-yellow-600 p-3 rounded-lg text-white text-center">
           <div className="text-sm font-medium mb-1">
             Montant total financé
           </div>
@@ -98,7 +98,7 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
                 </div>
               </div>
 
-              <div className="bg-gradient-to-r from-amber-400 to-amber-500 p-2.5 rounded-lg text-white text-center">
+              <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 p-2.5 rounded-lg text-white text-center">
                 <div className="text-xs font-medium mb-1">
                   Solde à la fin du terme
                 </div>
@@ -127,7 +127,7 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
                 </div>
               </div>
 
-              <div className="bg-gradient-to-r from-amber-600 to-amber-700 p-2.5 rounded-lg text-white text-center">
+              <div className="bg-gradient-to-r from-yellow-600 to-yellow-700 p-2.5 rounded-lg text-white text-center">
                 <div className="text-xs font-medium mb-1">
                   Intérêts payés
                 </div>
@@ -175,7 +175,7 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
                 </div>
               </div>
 
-              <div className="bg-gradient-to-r from-amber-400 to-amber-500 p-2.5 rounded-lg text-white text-center">
+              <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 p-2.5 rounded-lg text-white text-center">
                 <div className="text-xs font-medium mb-1">
                   Solde à la fin de l'amortissement
                 </div>
@@ -200,7 +200,7 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
                 </div>
               </div>
 
-              <div className="bg-gradient-to-r from-amber-600 to-amber-700 p-2.5 rounded-lg text-white text-center">
+              <div className="bg-gradient-to-r from-yellow-600 to-yellow-700 p-2.5 rounded-lg text-white text-center">
                 <div className="text-xs font-medium mb-1">
                   Intérêts payés
                 </div>
