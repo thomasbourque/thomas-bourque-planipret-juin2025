@@ -15,50 +15,50 @@ const SavingsDisplay = ({ savings, termYears }: SavingsDisplayProps) => {
       </h3>
       
       <div className="grid gap-4">
-        <div className="bg-gradient-to-r from-green-50 to-emerald-50 p-6 rounded-xl border border-green-200">
-          <div className="text-sm text-green-700 font-medium mb-1">
+        <div className="bg-gradient-to-r from-slate-700 to-slate-800 p-6 rounded-xl border text-white">
+          <div className="text-sm font-medium mb-1 text-slate-200">
             Économie sur les paiements
           </div>
-          <div className="text-2xl font-bold text-green-800">
+          <div className="text-2xl font-bold">
             {savings.termPaymentSavings.toLocaleString('fr-CA', { 
               style: 'currency', 
               currency: 'CAD',
               minimumFractionDigits: 0 
             })}
           </div>
-          <div className="text-xs text-green-600 mt-1">
+          <div className="text-xs text-slate-300 mt-1">
             à la fin du terme de {termYears} {termYears === 1 ? 'an' : 'ans'}
           </div>
         </div>
 
-        <div className="bg-gradient-to-r from-blue-50 to-cyan-50 p-6 rounded-xl border border-blue-200">
-          <div className="text-sm text-blue-700 font-medium mb-1">
+        <div className="bg-gradient-to-r from-slate-700 to-slate-800 p-6 rounded-xl border text-white">
+          <div className="text-sm font-medium mb-1 text-slate-200">
             Économie sur le solde en capital
           </div>
-          <div className="text-2xl font-bold text-blue-800">
+          <div className="text-2xl font-bold">
             {savings.principalBalanceDifference.toLocaleString('fr-CA', { 
               style: 'currency', 
               currency: 'CAD',
               minimumFractionDigits: 0 
             })}
           </div>
-          <div className="text-xs text-blue-600 mt-1">
+          <div className="text-xs text-slate-300 mt-1">
             à la fin du terme de {termYears} {termYears === 1 ? 'an' : 'ans'}
           </div>
         </div>
 
-        <div className="bg-gradient-to-r from-purple-50 to-violet-50 p-6 rounded-xl border border-purple-200">
-          <div className="text-sm text-purple-700 font-medium mb-1">
+        <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 p-6 rounded-xl border text-slate-900">
+          <div className="text-sm font-medium mb-1">
             Économie totale
           </div>
-          <div className="text-3xl font-bold text-purple-800">
+          <div className="text-3xl font-bold">
             {savings.totalTermSavings.toLocaleString('fr-CA', { 
               style: 'currency', 
               currency: 'CAD',
               minimumFractionDigits: 0 
             })}
           </div>
-          <div className="text-xs text-purple-600 mt-1">
+          <div className="text-xs mt-1">
             à la fin du terme de {termYears} {termYears === 1 ? 'an' : 'ans'}
           </div>
         </div>

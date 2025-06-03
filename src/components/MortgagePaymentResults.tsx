@@ -10,156 +10,121 @@ interface MortgagePaymentResultsProps {
 }
 
 const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency }: MortgagePaymentResultsProps) => {
-  const getPaymentLabel = () => {
-    switch (paymentFrequency) {
-      case 'monthly':
-        return 'mensuel';
-      case 'biweekly':
-        return 'aux 2 semaines';
-      case 'biweekly-accelerated':
-        return 'aux 2 semaines (accéléré)';
-      case 'weekly':
-        return 'hebdomadaire';
-      default:
-        return 'régulier';
+  const getPaymentFrequencyText = (frequency: string) => {
+    switch (frequency) {
+      case 'monthly': return 'mensuel';
+      case 'biweekly': return 'aux deux semaines';
+      case 'biweekly-accelerated': return 'aux deux semaines (accéléré)';
+      case 'weekly': return 'hebdomadaire';
+      default: return 'mensuel';
     }
   };
 
-  const getPaymentsCount = (years: number) => {
-    switch (paymentFrequency) {
-      case 'monthly':
-        return years * 12;
-      case 'biweekly':
-      case 'biweekly-accelerated':
-        return years * 26;
-      case 'weekly':
-        return years * 52;
-      default:
-        return years * 12;
+  const formatAmortization = (years: number) => {
+    const wholeYears = Math.floor(years);
+    const remainingMonths = Math.round((years - wholeYears) * 12);
+    
+    if (remainingMonths === 0) {
+      return `${wholeYears} ${wholeYears === 1 ? 'an' : 'ans'}`;
     }
+    
+    return `${wholeYears} ${wholeYears === 1 ? 'an' : 'ans'} et ${remainingMonths} mois`;
   };
 
   return (
     <div className="space-y-6">
-      <div className="text-center p-6 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-lg text-slate-800 shadow-lg">
-        <p className="text-sm mb-2 font-medium">
-          Paiement hypothécaire {getPaymentLabel()}
-        </p>
-        <p className="text-3xl font-bold">
-          {results.regularPayment.toLocaleString('fr-CA', { 
-            style: 'currency', 
-            currency: 'CAD', 
-            minimumFractionDigits: 0 
-          })}
-        </p>
-      </div>
-
-      <div className="bg-slate-50 p-4 md:p-6 rounded-lg">
-        <h4 className="font-semibold text-slate-900 mb-4 text-center text-sm md:text-base">
-          Résultats pour le terme ({term} ans)
-        </h4>
-        <div className="grid grid-cols-2 gap-2 md:gap-4 text-xs md:text-sm">
-          <div className="text-center p-2 md:p-3 bg-white rounded">
-            <p className="text-slate-600 mb-1 text-xs">Nombre de versements</p>
-            <p className="font-bold text-slate-900 text-sm md:text-base">{getPaymentsCount(term)}</p>
+      <h3 className="text-xl font-semibold text-slate-900 mb-6">
+        Résultats du calcul
+      </h3>
+      
+      <div className="space-y-4">
+        <div className="bg-primary text-white p-6 rounded-xl">
+          <div className="text-sm font-medium mb-2 opacity-90">
+            Paiement {getPaymentFrequencyText(paymentFrequency)}
           </div>
-          <div className="text-center p-2 md:p-3 bg-white rounded">
-            <p className="text-slate-600 mb-1 text-xs">Total des paiements</p>
-            <p className="font-bold text-slate-900 text-xs md:text-sm">
-              {results.termResults.totalPayments.toLocaleString('fr-CA', { 
-                style: 'currency', 
-                currency: 'CAD',
-                minimumFractionDigits: 0 
-              })}
-            </p>
-          </div>
-          <div className="text-center p-2 md:p-3 bg-white rounded">
-            <p className="text-slate-600 mb-1 text-xs">Paiement en capital</p>
-            <p className="font-bold text-green-600 text-xs md:text-sm">
-              {results.termResults.totalPrincipal.toLocaleString('fr-CA', { 
-                style: 'currency', 
-                currency: 'CAD',
-                minimumFractionDigits: 0 
-              })}
-            </p>
-          </div>
-          <div className="text-center p-2 md:p-3 bg-white rounded">
-            <p className="text-slate-600 mb-1 text-xs">Paiement en intérêts</p>
-            <p className="font-bold text-red-600 text-xs md:text-sm">
-              {results.termResults.totalInterest.toLocaleString('fr-CA', { 
-                style: 'currency', 
-                currency: 'CAD',
-                minimumFractionDigits: 0 
-              })}
-            </p>
-          </div>
-        </div>
-        <div className="mt-4 text-center p-2 md:p-3 bg-slate-800 text-white rounded">
-          <p className="text-xs mb-1">Solde restant après le terme</p>
-          <p className="font-bold text-sm md:text-lg">
-            {results.termResults.remainingBalance.toLocaleString('fr-CA', { 
+          <div className="text-3xl font-bold">
+            {results.payment.toLocaleString('fr-CA', { 
               style: 'currency', 
               currency: 'CAD',
               minimumFractionDigits: 0 
             })}
-          </p>
-        </div>
-      </div>
-
-      <div className="bg-slate-100 p-4 md:p-6 rounded-lg">
-        <h4 className="font-semibold text-slate-900 mb-4 text-center text-sm md:text-base">
-          Résultats pour l'amortissement complet ({Math.floor(amortization)} ans {Math.round((amortization % 1) * 12)} mois)
-        </h4>
-        <div className="grid grid-cols-2 gap-2 md:gap-4 text-xs md:text-sm">
-          <div className="text-center p-2 md:p-3 bg-white rounded">
-            <p className="text-slate-600 mb-1 text-xs">Nombre de versements</p>
-            <p className="font-bold text-slate-900 text-sm md:text-base">{getPaymentsCount(amortization)}</p>
-          </div>
-          <div className="text-center p-2 md:p-3 bg-white rounded">
-            <p className="text-slate-600 mb-1 text-xs">Coût total</p>
-            <p className="font-bold text-slate-900 text-xs md:text-sm">
-              {results.amortizationResults.totalPayments.toLocaleString('fr-CA', { 
-                style: 'currency', 
-                currency: 'CAD',
-                minimumFractionDigits: 0 
-              })}
-            </p>
-          </div>
-          <div className="text-center p-2 md:p-3 bg-white rounded">
-            <p className="text-slate-600 mb-1 text-xs">Capital total</p>
-            <p className="font-bold text-green-600 text-xs md:text-sm">
-              {results.amortizationResults.totalPrincipal.toLocaleString('fr-CA', { 
-                style: 'currency', 
-                currency: 'CAD',
-                minimumFractionDigits: 0 
-              })}
-            </p>
-          </div>
-          <div className="text-center p-2 md:p-3 bg-white rounded">
-            <p className="text-slate-600 mb-1 text-xs">Intérêts totaux</p>
-            <p className="font-bold text-red-600 text-xs md:text-sm">
-              {results.amortizationResults.totalInterest.toLocaleString('fr-CA', { 
-                style: 'currency', 
-                currency: 'CAD',
-                minimumFractionDigits: 0 
-              })}
-            </p>
           </div>
         </div>
-      </div>
 
-      <div className="text-center pt-4">
-        <p className="text-xs md:text-sm text-slate-600 mb-4">
-          Calculs basés sur une capitalisation semi-annuelle. Consultez-moi pour une évaluation personnalisée.
-        </p>
-        <a 
-          href="https://calendly.com/tbourque-planipret" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="inline-flex items-center px-4 md:px-6 py-2 md:py-3 bg-primary text-white font-medium rounded-full hover:bg-primary/90 transition-colors text-sm md:text-base"
-        >
-          Discuter de votre projet
-        </a>
+        <div className="bg-slate-100 p-6 rounded-xl">
+          <div className="text-sm font-medium text-slate-600 mb-2">
+            Montant total financé
+          </div>
+          <div className="text-2xl font-bold text-slate-900">
+            {results.loanAmount.toLocaleString('fr-CA', { 
+              style: 'currency', 
+              currency: 'CAD',
+              minimumFractionDigits: 0 
+            })}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+            <div className="text-sm font-medium text-blue-700 mb-1">
+              Coût total pendant le terme
+            </div>
+            <div className="text-lg font-bold text-blue-900">
+              {results.totalCostTerm.toLocaleString('fr-CA', { 
+                style: 'currency', 
+                currency: 'CAD',
+                minimumFractionDigits: 0 
+              })}
+            </div>
+            <div className="text-xs text-blue-600 mt-1">
+              Terme de {term} {term === 1 ? 'an' : 'ans'}
+            </div>
+          </div>
+
+          <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+            <div className="text-sm font-medium text-green-700 mb-1">
+              Coût total sur l'amortissement complet
+            </div>
+            <div className="text-lg font-bold text-green-900">
+              {results.totalCostAmortization.toLocaleString('fr-CA', { 
+                style: 'currency', 
+                currency: 'CAD',
+                minimumFractionDigits: 0 
+              })}
+            </div>
+            <div className="text-xs text-green-600 mt-1">
+              Amortissement de {formatAmortization(amortization)}
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="bg-orange-50 p-4 rounded-lg border border-orange-200">
+            <div className="text-sm font-medium text-orange-700 mb-1">
+              Intérêts pendant le terme
+            </div>
+            <div className="text-lg font-bold text-orange-900">
+              {results.totalInterestTerm.toLocaleString('fr-CA', { 
+                style: 'currency', 
+                currency: 'CAD',
+                minimumFractionDigits: 0 
+              })}
+            </div>
+          </div>
+
+          <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
+            <div className="text-sm font-medium text-purple-700 mb-1">
+              Intérêts sur l'amortissement complet
+            </div>
+            <div className="text-lg font-bold text-purple-900">
+              {results.totalInterestAmortization.toLocaleString('fr-CA', { 
+                style: 'currency', 
+                currency: 'CAD',
+                minimumFractionDigits: 0 
+              })}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

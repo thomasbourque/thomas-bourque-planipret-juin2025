@@ -119,7 +119,9 @@ const BorrowingCapacityForm = ({
           Taux de qualification
           <Popover>
             <PopoverTrigger asChild>
-              <Info className="w-4 h-4 text-slate-500 cursor-help" />
+              <button type="button" className="focus:outline-none">
+                <Info className="w-4 h-4 text-slate-500 cursor-help" />
+              </button>
             </PopoverTrigger>
             <PopoverContent className="w-80 p-4 bg-white border shadow-lg z-[70]" side="top">
               <div className="space-y-2">
@@ -155,7 +157,9 @@ const BorrowingCapacityForm = ({
           Dettes mensuelles
           <Popover>
             <PopoverTrigger asChild>
-              <Info className="w-4 h-4 text-slate-500 cursor-help" />
+              <button type="button" className="focus:outline-none">
+                <Info className="w-4 h-4 text-slate-500 cursor-help" />
+              </button>
             </PopoverTrigger>
             <PopoverContent className="w-80 p-4 bg-white border shadow-lg z-[70]" side="top">
               <div className="space-y-2">
@@ -205,7 +209,9 @@ const BorrowingCapacityForm = ({
           Taxes résidentielles mensuelles
           <Popover>
             <PopoverTrigger asChild>
-              <Info className="w-4 h-4 text-slate-500 cursor-help" />
+              <button type="button" className="focus:outline-none">
+                <Info className="w-4 h-4 text-slate-500 cursor-help" />
+              </button>
             </PopoverTrigger>
             <PopoverContent className="w-80 p-4 bg-white border shadow-lg z-[70]" side="top">
               <div className="space-y-2">
@@ -236,7 +242,9 @@ const BorrowingCapacityForm = ({
           Frais de copropriété mensuels (si applicable)
           <Popover>
             <PopoverTrigger asChild>
-              <Info className="w-4 h-4 text-slate-500 cursor-help" />
+              <button type="button" className="focus:outline-none">
+                <Info className="w-4 h-4 text-slate-500 cursor-help" />
+              </button>
             </PopoverTrigger>
             <PopoverContent className="w-80 p-4 bg-white border shadow-lg z-[70]" side="top">
               <div className="space-y-2">

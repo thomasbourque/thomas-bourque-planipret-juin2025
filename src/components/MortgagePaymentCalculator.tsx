@@ -49,7 +49,7 @@ const MortgagePaymentCalculator = () => {
               Calculateur de paiement hypothécaire
             </h2>
             <p className="body-md text-slate-700 max-w-3xl mx-auto">
-              Calculez vos paiements hypothécaires mensuels et découvrez le coût total de votre hypothèque sur le terme et l'amortissement complet.
+              Calculez vos paiements hypothécaires et découvrez le coût total de votre hypothèque pour la durée du terme et de l'amortissement complet.
             </p>
           </div>
 

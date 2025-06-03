@@ -114,14 +114,17 @@ const MortgagePaymentForm = ({
           </div>
         ) : (
           <div className="space-y-2">
-            <Input
-              type="number"
-              value={downPaymentPercentage}
-              onChange={(e) => handleDownPaymentPercentageChange(Number(e.target.value))}
-              className="text-lg"
-              min="5"
-              max="100"
-            />
+            <div className="relative">
+              <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-500">%</span>
+              <Input
+                type="number"
+                value={downPaymentPercentage}
+                onChange={(e) => handleDownPaymentPercentageChange(Number(e.target.value))}
+                className="text-lg pr-8"
+                min="5"
+                max="100"
+              />
+            </div>
             <p className="text-sm text-slate-600">
               Montant: {downPayment.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}
             </p>
