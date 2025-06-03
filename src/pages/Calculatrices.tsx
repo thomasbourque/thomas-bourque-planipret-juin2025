@@ -23,7 +23,7 @@ const Calculatrices = () => {
           </div>
 
           <Tabs defaultValue="payment" className="w-full max-w-6xl mx-auto">
-            <TabsList className="grid w-full grid-cols-3 gap-1 mb-6 md:mb-8 h-auto p-1 mx-2 sm:mx-0">
+            <TabsList className="grid w-full grid-cols-1 sm:grid-cols-3 gap-1 mb-6 md:mb-8 h-auto p-1 mx-2 sm:mx-0">
               <TabsTrigger value="payment" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center">
                 Paiement hypothécaire
               </TabsTrigger>
@@ -35,19 +35,19 @@ const Calculatrices = () => {
               </TabsTrigger>
             </TabsList>
             
-            <TabsContent value="payment" className="mt-4 md:mt-8 w-full px-2 sm:px-0">
+            <TabsContent value="payment" className="mt-4 md:mt-8 w-full px-0">
               <div className="w-full">
                 <MortgagePaymentCalculator />
               </div>
             </TabsContent>
             
-            <TabsContent value="capacity" className="mt-4 md:mt-8 w-full px-2 sm:px-0">
+            <TabsContent value="capacity" className="mt-4 md:mt-8 w-full px-0">
               <div className="w-full">
                 <BorrowingCapacityCalculator />
               </div>
             </TabsContent>
             
-            <TabsContent value="savings" className="mt-4 md:mt-8 w-full px-2 sm:px-0">
+            <TabsContent value="savings" className="mt-4 md:mt-8 w-full px-0">
               <div className="w-full">
                 <MortgageCalculator />
               </div>

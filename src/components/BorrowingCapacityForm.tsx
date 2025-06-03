@@ -115,8 +115,23 @@ const BorrowingCapacityForm = ({
       </div>
 
       <div>
-        <Label className="block text-base md:text-lg font-medium text-slate-900 mb-4">
+        <Label className="flex items-center gap-2 text-base md:text-lg font-medium text-slate-900 mb-4">
           Taux de qualification
+          <Popover>
+            <PopoverTrigger asChild>
+              <Info className="w-4 h-4 text-slate-500 cursor-help" />
+            </PopoverTrigger>
+            <PopoverContent className="w-80 p-4 bg-white border shadow-lg z-[70]" side="top">
+              <div className="space-y-2">
+                <p className="text-sm">
+                  Le taux de qualification (aussi appelé stress test) est un taux d'intérêt utilisé pour déterminer si vous êtes en mesure d'assumer un prêt hypothécaire même si les taux augmentent ou que votre situation financière change.
+                </p>
+                <p className="text-sm font-medium">
+                  Il s'agit du plus élevé entre le taux de référence en vigueur actuellement et le taux contractuel majoré de 2%.
+                </p>
+              </div>
+            </PopoverContent>
+          </Popover>
         </Label>
         <div className="space-y-4">
           <Slider
@@ -186,8 +201,23 @@ const BorrowingCapacityForm = ({
       </div>
 
       <div>
-        <Label htmlFor="propertyTaxes" className="block text-base md:text-lg font-medium text-slate-900 mb-2">
+        <Label htmlFor="propertyTaxes" className="flex items-center gap-2 text-base md:text-lg font-medium text-slate-900 mb-2">
           Taxes résidentielles mensuelles
+          <Popover>
+            <PopoverTrigger asChild>
+              <Info className="w-4 h-4 text-slate-500 cursor-help" />
+            </PopoverTrigger>
+            <PopoverContent className="w-80 p-4 bg-white border shadow-lg z-[70]" side="top">
+              <div className="space-y-2">
+                <p className="text-sm">
+                  Valeur par défaut : 1% du prix d'achat annuellement, divisé par 12 mois.
+                </p>
+                <p className="text-sm font-medium">
+                  Vous pouvez ajuster cette valeur selon les taxes réelles de votre municipalité.
+                </p>
+              </div>
+            </PopoverContent>
+          </Popover>
         </Label>
         <div className="relative">
           <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500">$</span>
@@ -202,8 +232,23 @@ const BorrowingCapacityForm = ({
       </div>
 
       <div>
-        <Label htmlFor="condoFees" className="block text-base md:text-lg font-medium text-slate-900 mb-2">
-          Frais de copropriété mensuels
+        <Label htmlFor="condoFees" className="flex items-center gap-2 text-base md:text-lg font-medium text-slate-900 mb-2">
+          Frais de copropriété mensuels (si applicable)
+          <Popover>
+            <PopoverTrigger asChild>
+              <Info className="w-4 h-4 text-slate-500 cursor-help" />
+            </PopoverTrigger>
+            <PopoverContent className="w-80 p-4 bg-white border shadow-lg z-[70]" side="top">
+              <div className="space-y-2">
+                <p className="text-sm">
+                  Les ratios ABD et ATD incluent la moitié de ces frais dans le calcul.
+                </p>
+                <p className="text-sm font-medium">
+                  Entrez 0 si la propriété n'est pas en copropriété.
+                </p>
+              </div>
+            </PopoverContent>
+          </Popover>
         </Label>
         <div className="relative">
           <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500">$</span>

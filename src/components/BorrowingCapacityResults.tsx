@@ -1,6 +1,8 @@
 
 import React from "react";
 import { BorrowingCapacityResult } from "@/utils/borrowingCapacityCalculations";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Info } from "lucide-react";
 
 interface BorrowingCapacityResultsProps {
   results: BorrowingCapacityResult;
@@ -37,7 +39,25 @@ const BorrowingCapacityResults = ({ results }: BorrowingCapacityResultsProps) =>
 
       <div className="grid grid-cols-2 gap-4">
         <div className="text-center p-4 bg-slate-100 rounded-lg">
-          <p className="text-xs text-slate-600 mb-1">Ratio ABD</p>
+          <div className="flex items-center justify-center gap-1 mb-1">
+            <p className="text-xs text-slate-600">Ratio ABD</p>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Info className="w-3 h-3 text-slate-500 cursor-help" />
+              </PopoverTrigger>
+              <PopoverContent className="w-80 p-4 bg-white border shadow-lg z-[70]" side="top">
+                <div className="space-y-2">
+                  <p className="text-sm font-medium">Ratio ABD (Amortissement Brut de la Dette)</p>
+                  <p className="text-sm">
+                    Calcul : (Paiement hypothécaire + chauffage + taxes + 50% des frais de condo) ÷ revenu mensuel brut
+                  </p>
+                  <p className="text-sm font-medium">
+                    Maximum accepté : 39%
+                  </p>
+                </div>
+              </PopoverContent>
+            </Popover>
+          </div>
           <p className={`text-lg font-bold ${results.abdRatio > 39 ? 'text-red-600' : 'text-green-600'}`}>
             {results.abdRatio.toFixed(1)}%
           </p>
@@ -45,7 +65,25 @@ const BorrowingCapacityResults = ({ results }: BorrowingCapacityResultsProps) =>
         </div>
         
         <div className="text-center p-4 bg-slate-100 rounded-lg">
-          <p className="text-xs text-slate-600 mb-1">Ratio ATD</p>
+          <div className="flex items-center justify-center gap-1 mb-1">
+            <p className="text-xs text-slate-600">Ratio ATD</p>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Info className="w-3 h-3 text-slate-500 cursor-help" />
+              </PopoverTrigger>
+              <PopoverContent className="w-80 p-4 bg-white border shadow-lg z-[70]" side="top">
+                <div className="space-y-2">
+                  <p className="text-sm font-medium">Ratio ATD (Amortissement Total de la Dette)</p>
+                  <p className="text-sm">
+                    Calcul : (Paiement hypothécaire + chauffage + taxes + 50% des frais de condo + dettes mensuelles) ÷ revenu mensuel brut
+                  </p>
+                  <p className="text-sm font-medium">
+                    Maximum accepté : 44%
+                  </p>
+                </div>
+              </PopoverContent>
+            </Popover>
+          </div>
           <p className={`text-lg font-bold ${results.atdRatio > 44 ? 'text-red-600' : 'text-green-600'}`}>
             {results.atdRatio.toFixed(1)}%
           </p>
