@@ -116,16 +116,16 @@ const Hero = () => {
                 <strong>Je travaille pour vos intérêts, pas ceux de la banque!</strong>
               </p>
               <p className="body-md text-slate-700 mb-4">
-                Après 7 ans à œuvrer en analyse quantitative, j'ai fait le saut comme courtier hypothécaire pour retrouver le contact avec la clientèle et aider les gens à y voir plus clair dans la jungle du financement résidentiel, un domaine trop souvent mal compris. J'ai la conviction que l'obtention d'un prêt hypothécaire devrait toujours demeurer un processus clair, facile et agréable sans devenir une charge mentale accablante.
+                J'aide mes clients à y voir plus clair dans la jungle du financement résidentiel, un domaine trop souvent mal compris. L'obtention d'un prêt hypothécaire devrait à mes yeux toujours demeurer un processus facile et simple et non une charge mentale accablante.
               </p>
               <p className="body-md text-slate-700 mb-4">
-                Détenteur d'un baccalauréat en administration des affaires de l'Université Laval, je carbure à faire parler les chiffres afin d'aider mes clients à prendre une décision éclairée pour leur financement hypothécaire.
+                Détenteur d'un baccalauréat en administration des affaires de l'Université Laval et ayant travaillé durant 7 ans en analyse quantitative, je carbure à faire parler les chiffres. Mon approche à la fois humaine et analytique a un objectif clair : vous permettre de prendre une décision éclairée pour votre projet de financement hypothécaire.
               </p>
               <p className="body-md text-slate-700 mb-4">
                 Mes services sont complètement sans frais et vous assurent d'obtenir les meilleures conditions d'emprunt et le taux d'intérêt le plus avantageux sur le marché parmi une vingtaine d'institutions financières.
               </p>
               <p className="body-md text-slate-700">
-                Basé à Québec, je peux vous servir à distance où que vous soyez au Québec. Prenons quelques minutes pour discuter ensemble de votre projet. Vous serez surpris, un simple appel de quelques minutes peut souvent mener à des économies substantielles.
+                Basé à Québec, je peux vous servir à distance où que vous soyez au Québec. Prenons quelques minutes pour discuter ensemble de votre projet. Vous serez surpris, un simple appel de quelques minutes peut souvent mener à des économies substantielles ou conduire à une solution à laquelle vous n'aviez pas pensé.
               </p>
             </div>
             

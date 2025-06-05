@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Phone, FileText, Search, MessageSquare, Send, Home } from "lucide-react";
 
@@ -7,38 +6,38 @@ const Fonctionnement = () => {
     {
       number: 1,
       icon: Phone,
-      title: "Rencontre initiale",
-      description: "Nous commençons par un appel personnalisé pour comprendre votre situation financière globale. Que vous envisagiez un refinancement, une restructuration de prêt ou l'optimisation de votre hypothèque actuelle, cet appel nous permet de définir votre situation, vos besoins et vos objectifs.",
+      title: "Appel initial",
+      description: "Je débute par un appel pour comprendre votre situation financière et votre réalité. Peu importe votre projet, cette première étape nous permet de définir ensemble vos besoins et vos objectifs.",
     },
     {
       number: 2,
       icon: FileText,
       title: "Collecte de vos documents", 
-      description: "Une fois votre situation définie, nous vous assistons dans l'obtention de la documentation nécessaire. Qu'il s'agisse des documents financiers requis pour un refinancement ou un transfert, nous vous guidons pour réunir toutes les informations nécessaires et assurer la précision du dossier, le tout dans un maximum de simplicité.",
+      description: "Je vous assiste pour obtenir toute la documentation requise à la préparation de votre dossier. Je vous dirige pour que vous puissiez facilement réunir toutes ces informations et me les faire parvenir de façon sécurisée.",
     },
     {
       number: 3,
       icon: Search,
       title: "Analyse de votre situation",
-      description: "Après avoir réuni les informations requises, nous effectuons une analyse détaillée de votre situation financière : engagements, revenus, actifs et objectifs. Nous utilisons ces informations pour choisir la meilleure stratégie et aller négocier les meilleures conditions.",
+      description: "J'effectue une analyse détaillée de votre situation financière : engagements, revenus, actifs et projet hypothécaire. Cette analyse me permet d'identifier la meilleure stratégie pour vous et de négocier les meilleures conditions pour votre projet.",
     },
     {
       number: 4,
       icon: MessageSquare,
       title: "Choix de la solution",
-      description: "Une fois l'analyse effectuée, nous planifions un appel pour vous présenter votre stratégie personnalisée. Cela inclut l'analyse des options disponibles : refinancement, transfert ou optimisation de votre hypothèque, afin de choisir la solution qui vous permettra de gérer efficacement votre passif. Cet appel est souvent un moment ah ah! Mais nous nous assurons de vous expliquer le tout de manière simple et humaine, tout en respectant votre gestion du risque et vos perceptions.",
+      description: "Je vous présente une stratégie adaptée à votre réalité et à votre niveau de tolérance au risque. Je vous explique pourquoi il s'agit selon moi de la solution répondant le mieux à vos besoins et je réponds à toute vos interrogations. Nous identifions ensemble le prêteur à qui nous allons soumettre votre dossier.",
     },
     {
       number: 5,
       icon: Send,
       title: "Soumission du dossier",
-      description: "Enfin, nous soumettons votre dossier complet à l'institution financière que nous choisissons ensemble. Chaque détail est pris en compte pour une approbation rapide et avantageuse. Vous pouvez compter sur notre suivi rigoureux pour vous accompagner jusqu'à l'approbation finale.",
+      description: "Je soumets votre dossier complet à l'institution financière que nous avons retenue. Tout est mis en place pour favoriser une approbation rapide de votre dossier. J'assure un suivi rigoureux avec vous jusqu'à l'obtention de la lettre d'approbation finale.",
     },
     {
       number: 6,
       icon: Home,
       title: "Passage chez le notaire",
-      description: "Notre travaille ne s'arrête pas là, nous vous accompagnons jusque chez le notaire où vous signerez l'acte de vente et l'hypothèque, officialisant la transaction. Le notaire effectue les vérifications finales et enregistre votre propriété. Par la suite, nous restons à vos côtés pour assurer un suivi rigoureux et répondre à vos besoins futurs.",
+      description: "Je vous informe et vous guide pour les étapes finales y compris votre passage chez le notaire où vous signerez l'acte de vente et l'hypothèque afin d'officialiser la transaction. Le notaire effectue les vérifications et enregistre votre propriété. Je reste à votre disposition tout au long du processus et pour vos besoins hypothécaires futurs.",
     }
   ];
 

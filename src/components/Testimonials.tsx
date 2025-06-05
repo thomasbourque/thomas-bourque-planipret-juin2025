@@ -9,22 +9,22 @@ const Testimonials = () => {
     {
       name: "Alexis Drouin",
       position: "Breakeyville",
-      content: "Nous avons eu une expérience exceptionnelle avec Thomas. Son service était impeccable du début à la fin du processus. Thomas a fait preuve de professionnalisme en plus d'avoir une réactivité exemplaire. Il a su répondre à toutes nos questions avec clarté et patience, nous guidant à chaque étape. Grâce à lui, nous avons pu obtenir un prêt hypothécaire pour l'achat de notre première maison. Nous recommandons vivement Thomas à tous ceux qui recherchent un courtier accessible et dévoué.",
+      content: "Nous avons eu une expérience exceptionnelle avec Thomas. Son service était impeccable du début à la fin. Thomas a fait preuve de professionnalisme en plus de répondre super rapidement. Il a su répondre à toutes nos questions avec clarté et beaucoup de patience! Nous avons obtenu un prêt hypothécaire facilement pour l'achat de notre première maison. Nous recommandons vivement Thomas à tous ceux qui recherchent un courtier humain et dévoué.",
     },
     {
-      name: "Simon Cassista",
+      name: "Martine Trudeau",
       position: "Lebourgneuf",
-      content: "Wow! Quel excellent service reçu par Thomas. Il nous a guidé de façon honnête et transparente dans notre renouvellement hypothécaire en plus de nous dénicher un taux bien meilleur que celui offert par notre banque. Ses conseils judicieux nous ont permis de prendre des décisions éclairées. Je recommande définitivement ses services.",
+      content: "Wow! Quel excellent service reçu par Thomas. Il nous a guidé de façon honnête et transparente dans notre renouvellement hypothécaire en plus de nous dénicher un taux bien meilleur que celui offert par notre banque. Ses conseils judicieux nous ont permis d'économiser des milliers de dollars.",
     },
     {
       name: "Léo Gendron",
       position: "Cap-Rouge",
-      content: "En tant que premiers acheteurs, on avait plein de questions et on avait clairement besoin d'accompagnement. Une chance que Thomas était là! Il est compétent, informé, à l'écoute et super sympathique. N'hésitez pas à le contacter!",
+      content: "En tant que premiers acheteurs, on avait plein de questions et on avait besoin d'un accompagnement serré considérant les délais rapides. Une chance que Thomas était là! Il est compétent, informé, à l'écoute et super sympathique. N'hésitez pas à le contacter!",
     },
     {
-      name: "Mélanie Beauvais",
+      name: "Camille Lampron",
       position: "Sainte-Foy",
-      content: "Je conseille sans hésiter Thomas à tous ceux qui veulent acheter, vendre ou refinancer leur maison. C'est une personne qui est toujours à l'écoute de ses clients et qui cherche toutes les options possibles pour vous satisfaire. Je suis très satisfait du service et de la patience dont il a fait preuve. Plus jamais je ne passerai par la banque directement dans le futur!",
+      content: "Un service impeccable sur toute la ligne! Thomas est toujours à l'écoute de nos besoins et nous a négocié un meilleur taux que partout ailleurs. Je suis très satisfait du service et surtout de la patience dont il a fait preuve. Plus jamais je ne passerai par la banque directement dans le futur!",
     },
   ];
 

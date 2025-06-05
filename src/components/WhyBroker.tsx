@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Shield, DollarSign, Users, Network, Phone, Award } from "lucide-react";
 
@@ -7,32 +6,32 @@ const WhyBroker = () => {
     {
       icon: Shield,
       title: "Indépendance face aux banques",
-      description: "Je travaille pour vos intérêts, pas ceux d'une institution financière spécifique."
+      description: "Je travaille pour vos intérêts et non pour ceux d'une institution financière spécifique. Je vous présente les différents produits hypothécaires disponibles de façon objective et neutre."
     },
     {
       icon: DollarSign,
       title: "Économies potentielles",
-      description: "Accès instantané aux meilleurs taux du marché parmi plus de 20 institutions financières."
+      description: "J'ai un accès instantané aux meilleurs taux du marché parmi plus de 20 institutions financières reconnues."
     },
     {
       icon: Users,
       title: "Conseils et accompagnement",
-      description: "Support personnalisé tout au long du processus. Disponibilités le soir et la fin de semaine pour une réactivité rapide."
+      description: "Je prends le temps de comprendre votre réalité et je vous offre un accompagnement personnalisé pour maximiser votre santé financière. Je suis joignable le soir et la fin de semaine pour assurer une prise en charge rapide."
     },
     {
       icon: Network,
       title: "Réseau de professionnels",
-      description: "Références vers des courtiers immobiliers, conseillers financiers, comptables, notaires, inspecteurs, évaluateurs et autres experts de confiance."
+      description: "Au besoin, je vous redirige vers des partenaires de confiance qui faciliteront l'avancement de votre dossier (courtiers immobiliers, conseillers financiers, comptables, notaires, inspecteurs en bâtiment, évaluateurs agréés et autres experts)."
     },
     {
       icon: Phone,
       title: "Un seul point de contact",
-      description: "Fini les démarches multiples - je m'occupe de tout pour vous simplifier la vie."
+      description: "Je magasine à votre place et vous permet d'économiser du temps précieux. Je vous évite de devoir entreprendre des démarches auprès de plusieurs prêteurs pour connaître leurs offres."
     },
     {
       icon: Award,
-      title: "Service 100% gratuit",
-      description: "Aucuns frais pour vous - ma rémunération provient des institutions financières."
+      title: "Service 100 % gratuit",
+      description: "Aussi surprenant que ça puisse paraître, les services d'un courtier hypothécaire résidentiel sont complètement gratuits. Ma rémunération provient uniquement de l'institution financière qui vous consentira un prêt."
     }
   ];
 
@@ -41,12 +40,12 @@ const WhyBroker = () => {
       <div className="container">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <p className="body-md text-slate-700 max-w-3xl mx-auto mb-6">
-              Encore souvent méconnu au Québec, le rôle du courtier hypothécaire est pourtant crucial. Découvrez les avantages de travailler avec un courtier hypothécaire indépendant pour votre financement.
-            </p>
             <h2 className="heading-lg text-slate-900 mb-6">
               Pourquoi faire appel à un courtier hypothécaire?
             </h2>
+            <p className="body-md text-slate-700 max-w-3xl mx-auto mb-6">
+              Encore souvent méconnu au Québec, le rôle du courtier hypothécaire est pourtant crucial. Découvrez les avantages de travailler avec un courtier hypothécaire indépendant pour votre financement.
+            </p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
