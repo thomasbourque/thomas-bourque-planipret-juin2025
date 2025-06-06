@@ -11,11 +11,26 @@ interface BorrowingCapacityResultsProps {
 const BorrowingCapacityResults = ({ results }: BorrowingCapacityResultsProps) => {
   return (
     <div className="flex flex-col justify-center space-y-6">
+      {/* Prix d'achat maximal - Encadré principal en évidence */}
       <div className="text-center p-6 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-lg border border-yellow-500 shadow-lg">
         <p className="text-sm text-slate-800 mb-2 font-medium">
-          Capacité d'emprunt maximale
+          Prix d'achat maximal
         </p>
         <p className="text-3xl font-bold text-slate-800">
+          {results.maxPurchasePrice.toLocaleString('fr-CA', { 
+            style: 'currency', 
+            currency: 'CAD', 
+            minimumFractionDigits: 0 
+          })}
+        </p>
+      </div>
+
+      {/* Capacité d'emprunt */}
+      <div className="text-center p-6 bg-slate-800 rounded-lg border border-slate-700">
+        <p className="text-sm text-white mb-2">
+          Capacité d'emprunt maximale
+        </p>
+        <p className="text-2xl font-bold text-white">
           {results.maxBorrowingAmount.toLocaleString('fr-CA', { 
             style: 'currency', 
             currency: 'CAD', 
@@ -24,18 +39,24 @@ const BorrowingCapacityResults = ({ results }: BorrowingCapacityResultsProps) =>
         </p>
       </div>
 
-      <div className="text-center p-6 bg-slate-800 rounded-lg border border-slate-700">
-        <p className="text-sm text-white mb-2">
-          Prix d'achat maximal suggéré
-        </p>
-        <p className="text-2xl font-bold text-white">
-          {results.maxPurchasePrice.toLocaleString('fr-CA', { 
-            style: 'currency', 
-            currency: 'CAD', 
-            minimumFractionDigits: 0 
-          })}
-        </p>
-      </div>
+      {/* Prime d'assurance hypothécaire (si applicable) */}
+      {results.mortgageInsurancePremium > 0 && (
+        <div className="text-center p-4 bg-orange-50 rounded-lg border border-orange-200">
+          <p className="text-sm text-orange-700 mb-1">
+            Prime d'assurance hypothécaire
+          </p>
+          <p className="text-lg font-bold text-orange-800">
+            {results.mortgageInsurancePremium.toLocaleString('fr-CA', { 
+              style: 'currency', 
+              currency: 'CAD', 
+              minimumFractionDigits: 0 
+            })} ({results.mortgageInsuranceRate}%)
+          </p>
+          <p className="text-xs text-orange-600 mt-1">
+            Ratio prêt-valeur: {results.loanToValueRatio}%
+          </p>
+        </div>
+      )}
 
       <div className="grid grid-cols-2 gap-4">
         <div className="text-center p-4 bg-slate-100 rounded-lg">
@@ -53,6 +74,9 @@ const BorrowingCapacityResults = ({ results }: BorrowingCapacityResultsProps) =>
                   </p>
                   <p className="text-sm font-medium">
                     Maximum accepté : 39%
+                  </p>
+                  <p className="text-sm">
+                    Paiement disponible ABD: {results.abdAvailablePayment.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}
                   </p>
                 </div>
               </PopoverContent>
@@ -80,6 +104,9 @@ const BorrowingCapacityResults = ({ results }: BorrowingCapacityResultsProps) =>
                   <p className="text-sm font-medium">
                     Maximum accepté : 44%
                   </p>
+                  <p className="text-sm">
+                    Paiement disponible ATD: {results.atdAvailablePayment.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}
+                  </p>
                 </div>
               </PopoverContent>
             </Popover>
@@ -97,6 +124,7 @@ const BorrowingCapacityResults = ({ results }: BorrowingCapacityResultsProps) =>
           <p>Paiement hypothécaire mensuel : {results.monthlyPayment.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}</p>
           <p>Charges de logement totales : {results.housingCosts.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}</p>
           <p>Revenu mensuel brut : {results.monthlyIncome.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}</p>
+          <p>Paiement retenu (le plus restrictif) : {Math.min(results.abdAvailablePayment, results.atdAvailablePayment).toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}</p>
         </div>
       </div>
 
