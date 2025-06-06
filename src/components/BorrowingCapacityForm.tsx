@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -44,6 +43,21 @@ const BorrowingCapacityForm = ({
   condoFees,
   setCondoFees
 }: BorrowingCapacityFormProps) => {
+  const handleInputFocus = (value: number, setValue: (val: number) => void) => {
+    if (value === 0) {
+      setValue(0);
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, setValue: (val: number) => void) => {
+    const value = e.target.value;
+    if (value === '') {
+      setValue(0);
+    } else {
+      setValue(Number(value));
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div>
@@ -69,9 +83,11 @@ const BorrowingCapacityForm = ({
           <Input
             id="annualIncome"
             type="number"
-            value={annualIncome}
-            onChange={(e) => setAnnualIncome(Number(e.target.value))}
+            value={annualIncome === 0 ? '' : annualIncome}
+            onFocus={() => handleInputFocus(annualIncome, setAnnualIncome)}
+            onChange={(e) => handleInputChange(e, setAnnualIncome)}
             className="text-base md:text-lg pl-8"
+            placeholder="0"
           />
         </div>
       </div>
@@ -85,9 +101,11 @@ const BorrowingCapacityForm = ({
           <Input
             id="downPayment"
             type="number"
-            value={downPayment}
-            onChange={(e) => setDownPayment(Number(e.target.value))}
+            value={downPayment === 0 ? '' : downPayment}
+            onFocus={() => handleInputFocus(downPayment, setDownPayment)}
+            onChange={(e) => handleInputChange(e, setDownPayment)}
             className="text-base md:text-lg pl-8"
+            placeholder="0"
           />
         </div>
       </div>
@@ -175,9 +193,11 @@ const BorrowingCapacityForm = ({
           <Input
             id="monthlyDebts"
             type="number"
-            value={monthlyDebts}
-            onChange={(e) => setMonthlyDebts(Number(e.target.value))}
+            value={monthlyDebts === 0 ? '' : monthlyDebts}
+            onFocus={() => handleInputFocus(monthlyDebts, setMonthlyDebts)}
+            onChange={(e) => handleInputChange(e, setMonthlyDebts)}
             className="text-base md:text-lg pl-8"
+            placeholder="0"
           />
         </div>
       </div>
@@ -191,9 +211,11 @@ const BorrowingCapacityForm = ({
           <Input
             id="heatingCosts"
             type="number"
-            value={heatingCosts}
-            onChange={(e) => setHeatingCosts(Number(e.target.value))}
+            value={heatingCosts === 0 ? '' : heatingCosts}
+            onFocus={() => handleInputFocus(heatingCosts, setHeatingCosts)}
+            onChange={(e) => handleInputChange(e, setHeatingCosts)}
             className="text-base md:text-lg pl-8"
+            placeholder="0"
           />
         </div>
       </div>
@@ -207,9 +229,11 @@ const BorrowingCapacityForm = ({
           <Input
             id="propertyTaxes"
             type="number"
-            value={propertyTaxes}
-            onChange={(e) => setPropertyTaxes(Number(e.target.value))}
+            value={propertyTaxes === 0 ? '' : propertyTaxes}
+            onFocus={() => handleInputFocus(propertyTaxes, setPropertyTaxes)}
+            onChange={(e) => handleInputChange(e, setPropertyTaxes)}
             className="text-base md:text-lg pl-8"
+            placeholder="0"
           />
         </div>
       </div>
@@ -240,9 +264,11 @@ const BorrowingCapacityForm = ({
           <Input
             id="condoFees"
             type="number"
-            value={condoFees}
-            onChange={(e) => setCondoFees(Number(e.target.value))}
+            value={condoFees === 0 ? '' : condoFees}
+            onFocus={() => handleInputFocus(condoFees, setCondoFees)}
+            onChange={(e) => handleInputChange(e, setCondoFees)}
             className="text-base md:text-lg pl-8"
+            placeholder="0"
           />
         </div>
       </div>

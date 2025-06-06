@@ -1,4 +1,3 @@
-
 import React from "react";
 import { BorrowingCapacityResult } from "@/utils/borrowingCapacityCalculations";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -23,14 +22,9 @@ const BorrowingCapacityResults = ({ results }: BorrowingCapacityResultsProps) =>
             minimumFractionDigits: 0 
           })}
         </p>
-        {results.isConstrainedByDownPayment && (
+        {(results.isConstrainedByDownPayment || results.isConstrainedByMinimumDownPayment) && (
           <p className="text-xs text-slate-700 mt-2">
-            Limité par la mise de fonds minimale de 5%
-          </p>
-        )}
-        {results.isConstrainedByMinimumDownPayment && (
-          <p className="text-xs text-slate-700 mt-2">
-            Limité par la règle de mise de fonds progressive
+            Limité par la règle de mise de fonds minimale
           </p>
         )}
       </div>
@@ -155,7 +149,7 @@ const BorrowingCapacityResults = ({ results }: BorrowingCapacityResultsProps) =>
           <p>Revenu mensuel brut : {results.monthlyIncome.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}</p>
           {(results.isConstrainedByDownPayment || results.isConstrainedByMinimumDownPayment) && (
             <p className="text-orange-700 font-medium">
-              Note: Le calcul est limité par {results.isConstrainedByDownPayment ? 'la règle de mise de fonds minimale de 5%' : 'la règle de mise de fonds progressive'}
+              Note: Le calcul est limité par la règle de mise de fonds minimale (5 % du premier 500 000$ et 10 % de l'excédent)
             </p>
           )}
         </div>
