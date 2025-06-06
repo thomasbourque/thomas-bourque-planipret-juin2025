@@ -25,7 +25,17 @@ export interface BorrowingCapacityResult {
   abdAvailablePayment: number;
   atdAvailablePayment: number;
   isConstrainedByDownPayment: boolean;
+  isConstrainedByMinimumDownPayment: boolean;
+  minimumDownPaymentRequired: number;
 }
+
+const calculateMinimumDownPayment = (purchasePrice: number): number => {
+  if (purchasePrice <= 500000) {
+    return purchasePrice * 0.05;
+  } else {
+    return 500000 * 0.05 + (purchasePrice - 500000) * 0.10;
+  }
+};
 
 export const calculateBorrowingCapacity = (input: BorrowingCapacityInput): BorrowingCapacityResult => {
   const {
@@ -94,18 +104,43 @@ export const calculateBorrowingCapacity = (input: BorrowingCapacityInput): Borro
     mortgageInsurancePremium = maxLoanAmount * (mortgageInsuranceRate / 100);
   }
 
-  // Étape 5: Prix d'achat maximal avant contrainte de mise de fonds minimale
+  // Étape 5: Prix d'achat maximal avant contraintes
   let maxPurchasePrice = downPayment + maxLoanAmount + mortgageInsurancePremium;
 
-  // Nouvelle contrainte: La mise de fonds doit représenter au moins 5% du prix d'achat
+  // Contrainte 1: La mise de fonds doit représenter au moins 5% du prix d'achat
   const maxPurchasePriceBasedOnDownPayment = downPayment / 0.05;
   let isConstrainedByDownPayment = false;
 
   if (maxPurchasePriceBasedOnDownPayment < maxPurchasePrice) {
     maxPurchasePrice = maxPurchasePriceBasedOnDownPayment;
-    maxLoanAmount = maxPurchasePrice - downPayment - mortgageInsurancePremium;
     isConstrainedByDownPayment = true;
   }
+
+  // Contrainte 2: Vérification de la mise de fonds minimale progressive
+  const minimumDownPaymentRequired = calculateMinimumDownPayment(maxPurchasePrice);
+  let isConstrainedByMinimumDownPayment = false;
+
+  if (downPayment < minimumDownPaymentRequired) {
+    // Calculer le prix d'achat maximal basé sur la mise de fonds disponible
+    let adjustedMaxPrice = maxPurchasePrice;
+    
+    // Résolution itérative pour trouver le prix maximal respectant la règle de mise de fonds progressive
+    for (let testPrice = maxPurchasePrice; testPrice >= 0; testPrice -= 1000) {
+      const requiredDownPayment = calculateMinimumDownPayment(testPrice);
+      if (downPayment >= requiredDownPayment) {
+        adjustedMaxPrice = testPrice;
+        break;
+      }
+    }
+    
+    if (adjustedMaxPrice < maxPurchasePrice) {
+      maxPurchasePrice = adjustedMaxPrice;
+      isConstrainedByMinimumDownPayment = true;
+    }
+  }
+
+  // Recalculer le montant de prêt final
+  maxLoanAmount = maxPurchasePrice - downPayment - mortgageInsurancePremium;
 
   // Calcul du paiement mensuel réel avec le montant final
   const calculateMonthlyPayment = (principal: number, annualRate: number, amortizationYears: number) => {
@@ -141,6 +176,8 @@ export const calculateBorrowingCapacity = (input: BorrowingCapacityInput): Borro
     loanToValueRatio: Math.round(loanToValueRatio * 100) / 100,
     abdAvailablePayment: Math.round(abdAvailablePayment),
     atdAvailablePayment: Math.round(atdAvailablePayment),
-    isConstrainedByDownPayment
+    isConstrainedByDownPayment,
+    isConstrainedByMinimumDownPayment,
+    minimumDownPaymentRequired: Math.round(minimumDownPaymentRequired)
   };
 };

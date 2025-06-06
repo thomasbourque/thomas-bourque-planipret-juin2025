@@ -6,7 +6,6 @@ import BorrowingCapacityResults from "./BorrowingCapacityResults";
 
 const BorrowingCapacityCalculator = () => {
   const [annualIncome, setAnnualIncome] = useState(80000);
-  const [coborrowersIncome, setCoborrowersIncome] = useState(0);
   const [downPayment, setDownPayment] = useState(50000);
   const [amortization, setAmortization] = useState(25);
   const [interestRate, setInterestRate] = useState([4.5]);
@@ -17,7 +16,7 @@ const BorrowingCapacityCalculator = () => {
 
   const results = calculateBorrowingCapacity({
     annualIncome,
-    coborrowersIncome,
+    coborrowersIncome: 0, // Supprimé car maintenant inclus dans annualIncome
     downPayment,
     amortization,
     interestRate: interestRate[0],
@@ -45,8 +44,6 @@ const BorrowingCapacityCalculator = () => {
               <BorrowingCapacityForm
                 annualIncome={annualIncome}
                 setAnnualIncome={setAnnualIncome}
-                coborrowersIncome={coborrowersIncome}
-                setCoborrowersIncome={setCoborrowersIncome}
                 downPayment={downPayment}
                 setDownPayment={setDownPayment}
                 amortization={amortization}

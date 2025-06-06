@@ -10,8 +10,6 @@ import { Info } from "lucide-react";
 interface BorrowingCapacityFormProps {
   annualIncome: number;
   setAnnualIncome: (value: number) => void;
-  coborrowersIncome: number;
-  setCoborrowersIncome: (value: number) => void;
   downPayment: number;
   setDownPayment: (value: number) => void;
   amortization: number;
@@ -31,8 +29,6 @@ interface BorrowingCapacityFormProps {
 const BorrowingCapacityForm = ({
   annualIncome,
   setAnnualIncome,
-  coborrowersIncome,
-  setCoborrowersIncome,
   downPayment,
   setDownPayment,
   amortization,
@@ -51,8 +47,22 @@ const BorrowingCapacityForm = ({
   return (
     <div className="space-y-6">
       <div>
-        <Label htmlFor="annualIncome" className="block text-base md:text-lg font-medium text-slate-900 mb-2">
+        <Label htmlFor="annualIncome" className="flex items-center gap-2 text-base md:text-lg font-medium text-slate-900 mb-2">
           Revenu brut annuel
+          <Popover>
+            <PopoverTrigger asChild>
+              <button type="button" className="focus:outline-none">
+                <Info className="w-4 h-4 text-slate-500 cursor-help" />
+              </button>
+            </PopoverTrigger>
+            <PopoverContent className="w-80 p-4 bg-white border shadow-lg z-[70]" side="top">
+              <div className="space-y-2">
+                <p className="text-sm">
+                  En présence de deux coemprunteurs ou plus, additionner le revenu brut total de tous les coemprunteurs.
+                </p>
+              </div>
+            </PopoverContent>
+          </Popover>
         </Label>
         <div className="relative">
           <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500">$</span>
@@ -61,22 +71,6 @@ const BorrowingCapacityForm = ({
             type="number"
             value={annualIncome}
             onChange={(e) => setAnnualIncome(Number(e.target.value))}
-            className="text-base md:text-lg pl-8"
-          />
-        </div>
-      </div>
-
-      <div>
-        <Label htmlFor="coborrowersIncome" className="block text-base md:text-lg font-medium text-slate-900 mb-2">
-          Revenu brut annuel des coemprunteurs (optionnel)
-        </Label>
-        <div className="relative">
-          <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500">$</span>
-          <Input
-            id="coborrowersIncome"
-            type="number"
-            value={coborrowersIncome}
-            onChange={(e) => setCoborrowersIncome(Number(e.target.value))}
             className="text-base md:text-lg pl-8"
           />
         </div>
@@ -213,10 +207,9 @@ const BorrowingCapacityForm = ({
           <Input
             id="propertyTaxes"
             type="number"
-            value={propertyTaxes || ''}
-            onChange={(e) => setPropertyTaxes(Number(e.target.value) || 0)}
+            value={propertyTaxes}
+            onChange={(e) => setPropertyTaxes(Number(e.target.value))}
             className="text-base md:text-lg pl-8"
-            placeholder="Entrez le montant annuel"
           />
         </div>
       </div>

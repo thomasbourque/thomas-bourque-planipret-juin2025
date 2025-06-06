@@ -28,6 +28,11 @@ const BorrowingCapacityResults = ({ results }: BorrowingCapacityResultsProps) =>
             Limité par la mise de fonds minimale de 5%
           </p>
         )}
+        {results.isConstrainedByMinimumDownPayment && (
+          <p className="text-xs text-slate-700 mt-2">
+            Limité par la règle de mise de fonds progressive
+          </p>
+        )}
       </div>
 
       {/* Capacité d'emprunt */}
@@ -59,6 +64,25 @@ const BorrowingCapacityResults = ({ results }: BorrowingCapacityResultsProps) =>
           </p>
           <p className="text-xs text-orange-600 mt-1">
             Ratio prêt-valeur: {results.loanToValueRatio}%
+          </p>
+        </div>
+      )}
+
+      {/* Mise de fonds minimale requise (si contrainte) */}
+      {results.isConstrainedByMinimumDownPayment && (
+        <div className="text-center p-4 bg-red-50 rounded-lg border border-red-200">
+          <p className="text-sm text-red-700 mb-1">
+            Mise de fonds minimale requise
+          </p>
+          <p className="text-lg font-bold text-red-800">
+            {results.minimumDownPaymentRequired.toLocaleString('fr-CA', { 
+              style: 'currency', 
+              currency: 'CAD', 
+              minimumFractionDigits: 0 
+            })}
+          </p>
+          <p className="text-xs text-red-600 mt-1">
+            5% sur les premiers 500 000$ + 10% sur l'excédent
           </p>
         </div>
       )}
@@ -129,16 +153,17 @@ const BorrowingCapacityResults = ({ results }: BorrowingCapacityResultsProps) =>
           <p>Paiement hypothécaire mensuel : {results.monthlyPayment.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}</p>
           <p>Charges de logement totales : {results.housingCosts.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}</p>
           <p>Revenu mensuel brut : {results.monthlyIncome.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}</p>
-          <p>Paiement retenu (le plus restrictif) : {Math.min(results.abdAvailablePayment, results.atdAvailablePayment).toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}</p>
-          {results.isConstrainedByDownPayment && (
-            <p className="text-orange-700 font-medium">Note: Le calcul est limité par la règle de mise de fonds minimale de 5%</p>
+          {(results.isConstrainedByDownPayment || results.isConstrainedByMinimumDownPayment) && (
+            <p className="text-orange-700 font-medium">
+              Note: Le calcul est limité par {results.isConstrainedByDownPayment ? 'la règle de mise de fonds minimale de 5%' : 'la règle de mise de fonds progressive'}
+            </p>
           )}
         </div>
       </div>
 
       <div className="text-center pt-4">
         <p className="text-sm text-slate-600 mb-4">
-          Ces calculs sont basés sur les ratios d'endettement standards. Consultez-moi pour une évaluation personnalisée.
+          Ces calculs sont basés sur les ratios d'endettement standards. Ces ratios varient d'un prêteur à l'autre. Il ne s'agit que d'une estimation à haut niveau pour vous donner une idée de votre capacité d'emprunt. Consultez-moi pour que l'on revoit vos calculs ensemble.
         </p>
         <a 
           href="https://calendly.com/tbourque-planipret" 
