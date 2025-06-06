@@ -24,6 +24,7 @@ export interface BorrowingCapacityResult {
   loanToValueRatio: number;
   abdAvailablePayment: number;
   atdAvailablePayment: number;
+  isConstrainedByDownPayment: boolean;
 }
 
 export const calculateBorrowingCapacity = (input: BorrowingCapacityInput): BorrowingCapacityResult => {
@@ -93,8 +94,18 @@ export const calculateBorrowingCapacity = (input: BorrowingCapacityInput): Borro
     mortgageInsurancePremium = maxLoanAmount * (mortgageInsuranceRate / 100);
   }
 
-  // Étape 5: Prix d'achat maximal final
-  const maxPurchasePrice = downPayment + maxLoanAmount + mortgageInsurancePremium;
+  // Étape 5: Prix d'achat maximal avant contrainte de mise de fonds minimale
+  let maxPurchasePrice = downPayment + maxLoanAmount + mortgageInsurancePremium;
+
+  // Nouvelle contrainte: La mise de fonds doit représenter au moins 5% du prix d'achat
+  const maxPurchasePriceBasedOnDownPayment = downPayment / 0.05;
+  let isConstrainedByDownPayment = false;
+
+  if (maxPurchasePriceBasedOnDownPayment < maxPurchasePrice) {
+    maxPurchasePrice = maxPurchasePriceBasedOnDownPayment;
+    maxLoanAmount = maxPurchasePrice - downPayment - mortgageInsurancePremium;
+    isConstrainedByDownPayment = true;
+  }
 
   // Calcul du paiement mensuel réel avec le montant final
   const calculateMonthlyPayment = (principal: number, annualRate: number, amortizationYears: number) => {
@@ -129,6 +140,7 @@ export const calculateBorrowingCapacity = (input: BorrowingCapacityInput): Borro
     mortgageInsuranceRate,
     loanToValueRatio: Math.round(loanToValueRatio * 100) / 100,
     abdAvailablePayment: Math.round(abdAvailablePayment),
-    atdAvailablePayment: Math.round(atdAvailablePayment)
+    atdAvailablePayment: Math.round(atdAvailablePayment),
+    isConstrainedByDownPayment
   };
 };

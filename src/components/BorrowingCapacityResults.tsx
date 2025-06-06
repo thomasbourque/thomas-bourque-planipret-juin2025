@@ -23,6 +23,11 @@ const BorrowingCapacityResults = ({ results }: BorrowingCapacityResultsProps) =>
             minimumFractionDigits: 0 
           })}
         </p>
+        {results.isConstrainedByDownPayment && (
+          <p className="text-xs text-slate-700 mt-2">
+            Limité par la mise de fonds minimale de 5%
+          </p>
+        )}
       </div>
 
       {/* Capacité d'emprunt */}
@@ -125,6 +130,9 @@ const BorrowingCapacityResults = ({ results }: BorrowingCapacityResultsProps) =>
           <p>Charges de logement totales : {results.housingCosts.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}</p>
           <p>Revenu mensuel brut : {results.monthlyIncome.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}</p>
           <p>Paiement retenu (le plus restrictif) : {Math.min(results.abdAvailablePayment, results.atdAvailablePayment).toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}</p>
+          {results.isConstrainedByDownPayment && (
+            <p className="text-orange-700 font-medium">Note: Le calcul est limité par la règle de mise de fonds minimale de 5%</p>
+          )}
         </div>
       </div>
 
