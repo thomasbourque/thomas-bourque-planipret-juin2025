@@ -12,48 +12,64 @@ import {
 const FAQ = () => {
   const faqs = [
     {
-      question: "Qu'est-ce qu'un courtier hypothécaire?",
-      answer: "Un courtier hypothécaire est un professionnel qui agit comme intermédiaire entre vous et les prêteurs. Il compare les offres de plusieurs institutions financières pour vous trouver le meilleur taux et les conditions les plus avantageuses selon votre situation."
+      question: "Pourquoi faire affaire avec un courtier hypothécaire plutôt qu'avec une banque?",
+      answer: "Un courtier hypothécaire travaille pour vous, pas pour une institution financière. Il compare les offres de plusieurs prêteurs pour trouver le meilleur taux et les meilleures conditions adaptées à votre situation."
     },
     {
-      question: "Quels sont les avantages de faire affaire avec un courtier hypothécaire?",
-      answer: "Faire affaire avec un courtier hypothécaire vous permet d'économiser temps et argent. Nous avons accès à de nombreux prêteurs et pouvons négocier de meilleurs taux. De plus, nos services sont gratuits pour vous - nous sommes rémunérés par les institutions financières."
+      question: "Combien coûte les services d'un courtier hypothécaire?",
+      answer: "Mes services sont gratuits. Ma rémunération provient du prêteur une fois le prêt accordé. Vous bénéficiez donc de conseils objectifs complètement sans frais."
     },
     {
-      question: "Combien coûtent vos services?",
-      answer: "Mes services sont entièrement gratuits pour vous. Je suis rémunéré directement par l'institution financière qui vous octroie le prêt, sans aucun frais supplémentaire de votre part."
+      question: "Est-ce qu'une préautorisation hypothécaire et est-ce nécessaire?",
+      answer: "Oui, c'est fortement recommandé d'avoir une préautorisation si vous souhaitez acheter une propriété prochainement. Une préautorisation vous donne une idée claire de votre budget, rassure les vendeurs et les courtiers immobiliers en plus de vous permettre de figer votre taux pour une période donnée (souvent 90 à 120 jours)."
+    },
+    {
+      question: "Quel est le meilleur moment pour comparer les offres en vue de mon renouvellement?",
+      answer: "Vous pouvez débuter le processus jusqu'à 6 mois avant la date d'échéance. Cela vous donne le temps de magasiner les meilleures conditions sans pression. Le moment où le prêteur vous enverra votre offre de renouvellement varie d'une institution à l'autre."
+    },
+    {
+      question: "Puis-je transférer mon hypothèque ailleurs au moment du renouvellement?",
+      answer: "Oui. C'est l'occasion idéale pour renégocier vos conditions et changer de prêteur sans avoir de pénalité à payer."
+    },
+    {
+      question: "Quelle est la différence entre un taux fixe et un taux variable?",
+      answer: "• Taux fixe : reste stable pendant toute la durée de votre terme.\n• Taux variable : peut fluctuer selon le taux directeur de la banque du Canada\n\nLe choix dépend avant tout de votre seuil de tolérance au risque et de vos objectifs financiers. Nous pourrons prendre le temps de comparer ces deux options lors d'un appel."
+    },
+    {
+      question: "Puis-je acheter une propriété avec une mise de fonds inférieure à 20 %?",
+      answer: "Oui, mais votre prêt devra être assuré par la SCHL ou un autre assureur hypothécaire. Cela implique certains frais supplémentaires, mais peut vous permettre d'accéder à la propriété plus rapidement et d'avoir accès à des meilleurs taux."
+    },
+    {
+      question: "Quels sont les programmes à ma disposition pour acheter une première maison?",
+      answer: "Le RAP (Régime d'accession à la propriété) vous permet de retirer jusqu'à 60 000 $ de votre REER sans impôt, à condition de rembourser ce montant sur 15 ans.\n\nLe CELIAPP (compte d'épargne libre d'impôt pour l'achat d'une première propriété) permet d'épargner jusqu'à 8 000 $ par année, jusqu'à un maximum de 40 000 $, avec des avantages fiscaux doubles : vos cotisations sont déductibles d'impôt, et les retraits pour l'achat de votre première propriété sont non imposables. C'est un outil puissant pour bâtir votre mise de fonds plus rapidement.\n\nCes deux programmes peuvent être combinés."
+    },
+    {
+      question: "Qu'est-ce qu'une hypothèque conventionnelle?",
+      answer: "Une hypothèque est dite conventionnelle lorsque la mise de fonds est de 20 % ou plus. Elle ne nécessite pas d'assurance prêt hypothécaire."
+    },
+    {
+      question: "Un courtier peut-il m'aider même si j'ai une situation financière complexe (travailleur autonome, crédit affecté, faillite, etc.)?",
+      answer: "Tout à fait. Je travaille à la fois avec des prêteurs de type A, des prêteurs de type B et des prêteurs privés. Certains prêteurs se spécialisent dans les cas hors norme et peuvent par exemple considérer votre dossier même avec un historique de crédit difficile. Nous pourrons explorer ensemble toutes les options pour trouver la solution la mieux adaptée à votre profil."
+    },
+    {
+      question: "Est-ce que je peux rembourser mon hypothèque plus rapidement?",
+      answer: "Oui, la plupart des prêts permettent des remboursements anticipés (paiements supplémentaires ou augmentation du montant régulier) sans pénalité. Je pourrai vous expliquer vos options selon le produit choisi."
+    },
+    {
+      question: "Puis-je refinancer mon hypothèque pour accéder à l'équité de ma maison?",
+      answer: "Absolument. Le refinancement vous permet de débloquer une partie de la valeur nette de votre propriété pour des projets comme des rénovations ou le remboursement de dettes."
+    },
+    {
+      question: "Quels documents dois-je fournir lors de la demande?",
+      answer: "Les documents requis incluent généralement : preuve de revenus, relevés bancaires, avis de cotisation, preuve d'emploi, et preuves d'identité. Je vous fournirai une liste complète selon votre situation spécifique."
     },
     {
       question: "Puis-je obtenir un meilleur taux en passant par un courtier?",
       answer: "Absolument! Grâce à mon réseau de prêteurs et mon volume d'affaires, j'ai souvent accès à des taux préférentiels que vous ne pourriez pas obtenir en vous adressant directement à une seule institution."
     },
     {
-      question: "Combien de temps prend le processus d'approbation?",
-      answer: "Le délai varie selon la complexité de votre dossier, mais généralement, une pré-approbation peut être obtenue en 24-48 heures. Pour une approbation finale, comptez entre 5 à 15 jours ouvrables."
-    },
-    {
-      question: "Quels documents dois-je fournir?",
-      answer: "Les documents requis incluent généralement : preuve de revenus, relevés bancaires, avis de cotisation, preuve d'emploi, et identification. Je vous fournirai une liste complète selon votre situation spécifique."
-    },
-    {
-      question: "Puis-je obtenir un prêt hypothécaire si je suis travailleur autonome?",
-      answer: "Absolument! Être travailleur autonome ne vous disqualifie pas. Nous avons accès à des prêteurs spécialisés qui comprennent les revenus variables et peuvent évaluer votre capacité de remboursement de façon adaptée."
-    },
-    {
-      question: "Que se passe-t-il si j'ai un mauvais crédit?",
-      answer: "Un crédit imparfait ne signifie pas que vous ne pouvez pas obtenir de financement. Nous travaillons avec des prêteurs alternatifs qui peuvent considérer votre dossier même avec un historique de crédit difficile."
-    },
-    {
-      question: "Offrez-vous un service de refinancement?",
-      answer: "Oui, je peux vous aider avec le refinancement de votre hypothèque actuelle. Cela peut vous permettre d'obtenir un meilleur taux, de consolider des dettes ou d'accéder à l'équité de votre propriété."
-    },
-    {
       question: "Dans quelles régions offrez-vous vos services?",
-      answer: "Bien que je sois basé à Québec, j'offre mes services à distance partout au Québec. Grâce à la technologie, nous pouvons traiter votre dossier efficacement peu importe où vous vous trouvez dans la province."
-    },
-    {
-      question: "Comment puis-je vous contacter?",
-      answer: "Vous pouvez me joindre par téléphone au 418-569-6482, par courriel à tbourque@planipret.com, ou planifier un appel gratuit via mon calendrier en ligne."
+      answer: "Bien que je sois basé à Québec, j'offre mes services à distance partout au Québec. Je peux traiter votre dossier efficacement peu importe où vous vous trouvez dans la province."
     }
   ];
 
@@ -83,7 +99,7 @@ const FAQ = () => {
                     <AccordionTrigger className="text-left font-medium text-slate-900 hover:text-primary">
                       {faq.question}
                     </AccordionTrigger>
-                    <AccordionContent className="text-slate-700 leading-relaxed">
+                    <AccordionContent className="text-slate-700 leading-relaxed whitespace-pre-line">
                       {faq.answer}
                     </AccordionContent>
                   </AccordionItem>

@@ -2,7 +2,6 @@
 import React from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Slider } from "@/components/ui/slider";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
@@ -65,6 +64,13 @@ const MortgagePaymentForm = ({
     setDownPaymentPercentage((amount / purchasePrice) * 100);
   };
 
+  const handleInterestRateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseFloat(e.target.value);
+    if (!isNaN(value)) {
+      setInterestRate([value]);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div>
@@ -78,6 +84,7 @@ const MortgagePaymentForm = ({
             type="number"
             value={purchasePrice}
             onChange={(e) => setPurchasePrice(Number(e.target.value))}
+            step={25000}
             className="text-lg pl-8"
           />
         </div>
@@ -109,6 +116,7 @@ const MortgagePaymentForm = ({
               type="number"
               value={downPayment}
               onChange={(e) => handleDownPaymentAmountChange(Number(e.target.value))}
+              step={25000}
               className="text-lg pl-8"
             />
           </div>
@@ -191,24 +199,19 @@ const MortgagePaymentForm = ({
       </div>
 
       <div>
-        <Label className="block text-lg font-medium text-slate-900 mb-4">
-          Taux d'intérêt
+        <Label htmlFor="interestRate" className="block text-lg font-medium text-slate-900 mb-2">
+          Taux d'intérêt (%)
         </Label>
-        <div className="space-y-4">
-          <Slider
-            value={interestRate}
-            onValueChange={setInterestRate}
-            max={10}
-            min={2}
-            step={0.05}
-            className="w-full"
-          />
-          <div className="text-center">
-            <span className="text-xl font-semibold text-slate-700">
-              {interestRate[0].toFixed(2)}%
-            </span>
-          </div>
-        </div>
+        <Input
+          id="interestRate"
+          type="number"
+          value={interestRate[0]}
+          onChange={handleInterestRateChange}
+          step={0.05}
+          min={2}
+          max={10}
+          className="text-lg"
+        />
       </div>
 
       <div>

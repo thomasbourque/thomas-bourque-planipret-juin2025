@@ -43,7 +43,6 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
 
   const paymentsPerYear = getPaymentsPerYear(paymentFrequency);
   const totalTermPayments = term * paymentsPerYear;
-  const totalAmortizationPayments = amortization * paymentsPerYear;
 
   return (
     <div className="space-y-3 flex flex-col items-center">
@@ -61,7 +60,7 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
             {results.regularPayment.toLocaleString('fr-CA', { 
               style: 'currency', 
               currency: 'CAD',
-              minimumFractionDigits: 0 
+              minimumFractionDigits: 2 
             })}
           </div>
         </div>
@@ -79,6 +78,25 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
             })}
           </div>
         </div>
+
+        {/* Économie d'intérêts grâce à la fréquence de paiement */}
+        {results.interestSavings && results.interestSavings > 0 && (
+          <div className="bg-gradient-to-r from-green-500 to-green-600 p-3 rounded-lg border text-white text-center">
+            <div className="text-sm font-medium mb-1">
+              Économie d'intérêts grâce à la fréquence de paiement
+            </div>
+            <div className="text-xl font-bold">
+              {results.interestSavings.toLocaleString('fr-CA', { 
+                style: 'currency', 
+                currency: 'CAD',
+                minimumFractionDigits: 0 
+              })}
+            </div>
+            <div className="text-xs mt-1">
+              comparé aux paiements mensuels
+            </div>
+          </div>
+        )}
 
         {/* Encadré pour la durée du terme - style formulaire */}
         <div className="bg-slate-50 border border-slate-300 p-3 rounded-lg shadow-sm">
@@ -171,7 +189,16 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
                   Nombre de versements
                 </div>
                 <div className="text-md font-bold">
-                  {Math.round(totalAmortizationPayments)}
+                  {results.numberOfPayments}
+                  {results.finalPayment && (
+                    <div className="text-xs text-slate-500 mt-1">
+                      + 1 versement de {results.finalPayment.toLocaleString('fr-CA', { 
+                        style: 'currency', 
+                        currency: 'CAD',
+                        minimumFractionDigits: 2 
+                      })}
+                    </div>
+                  )}
                 </div>
               </div>
 
