@@ -93,7 +93,7 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
               })}
             </div>
             <div className="text-xs mt-1">
-              comparé aux paiements mensuels
+              comparé aux paiements mensuels (amortissement complet)
             </div>
           </div>
         )}
@@ -105,6 +105,25 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
           </h4>
           
           <div className="space-y-2">
+            {/* Économie d'intérêts pour le terme */}
+            {results.termResults.interestSavings && results.termResults.interestSavings > 0 && (
+              <div className="bg-gradient-to-r from-green-400 to-green-500 p-2.5 rounded-lg text-white text-center">
+                <div className="text-xs font-medium mb-1">
+                  Économie d'intérêts durant le terme
+                </div>
+                <div className="text-md font-bold">
+                  {results.termResults.interestSavings.toLocaleString('fr-CA', { 
+                    style: 'currency', 
+                    currency: 'CAD',
+                    minimumFractionDigits: 0 
+                  })}
+                </div>
+                <div className="text-xs mt-1">
+                  comparé aux paiements mensuels
+                </div>
+              </div>
+            )}
+
             {/* Première ligne: Nombre de versements et Solde */}
             <div className="grid grid-cols-2 gap-2">
               <div className="bg-white border border-slate-200 p-2.5 rounded-lg text-slate-700 text-center">

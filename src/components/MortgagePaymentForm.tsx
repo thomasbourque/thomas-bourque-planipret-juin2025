@@ -116,7 +116,7 @@ const MortgagePaymentForm = ({
               type="number"
               value={downPayment}
               onChange={(e) => handleDownPaymentAmountChange(Number(e.target.value))}
-              step={25000}
+              step={5000}
               className="text-lg pl-8"
             />
           </div>
@@ -205,7 +205,7 @@ const MortgagePaymentForm = ({
         <Input
           id="interestRate"
           type="number"
-          value={interestRate[0]}
+          value={interestRate[0].toFixed(2)}
           onChange={handleInterestRateChange}
           step={0.05}
           min={2}

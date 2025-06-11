@@ -25,6 +25,7 @@ export interface MortgagePaymentResult {
     totalInterest: number;
     totalPrincipal: number;
     remainingBalance: number;
+    interestSavings?: number;
   };
   amortizationResults: {
     totalPayments: number;
@@ -53,7 +54,7 @@ export const calculateMortgagePayment = (input: MortgagePaymentInput): MortgageP
 
   const mortgageAmount = purchasePrice - downPayment;
   
-  // Fréquence des paiements par année
+  // Payment frequencies per year
   let paymentsPerYear: number;
   let isAccelerated = false;
   
@@ -75,15 +76,15 @@ export const calculateMortgagePayment = (input: MortgagePaymentInput): MortgageP
       paymentsPerYear = 12;
   }
   
-  // Calcul du taux périodique selon la capitalisation semi-annuelle canadienne
+  // Calculate periodic rate based on Canadian semi-annual compounding
   const semiAnnualRate = interestRate / 2 / 100;
   const periodicRate = Math.pow(1 + semiAnnualRate, 2 / paymentsPerYear) - 1;
   
-  // Nombre total de paiements pour l'amortissement complet
+  // Total payments for full amortization and term
   const totalAmortizationPayments = amortization * paymentsPerYear;
   const totalTermPayments = term * paymentsPerYear;
   
-  // Calcul du paiement régulier
+  // Calculate regular payment
   const calculateRegularPayment = (principal: number, rate: number, totalPayments: number) => {
     if (rate === 0) return principal / totalPayments;
     
@@ -96,29 +97,31 @@ export const calculateMortgagePayment = (input: MortgagePaymentInput): MortgageP
   let regularPayment: number;
   let monthlyPayment: number;
   
-  // Calcul du paiement mensuel équivalent pour référence
+  // Calculate monthly payment equivalent for reference
   const monthlyPeriodicRate = Math.pow(1 + semiAnnualRate, 2 / 12) - 1;
   monthlyPayment = calculateRegularPayment(mortgageAmount, monthlyPeriodicRate, amortization * 12);
   
   if (isAccelerated) {
-    // Pour les paiements accélérés, diviser le paiement mensuel par 2
+    // For accelerated payments, divide monthly payment by 2
     regularPayment = monthlyPayment / 2;
   } else {
     regularPayment = calculateRegularPayment(mortgageAmount, periodicRate, totalAmortizationPayments);
   }
   
-  // Simulation détaillée pour calculer le nombre exact de paiements et le paiement final
+  // Detailed simulation for exact payment count and final payment
   let balance = mortgageAmount;
   let totalInterestPaid = 0;
   let paymentCount = 0;
   let finalPayment = 0;
   
-  while (balance > 0.01 && paymentCount < totalAmortizationPayments * 2) {
+  const epsilon = 0.01; // Tolerance for balance close to zero
+  
+  while (balance > epsilon && paymentCount < totalAmortizationPayments * 2) {
     const interestPayment = balance * periodicRate;
     let principalPayment = regularPayment - interestPayment;
     
     if (principalPayment >= balance) {
-      // Dernier paiement
+      // Final payment
       finalPayment = balance + interestPayment;
       totalInterestPaid += interestPayment;
       balance = 0;
@@ -132,19 +135,39 @@ export const calculateMortgagePayment = (input: MortgagePaymentInput): MortgageP
   }
   
   const numberOfPayments = paymentCount;
-  const totalAmortizationCost = (regularPayment * (numberOfPayments - 1)) + finalPayment;
+  const totalAmortizationCost = (regularPayment * (numberOfPayments - 1)) + (finalPayment > 0 ? finalPayment : 0);
   
-  // Calcul des économies comparé au paiement mensuel
+  // Calculate interest savings compared to monthly payments
   let interestSavings = 0;
   if (paymentFrequency !== 'monthly') {
-    const monthlyTotalInterest = (monthlyPayment * amortization * 12) - mortgageAmount;
+    // Calculate monthly scenario
+    let monthlyBalance = mortgageAmount;
+    let monthlyTotalInterest = 0;
+    let monthlyPaymentCount = 0;
+    
+    while (monthlyBalance > epsilon && monthlyPaymentCount < amortization * 12 * 2) {
+      const monthlyInterestPayment = monthlyBalance * monthlyPeriodicRate;
+      let monthlyPrincipalPayment = monthlyPayment - monthlyInterestPayment;
+      
+      if (monthlyPrincipalPayment >= monthlyBalance) {
+        monthlyTotalInterest += monthlyInterestPayment;
+        monthlyBalance = 0;
+        monthlyPaymentCount++;
+        break;
+      } else {
+        monthlyTotalInterest += monthlyInterestPayment;
+        monthlyBalance -= monthlyPrincipalPayment;
+        monthlyPaymentCount++;
+      }
+    }
+    
     interestSavings = monthlyTotalInterest - totalInterestPaid;
   }
   
-  // Calcul du solde restant après le terme
-  const calculateRemainingBalance = (principal: number, rate: number, totalPayments: number, paymentsMade: number, payment: number) => {
+  // Calculate remaining balance after term
+  const calculateRemainingBalance = (principal: number, rate: number, payment: number, paymentsMade: number) => {
     if (rate === 0) {
-      return principal - (payment * paymentsMade);
+      return Math.max(0, principal - (payment * paymentsMade));
     }
     
     const compoundFactor = Math.pow(1 + rate, paymentsMade);
@@ -154,20 +177,36 @@ export const calculateMortgagePayment = (input: MortgagePaymentInput): MortgageP
     return Math.max(0, balanceGrowth - paymentSum);
   };
   
-  // Calculs pour le terme
+  // Calculations for term period
   const remainingBalanceAfterTerm = calculateRemainingBalance(
     mortgageAmount, 
     periodicRate, 
-    totalAmortizationPayments, 
-    totalTermPayments, 
-    regularPayment
+    regularPayment,
+    totalTermPayments
   );
   
   const principalPaidDuringTerm = mortgageAmount - remainingBalanceAfterTerm;
   const totalPaymentsDuringTerm = regularPayment * totalTermPayments;
   const interestPaidDuringTerm = totalPaymentsDuringTerm - principalPaidDuringTerm;
   
-  // Générer le calendrier d'amortissement pour le graphique
+  // Calculate term interest savings
+  let termInterestSavings = 0;
+  if (paymentFrequency !== 'monthly') {
+    const monthlyTermPayments = term * 12;
+    const monthlyRemainingBalanceAfterTerm = calculateRemainingBalance(
+      mortgageAmount, 
+      monthlyPeriodicRate, 
+      monthlyPayment,
+      monthlyTermPayments
+    );
+    const monthlyPrincipalPaidDuringTerm = mortgageAmount - monthlyRemainingBalanceAfterTerm;
+    const monthlyTotalPaymentsDuringTerm = monthlyPayment * monthlyTermPayments;
+    const monthlyInterestPaidDuringTerm = monthlyTotalPaymentsDuringTerm - monthlyPrincipalPaidDuringTerm;
+    
+    termInterestSavings = monthlyInterestPaidDuringTerm - interestPaidDuringTerm;
+  }
+  
+  // Generate amortization schedule
   const generateAmortizationSchedule = () => {
     let remainingBalance = mortgageAmount;
     const schedule = [];
@@ -215,7 +254,8 @@ export const calculateMortgagePayment = (input: MortgagePaymentInput): MortgageP
       totalPayments: Math.round(totalPaymentsDuringTerm),
       totalInterest: Math.round(interestPaidDuringTerm),
       totalPrincipal: Math.round(principalPaidDuringTerm),
-      remainingBalance: Math.round(remainingBalanceAfterTerm)
+      remainingBalance: Math.round(remainingBalanceAfterTerm),
+      interestSavings: termInterestSavings > 0 ? Math.round(termInterestSavings) : undefined
     },
     amortizationResults: {
       totalPayments: Math.round(totalAmortizationCost),
