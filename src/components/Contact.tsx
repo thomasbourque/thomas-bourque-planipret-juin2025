@@ -1,50 +1,19 @@
-import React, { useState } from "react";
+
+import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { supabase, type ContactSubmission } from "@/lib/supabase";
 
 const Contact = () => {
   const { toast } = useToast();
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-
-    const formData = new FormData(e.target as HTMLFormElement);
-    const submission: Omit<ContactSubmission, 'id' | 'created_at'> = {
-      name: formData.get('name') as string,
-      email: formData.get('email') as string,
-      phone: formData.get('phone') as string || null,
-      message: formData.get('message') as string,
-    };
-
-    try {
-      const { error } = await supabase
-        .from('contact_submissions')
-        .insert([submission]);
-
-      if (error) throw error;
-
-      toast({
-        title: "Formulaire envoyé",
-        description: "Merci pour votre message. Je vous contacterai prochainement.",
-      });
-
-      // Reset form
-      (e.target as HTMLFormElement).reset();
-    } catch (error) {
-      console.error('Error submitting contact form:', error);
-      toast({
-        title: "Erreur",
-        description: "Une erreur s'est produite lors de l'envoi. Veuillez réessayer.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+    toast({
+      title: "Formulaire envoyé",
+      description: "Merci pour votre message. Je vous contacterai prochainement.",
+    });
   };
 
   return (
@@ -68,7 +37,6 @@ const Contact = () => {
                   </label>
                   <Input
                     id="name"
-                    name="name"
                     placeholder="Votre nom"
                     required
                   />
@@ -79,7 +47,6 @@ const Contact = () => {
                   </label>
                   <Input
                     id="email"
-                    name="email"
                     type="email"
                     placeholder="nom@exemple.com"
                     required
@@ -91,7 +58,6 @@ const Contact = () => {
                   </label>
                   <Input
                     id="phone"
-                    name="phone"
                     type="tel"
                     placeholder="(123) 456-7890"
                   />
@@ -102,15 +68,14 @@ const Contact = () => {
                   </label>
                   <Textarea
                     id="message"
-                    name="message"
                     placeholder="Comment puis-je vous aider?"
                     rows={5}
                     required
                   />
                 </div>
               </div>
-              <Button type="submit" className="w-full" disabled={isSubmitting}>
-                {isSubmitting ? "Envoi en cours..." : "Envoyer"}
+              <Button type="submit" className="w-full">
+                Envoyer
               </Button>
             </form>
           </div>
