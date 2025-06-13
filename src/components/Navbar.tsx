@@ -10,7 +10,7 @@ const Navbar = () => {
   const location = useLocation();
   
   // Check if we're on pages that should always have dark colors
-  const isDarkPage = ['/faq', '/calculatrices', '/boussole-hypothecaire'].includes(location.pathname);
+  const isDarkPage = ['/faq', '/calculatrices'].includes(location.pathname);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -62,9 +62,6 @@ const Navbar = () => {
           </a>
           <a href="/calculatrices" className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
             Calculatrices
-          </a>
-          <a href="/boussole-hypothecaire" className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
-            Boussole hypothécaire
           </a>
           <a href="/faq" className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
             FAQ
@@ -130,13 +127,6 @@ const Navbar = () => {
               onClick={() => setIsMobileMenuOpen(false)}
             >
               Calculatrices
-            </a>
-            <a
-              href="/boussole-hypothecaire"
-              className="block px-4 py-3 text-white font-medium hover:bg-white/10 rounded-lg transition-colors"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Boussole hypothécaire
             </a>
             <a
               href="/faq"

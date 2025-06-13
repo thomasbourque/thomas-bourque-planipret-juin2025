@@ -79,24 +79,6 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
           </div>
         </div>
 
-        {/* Économie d'intérêts grâce à la fréquence de paiement */}
-        {results.interestSavings && results.interestSavings > 0 && (
-          <div className="bg-gradient-to-r from-green-500 to-green-600 p-3 rounded-lg border text-white text-center">
-            <div className="text-sm font-medium mb-1">
-              Économie d'intérêts grâce à la fréquence de paiement
-            </div>
-            <div className="text-xl font-bold">
-              {results.interestSavings.toLocaleString('fr-CA', { 
-                style: 'currency', 
-                currency: 'CAD',
-                minimumFractionDigits: 0 
-              })}
-            </div>
-            <div className="text-xs mt-1">
-              comparé aux paiements mensuels (amortissement complet)
-            </div>
-          </div>
-        )}
 
         {/* Encadré pour la durée du terme - style formulaire */}
         <div className="bg-slate-50 border border-slate-300 p-3 rounded-lg shadow-sm">
@@ -201,6 +183,24 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
           </h4>
           
           <div className="space-y-2">
+            {/* Économie d'intérêts durant la durée totale de l'amortissement */}
+            {results.interestSavings && results.interestSavings > 0 && (
+              <div className="bg-gradient-to-r from-green-500 to-green-600 p-3 rounded-lg border text-white text-center">
+                <div className="text-sm font-medium mb-1">
+                  Économie d'intérêts durant la durée totale de l'amortissement
+                </div>
+                <div className="text-xl font-bold">
+                  {results.interestSavings.toLocaleString('fr-CA', { 
+                    style: 'currency', 
+                    currency: 'CAD',
+                    minimumFractionDigits: 0 
+                  })}
+                </div>
+                <div className="text-xs mt-1">
+                  comparé aux paiements mensuels (amortissement complet)
+                </div>
+              </div>
+            )}
             {/* Première ligne: Nombre de versements et Solde */}
             <div className="grid grid-cols-2 gap-2">
               <div className="bg-white border border-slate-200 p-2.5 rounded-lg text-slate-700 text-center">

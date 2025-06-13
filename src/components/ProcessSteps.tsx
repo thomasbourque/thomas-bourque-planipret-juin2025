@@ -38,8 +38,8 @@ const ProcessSteps = () => {
               {steps.map((step, index) => (
                 <div key={index} className="relative text-center">
                   {/* Circle with number */}
-                  <div className="relative z-10 mx-auto w-16 h-16 bg-primary rounded-full flex items-center justify-center mb-6">
-                    <span className="text-2xl font-bold text-primary-foreground">
+                  <div className="relative z-10 mx-auto w-16 h-16 bg-gradient-to-br from-yellow-500 to-yellow-600 rounded-full flex items-center justify-center mb-6">
+                    <span className="text-2xl font-bold text-white">
                       {step.number}
                     </span>
                   </div>

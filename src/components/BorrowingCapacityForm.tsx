@@ -86,7 +86,7 @@ const BorrowingCapacityForm = ({
             value={annualIncome === 0 ? '' : annualIncome}
             onFocus={() => handleInputFocus(annualIncome, setAnnualIncome)}
             onChange={(e) => handleInputChange(e, setAnnualIncome)}
-            className="text-base md:text-lg pl-8"
+            className="text-base md:text-lg pl-8 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
             placeholder="0"
           />
         </div>
@@ -104,7 +104,7 @@ const BorrowingCapacityForm = ({
             value={downPayment === 0 ? '' : downPayment}
             onFocus={() => handleInputFocus(downPayment, setDownPayment)}
             onChange={(e) => handleInputChange(e, setDownPayment)}
-            className="text-base md:text-lg pl-8"
+            className="text-base md:text-lg pl-8 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
             placeholder="0"
           />
         </div>
@@ -196,7 +196,7 @@ const BorrowingCapacityForm = ({
             value={monthlyDebts === 0 ? '' : monthlyDebts}
             onFocus={() => handleInputFocus(monthlyDebts, setMonthlyDebts)}
             onChange={(e) => handleInputChange(e, setMonthlyDebts)}
-            className="text-base md:text-lg pl-8"
+            className="text-base md:text-lg pl-8 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
             placeholder="0"
           />
         </div>
@@ -214,7 +214,7 @@ const BorrowingCapacityForm = ({
             value={heatingCosts === 0 ? '' : heatingCosts}
             onFocus={() => handleInputFocus(heatingCosts, setHeatingCosts)}
             onChange={(e) => handleInputChange(e, setHeatingCosts)}
-            className="text-base md:text-lg pl-8"
+            className="text-base md:text-lg pl-8 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
             placeholder="0"
           />
         </div>
@@ -232,7 +232,7 @@ const BorrowingCapacityForm = ({
             value={propertyTaxes === 0 ? '' : propertyTaxes}
             onFocus={() => handleInputFocus(propertyTaxes, setPropertyTaxes)}
             onChange={(e) => handleInputChange(e, setPropertyTaxes)}
-            className="text-base md:text-lg pl-8"
+            className="text-base md:text-lg pl-8 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
             placeholder="0"
           />
         </div>
@@ -267,7 +267,7 @@ const BorrowingCapacityForm = ({
             value={condoFees === 0 ? '' : condoFees}
             onFocus={() => handleInputFocus(condoFees, setCondoFees)}
             onChange={(e) => handleInputChange(e, setCondoFees)}
-            className="text-base md:text-lg pl-8"
+            className="text-base md:text-lg pl-8 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
             placeholder="0"
           />
         </div>

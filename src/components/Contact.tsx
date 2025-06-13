@@ -26,60 +26,7 @@ const Contact = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
-          <div className="bg-white rounded-lg shadow-sm p-8">
-            <h3 className="heading-md text-slate-900 mb-6">Envoyez-moi un message</h3>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="space-y-4">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-slate-700 mb-1">
-                    Nom complet
-                  </label>
-                  <Input
-                    id="name"
-                    placeholder="Votre nom"
-                    required
-                  />
-                </div>
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-1">
-                    Courriel
-                  </label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="nom@exemple.com"
-                    required
-                  />
-                </div>
-                <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-slate-700 mb-1">
-                    Téléphone
-                  </label>
-                  <Input
-                    id="phone"
-                    type="tel"
-                    placeholder="(123) 456-7890"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-slate-700 mb-1">
-                    Message
-                  </label>
-                  <Textarea
-                    id="message"
-                    placeholder="Comment puis-je vous aider?"
-                    rows={5}
-                    required
-                  />
-                </div>
-              </div>
-              <Button type="submit" className="w-full">
-                Envoyer
-              </Button>
-            </form>
-          </div>
-
+        <div className="max-w-3xl mx-auto">
           <div className="flex flex-col justify-center">
             <div className="space-y-8">
               <div>

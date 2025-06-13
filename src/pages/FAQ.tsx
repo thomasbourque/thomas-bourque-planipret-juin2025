@@ -16,11 +16,11 @@ const FAQ = () => {
       answer: "Un courtier hypothécaire travaille pour vous, pas pour une institution financière. Il compare les offres de plusieurs prêteurs pour trouver le meilleur taux et les meilleures conditions adaptées à votre situation."
     },
     {
-      question: "Combien coûte les services d'un courtier hypothécaire?",
+      question: "Combien coûtent les services d'un courtier hypothécaire?",
       answer: "Mes services sont gratuits. Ma rémunération provient du prêteur une fois le prêt accordé. Vous bénéficiez donc de conseils objectifs complètement sans frais."
     },
     {
-      question: "Est-ce qu'une préautorisation hypothécaire et est-ce nécessaire?",
+      question: "Qu'est-ce qu'une préautorisation hypothécaire et est-ce nécessaire?",
       answer: "Oui, c'est fortement recommandé d'avoir une préautorisation si vous souhaitez acheter une propriété prochainement. Une préautorisation vous donne une idée claire de votre budget, rassure les vendeurs et les courtiers immobiliers en plus de vous permettre de figer votre taux pour une période donnée (souvent 90 à 120 jours)."
     },
     {

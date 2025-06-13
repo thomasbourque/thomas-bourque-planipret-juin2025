@@ -224,9 +224,7 @@ const MortgagePaymentForm = ({
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="monthly">Mensuel</SelectItem>
-            <SelectItem value="biweekly">Aux deux semaines</SelectItem>
             <SelectItem value="biweekly-accelerated">Aux deux semaines (accéléré)</SelectItem>
-            <SelectItem value="weekly">Hebdomadaire</SelectItem>
           </SelectContent>
         </Select>
       </div>
