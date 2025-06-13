@@ -89,11 +89,11 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
           <div className="space-y-2">
             {/* Économie d'intérêts pour le terme */}
             {results.termResults.interestSavings && results.termResults.interestSavings > 0 && (
-              <div className="bg-gradient-to-r from-green-400 to-green-500 p-2.5 rounded-lg text-white text-center">
-                <div className="text-xs font-medium mb-1">
+              <div className="bg-gradient-to-r from-green-400 to-green-500 p-3 rounded-lg text-white text-center">
+                <div className="text-sm font-medium mb-1">
                   Économie d'intérêts durant le terme
                 </div>
-                <div className="text-md font-bold">
+                <div className="text-xl font-bold">
                   {results.termResults.interestSavings.toLocaleString('fr-CA', { 
                     style: 'currency', 
                     currency: 'CAD',

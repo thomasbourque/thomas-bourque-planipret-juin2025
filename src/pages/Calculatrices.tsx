@@ -23,7 +23,7 @@ const Calculatrices = () => {
           </div>
 
           <Tabs defaultValue="payment" className="w-full max-w-6xl mx-auto">
-            <TabsList className="grid w-full grid-cols-1 sm:grid-cols-3 gap-1 mb-6 md:mb-8 h-auto p-1 mx-2 sm:mx-0">
+            <TabsList className="grid w-full grid-cols-1 sm:grid-cols-3 gap-1 mb-6 md:mb-8 h-auto p-1">
               <TabsTrigger value="payment" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center">
                 Paiement hypothécaire
               </TabsTrigger>
