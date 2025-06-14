@@ -1,3 +1,4 @@
+
 import React from "react";
 
 const Partners = () => {
@@ -44,6 +45,7 @@ const Partners = () => {
                   src={partner.logo} 
                   alt={partner.name}
                   className="max-h-full max-w-full object-contain"
+                  loading="lazy"
                   onError={(e) => {
                     console.log(`Error loading logo for ${partner.name}:`, e);
                   }}
@@ -79,3 +81,4 @@ const Partners = () => {
 };
 
 export default Partners;
+

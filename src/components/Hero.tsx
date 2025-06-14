@@ -1,9 +1,12 @@
-
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Mail, Linkedin, Facebook, Instagram, Phone } from "lucide-react";
+import { Skeleton } from "./ui/skeleton";
 
 const Hero = () => {
+  const [imgLoadedMobile, setImgLoadedMobile] = useState(false);
+  const [imgLoadedDesktop, setImgLoadedDesktop] = useState(false);
+
   return (
     <>
       {/* Nouvelle section héros avec image de maison en arrière-plan */}
@@ -53,12 +56,17 @@ const Hero = () => {
             </p>
             
             {/* Photo pour mobile - s'affiche ici sur mobile */}
-            <div className="relative md:hidden mb-6">
+            <div className="relative md:hidden mb-6 w-64 mx-auto">
+              {!imgLoadedMobile && (
+                <Skeleton className="aspect-[4/5] rounded-full w-64 h-auto" />
+              )}
               <div className="aspect-[4/5] bg-slate-200 rounded-full overflow-hidden shadow-xl w-64 mx-auto">
                 <img 
                   src="/lovable-uploads/e890eb15-6fc3-48da-a825-ef289e0a40df.png" 
                   alt="Thomas Bourque, courtier hypothécaire" 
-                  className="h-full w-full object-cover brightness-100 contrast-110 saturate-75"
+                  className={`h-full w-full object-cover brightness-100 contrast-110 saturate-75 transition-opacity duration-500 ${imgLoadedMobile ? "opacity-100" : "opacity-0"}`}
+                  loading="lazy"
+                  onLoad={() => setImgLoadedMobile(true)}
                 />
               </div>
             </div>
@@ -149,12 +157,17 @@ const Hero = () => {
               </Button>
             </div>
           </div>
-          <div className="relative order-1 md:order-2 hidden md:block">
-            <div className="aspect-[4/5] bg-slate-200 rounded-full overflow-hidden shadow-xl w-4/5 mx-auto">
+          <div className="relative order-1 md:order-2 hidden md:block w-4/5 mx-auto">
+            {!imgLoadedDesktop && (
+              <Skeleton className="absolute aspect-[4/5] rounded-full w-full h-auto top-0 left-0" />
+            )}
+            <div className="aspect-[4/5] bg-slate-200 rounded-full overflow-hidden shadow-xl w-full mx-auto">
               <img 
                 src="/lovable-uploads/e890eb15-6fc3-48da-a825-ef289e0a40df.png" 
                 alt="Thomas Bourque, courtier hypothécaire" 
-                className="h-full w-full object-cover brightness-100 contrast-110 saturate-75"
+                className={`h-full w-full object-cover brightness-100 contrast-110 saturate-75 transition-opacity duration-500 ${imgLoadedDesktop ? "opacity-100" : "opacity-0"}`}
+                loading="lazy"
+                onLoad={() => setImgLoadedDesktop(true)}
               />
             </div>
             <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-primary/10 rounded-full -z-10"></div>
