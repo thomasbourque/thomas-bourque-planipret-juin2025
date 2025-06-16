@@ -1,3 +1,4 @@
+
 import React from "react";
 
 const Partners = () => {
@@ -32,7 +33,7 @@ const Partners = () => {
             Je travaille avec une vingtaine d'institutions financières reconnues pour vous offrir les meilleures conditions d'emprunt sur le marché.
           </p>
           <p className="body-md text-slate-700 max-w-3xl mx-auto">
-            Imaginez un instant devoir contacter chacune de ses institutions pour comparer leurs offres entre elles, un véritable travail de moine! En passant par un courtier hypothécaire, vous n'avez qu'un seul point de contact unique qui vous donne accès à tous ces prêteurs. Vous m'envoyez vos documents, je m'occupe du reste!
+            Imaginez un instant devoir contacter chacune de ces institutions pour comparer leurs offres entre elles, un véritable travail de moine! En passant par un courtier hypothécaire, vous n'avez qu'un seul point de contact unique qui vous donne accès à tous ces prêteurs. Vous m'envoyez vos documents, je m'occupe du reste!
           </p>
         </div>
         
