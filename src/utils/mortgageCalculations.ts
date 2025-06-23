@@ -9,9 +9,10 @@ export const calculateMortgagePayments = (
   mortgageBalance: number,
   termYears: number,
   bankRate: number,
-  brokerRate: number
+  brokerRate: number,
+  amortizationYears: number = 25
 ): MortgageSavings => {
-  const amortizationMonths = 25 * 12; // 25 ans standard
+  const amortizationMonths = amortizationYears * 12;
   const termMonths = termYears * 12;
   
   // Calcul du paiement mensuel selon la formule canadienne (composition semi-annuelle)
