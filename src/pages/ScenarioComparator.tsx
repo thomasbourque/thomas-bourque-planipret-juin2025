@@ -4,9 +4,10 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus, X, Copy } from "lucide-react";
+import { Plus, X, Copy, Download } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import jsPDF from 'jspdf';
 
 interface Scenario {
   id: string;
@@ -248,6 +249,67 @@ const ScenarioComparator = () => {
     return calculateRemainingBalance(principal, monthlyEquivalentRate, monthlyPayment, termMonths);
   };
 
+  const generatePDF = () => {
+    const pdf = new jsPDF('landscape', 'mm', 'a4');
+    
+    // Title
+    pdf.setFontSize(16);
+    pdf.text('Comparateur de Scénarios', 20, 20);
+    
+    // Table headers
+    const headers = ['', ...scenarios.map((_, index) => `Scénario #${index + 1}`)];
+    let yPosition = 40;
+    
+    // Set font size for table
+    pdf.setFontSize(8);
+    
+    // Column widths
+    const colWidth = 45;
+    const firstColWidth = 40;
+    
+    // Headers
+    pdf.text('Critères', 20, yPosition);
+    scenarios.forEach((_, index) => {
+      pdf.text(`Scénario #${index + 1}`, 20 + firstColWidth + (index * colWidth), yPosition);
+    });
+    
+    yPosition += 10;
+    
+    // Table rows data
+    const rows = [
+      ['Prêteur', ...scenarios.map(s => s.lender || 'Non sélectionné')],
+      ['Terme', ...scenarios.map(s => `${s.term} an${s.term > 1 ? 's' : ''}`)],
+      ['Produit', ...scenarios.map(s => s.product === 'fixe' ? 'Fixe' : 'Variable')],
+      ['Taux d\'intérêt', ...scenarios.map(s => `${s.interestRate.toFixed(2)}%`)],
+      ['Amortissement', ...scenarios.map(s => `${s.amortization} ans`)],
+      ['Valeur de l\'achat', ...scenarios.map(s => `$${s.purchaseValue.toLocaleString('fr-CA')}`)],
+      ['Mise de fonds', ...scenarios.map(s => `$${s.downPayment.toLocaleString('fr-CA')}`)],
+      ['Emprunt de base', ...scenarios.map(s => `$${calculateBaseLoan(s).toLocaleString('fr-CA')}`)],
+      ['Ratio prêt-valeur', ...scenarios.map(s => `${calculateLTV(s).toFixed(2)}%`)],
+      ['Prime SCHL (%)', ...scenarios.map(s => `${getCMHCPremiumRate(calculateLTV(s), s.amortization).toFixed(2)}%`)],
+      ['Prime SCHL ($)', ...scenarios.map(s => `$${calculateCMHCPremium(s).toLocaleString('fr-CA')}`)],
+      ['Montant financé', ...scenarios.map(s => `$${calculateTotalFinanced(s).toLocaleString('fr-CA')}`)],
+      ['Versement mensuel', ...scenarios.map(s => `$${calculateMonthlyPayment(s).toLocaleString('fr-CA', { maximumFractionDigits: 2 })}`)],
+      ['Versement aux 2 semaines', ...scenarios.map(s => `$${calculateBiweeklyPayment(s).toLocaleString('fr-CA', { maximumFractionDigits: 2 })}`)],
+      ['Versement par semaine', ...scenarios.map(s => `$${calculateWeeklyPayment(s).toLocaleString('fr-CA', { maximumFractionDigits: 2 })}`)],
+      ['Intérêts payés durant le terme', ...scenarios.map(s => `$${calculateTermInterest(s).toLocaleString('fr-CA')}`)],
+      ['Capital remboursé durant le terme', ...scenarios.map(s => `$${calculateTermPrincipal(s).toLocaleString('fr-CA')}`)],
+      ['Solde restant à la fin du terme', ...scenarios.map(s => `$${calculateTermRemainingBalance(s).toLocaleString('fr-CA')}`)],
+    ];
+    
+    // Draw table rows
+    rows.forEach((row) => {
+      pdf.text(row[0] || '', 20, yPosition);
+      row.slice(1).forEach((cell, index) => {
+        pdf.text(cell || '', 20 + firstColWidth + (index * colWidth), yPosition);
+      });
+      yPosition += 8;
+    });
+    
+    // Save the PDF
+    pdf.save('comparateur-scenarios.pdf');
+  };
+
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-background">
@@ -279,10 +341,17 @@ const ScenarioComparator = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <div className="container mx-auto py-4 pt-32">
+      <div className="container mx-auto py-4 pt-40">
         <div className="flex items-center justify-between mb-6">
           <h1 className="text-2xl font-bold">Comparateur de Scénarios</h1>
           <div className="flex gap-2">
+            <Button 
+              onClick={generatePDF} 
+              className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white"
+            >
+              <Download className="h-4 w-4" />
+              Télécharger PDF
+            </Button>
             <Button onClick={duplicateFirstScenario} className="flex items-center gap-2" variant="outline">
               <Copy className="h-4 w-4" />
               Dupliquer scénario #1
@@ -394,10 +463,22 @@ const ScenarioComparator = () => {
                   <TableCell key={scenario.id} className="p-1">
                     <div className="relative">
                       <Input
-                        type="number"
-                        step="0.01"
+                        type="text"
                         value={scenario.interestRate.toFixed(2)}
-                        onChange={(e) => updateScenario(scenario.id, 'interestRate', parseFloat(e.target.value) || 0)}
+                        onChange={(e) => {
+                          const value = parseFloat(e.target.value);
+                          if (!isNaN(value) && value >= 0 && value <= 20) {
+                            updateScenario(scenario.id, 'interestRate', value);
+                          }
+                        }}
+                        onBlur={(e) => {
+                          const value = parseFloat(e.target.value);
+                          if (isNaN(value) || value < 0) {
+                            updateScenario(scenario.id, 'interestRate', 0);
+                          } else if (value > 20) {
+                            updateScenario(scenario.id, 'interestRate', 20);
+                          }
+                        }}
                         className="h-6 pr-4 text-xs"
                       />
                       <span className="absolute right-1 top-1/2 transform -translate-y-1/2 text-xs">%</span>
