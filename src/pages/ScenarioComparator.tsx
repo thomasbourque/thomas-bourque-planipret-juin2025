@@ -279,15 +279,15 @@ const ScenarioComparator = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <div className="container mx-auto py-4 pt-24">
-        <div className="flex items-center justify-between mb-4">
+      <div className="container mx-auto py-4 pt-32">
+        <div className="flex items-center justify-between mb-6">
           <h1 className="text-2xl font-bold">Comparateur de Scénarios</h1>
           <div className="flex gap-2">
             <Button onClick={duplicateFirstScenario} className="flex items-center gap-2" variant="outline">
               <Copy className="h-4 w-4" />
               Dupliquer scénario #1
             </Button>
-            <Button onClick={addScenario} className="flex items-center gap-2">
+            <Button onClick={addScenario} className="flex items-center gap-2" disabled={scenarios.length >= 5}>
               <Plus className="h-4 w-4" />
               Ajouter un scénario
             </Button>
@@ -389,6 +389,44 @@ const ScenarioComparator = () => {
               </TableRow>
 
               <TableRow className="h-8">
+                <TableCell className="font-medium p-1">Taux d'intérêt</TableCell>
+                {scenarios.map((scenario) => (
+                  <TableCell key={scenario.id} className="p-1">
+                    <div className="relative">
+                      <Input
+                        type="number"
+                        step="0.01"
+                        value={scenario.interestRate.toFixed(2)}
+                        onChange={(e) => updateScenario(scenario.id, 'interestRate', parseFloat(e.target.value) || 0)}
+                        className="h-6 pr-4 text-xs"
+                      />
+                      <span className="absolute right-1 top-1/2 transform -translate-y-1/2 text-xs">%</span>
+                    </div>
+                  </TableCell>
+                ))}
+              </TableRow>
+
+              <TableRow className="h-8">
+                <TableCell className="font-medium p-1">Amortissement</TableCell>
+                {scenarios.map((scenario) => (
+                  <TableCell key={scenario.id} className="p-1">
+                    <Select 
+                      value={scenario.amortization.toString()} 
+                      onValueChange={(value) => updateScenario(scenario.id, 'amortization', parseInt(value))}
+                    >
+                      <SelectTrigger className="h-6 text-xs">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="25">25 ans</SelectItem>
+                        <SelectItem value="30">30 ans</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </TableCell>
+                ))}
+              </TableRow>
+
+              <TableRow className="h-8">
                 <TableCell className="font-medium p-1">Valeur de l'achat</TableCell>
                 {scenarios.map((scenario) => (
                   <TableCell key={scenario.id} className="p-1">
@@ -463,44 +501,6 @@ const ScenarioComparator = () => {
                 {scenarios.map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
                     ${calculateTotalFinanced(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })}
-                  </TableCell>
-                ))}
-              </TableRow>
-
-              <TableRow className="h-8">
-                <TableCell className="font-medium p-1 text-xs">Taux d'intérêt</TableCell>
-                {scenarios.map((scenario) => (
-                  <TableCell key={scenario.id} className="p-1">
-                    <div className="relative">
-                      <Input
-                        type="number"
-                        step="0.01"
-                        value={scenario.interestRate.toFixed(2)}
-                        onChange={(e) => updateScenario(scenario.id, 'interestRate', parseFloat(e.target.value) || 0)}
-                        className="h-6 pr-4 text-xs"
-                      />
-                      <span className="absolute right-1 top-1/2 transform -translate-y-1/2 text-xs">%</span>
-                    </div>
-                  </TableCell>
-                ))}
-              </TableRow>
-
-              <TableRow className="h-8">
-                <TableCell className="font-medium p-1">Amortissement</TableCell>
-                {scenarios.map((scenario) => (
-                  <TableCell key={scenario.id} className="p-1">
-                    <Select 
-                      value={scenario.amortization.toString()} 
-                      onValueChange={(value) => updateScenario(scenario.id, 'amortization', parseInt(value))}
-                    >
-                      <SelectTrigger className="h-6 text-xs">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="25">25 ans</SelectItem>
-                        <SelectItem value="30">30 ans</SelectItem>
-                      </SelectContent>
-                    </Select>
                   </TableCell>
                 ))}
               </TableRow>
