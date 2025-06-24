@@ -402,7 +402,7 @@ const ScenarioComparator = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <div className="container mx-auto py-4 pt-32">
+      <div className="container mx-auto py-4 pt-40">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-4">
             <h1 className="text-2xl font-bold">Comparateur de Scénarios</h1>
