@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -519,7 +518,7 @@ const ScenarioComparator = () => {
                 <TableCell className="font-medium text-xs p-2">Capital remboursé durant le terme</TableCell>
                 {scenarios.map((scenario) => (
                   <TableCell key={scenario.id} className="text-xs p-2">
-                    ${calculateTermPrincipal(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })}
+                    ${calculateTermPrincipal(scenario).toLocaleString('fr-CA', { maximumFraction Digits: 0 })}
                   </TableCell>
                 ))}
               </TableRow>
