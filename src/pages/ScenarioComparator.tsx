@@ -243,9 +243,9 @@ const ScenarioComparator = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <div className="container mx-auto py-8">
-        <div className="flex items-center justify-between mb-6">
-          <h1 className="text-3xl font-bold">Comparateur de Scénarios</h1>
+      <div className="container mx-auto py-4">
+        <div className="flex items-center justify-between mb-4">
+          <h1 className="text-2xl font-bold">Comparateur de Scénarios</h1>
           {scenarios.length < 5 && (
             <Button onClick={addScenario} className="flex items-center gap-2">
               <Plus className="h-4 w-4" />
@@ -257,10 +257,10 @@ const ScenarioComparator = () => {
         <div className="overflow-x-auto">
           <Table className="min-w-full text-xs">
             <TableHeader>
-              <TableRow>
-                <TableHead className="w-32 font-semibold">Critères</TableHead>
+              <TableRow className="h-8">
+                <TableHead className="w-32 font-semibold p-1">Critères</TableHead>
                 {scenarios.map((scenario, index) => (
-                  <TableHead key={scenario.id} className="text-center min-w-40">
+                  <TableHead key={scenario.id} className="text-center min-w-32 p-1">
                     <div className="flex items-center justify-between">
                       <span>Scénario {index + 1}</span>
                       {scenarios.length > 2 && (
@@ -268,9 +268,9 @@ const ScenarioComparator = () => {
                           variant="ghost"
                           size="sm"
                           onClick={() => removeScenario(scenario.id)}
-                          className="h-6 w-6 p-0"
+                          className="h-4 w-4 p-0"
                         >
-                          <X className="h-3 w-3" />
+                          <X className="h-2 w-2" />
                         </Button>
                       )}
                     </div>
@@ -279,22 +279,22 @@ const ScenarioComparator = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow>
-                <TableCell className="font-medium">Prêteur</TableCell>
+              <TableRow className="h-8">
+                <TableCell className="font-medium p-1">Prêteur</TableCell>
                 {scenarios.map((scenario) => (
-                  <TableCell key={scenario.id}>
+                  <TableCell key={scenario.id} className="p-1">
                     <Select 
                       value={scenario.lender} 
                       onValueChange={(value) => updateScenario(scenario.id, 'lender', value)}
                     >
-                      <SelectTrigger className="h-8">
+                      <SelectTrigger className="h-6 text-xs">
                         <SelectValue placeholder="Choisir" />
                       </SelectTrigger>
                       <SelectContent>
                         {lenders.map((lender) => (
                           <SelectItem key={lender.name} value={lender.name}>
                             <div className="flex items-center gap-2">
-                              <img src={lender.logo} alt={lender.name} className="h-4 w-4 object-contain" />
+                              <img src={lender.logo} alt={lender.name} className="h-3 w-3 object-contain" />
                               {lender.name}
                             </div>
                           </SelectItem>
@@ -305,15 +305,15 @@ const ScenarioComparator = () => {
                 ))}
               </TableRow>
 
-              <TableRow>
-                <TableCell className="font-medium">Terme</TableCell>
+              <TableRow className="h-8">
+                <TableCell className="font-medium p-1">Terme</TableCell>
                 {scenarios.map((scenario) => (
-                  <TableCell key={scenario.id}>
+                  <TableCell key={scenario.id} className="p-1">
                     <Select 
                       value={scenario.term.toString()} 
                       onValueChange={(value) => updateScenario(scenario.id, 'term', parseInt(value))}
                     >
-                      <SelectTrigger className="h-8">
+                      <SelectTrigger className="h-6 text-xs">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -328,15 +328,15 @@ const ScenarioComparator = () => {
                 ))}
               </TableRow>
 
-              <TableRow>
-                <TableCell className="font-medium">Produit</TableCell>
+              <TableRow className="h-8">
+                <TableCell className="font-medium p-1">Produit</TableCell>
                 {scenarios.map((scenario) => (
-                  <TableCell key={scenario.id}>
+                  <TableCell key={scenario.id} className="p-1">
                     <Select 
                       value={scenario.product} 
                       onValueChange={(value) => updateScenario(scenario.id, 'product', value)}
                     >
-                      <SelectTrigger className="h-8">
+                      <SelectTrigger className="h-6 text-xs">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -348,112 +348,112 @@ const ScenarioComparator = () => {
                 ))}
               </TableRow>
 
-              <TableRow>
-                <TableCell className="font-medium">Valeur de l'achat</TableCell>
+              <TableRow className="h-8">
+                <TableCell className="font-medium p-1">Valeur de l'achat</TableCell>
                 {scenarios.map((scenario) => (
-                  <TableCell key={scenario.id}>
+                  <TableCell key={scenario.id} className="p-1">
                     <div className="relative">
-                      <span className="absolute left-2 top-1/2 transform -translate-y-1/2 text-xs">$</span>
+                      <span className="absolute left-1 top-1/2 transform -translate-y-1/2 text-xs">$</span>
                       <Input
                         type="number"
                         value={scenario.purchaseValue || ''}
                         onChange={(e) => updateScenario(scenario.id, 'purchaseValue', parseFloat(e.target.value) || 0)}
-                        className="h-8 pl-6 text-xs"
+                        className="h-6 pl-4 text-xs"
                       />
                     </div>
                   </TableCell>
                 ))}
               </TableRow>
 
-              <TableRow>
-                <TableCell className="font-medium">Mise de fonds</TableCell>
+              <TableRow className="h-8">
+                <TableCell className="font-medium p-1">Mise de fonds</TableCell>
                 {scenarios.map((scenario) => (
-                  <TableCell key={scenario.id}>
+                  <TableCell key={scenario.id} className="p-1">
                     <div className="relative">
-                      <span className="absolute left-2 top-1/2 transform -translate-y-1/2 text-xs">$</span>
+                      <span className="absolute left-1 top-1/2 transform -translate-y-1/2 text-xs">$</span>
                       <Input
                         type="number"
                         value={scenario.downPayment || ''}
                         onChange={(e) => updateScenario(scenario.id, 'downPayment', parseFloat(e.target.value) || 0)}
-                        className="h-8 pl-6 text-xs"
+                        className="h-6 pl-4 text-xs"
                       />
                     </div>
                   </TableCell>
                 ))}
               </TableRow>
 
-              <TableRow>
-                <TableCell className="font-medium">Emprunt de base</TableCell>
+              <TableRow className="h-8">
+                <TableCell className="font-medium p-1">Emprunt de base</TableCell>
                 {scenarios.map((scenario) => (
-                  <TableCell key={scenario.id}>
+                  <TableCell key={scenario.id} className="p-1 text-xs">
                     ${calculateBaseLoan(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })}
                   </TableCell>
                 ))}
               </TableRow>
 
-              <TableRow>
-                <TableCell className="font-medium">Ratio prêt-valeur</TableCell>
+              <TableRow className="h-8">
+                <TableCell className="font-medium p-1">Ratio prêt-valeur</TableCell>
                 {scenarios.map((scenario) => (
-                  <TableCell key={scenario.id}>
+                  <TableCell key={scenario.id} className="p-1 text-xs">
                     {calculateLTV(scenario).toFixed(2)}%
                   </TableCell>
                 ))}
               </TableRow>
 
-              <TableRow>
-                <TableCell className="font-medium">Prime SCHL (%)</TableCell>
+              <TableRow className="h-8">
+                <TableCell className="font-medium p-1">Prime SCHL (%)</TableCell>
                 {scenarios.map((scenario) => (
-                  <TableCell key={scenario.id}>
+                  <TableCell key={scenario.id} className="p-1 text-xs">
                     {getCMHCPremiumRate(calculateLTV(scenario), scenario.amortization).toFixed(2)}%
                   </TableCell>
                 ))}
               </TableRow>
 
-              <TableRow>
-                <TableCell className="font-medium">Prime SCHL ($)</TableCell>
+              <TableRow className="h-8">
+                <TableCell className="font-medium p-1">Prime SCHL ($)</TableCell>
                 {scenarios.map((scenario) => (
-                  <TableCell key={scenario.id}>
+                  <TableCell key={scenario.id} className="p-1 text-xs">
                     ${calculateCMHCPremium(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })}
                   </TableCell>
                 ))}
               </TableRow>
 
-              <TableRow>
-                <TableCell className="font-medium">Montant financé</TableCell>
+              <TableRow className="h-8">
+                <TableCell className="font-medium p-1">Montant financé</TableCell>
                 {scenarios.map((scenario) => (
-                  <TableCell key={scenario.id}>
+                  <TableCell key={scenario.id} className="p-1 text-xs">
                     ${calculateTotalFinanced(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })}
                   </TableCell>
                 ))}
               </TableRow>
 
-              <TableRow>
-                <TableCell className="font-medium">Taux d'intérêt</TableCell>
+              <TableRow className="h-8">
+                <TableCell className="font-medium p-1">Taux d'intérêt</TableCell>
                 {scenarios.map((scenario) => (
-                  <TableCell key={scenario.id}>
+                  <TableCell key={scenario.id} className="p-1">
                     <div className="relative">
                       <Input
                         type="number"
                         step="0.01"
                         value={scenario.interestRate.toFixed(2)}
                         onChange={(e) => updateScenario(scenario.id, 'interestRate', parseFloat(e.target.value) || 0)}
-                        className="h-8 pr-6 text-xs"
+                        className="h-6 pr-4 text-xs"
                       />
-                      <span className="absolute right-2 top-1/2 transform -translate-y-1/2 text-xs">%</span>
+                      <span className="absolute right-1 top-1/2 transform -translate-y-1/2 text-xs">%</span>
                     </div>
                   </TableCell>
                 ))}
               </TableRow>
 
-              <TableRow>
-                <TableCell className="font-medium">Amortissement</TableCell>
+              <TableRow className="h-8">
+                <TableCell className="font-medium p-1">Amortissement</TableCell>
                 {scenarios.map((scenario) => (
-                  <TableCell key={scenario.id}>
+                  <TableCell key={scenario.id} className="p-1">
                     <Select 
                       value={scenario.amortization.toString()} 
                       onValueChange={(value) => updateScenario(scenario.id, 'amortization', parseInt(value))}
                     >
-                      <SelectTrigger className="h-8">
+                      <SelectTrigger className="h-6 text-xs">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -465,55 +465,55 @@ const ScenarioComparator = () => {
                 ))}
               </TableRow>
 
-              <TableRow>
-                <TableCell className="font-medium">Versement mensuel</TableCell>
+              <TableRow className="h-8">
+                <TableCell className="font-medium p-1">Versement mensuel</TableCell>
                 {scenarios.map((scenario) => (
-                  <TableCell key={scenario.id}>
+                  <TableCell key={scenario.id} className="p-1 text-xs">
                     ${calculateMonthlyPayment(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 2 })}
                   </TableCell>
                 ))}
               </TableRow>
 
-              <TableRow>
-                <TableCell className="font-medium">Versement aux 2 semaines</TableCell>
+              <TableRow className="h-8">
+                <TableCell className="font-medium p-1">Versement aux 2 semaines</TableCell>
                 {scenarios.map((scenario) => (
-                  <TableCell key={scenario.id}>
+                  <TableCell key={scenario.id} className="p-1 text-xs">
                     ${calculateBiweeklyPayment(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 2 })}
                   </TableCell>
                 ))}
               </TableRow>
 
-              <TableRow>
-                <TableCell className="font-medium">Versement par semaine</TableCell>
+              <TableRow className="h-8">
+                <TableCell className="font-medium p-1">Versement par semaine</TableCell>
                 {scenarios.map((scenario) => (
-                  <TableCell key={scenario.id}>
+                  <TableCell key={scenario.id} className="p-1 text-xs">
                     ${calculateWeeklyPayment(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 2 })}
                   </TableCell>
                 ))}
               </TableRow>
 
-              <TableRow>
-                <TableCell className="font-medium">Intérêts payés durant le terme</TableCell>
+              <TableRow className="h-8">
+                <TableCell className="font-medium p-1">Intérêts payés durant le terme</TableCell>
                 {scenarios.map((scenario) => (
-                  <TableCell key={scenario.id}>
+                  <TableCell key={scenario.id} className="p-1 text-xs">
                     ${calculateTermInterest(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })}
                   </TableCell>
                 ))}
               </TableRow>
 
-              <TableRow>
-                <TableCell className="font-medium">Capital remboursé durant le terme</TableCell>
+              <TableRow className="h-8">
+                <TableCell className="font-medium p-1">Capital remboursé durant le terme</TableCell>
                 {scenarios.map((scenario) => (
-                  <TableCell key={scenario.id}>
+                  <TableCell key={scenario.id} className="p-1 text-xs">
                     ${calculateTermPrincipal(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })}
                   </TableCell>
                 ))}
               </TableRow>
 
-              <TableRow>
-                <TableCell className="font-medium">Solde restant à la fin du terme</TableCell>
+              <TableRow className="h-8">
+                <TableCell className="font-medium p-1">Solde restant à la fin du terme</TableCell>
                 {scenarios.map((scenario) => (
-                  <TableCell key={scenario.id}>
+                  <TableCell key={scenario.id} className="p-1 text-xs">
                     ${calculateTermRemainingBalance(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })}
                   </TableCell>
                 ))}
