@@ -275,7 +275,7 @@ const ScenarioComparator = () => {
               <TableRow>
                 <TableHead className="w-24 font-semibold text-xs p-2">Critères</TableHead>
                 {scenarios.map((scenario, index) => (
-                  <TableHead key={scenario.id} className="text-center w-32 text-xs p-2">
+                  <TableHead key={scenario.id} className="text-center w-24 text-xs p-2">
                     <div className="flex items-center justify-between">
                       <span>Scénario {index + 1}</span>
                       {scenarios.length > 2 && (
