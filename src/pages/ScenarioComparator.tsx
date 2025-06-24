@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus, X } from "lucide-react";
+import { Plus, X, Copy } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -129,6 +129,26 @@ const ScenarioComparator = () => {
   const removeScenario = (id: string) => {
     if (scenarios.length > 2) {
       setScenarios(scenarios.filter(s => s.id !== id));
+    }
+  };
+
+  const duplicateFirstScenario = () => {
+    if (scenarios.length > 0) {
+      const firstScenario = scenarios[0];
+      const updatedScenarios = scenarios.map((scenario, index) => {
+        if (index === 0) return scenario; // Keep the first scenario unchanged
+        return {
+          ...scenario,
+          lender: firstScenario.lender,
+          term: firstScenario.term,
+          product: firstScenario.product,
+          purchaseValue: firstScenario.purchaseValue,
+          downPayment: firstScenario.downPayment,
+          interestRate: firstScenario.interestRate,
+          amortization: firstScenario.amortization
+        };
+      });
+      setScenarios(updatedScenarios);
     }
   };
 
@@ -275,23 +295,29 @@ const ScenarioComparator = () => {
       <div className="container mx-auto py-4 pt-24">
         <div className="flex items-center justify-between mb-4">
           <h1 className="text-2xl font-bold">Comparateur de Scénarios</h1>
-          {scenarios.length < 5 && (
-            <Button onClick={addScenario} className="flex items-center gap-2">
-              <Plus className="h-4 w-4" />
-              Ajouter un scénario
+          <div className="flex gap-2">
+            <Button onClick={duplicateFirstScenario} className="flex items-center gap-2" variant="outline">
+              <Copy className="h-4 w-4" />
+              Dupliquer scénario #1
             </Button>
-          )}
+            {scenarios.length < 5 && (
+              <Button onClick={addScenario} className="flex items-center gap-2">
+                <Plus className="h-4 w-4" />
+                Ajouter un scénario
+              </Button>
+            )}
+          </div>
         </div>
 
         <div className="overflow-x-auto">
           <Table className="min-w-full text-xs">
             <TableHeader>
               <TableRow className="h-8">
-                <TableHead className="w-32 font-semibold p-1">Critères</TableHead>
+                <TableHead className="w-32 font-semibold p-1"></TableHead>
                 {scenarios.map((scenario, index) => (
                   <TableHead key={scenario.id} className="text-center min-w-32 p-1">
                     <div className="flex items-center justify-between">
-                      <span>Scénario #{index + 1}</span>
+                      <span className="font-bold text-sm">Scénario #{index + 1}</span>
                       {scenarios.length > 2 && (
                         <Button
                           variant="ghost"
@@ -457,7 +483,7 @@ const ScenarioComparator = () => {
               </TableRow>
 
               <TableRow className="h-8">
-                <TableCell className="font-medium p-1">Taux d'intérêt</TableCell>
+                <TableCell className="font-medium p-1 text-xs">Taux d'intérêt</TableCell>
                 {scenarios.map((scenario) => (
                   <TableCell key={scenario.id} className="p-1">
                     <div className="relative">
