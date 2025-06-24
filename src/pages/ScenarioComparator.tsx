@@ -101,7 +101,7 @@ const ScenarioComparator = () => {
   const addScenario = () => {
     if (scenarios.length < 5) {
       const newScenario: Scenario = {
-        id: (scenarios.length + 1).toString(),
+        id: (Date.now()).toString(), // Use timestamp to ensure unique IDs
         lender: "",
         term: 5,
         product: 'fixe',
@@ -116,7 +116,9 @@ const ScenarioComparator = () => {
 
   const removeScenario = (id: string) => {
     if (scenarios.length > 1) {
-      setScenarios(scenarios.filter(s => s.id !== id));
+      const updatedScenarios = scenarios.filter(s => s.id !== id);
+      // Ensure we never have more than 5 scenarios
+      setScenarios(updatedScenarios.slice(0, 5));
     }
   };
 
@@ -136,7 +138,8 @@ const ScenarioComparator = () => {
           amortization: firstScenario.amortization
         };
       });
-      setScenarios(updatedScenarios);
+      // Ensure we never have more than 5 scenarios
+      setScenarios(updatedScenarios.slice(0, 5));
     }
   };
 
@@ -252,59 +255,117 @@ const ScenarioComparator = () => {
   const generatePDF = () => {
     const pdf = new jsPDF('landscape', 'mm', 'a4');
     
-    // Title
-    pdf.setFontSize(16);
-    pdf.text('Comparateur de Scénarios', 20, 20);
+    // Add logos
+    try {
+      // Add Planiprêt logo (top left)
+      pdf.addImage('/logos/planipret-logo.png', 'PNG', 20, 10, 30, 15);
+      
+      // Add TB logo (top right)  
+      pdf.addImage('/lovable-uploads/d334ed50-2338-4946-8525-666d74e2684b.png', 'PNG', 240, 10, 20, 20);
+    } catch (error) {
+      console.log('Logos could not be loaded');
+    }
     
-    // Table headers
-    const headers = ['', ...scenarios.map((_, index) => `Scénario #${index + 1}`)];
-    let yPosition = 40;
+    // Title - centered
+    pdf.setFontSize(18);
+    pdf.setFont('helvetica', 'bold');
+    pdf.text('Comparateur de Scénarios Hypothécaires', 148, 40, { align: 'center' });
+    
+    // Subtitle
+    pdf.setFontSize(12);
+    pdf.setFont('helvetica', 'normal');
+    pdf.text('Thomas Bourque - Courtier Hypothécaire', 148, 50, { align: 'center' });
+    
+    // Draw a line under the header
+    pdf.setLineWidth(0.5);
+    pdf.line(20, 55, 277, 55);
+    
+    let yPosition = 70;
     
     // Set font size for table
-    pdf.setFontSize(8);
+    pdf.setFontSize(9);
+    pdf.setFont('helvetica', 'normal');
     
-    // Column widths
-    const colWidth = 45;
-    const firstColWidth = 40;
+    // Column widths - adjusted to prevent overlap
+    const firstColWidth = 55; // Increased width for criteria column
+    const colWidth = (277 - 20 - firstColWidth) / scenarios.length; // Dynamic width based on number of scenarios
     
-    // Headers
-    pdf.text('Critères', 20, yPosition);
+    // Headers with background color
+    pdf.setFillColor(230, 230, 230);
+    pdf.rect(20, yPosition - 5, firstColWidth, 10, 'F');
+    pdf.setFont('helvetica', 'bold');
+    pdf.text('Critères', 22, yPosition);
+    
     scenarios.forEach((_, index) => {
-      pdf.text(`Scénario #${index + 1}`, 20 + firstColWidth + (index * colWidth), yPosition);
+      const xPos = 20 + firstColWidth + (index * colWidth);
+      pdf.setFillColor(230, 230, 230);
+      pdf.rect(xPos, yPosition - 5, colWidth, 10, 'F');
+      pdf.text(`Scénario #${index + 1}`, xPos + 2, yPosition);
     });
     
-    yPosition += 10;
+    yPosition += 15;
     
-    // Table rows data
+    // Table rows data with better formatting
     const rows = [
       ['Prêteur', ...scenarios.map(s => s.lender || 'Non sélectionné')],
       ['Terme', ...scenarios.map(s => `${s.term} an${s.term > 1 ? 's' : ''}`)],
       ['Produit', ...scenarios.map(s => s.product === 'fixe' ? 'Fixe' : 'Variable')],
       ['Taux d\'intérêt', ...scenarios.map(s => `${s.interestRate.toFixed(2)}%`)],
       ['Amortissement', ...scenarios.map(s => `${s.amortization} ans`)],
-      ['Valeur de l\'achat', ...scenarios.map(s => `$${s.purchaseValue.toLocaleString('fr-CA')}`)],
-      ['Mise de fonds', ...scenarios.map(s => `$${s.downPayment.toLocaleString('fr-CA')}`)],
-      ['Emprunt de base', ...scenarios.map(s => `$${calculateBaseLoan(s).toLocaleString('fr-CA')}`)],
-      ['Ratio prêt-valeur', ...scenarios.map(s => `${calculateLTV(s).toFixed(2)}%`)],
+      ['Valeur de l\'achat', ...scenarios.map(s => `${s.purchaseValue.toLocaleString('fr-CA')} $`)],
+      ['Mise de fonds', ...scenarios.map(s => `${s.downPayment.toLocaleString('fr-CA')} $`)],
+      ['Emprunt de base', ...scenarios.map(s => `${calculateBaseLoan(s).toLocaleString('fr-CA')} $`)],
+      ['Ratio prêt-valeur', ...scenarios.map(s => `${calculateLTV(s).toFixed(1)}%`)],
       ['Prime SCHL (%)', ...scenarios.map(s => `${getCMHCPremiumRate(calculateLTV(s), s.amortization).toFixed(2)}%`)],
-      ['Prime SCHL ($)', ...scenarios.map(s => `$${calculateCMHCPremium(s).toLocaleString('fr-CA')}`)],
-      ['Montant financé', ...scenarios.map(s => `$${calculateTotalFinanced(s).toLocaleString('fr-CA')}`)],
-      ['Versement mensuel', ...scenarios.map(s => `$${calculateMonthlyPayment(s).toLocaleString('fr-CA', { maximumFractionDigits: 2 })}`)],
-      ['Versement aux 2 semaines', ...scenarios.map(s => `$${calculateBiweeklyPayment(s).toLocaleString('fr-CA', { maximumFractionDigits: 2 })}`)],
-      ['Versement par semaine', ...scenarios.map(s => `$${calculateWeeklyPayment(s).toLocaleString('fr-CA', { maximumFractionDigits: 2 })}`)],
-      ['Intérêts payés durant le terme', ...scenarios.map(s => `$${calculateTermInterest(s).toLocaleString('fr-CA')}`)],
-      ['Capital remboursé durant le terme', ...scenarios.map(s => `$${calculateTermPrincipal(s).toLocaleString('fr-CA')}`)],
-      ['Solde restant à la fin du terme', ...scenarios.map(s => `$${calculateTermRemainingBalance(s).toLocaleString('fr-CA')}`)],
+      ['Prime SCHL ($)', ...scenarios.map(s => `${calculateCMHCPremium(s).toLocaleString('fr-CA')} $`)],
+      ['Montant financé', ...scenarios.map(s => `${calculateTotalFinanced(s).toLocaleString('fr-CA')} $`)],
+      ['Versement mensuel', ...scenarios.map(s => `${calculateMonthlyPayment(s).toLocaleString('fr-CA', { maximumFractionDigits: 0 })} $`)],
+      ['Versement aux 2 semaines', ...scenarios.map(s => `${calculateBiweeklyPayment(s).toLocaleString('fr-CA', { maximumFractionDigits: 0 })} $`)],
+      ['Versement par semaine', ...scenarios.map(s => `${calculateWeeklyPayment(s).toLocaleString('fr-CA', { maximumFractionDigits: 0 })} $`)],
+      ['Intérêts payés durant le terme', ...scenarios.map(s => `${calculateTermInterest(s).toLocaleString('fr-CA')} $`)],
+      ['Capital remboursé durant le terme', ...scenarios.map(s => `${calculateTermPrincipal(s).toLocaleString('fr-CA')} $`)],
+      ['Solde restant à la fin du terme', ...scenarios.map(s => `${calculateTermRemainingBalance(s).toLocaleString('fr-CA')} $`)],
     ];
     
-    // Draw table rows
-    rows.forEach((row) => {
-      pdf.text(row[0] || '', 20, yPosition);
+    // Draw table rows with alternating colors
+    rows.forEach((row, rowIndex) => {
+      // Alternate row colors
+      if (rowIndex % 2 === 1) {
+        pdf.setFillColor(248, 248, 248);
+        pdf.rect(20, yPosition - 3, 257, 8, 'F');
+      }
+      
+      // Draw borders
+      pdf.setDrawColor(200, 200, 200);
+      pdf.setLineWidth(0.1);
+      pdf.rect(20, yPosition - 3, firstColWidth, 8);
+      
+      // First column (criteria)
+      pdf.setFont('helvetica', 'bold');
+      pdf.text(row[0] || '', 22, yPosition);
+      
+      // Data columns
+      pdf.setFont('helvetica', 'normal');
       row.slice(1).forEach((cell, index) => {
-        pdf.text(cell || '', 20 + firstColWidth + (index * colWidth), yPosition);
+        const xPos = 20 + firstColWidth + (index * colWidth);
+        pdf.rect(xPos, yPosition - 3, colWidth, 8);
+        
+        // Truncate text if too long for cell
+        let displayText = cell || '';
+        if (displayText.length > 15) {
+          displayText = displayText.substring(0, 12) + '...';
+        }
+        
+        pdf.text(displayText, xPos + 2, yPosition);
       });
       yPosition += 8;
     });
+    
+    // Footer
+    pdf.setFontSize(8);
+    pdf.setFont('helvetica', 'italic');
+    pdf.text(`Généré le ${new Date().toLocaleDateString('fr-CA')}`, 20, 190);
+    pdf.text('Thomas Bourque - Courtier Hypothécaire', 200, 190);
     
     // Save the PDF
     pdf.save('comparateur-scenarios.pdf');
@@ -341,10 +402,10 @@ const ScenarioComparator = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <div className="container mx-auto py-4 pt-40">
+      <div className="container mx-auto py-4 pt-32">
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-2xl font-bold">Comparateur de Scénarios</h1>
-          <div className="flex gap-2">
+          <div className="flex items-center gap-4">
+            <h1 className="text-2xl font-bold">Comparateur de Scénarios</h1>
             <Button 
               onClick={generatePDF} 
               className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white"
@@ -352,6 +413,8 @@ const ScenarioComparator = () => {
               <Download className="h-4 w-4" />
               Télécharger PDF
             </Button>
+          </div>
+          <div className="flex gap-2">
             <Button onClick={duplicateFirstScenario} className="flex items-center gap-2" variant="outline">
               <Copy className="h-4 w-4" />
               Dupliquer scénario #1
@@ -368,7 +431,7 @@ const ScenarioComparator = () => {
             <TableHeader>
               <TableRow className="h-8">
                 <TableHead className="w-32 font-semibold p-1"></TableHead>
-                {scenarios.map((scenario, index) => (
+                {scenarios.slice(0, 5).map((scenario, index) => (
                   <TableHead key={scenario.id} className="text-center min-w-32 p-1">
                     <div className="flex items-center justify-between">
                       <span className="font-bold text-sm">Scénario #{index + 1}</span>
@@ -390,7 +453,7 @@ const ScenarioComparator = () => {
             <TableBody>
               <TableRow className="h-8">
                 <TableCell className="font-medium p-1">Prêteur</TableCell>
-                {scenarios.map((scenario) => (
+                {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1">
                     <Select 
                       value={scenario.lender} 
@@ -416,7 +479,7 @@ const ScenarioComparator = () => {
 
               <TableRow className="h-8">
                 <TableCell className="font-medium p-1">Terme</TableCell>
-                {scenarios.map((scenario) => (
+                {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1">
                     <Select 
                       value={scenario.term.toString()} 
@@ -439,7 +502,7 @@ const ScenarioComparator = () => {
 
               <TableRow className="h-8">
                 <TableCell className="font-medium p-1">Produit</TableCell>
-                {scenarios.map((scenario) => (
+                {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1">
                     <Select 
                       value={scenario.product} 
@@ -459,24 +522,21 @@ const ScenarioComparator = () => {
 
               <TableRow className="h-8">
                 <TableCell className="font-medium p-1">Taux d'intérêt</TableCell>
-                {scenarios.map((scenario) => (
+                {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1">
                     <div className="relative">
                       <Input
-                        type="text"
-                        value={scenario.interestRate.toFixed(2)}
+                        type="number"
+                        step="0.01"
+                        min="0"
+                        max="20"
+                        value={scenario.interestRate}
                         onChange={(e) => {
                           const value = parseFloat(e.target.value);
                           if (!isNaN(value) && value >= 0 && value <= 20) {
                             updateScenario(scenario.id, 'interestRate', value);
-                          }
-                        }}
-                        onBlur={(e) => {
-                          const value = parseFloat(e.target.value);
-                          if (isNaN(value) || value < 0) {
+                          } else if (e.target.value === '') {
                             updateScenario(scenario.id, 'interestRate', 0);
-                          } else if (value > 20) {
-                            updateScenario(scenario.id, 'interestRate', 20);
                           }
                         }}
                         className="h-6 pr-4 text-xs"
@@ -489,7 +549,7 @@ const ScenarioComparator = () => {
 
               <TableRow className="h-8">
                 <TableCell className="font-medium p-1">Amortissement</TableCell>
-                {scenarios.map((scenario) => (
+                {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1">
                     <Select 
                       value={scenario.amortization.toString()} 
@@ -509,7 +569,7 @@ const ScenarioComparator = () => {
 
               <TableRow className="h-8">
                 <TableCell className="font-medium p-1">Valeur de l'achat</TableCell>
-                {scenarios.map((scenario) => (
+                {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1">
                     <div className="relative">
                       <span className="absolute left-1 top-1/2 transform -translate-y-1/2 text-xs">$</span>
@@ -526,7 +586,7 @@ const ScenarioComparator = () => {
 
               <TableRow className="h-8">
                 <TableCell className="font-medium p-1">Mise de fonds</TableCell>
-                {scenarios.map((scenario) => (
+                {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1">
                     <div className="relative">
                       <span className="absolute left-1 top-1/2 transform -translate-y-1/2 text-xs">$</span>
@@ -541,9 +601,10 @@ const ScenarioComparator = () => {
                 ))}
               </TableRow>
 
+              {/* Keep all the calculated rows the same with slice(0, 5) applied */}
               <TableRow className="h-8">
                 <TableCell className="font-medium p-1">Emprunt de base</TableCell>
-                {scenarios.map((scenario) => (
+                {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
                     ${calculateBaseLoan(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })}
                   </TableCell>
@@ -552,7 +613,7 @@ const ScenarioComparator = () => {
 
               <TableRow className="h-8">
                 <TableCell className="font-medium p-1">Ratio prêt-valeur</TableCell>
-                {scenarios.map((scenario) => (
+                {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
                     {calculateLTV(scenario).toFixed(2)}%
                   </TableCell>
@@ -561,7 +622,7 @@ const ScenarioComparator = () => {
 
               <TableRow className="h-8">
                 <TableCell className="font-medium p-1">Prime SCHL (%)</TableCell>
-                {scenarios.map((scenario) => (
+                {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
                     {getCMHCPremiumRate(calculateLTV(scenario), scenario.amortization).toFixed(2)}%
                   </TableCell>
@@ -570,7 +631,7 @@ const ScenarioComparator = () => {
 
               <TableRow className="h-8">
                 <TableCell className="font-medium p-1">Prime SCHL ($)</TableCell>
-                {scenarios.map((scenario) => (
+                {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
                     ${calculateCMHCPremium(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })}
                   </TableCell>
@@ -579,7 +640,7 @@ const ScenarioComparator = () => {
 
               <TableRow className="h-8">
                 <TableCell className="font-medium p-1">Montant financé</TableCell>
-                {scenarios.map((scenario) => (
+                {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
                     ${calculateTotalFinanced(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })}
                   </TableCell>
@@ -588,7 +649,7 @@ const ScenarioComparator = () => {
 
               <TableRow className="h-8">
                 <TableCell className="font-medium p-1">Versement mensuel</TableCell>
-                {scenarios.map((scenario) => (
+                {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
                     ${calculateMonthlyPayment(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 2 })}
                   </TableCell>
@@ -597,7 +658,7 @@ const ScenarioComparator = () => {
 
               <TableRow className="h-8">
                 <TableCell className="font-medium p-1">Versement aux 2 semaines</TableCell>
-                {scenarios.map((scenario) => (
+                {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
                     ${calculateBiweeklyPayment(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 2 })}
                   </TableCell>
@@ -606,7 +667,7 @@ const ScenarioComparator = () => {
 
               <TableRow className="h-8">
                 <TableCell className="font-medium p-1">Versement par semaine</TableCell>
-                {scenarios.map((scenario) => (
+                {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
                     ${calculateWeeklyPayment(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 2 })}
                   </TableCell>
@@ -615,7 +676,7 @@ const ScenarioComparator = () => {
 
               <TableRow className="h-8">
                 <TableCell className="font-medium p-1">Intérêts payés durant le terme</TableCell>
-                {scenarios.map((scenario) => (
+                {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
                     ${calculateTermInterest(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })}
                   </TableCell>
@@ -624,7 +685,7 @@ const ScenarioComparator = () => {
 
               <TableRow className="h-8">
                 <TableCell className="font-medium p-1">Capital remboursé durant le terme</TableCell>
-                {scenarios.map((scenario) => (
+                {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
                     ${calculateTermPrincipal(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })}
                   </TableCell>
@@ -633,7 +694,7 @@ const ScenarioComparator = () => {
 
               <TableRow className="h-8">
                 <TableCell className="font-medium p-1">Solde restant à la fin du terme</TableCell>
-                {scenarios.map((scenario) => (
+                {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
                     ${calculateTermRemainingBalance(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })}
                   </TableCell>
