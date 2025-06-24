@@ -101,6 +101,11 @@ export const calculateBorrowingCapacity = (input: BorrowingCapacityInput): Borro
       maxLoanAmount = maxLoanAmount / 1.028;
     }
     
+    // Majoration de 0,2% si amortissement sur 30 ans
+    if (amortization === 30) {
+      mortgageInsuranceRate += 0.2;
+    }
+    
     mortgageInsurancePremium = maxLoanAmount * (mortgageInsuranceRate / 100);
   }
 

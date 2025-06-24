@@ -52,7 +52,31 @@ export const calculateMortgagePayment = (input: MortgagePaymentInput): MortgageP
     extraPaymentFrequency = 'monthly'
   } = input;
 
-  const mortgageAmount = purchasePrice - downPayment;
+  let mortgageAmount = purchasePrice - downPayment;
+  const downPaymentRatio = downPayment / purchasePrice;
+  
+  // Calcul de la prime d'assurance hypothécaire si mise de fonds < 20%
+  let mortgageInsurancePremium = 0;
+  if (downPaymentRatio < 0.20) {
+    const loanToValueRatio = (mortgageAmount / purchasePrice) * 100;
+    let mortgageInsuranceRate = 0;
+    
+    if (loanToValueRatio >= 90.01 && loanToValueRatio <= 95) {
+      mortgageInsuranceRate = 4.0;
+    } else if (loanToValueRatio >= 85.01 && loanToValueRatio <= 90) {
+      mortgageInsuranceRate = 3.1;
+    } else if (loanToValueRatio >= 80.01 && loanToValueRatio <= 85) {
+      mortgageInsuranceRate = 2.8;
+    }
+    
+    // Majoration de 0,2% si amortissement sur 30 ans
+    if (amortization >= 30) {
+      mortgageInsuranceRate += 0.2;
+    }
+    
+    mortgageInsurancePremium = mortgageAmount * (mortgageInsuranceRate / 100);
+    mortgageAmount += mortgageInsurancePremium;
+  }
   
   // Payment frequencies per year
   let paymentsPerYear: number;
@@ -241,7 +265,7 @@ export const calculateMortgagePayment = (input: MortgagePaymentInput): MortgageP
   };
 
   return {
-    mortgageAmount: Math.round(mortgageAmount),
+    mortgageAmount: Math.round(mortgageAmount - mortgageInsurancePremium),
     regularPayment: Math.round(regularPayment * 100) / 100,
     totalPayments: Math.round(totalPaymentsDuringTerm),
     totalInterest: Math.round(interestPaidDuringTerm),
