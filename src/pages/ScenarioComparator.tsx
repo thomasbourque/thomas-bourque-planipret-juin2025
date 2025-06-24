@@ -258,12 +258,10 @@ const ScenarioComparator = () => {
         <div className="flex items-center justify-between mb-4">
           <h1 className="text-2xl font-bold">Comparateur de Scénarios</h1>
           <div className="flex gap-2">
-            {scenarios.length < 5 && (
-              <Button onClick={addScenario} className="flex items-center gap-2" size="sm">
-                <Plus className="h-4 w-4" />
-                Ajouter un scénario
-              </Button>
-            )}
+            <Button onClick={addScenario} className="flex items-center gap-2" size="sm">
+              <Plus className="h-4 w-4" />
+              Ajouter un scénario
+            </Button>
             <Button onClick={downloadPDF} className="flex items-center gap-2" size="sm" variant="outline">
               <Download className="h-4 w-4" />
               Télécharger PDF
