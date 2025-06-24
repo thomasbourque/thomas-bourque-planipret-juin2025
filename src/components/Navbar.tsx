@@ -10,7 +10,7 @@ const Navbar = () => {
   const location = useLocation();
   
   // Check if we're on pages that should always have dark colors
-  const isDarkPage = ['/faq', '/calculatrices'].includes(location.pathname);
+  const isDarkPage = ['/faq', '/calculatrices', '/comparateur-scenarios'].includes(location.pathname);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -69,11 +69,18 @@ const Navbar = () => {
           <a href="/#contact" className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
             Contact
           </a>
-          <Button asChild size="sm" className="rounded-full">
-            <a href="https://calendly.com/tbourque-planipret" target="_blank" rel="noopener noreferrer">
-              Planifier un appel
-            </a>
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button asChild size="sm" className="rounded-full">
+              <a href="https://calendly.com/tbourque-planipret" target="_blank" rel="noopener noreferrer">
+                Planifier un appel
+              </a>
+            </Button>
+            <Button asChild variant="outline" size="sm" className="rounded-full">
+              <a href="/comparateur-scenarios">
+                Accès courtiers
+              </a>
+            </Button>
+          </div>
         </nav>
 
         {/* Mobile Menu Button */}
@@ -142,7 +149,7 @@ const Navbar = () => {
             >
               Contact
             </a>
-            <div className="pt-4">
+            <div className="pt-4 space-y-2">
               <Button asChild size="sm" className="w-full rounded-full bg-white text-primary hover:bg-white/90">
                 <a 
                   href="https://calendly.com/tbourque-planipret" 
@@ -151,6 +158,15 @@ const Navbar = () => {
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   Planifier un appel
+                </a>
+              </Button>
+              
+              <Button asChild variant="outline" size="sm" className="w-full rounded-full bg-transparent border-white text-white hover:bg-white/10">
+                <a 
+                  href="/comparateur-scenarios"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Accès courtiers
                 </a>
               </Button>
               

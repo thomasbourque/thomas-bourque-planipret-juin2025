@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Lenders from "./pages/Lenders";
 import FAQ from "./pages/FAQ";
 import Calculatrices from "./pages/Calculatrices";
+import ScenarioComparator from "./pages/ScenarioComparator";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/preteurs" element={<Lenders />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/calculatrices" element={<Calculatrices />} />
+          <Route path="/comparateur-scenarios" element={<ScenarioComparator />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
