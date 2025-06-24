@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -63,6 +62,36 @@ const ScenarioComparator = () => {
     },
     {
       id: "2",
+      lender: "",
+      term: 5,
+      product: 'fixe',
+      purchaseValue: 0,
+      downPayment: 0,
+      interestRate: 4.00,
+      amortization: 25
+    },
+    {
+      id: "3",
+      lender: "",
+      term: 5,
+      product: 'fixe',
+      purchaseValue: 0,
+      downPayment: 0,
+      interestRate: 4.00,
+      amortization: 25
+    },
+    {
+      id: "4",
+      lender: "",
+      term: 5,
+      product: 'fixe',
+      purchaseValue: 0,
+      downPayment: 0,
+      interestRate: 4.00,
+      amortization: 25
+    },
+    {
+      id: "5",
       lender: "",
       term: 5,
       product: 'fixe',
@@ -243,7 +272,7 @@ const ScenarioComparator = () => {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <div className="container mx-auto py-4">
+      <div className="container mx-auto py-4 pt-24">
         <div className="flex items-center justify-between mb-4">
           <h1 className="text-2xl font-bold">Comparateur de Scénarios</h1>
           {scenarios.length < 5 && (
@@ -262,7 +291,7 @@ const ScenarioComparator = () => {
                 {scenarios.map((scenario, index) => (
                   <TableHead key={scenario.id} className="text-center min-w-32 p-1">
                     <div className="flex items-center justify-between">
-                      <span>Scénario {index + 1}</span>
+                      <span>Scénario #{index + 1}</span>
                       {scenarios.length > 2 && (
                         <Button
                           variant="ghost"
