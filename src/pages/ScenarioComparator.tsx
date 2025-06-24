@@ -266,6 +266,11 @@ const ScenarioComparator = () => {
       console.log('Logos could not be loaded');
     }
     
+    // Date in header area - moved up
+    pdf.setFontSize(8);
+    pdf.setFont('helvetica', 'italic');
+    pdf.text(`Généré le ${new Date().toLocaleDateString('fr-CA')}`, 20, 30);
+    
     // Title - centered
     pdf.setFontSize(18);
     pdf.setFont('helvetica', 'bold');
@@ -286,23 +291,28 @@ const ScenarioComparator = () => {
     pdf.setFontSize(9);
     pdf.setFont('helvetica', 'normal');
     
-    // Column widths - adjusted to prevent overlap
-    const firstColWidth = 55; // Increased width for criteria column
-    const colWidth = (277 - 20 - firstColWidth) / scenarios.length; // Dynamic width based on number of scenarios
+    // Fixed column widths - keep same width regardless of number of scenarios
+    const firstColWidth = 55;
+    const fixedColWidth = 44; // Fixed width for each scenario column
+    const maxScenarios = 5;
     
     // Headers with background color
-    pdf.setFillColor(230, 230, 230);
+    pdf.setFillColor(70, 130, 180); // Steel blue background
+    pdf.setTextColor(255, 255, 255); // White text
     pdf.rect(20, yPosition - 5, firstColWidth, 10, 'F');
     pdf.setFont('helvetica', 'bold');
     pdf.text('Critères', 22, yPosition);
     
     scenarios.forEach((_, index) => {
-      const xPos = 20 + firstColWidth + (index * colWidth);
-      pdf.setFillColor(230, 230, 230);
-      pdf.rect(xPos, yPosition - 5, colWidth, 10, 'F');
+      const xPos = 20 + firstColWidth + (index * fixedColWidth);
+      pdf.setFillColor(70, 130, 180); // Steel blue background
+      pdf.setTextColor(255, 255, 255); // White text
+      pdf.rect(xPos, yPosition - 5, fixedColWidth, 10, 'F');
       pdf.text(`Scénario #${index + 1}`, xPos + 2, yPosition);
     });
     
+    // Reset text color for table content
+    pdf.setTextColor(0, 0, 0);
     yPosition += 15;
     
     // Table rows data with better formatting
@@ -331,8 +341,8 @@ const ScenarioComparator = () => {
     rows.forEach((row, rowIndex) => {
       // Alternate row colors
       if (rowIndex % 2 === 1) {
-        pdf.setFillColor(248, 248, 248);
-        pdf.rect(20, yPosition - 3, 257, 8, 'F');
+        pdf.setFillColor(240, 248, 255); // Light blue background
+        pdf.rect(20, yPosition - 3, 20 + firstColWidth + (maxScenarios * fixedColWidth), 8, 'F');
       }
       
       // Draw borders
@@ -340,20 +350,27 @@ const ScenarioComparator = () => {
       pdf.setLineWidth(0.1);
       pdf.rect(20, yPosition - 3, firstColWidth, 8);
       
-      // First column (criteria)
+      // First column (criteria) with colored background
+      pdf.setFillColor(250, 250, 250); // Light gray background for criteria
+      if (rowIndex % 2 === 1) {
+        pdf.setFillColor(235, 245, 255); // Slightly darker for alternating rows
+      }
+      pdf.rect(20, yPosition - 3, firstColWidth, 8, 'F');
+      
       pdf.setFont('helvetica', 'bold');
+      pdf.setTextColor(0, 0, 0);
       pdf.text(row[0] || '', 22, yPosition);
       
       // Data columns
       pdf.setFont('helvetica', 'normal');
       row.slice(1).forEach((cell, index) => {
-        const xPos = 20 + firstColWidth + (index * colWidth);
-        pdf.rect(xPos, yPosition - 3, colWidth, 8);
+        const xPos = 20 + firstColWidth + (index * fixedColWidth);
+        pdf.rect(xPos, yPosition - 3, fixedColWidth, 8);
         
         // Truncate text if too long for cell
         let displayText = cell || '';
-        if (displayText.length > 15) {
-          displayText = displayText.substring(0, 12) + '...';
+        if (displayText.length > 12) {
+          displayText = displayText.substring(0, 9) + '...';
         }
         
         pdf.text(displayText, xPos + 2, yPosition);
@@ -361,11 +378,11 @@ const ScenarioComparator = () => {
       yPosition += 8;
     });
     
-    // Footer
+    // Footer - moved to bottom with more space
     pdf.setFontSize(8);
     pdf.setFont('helvetica', 'italic');
-    pdf.text(`Généré le ${new Date().toLocaleDateString('fr-CA')}`, 20, 190);
-    pdf.text('Thomas Bourque - Courtier Hypothécaire', 200, 190);
+    pdf.setTextColor(100, 100, 100);
+    pdf.text('Thomas Bourque - Courtier Hypothécaire', 200, 200);
     
     // Save the PDF
     pdf.save('comparateur-scenarios.pdf');
