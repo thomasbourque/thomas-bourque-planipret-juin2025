@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -257,12 +256,12 @@ const ScenarioComparator = () => {
         <div className="overflow-x-auto">
           <Table className="min-w-full text-xs">
             <TableHeader>
-              <TableRow className="h-8">
-                <TableHead className="w-32 font-semibold p-1">Critères</TableHead>
+              <TableRow className="h-6">
+                <TableHead className="w-24 font-semibold p-1"></TableHead>
                 {scenarios.map((scenario, index) => (
-                  <TableHead key={scenario.id} className="text-center min-w-32 p-1">
-                    <div className="flex items-center justify-between">
-                      <span>Scénario {index + 1}</span>
+                  <TableHead key={scenario.id} className="text-center min-w-24 p-1">
+                    <div className="flex flex-col items-center">
+                      <div className="font-bold text-sm mb-1">Scénario #{index + 1}</div>
                       {scenarios.length > 2 && (
                         <Button
                           variant="ghost"
@@ -277,9 +276,16 @@ const ScenarioComparator = () => {
                   </TableHead>
                 ))}
               </TableRow>
+              <TableRow className="h-6">
+                <TableHead className="w-24 font-semibold p-1">Critères</TableHead>
+                {scenarios.map((scenario) => (
+                  <TableHead key={scenario.id} className="text-center min-w-24 p-1">
+                  </TableHead>
+                ))}
+              </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow className="h-8">
+              <TableRow className="h-6">
                 <TableCell className="font-medium p-1">Prêteur</TableCell>
                 {scenarios.map((scenario) => (
                   <TableCell key={scenario.id} className="p-1">
@@ -287,7 +293,7 @@ const ScenarioComparator = () => {
                       value={scenario.lender} 
                       onValueChange={(value) => updateScenario(scenario.id, 'lender', value)}
                     >
-                      <SelectTrigger className="h-6 text-xs">
+                      <SelectTrigger className="h-5 text-xs">
                         <SelectValue placeholder="Choisir" />
                       </SelectTrigger>
                       <SelectContent>
@@ -305,7 +311,7 @@ const ScenarioComparator = () => {
                 ))}
               </TableRow>
 
-              <TableRow className="h-8">
+              <TableRow className="h-6">
                 <TableCell className="font-medium p-1">Terme</TableCell>
                 {scenarios.map((scenario) => (
                   <TableCell key={scenario.id} className="p-1">
@@ -313,7 +319,7 @@ const ScenarioComparator = () => {
                       value={scenario.term.toString()} 
                       onValueChange={(value) => updateScenario(scenario.id, 'term', parseInt(value))}
                     >
-                      <SelectTrigger className="h-6 text-xs">
+                      <SelectTrigger className="h-5 text-xs">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -328,7 +334,7 @@ const ScenarioComparator = () => {
                 ))}
               </TableRow>
 
-              <TableRow className="h-8">
+              <TableRow className="h-6">
                 <TableCell className="font-medium p-1">Produit</TableCell>
                 {scenarios.map((scenario) => (
                   <TableCell key={scenario.id} className="p-1">
@@ -336,7 +342,7 @@ const ScenarioComparator = () => {
                       value={scenario.product} 
                       onValueChange={(value) => updateScenario(scenario.id, 'product', value)}
                     >
-                      <SelectTrigger className="h-6 text-xs">
+                      <SelectTrigger className="h-5 text-xs">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -348,7 +354,7 @@ const ScenarioComparator = () => {
                 ))}
               </TableRow>
 
-              <TableRow className="h-8">
+              <TableRow className="h-6">
                 <TableCell className="font-medium p-1">Valeur de l'achat</TableCell>
                 {scenarios.map((scenario) => (
                   <TableCell key={scenario.id} className="p-1">
@@ -358,14 +364,14 @@ const ScenarioComparator = () => {
                         type="number"
                         value={scenario.purchaseValue || ''}
                         onChange={(e) => updateScenario(scenario.id, 'purchaseValue', parseFloat(e.target.value) || 0)}
-                        className="h-6 pl-4 text-xs"
+                        className="h-5 pl-4 text-xs"
                       />
                     </div>
                   </TableCell>
                 ))}
               </TableRow>
 
-              <TableRow className="h-8">
+              <TableRow className="h-6">
                 <TableCell className="font-medium p-1">Mise de fonds</TableCell>
                 {scenarios.map((scenario) => (
                   <TableCell key={scenario.id} className="p-1">
@@ -375,14 +381,14 @@ const ScenarioComparator = () => {
                         type="number"
                         value={scenario.downPayment || ''}
                         onChange={(e) => updateScenario(scenario.id, 'downPayment', parseFloat(e.target.value) || 0)}
-                        className="h-6 pl-4 text-xs"
+                        className="h-5 pl-4 text-xs"
                       />
                     </div>
                   </TableCell>
                 ))}
               </TableRow>
 
-              <TableRow className="h-8">
+              <TableRow className="h-6">
                 <TableCell className="font-medium p-1">Emprunt de base</TableCell>
                 {scenarios.map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
@@ -391,7 +397,7 @@ const ScenarioComparator = () => {
                 ))}
               </TableRow>
 
-              <TableRow className="h-8">
+              <TableRow className="h-6">
                 <TableCell className="font-medium p-1">Ratio prêt-valeur</TableCell>
                 {scenarios.map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
@@ -400,7 +406,7 @@ const ScenarioComparator = () => {
                 ))}
               </TableRow>
 
-              <TableRow className="h-8">
+              <TableRow className="h-6">
                 <TableCell className="font-medium p-1">Prime SCHL (%)</TableCell>
                 {scenarios.map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
@@ -409,7 +415,7 @@ const ScenarioComparator = () => {
                 ))}
               </TableRow>
 
-              <TableRow className="h-8">
+              <TableRow className="h-6">
                 <TableCell className="font-medium p-1">Prime SCHL ($)</TableCell>
                 {scenarios.map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
@@ -418,7 +424,7 @@ const ScenarioComparator = () => {
                 ))}
               </TableRow>
 
-              <TableRow className="h-8">
+              <TableRow className="h-6">
                 <TableCell className="font-medium p-1">Montant financé</TableCell>
                 {scenarios.map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
@@ -427,7 +433,7 @@ const ScenarioComparator = () => {
                 ))}
               </TableRow>
 
-              <TableRow className="h-8">
+              <TableRow className="h-6">
                 <TableCell className="font-medium p-1">Taux d'intérêt</TableCell>
                 {scenarios.map((scenario) => (
                   <TableCell key={scenario.id} className="p-1">
@@ -437,7 +443,7 @@ const ScenarioComparator = () => {
                         step="0.01"
                         value={scenario.interestRate.toFixed(2)}
                         onChange={(e) => updateScenario(scenario.id, 'interestRate', parseFloat(e.target.value) || 0)}
-                        className="h-6 pr-4 text-xs"
+                        className="h-5 pr-4 text-xs"
                       />
                       <span className="absolute right-1 top-1/2 transform -translate-y-1/2 text-xs">%</span>
                     </div>
@@ -445,7 +451,7 @@ const ScenarioComparator = () => {
                 ))}
               </TableRow>
 
-              <TableRow className="h-8">
+              <TableRow className="h-6">
                 <TableCell className="font-medium p-1">Amortissement</TableCell>
                 {scenarios.map((scenario) => (
                   <TableCell key={scenario.id} className="p-1">
@@ -453,7 +459,7 @@ const ScenarioComparator = () => {
                       value={scenario.amortization.toString()} 
                       onValueChange={(value) => updateScenario(scenario.id, 'amortization', parseInt(value))}
                     >
-                      <SelectTrigger className="h-6 text-xs">
+                      <SelectTrigger className="h-5 text-xs">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
@@ -465,7 +471,7 @@ const ScenarioComparator = () => {
                 ))}
               </TableRow>
 
-              <TableRow className="h-8">
+              <TableRow className="h-6">
                 <TableCell className="font-medium p-1">Versement mensuel</TableCell>
                 {scenarios.map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
@@ -474,7 +480,7 @@ const ScenarioComparator = () => {
                 ))}
               </TableRow>
 
-              <TableRow className="h-8">
+              <TableRow className="h-6">
                 <TableCell className="font-medium p-1">Versement aux 2 semaines</TableCell>
                 {scenarios.map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
@@ -483,7 +489,7 @@ const ScenarioComparator = () => {
                 ))}
               </TableRow>
 
-              <TableRow className="h-8">
+              <TableRow className="h-6">
                 <TableCell className="font-medium p-1">Versement par semaine</TableCell>
                 {scenarios.map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
@@ -492,7 +498,7 @@ const ScenarioComparator = () => {
                 ))}
               </TableRow>
 
-              <TableRow className="h-8">
+              <TableRow className="h-6">
                 <TableCell className="font-medium p-1">Intérêts payés durant le terme</TableCell>
                 {scenarios.map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
@@ -501,7 +507,7 @@ const ScenarioComparator = () => {
                 ))}
               </TableRow>
 
-              <TableRow className="h-8">
+              <TableRow className="h-6">
                 <TableCell className="font-medium p-1">Capital remboursé durant le terme</TableCell>
                 {scenarios.map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
@@ -510,7 +516,7 @@ const ScenarioComparator = () => {
                 ))}
               </TableRow>
 
-              <TableRow className="h-8">
+              <TableRow className="h-6">
                 <TableCell className="font-medium p-1">Solde restant à la fin du terme</TableCell>
                 {scenarios.map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
