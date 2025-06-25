@@ -258,20 +258,97 @@ const ScenarioComparator = () => {
       const tableElement = document.querySelector('.overflow-x-auto');
       if (!tableElement) return;
 
-      const canvas = await html2canvas(tableElement as HTMLElement, {
+      // Create a temporary container with better styling for PDF
+      const tempContainer = document.createElement('div');
+      tempContainer.style.position = 'absolute';
+      tempContainer.style.left = '-9999px';
+      tempContainer.style.top = '0';
+      tempContainer.style.backgroundColor = '#ffffff';
+      tempContainer.style.padding = '20px';
+      tempContainer.style.width = '1200px';
+      document.body.appendChild(tempContainer);
+
+      // Clone the table with improved styling
+      const clonedTable = tableElement.cloneNode(true) as HTMLElement;
+      
+      // Apply specific styles to fix alignment issues
+      const table = clonedTable.querySelector('table');
+      if (table) {
+        table.style.borderCollapse = 'collapse';
+        table.style.width = '100%';
+        table.style.fontSize = '12px';
+        table.style.lineHeight = '1.2';
+      }
+
+      // Fix cell alignment and padding
+      const cells = clonedTable.querySelectorAll('td, th');
+      cells.forEach(cell => {
+        const htmlCell = cell as HTMLElement;
+        htmlCell.style.padding = '8px 4px';
+        htmlCell.style.verticalAlign = 'middle';
+        htmlCell.style.textAlign = 'center';
+        htmlCell.style.border = '1px solid #e5e7eb';
+        htmlCell.style.backgroundColor = '#ffffff';
+        htmlCell.style.height = 'auto';
+        htmlCell.style.minHeight = '32px';
+        htmlCell.style.display = 'table-cell';
+      });
+
+      // Fix header cells specifically
+      const headerCells = clonedTable.querySelectorAll('th');
+      headerCells.forEach(cell => {
+        const htmlCell = cell as HTMLElement;
+        htmlCell.style.backgroundColor = '#f9fafb';
+        htmlCell.style.fontWeight = 'bold';
+        htmlCell.style.padding = '10px 4px';
+      });
+
+      // Fix input fields in the table
+      const inputs = clonedTable.querySelectorAll('input');
+      inputs.forEach(input => {
+        const htmlInput = input as HTMLInputElement;
+        const span = document.createElement('span');
+        span.textContent = htmlInput.value || htmlInput.placeholder || '';
+        span.style.fontSize = '12px';
+        span.style.padding = '4px';
+        htmlInput.parentNode?.replaceChild(span, htmlInput);
+      });
+
+      // Fix select elements
+      const selects = clonedTable.querySelectorAll('[role="combobox"]');
+      selects.forEach(select => {
+        const htmlSelect = select as HTMLElement;
+        const span = document.createElement('span');
+        const valueElement = htmlSelect.querySelector('[data-state="checked"]') || 
+                            htmlSelect.querySelector('span');
+        span.textContent = valueElement?.textContent || '';
+        span.style.fontSize = '12px';
+        span.style.padding = '4px';
+        htmlSelect.parentNode?.replaceChild(span, htmlSelect);
+      });
+
+      tempContainer.appendChild(clonedTable);
+
+      const canvas = await html2canvas(tempContainer, {
         scale: 2,
         backgroundColor: '#ffffff',
         logging: false,
-        useCORS: true
+        useCORS: true,
+        allowTaint: true,
+        height: tempContainer.scrollHeight,
+        width: tempContainer.scrollWidth
       });
+
+      // Clean up temporary container
+      document.body.removeChild(tempContainer);
 
       const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF('landscape', 'mm', 'a4');
       
-      // Add title
+      // Add title with correct capitalization
       pdf.setFontSize(16);
       pdf.setFont('helvetica', 'bold');
-      pdf.text('Comparateur de Scénarios Hypothécaires', 148, 20, { align: 'center' });
+      pdf.text('Comparateur de scénarios hypothécaires', 148, 20, { align: 'center' });
       
       // Add date
       pdf.setFontSize(10);
