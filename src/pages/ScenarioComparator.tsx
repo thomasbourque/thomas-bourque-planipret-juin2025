@@ -690,7 +690,7 @@ const ScenarioComparator = () => {
                 <TableCell className="font-medium p-1">Montant financé</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
-                    {calculateTotalFinanced(scenario).toLocaleString('fr-CA', { maximumFraction Digits: 0 })} $
+                    {calculateTotalFinanced(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })} $
                   </TableCell>
                 ))}
               </TableRow>
