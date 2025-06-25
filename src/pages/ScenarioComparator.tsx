@@ -19,20 +19,22 @@ interface Scenario {
   downPayment: number;
   interestRate: number;
   amortization: number;
+  cashRebate: number;
+  notes: string;
 }
 
 const lenders = [
-  { name: "Desjardins", logo: "/lovable-uploads/488d6693-42ac-4a3e-bc89-c0812b76c8f4.png" },
-  { name: "Banque Nationale", logo: "/lovable-uploads/11a31022-5658-4a44-aab3-94a9d18df466.png" },
-  { name: "TD", logo: "/lovable-uploads/46afe0ab-f2da-4dce-9580-2abdedfb96b7.png" },
-  { name: "Scotia", logo: "/lovable-uploads/3626800e-914e-43ba-ad92-b6cb1bf0563b.png" },
-  { name: "Laurentienne", logo: "/lovable-uploads/8b4c71c0-7241-4093-982d-eaaed3ff1efb.png" },
-  { name: "MCAP", logo: "/lovable-uploads/b4f91d0a-9255-40cc-bfec-c67b07ffaf9a.png" },
-  { name: "Merix", logo: "/lovable-uploads/0341a932-9b2b-4ac8-9507-51acbe1dc9ea.png" },
-  { name: "Lendwise", logo: "/lovable-uploads/ddb28e45-ff43-49de-84e7-3cb508838b06.png" },
-  { name: "Manulife", logo: "/lovable-uploads/e68b4b44-21cc-4489-b34e-27d8d6e467c8.png" },
-  { name: "CMLS", logo: "/lovable-uploads/d0b615ee-b5fe-461f-8eea-9864af16fdce.png" },
-  { name: "First National", logo: "/lovable-uploads/b31c4af3-2ca7-49ce-a958-05195848e807.png" }
+  { name: "Desjardins" },
+  { name: "Banque Nationale" },
+  { name: "TD" },
+  { name: "Scotia" },
+  { name: "Laurentienne" },
+  { name: "MCAP" },
+  { name: "Merix" },
+  { name: "Lendwise" },
+  { name: "Manulife" },
+  { name: "CMLS" },
+  { name: "First National" }
 ];
 
 const ScenarioComparator = () => {
@@ -47,7 +49,9 @@ const ScenarioComparator = () => {
       purchaseValue: 0,
       downPayment: 0,
       interestRate: 4.00,
-      amortization: 25
+      amortization: 25,
+      cashRebate: 0,
+      notes: ""
     },
     {
       id: "2",
@@ -57,7 +61,9 @@ const ScenarioComparator = () => {
       purchaseValue: 0,
       downPayment: 0,
       interestRate: 4.00,
-      amortization: 25
+      amortization: 25,
+      cashRebate: 0,
+      notes: ""
     },
     {
       id: "3",
@@ -67,7 +73,9 @@ const ScenarioComparator = () => {
       purchaseValue: 0,
       downPayment: 0,
       interestRate: 4.00,
-      amortization: 25
+      amortization: 25,
+      cashRebate: 0,
+      notes: ""
     },
     {
       id: "4",
@@ -77,7 +85,9 @@ const ScenarioComparator = () => {
       purchaseValue: 0,
       downPayment: 0,
       interestRate: 4.00,
-      amortization: 25
+      amortization: 25,
+      cashRebate: 0,
+      notes: ""
     },
     {
       id: "5",
@@ -87,7 +97,9 @@ const ScenarioComparator = () => {
       purchaseValue: 0,
       downPayment: 0,
       interestRate: 4.00,
-      amortization: 25
+      amortization: 25,
+      cashRebate: 0,
+      notes: ""
     }
   ]);
 
@@ -102,14 +114,16 @@ const ScenarioComparator = () => {
   const addScenario = () => {
     if (scenarios.length < 5) {
       const newScenario: Scenario = {
-        id: (Date.now()).toString(), // Use timestamp to ensure unique IDs
+        id: (Date.now()).toString(),
         lender: "",
         term: 5,
         product: 'fixe',
         purchaseValue: 0,
         downPayment: 0,
         interestRate: 4.00,
-        amortization: 25
+        amortization: 25,
+        cashRebate: 0,
+        notes: ""
       };
       setScenarios([...scenarios, newScenario]);
     }
@@ -118,7 +132,6 @@ const ScenarioComparator = () => {
   const removeScenario = (id: string) => {
     if (scenarios.length > 1) {
       const updatedScenarios = scenarios.filter(s => s.id !== id);
-      // Ensure we never have more than 5 scenarios
       setScenarios(updatedScenarios.slice(0, 5));
     }
   };
@@ -127,7 +140,7 @@ const ScenarioComparator = () => {
     if (scenarios.length > 0) {
       const firstScenario = scenarios[0];
       const updatedScenarios = scenarios.map((scenario, index) => {
-        if (index === 0) return scenario; // Keep the first scenario unchanged
+        if (index === 0) return scenario;
         return {
           ...scenario,
           lender: firstScenario.lender,
@@ -136,10 +149,11 @@ const ScenarioComparator = () => {
           purchaseValue: firstScenario.purchaseValue,
           downPayment: firstScenario.downPayment,
           interestRate: firstScenario.interestRate,
-          amortization: firstScenario.amortization
+          amortization: firstScenario.amortization,
+          cashRebate: firstScenario.cashRebate,
+          notes: firstScenario.notes
         };
       });
-      // Ensure we never have more than 5 scenarios
       setScenarios(updatedScenarios.slice(0, 5));
     }
   };
@@ -160,11 +174,11 @@ const ScenarioComparator = () => {
   };
 
   const getCMHCPremiumRate = (ltv: number, amortization: number) => {
-    if (ltv <= 80) return 0; // 0% premium when LTV is 80% or less
+    if (ltv <= 80) return 0;
     if (ltv <= 85) return amortization === 30 ? 3.0 : 2.8;
     if (ltv <= 90) return amortization === 30 ? 3.3 : 3.1;
     if (ltv <= 95) return amortization === 30 ? 4.2 : 4.0;
-    return 0; // Should not happen as LTV > 95% is not allowed
+    return 0;
   };
 
   const calculateCMHCPremium = (scenario: Scenario) => {
@@ -258,7 +272,6 @@ const ScenarioComparator = () => {
       const tableElement = document.querySelector('.overflow-x-auto');
       if (!tableElement) return;
 
-      // Create a temporary container with better styling for PDF
       const tempContainer = document.createElement('div');
       tempContainer.style.position = 'absolute';
       tempContainer.style.left = '-9999px';
@@ -268,53 +281,65 @@ const ScenarioComparator = () => {
       tempContainer.style.width = '1200px';
       document.body.appendChild(tempContainer);
 
-      // Clone the table with improved styling
       const clonedTable = tableElement.cloneNode(true) as HTMLElement;
       
-      // Apply specific styles to fix alignment issues
       const table = clonedTable.querySelector('table');
       if (table) {
         table.style.borderCollapse = 'collapse';
         table.style.width = '100%';
         table.style.fontSize = '12px';
-        table.style.lineHeight = '1.2';
+        table.style.lineHeight = '1.4';
       }
 
-      // Fix cell alignment and padding
       const cells = clonedTable.querySelectorAll('td, th');
       cells.forEach(cell => {
         const htmlCell = cell as HTMLElement;
-        htmlCell.style.padding = '8px 4px';
+        htmlCell.style.padding = '10px 6px';
         htmlCell.style.verticalAlign = 'middle';
         htmlCell.style.textAlign = 'center';
         htmlCell.style.border = '1px solid #e5e7eb';
         htmlCell.style.backgroundColor = '#ffffff';
-        htmlCell.style.height = 'auto';
-        htmlCell.style.minHeight = '32px';
+        htmlCell.style.height = '40px';
+        htmlCell.style.minHeight = '40px';
         htmlCell.style.display = 'table-cell';
+        htmlCell.style.lineHeight = '1.4';
       });
 
-      // Fix header cells specifically
       const headerCells = clonedTable.querySelectorAll('th');
       headerCells.forEach(cell => {
         const htmlCell = cell as HTMLElement;
         htmlCell.style.backgroundColor = '#f9fafb';
         htmlCell.style.fontWeight = 'bold';
-        htmlCell.style.padding = '10px 4px';
+        htmlCell.style.padding = '12px 6px';
       });
 
-      // Fix input fields in the table
       const inputs = clonedTable.querySelectorAll('input');
       inputs.forEach(input => {
         const htmlInput = input as HTMLInputElement;
         const span = document.createElement('span');
-        span.textContent = htmlInput.value || htmlInput.placeholder || '';
+        
+        // Format values with currency symbols on the right
+        let displayValue = htmlInput.value || htmlInput.placeholder || '';
+        
+        // Check if this is a currency field
+        const isCurrencyField = htmlInput.parentElement?.querySelector('span')?.textContent === '$';
+        if (isCurrencyField && displayValue && displayValue !== '0') {
+          displayValue = `${parseFloat(displayValue).toLocaleString('fr-CA')} $`;
+        }
+        
+        // Check if this is the interest rate field
+        const isInterestRate = htmlInput.type === 'number' && htmlInput.step === '0.01';
+        if (isInterestRate && displayValue) {
+          displayValue = `${displayValue}%`;
+        }
+        
+        span.textContent = displayValue;
         span.style.fontSize = '12px';
         span.style.padding = '4px';
+        span.style.lineHeight = '1.4';
         htmlInput.parentNode?.replaceChild(span, htmlInput);
       });
 
-      // Fix select elements
       const selects = clonedTable.querySelectorAll('[role="combobox"]');
       selects.forEach(select => {
         const htmlSelect = select as HTMLElement;
@@ -324,7 +349,20 @@ const ScenarioComparator = () => {
         span.textContent = valueElement?.textContent || '';
         span.style.fontSize = '12px';
         span.style.padding = '4px';
+        span.style.lineHeight = '1.4';
         htmlSelect.parentNode?.replaceChild(span, htmlSelect);
+      });
+
+      // Handle textarea elements for notes
+      const textareas = clonedTable.querySelectorAll('textarea');
+      textareas.forEach(textarea => {
+        const htmlTextarea = textarea as HTMLTextAreaElement;
+        const span = document.createElement('span');
+        span.textContent = htmlTextarea.value || '';
+        span.style.fontSize = '12px';
+        span.style.padding = '4px';
+        span.style.lineHeight = '1.4';
+        htmlTextarea.parentNode?.replaceChild(span, htmlTextarea);
       });
 
       tempContainer.appendChild(clonedTable);
@@ -339,23 +377,19 @@ const ScenarioComparator = () => {
         width: tempContainer.scrollWidth
       });
 
-      // Clean up temporary container
       document.body.removeChild(tempContainer);
 
       const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF('landscape', 'mm', 'a4');
       
-      // Add title with correct capitalization
       pdf.setFontSize(16);
       pdf.setFont('helvetica', 'bold');
       pdf.text('Comparateur de scénarios hypothécaires', 148, 20, { align: 'center' });
       
-      // Add date
       pdf.setFontSize(10);
       pdf.setFont('helvetica', 'normal');
       pdf.text(`Généré le ${new Date().toLocaleDateString('fr-CA')}`, 148, 30, { align: 'center' });
 
-      // Calculate image dimensions to fit the page
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = pdf.internal.pageSize.getHeight();
       const imgWidth = canvas.width;
@@ -409,23 +443,21 @@ const ScenarioComparator = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
       <div className="container mx-auto py-4 pt-40">
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-4">
-            <h1 className="text-2xl font-bold">Comparateur de Scénarios</h1>
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-6 gap-4">
+          <h1 className="text-2xl font-bold">Comparateur de Scénarios</h1>
+          <div className="flex flex-col md:flex-row gap-2 w-full md:w-auto">
             <Button 
               onClick={generatePDF} 
-              className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white"
+              className="flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white w-full md:w-auto"
             >
               <Download className="h-4 w-4" />
               Télécharger PDF
             </Button>
-          </div>
-          <div className="flex gap-2">
-            <Button onClick={duplicateFirstScenario} className="flex items-center gap-2" variant="outline">
+            <Button onClick={duplicateFirstScenario} className="flex items-center justify-center gap-2 w-full md:w-auto" variant="outline">
               <Copy className="h-4 w-4" />
               Dupliquer scénario #1
             </Button>
-            <Button onClick={addScenario} className="flex items-center gap-2" disabled={scenarios.length >= 5}>
+            <Button onClick={addScenario} className="flex items-center justify-center gap-2 w-full md:w-auto" disabled={scenarios.length >= 5}>
               <Plus className="h-4 w-4" />
               Ajouter un scénario
             </Button>
@@ -471,10 +503,7 @@ const ScenarioComparator = () => {
                       <SelectContent>
                         {lenders.map((lender) => (
                           <SelectItem key={lender.name} value={lender.name}>
-                            <div className="flex items-center gap-2">
-                              <img src={lender.logo} alt={lender.name} className="h-3 w-3 object-contain" />
-                              {lender.name}
-                            </div>
+                            {lender.name}
                           </SelectItem>
                         ))}
                       </SelectContent>
@@ -530,25 +559,23 @@ const ScenarioComparator = () => {
                 <TableCell className="font-medium p-1">Taux d'intérêt</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1">
-                    <div className="relative">
-                      <Input
-                        type="number"
-                        step="0.01"
-                        min="0"
-                        max="20"
-                        value={scenario.interestRate}
-                        onChange={(e) => {
-                          const value = parseFloat(e.target.value);
-                          if (!isNaN(value) && value >= 0 && value <= 20) {
-                            updateScenario(scenario.id, 'interestRate', value);
-                          } else if (e.target.value === '') {
-                            updateScenario(scenario.id, 'interestRate', 0);
-                          }
-                        }}
-                        className="h-6 pr-4 text-xs"
-                      />
-                      <span className="absolute right-1 top-1/2 transform -translate-y-1/2 text-xs">%</span>
-                    </div>
+                    <Input
+                      type="number"
+                      step="0.01"
+                      min="0"
+                      max="20"
+                      value={scenario.interestRate}
+                      onChange={(e) => {
+                        const value = parseFloat(e.target.value);
+                        if (!isNaN(value) && value >= 0 && value <= 20) {
+                          updateScenario(scenario.id, 'interestRate', value);
+                        } else if (e.target.value === '') {
+                          updateScenario(scenario.id, 'interestRate', 0);
+                        }
+                      }}
+                      className="h-6 text-xs text-center"
+                      placeholder="4.00%"
+                    />
                   </TableCell>
                 ))}
               </TableRow>
@@ -577,15 +604,13 @@ const ScenarioComparator = () => {
                 <TableCell className="font-medium p-1">Valeur de l'achat</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1">
-                    <div className="relative">
-                      <span className="absolute left-1 top-1/2 transform -translate-y-1/2 text-xs">$</span>
-                      <Input
-                        type="number"
-                        value={scenario.purchaseValue || ''}
-                        onChange={(e) => updateScenario(scenario.id, 'purchaseValue', parseFloat(e.target.value) || 0)}
-                        className="h-6 pl-4 text-xs"
-                      />
-                    </div>
+                    <Input
+                      type="number"
+                      value={scenario.purchaseValue || ''}
+                      onChange={(e) => updateScenario(scenario.id, 'purchaseValue', parseFloat(e.target.value) || 0)}
+                      className="h-6 text-xs text-center"
+                      placeholder="0 $"
+                    />
                   </TableCell>
                 ))}
               </TableRow>
@@ -594,25 +619,22 @@ const ScenarioComparator = () => {
                 <TableCell className="font-medium p-1">Mise de fonds</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1">
-                    <div className="relative">
-                      <span className="absolute left-1 top-1/2 transform -translate-y-1/2 text-xs">$</span>
-                      <Input
-                        type="number"
-                        value={scenario.downPayment || ''}
-                        onChange={(e) => updateScenario(scenario.id, 'downPayment', parseFloat(e.target.value) || 0)}
-                        className="h-6 pl-4 text-xs"
-                      />
-                    </div>
+                    <Input
+                      type="number"
+                      value={scenario.downPayment || ''}
+                      onChange={(e) => updateScenario(scenario.id, 'downPayment', parseFloat(e.target.value) || 0)}
+                      className="h-6 text-xs text-center"
+                      placeholder="0 $"
+                    />
                   </TableCell>
                 ))}
               </TableRow>
 
-              {/* Keep all the calculated rows the same with slice(0, 5) applied */}
               <TableRow className="h-8">
                 <TableCell className="font-medium p-1">Emprunt de base</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
-                    ${calculateBaseLoan(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })}
+                    {calculateBaseLoan(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })} $
                   </TableCell>
                 ))}
               </TableRow>
@@ -639,7 +661,7 @@ const ScenarioComparator = () => {
                 <TableCell className="font-medium p-1">Prime SCHL ($)</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
-                    ${calculateCMHCPremium(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })}
+                    {calculateCMHCPremium(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })} $
                   </TableCell>
                 ))}
               </TableRow>
@@ -648,7 +670,7 @@ const ScenarioComparator = () => {
                 <TableCell className="font-medium p-1">Montant financé</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
-                    ${calculateTotalFinanced(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })}
+                    {calculateTotalFinanced(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })} $
                   </TableCell>
                 ))}
               </TableRow>
@@ -657,7 +679,7 @@ const ScenarioComparator = () => {
                 <TableCell className="font-medium p-1">Versement mensuel</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
-                    ${calculateMonthlyPayment(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 2 })}
+                    {calculateMonthlyPayment(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 2 })} $
                   </TableCell>
                 ))}
               </TableRow>
@@ -666,7 +688,7 @@ const ScenarioComparator = () => {
                 <TableCell className="font-medium p-1">Versement aux 2 semaines</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
-                    ${calculateBiweeklyPayment(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 2 })}
+                    {calculateBiweeklyPayment(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 2 })} $
                   </TableCell>
                 ))}
               </TableRow>
@@ -675,7 +697,7 @@ const ScenarioComparator = () => {
                 <TableCell className="font-medium p-1">Versement par semaine</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
-                    ${calculateWeeklyPayment(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 2 })}
+                    {calculateWeeklyPayment(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 2 })} $
                   </TableCell>
                 ))}
               </TableRow>
@@ -684,7 +706,7 @@ const ScenarioComparator = () => {
                 <TableCell className="font-medium p-1">Intérêts payés durant le terme</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
-                    ${calculateTermInterest(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })}
+                    {calculateTermInterest(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })} $
                   </TableCell>
                 ))}
               </TableRow>
@@ -693,7 +715,7 @@ const ScenarioComparator = () => {
                 <TableCell className="font-medium p-1">Capital remboursé durant le terme</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
-                    ${calculateTermPrincipal(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })}
+                    {calculateTermPrincipal(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })} $
                   </TableCell>
                 ))}
               </TableRow>
@@ -702,7 +724,37 @@ const ScenarioComparator = () => {
                 <TableCell className="font-medium p-1">Solde restant à la fin du terme</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
-                    ${calculateTermRemainingBalance(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })}
+                    {calculateTermRemainingBalance(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })} $
+                  </TableCell>
+                ))}
+              </TableRow>
+
+              <TableRow className="h-8">
+                <TableCell className="font-medium p-1">Remise en argent</TableCell>
+                {scenarios.slice(0, 5).map((scenario) => (
+                  <TableCell key={scenario.id} className="p-1">
+                    <Input
+                      type="number"
+                      value={scenario.cashRebate || ''}
+                      onChange={(e) => updateScenario(scenario.id, 'cashRebate', parseFloat(e.target.value) || 0)}
+                      className="h-6 text-xs text-center"
+                      placeholder="0 $"
+                    />
+                  </TableCell>
+                ))}
+              </TableRow>
+
+              <TableRow className="h-8">
+                <TableCell className="font-medium p-1">Notes</TableCell>
+                {scenarios.slice(0, 5).map((scenario) => (
+                  <TableCell key={scenario.id} className="p-1">
+                    <Input
+                      type="text"
+                      value={scenario.notes || ''}
+                      onChange={(e) => updateScenario(scenario.id, 'notes', e.target.value)}
+                      className="h-6 text-xs"
+                      placeholder="Notes..."
+                    />
                   </TableCell>
                 ))}
               </TableRow>
