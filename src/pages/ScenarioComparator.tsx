@@ -159,11 +159,11 @@ const ScenarioComparator = () => {
   };
 
   const getCMHCPremiumRate = (ltv: number, amortization: number) => {
-    if (ltv <= 80) return 0;
+    if (ltv <= 80) return 0; // 0% premium when LTV is 80% or less
     if (ltv <= 85) return amortization === 30 ? 3.0 : 2.8;
     if (ltv <= 90) return amortization === 30 ? 3.3 : 3.1;
     if (ltv <= 95) return amortization === 30 ? 4.2 : 4.0;
-    return 0;
+    return 0; // Should not happen as LTV > 95% is not allowed
   };
 
   const calculateCMHCPremium = (scenario: Scenario) => {
