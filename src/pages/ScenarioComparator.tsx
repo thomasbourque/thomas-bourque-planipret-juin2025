@@ -303,36 +303,15 @@ const ScenarioComparator = () => {
         htmlCell.style.padding = '10px 4px';
       });
 
-      // Fix input fields in the table - handle currency formatting
+      // Fix input fields in the table
       const inputs = clonedTable.querySelectorAll('input');
       inputs.forEach(input => {
         const htmlInput = input as HTMLInputElement;
         const span = document.createElement('span');
-        
-        // Check if this is a currency field (has $ in the parent)
-        const hasDollarSign = htmlInput.parentElement?.querySelector('span')?.textContent === '$';
-        // Check if this is an interest rate field (has % in the parent)
-        const hasPercentSign = htmlInput.parentElement?.querySelector('span')?.textContent === '%';
-        
-        if (hasDollarSign) {
-          span.textContent = (htmlInput.value || htmlInput.placeholder || '') + ' $';
-        } else if (hasPercentSign) {
-          span.textContent = (htmlInput.value || htmlInput.placeholder || '') + '%';
-        } else {
-          span.textContent = htmlInput.value || htmlInput.placeholder || '';
-        }
-        
+        span.textContent = htmlInput.value || htmlInput.placeholder || '';
         span.style.fontSize = '12px';
         span.style.padding = '4px';
         htmlInput.parentNode?.replaceChild(span, htmlInput);
-      });
-
-      // Remove $ and % symbols that are now redundant
-      const symbols = clonedTable.querySelectorAll('span');
-      symbols.forEach(symbol => {
-        if (symbol.textContent === '$' || symbol.textContent === '%') {
-          symbol.remove();
-        }
       });
 
       // Fix select elements
@@ -371,61 +350,27 @@ const ScenarioComparator = () => {
       pdf.setFont('helvetica', 'bold');
       pdf.text('Comparateur de scénarios hypothécaires', 148, 20, { align: 'center' });
       
-      // Add Planiprêt logo in top right
-      try {
-        const logoImg = new Image();
-        logoImg.crossOrigin = 'anonymous';
-        logoImg.onload = () => {
-          // Add logo to PDF (top right corner)
-          pdf.addImage('/lovable-uploads/5fe873bc-2cab-4f69-a4b7-4534f0f0eb17.png', 'PNG', 250, 10, 40, 20);
-          
-          // Add date
-          pdf.setFontSize(10);
-          pdf.setFont('helvetica', 'normal');
-          pdf.text(`Généré le ${new Date().toLocaleDateString('fr-CA')}`, 148, 30, { align: 'center' });
+      // Add date
+      pdf.setFontSize(10);
+      pdf.setFont('helvetica', 'normal');
+      pdf.text(`Généré le ${new Date().toLocaleDateString('fr-CA')}`, 148, 30, { align: 'center' });
 
-          // Calculate image dimensions to fit the page
-          const pdfWidth = pdf.internal.pageSize.getWidth();
-          const pdfHeight = pdf.internal.pageSize.getHeight();
-          const imgWidth = canvas.width;
-          const imgHeight = canvas.height;
-          
-          const ratio = Math.min((pdfWidth - 20) / imgWidth, (pdfHeight - 50) / imgHeight);
-          const imgScaledWidth = imgWidth * ratio;
-          const imgScaledHeight = imgHeight * ratio;
-          
-          const x = (pdfWidth - imgScaledWidth) / 2;
-          const y = 40;
+      // Calculate image dimensions to fit the page
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
+      const imgWidth = canvas.width;
+      const imgHeight = canvas.height;
+      
+      const ratio = Math.min((pdfWidth - 20) / imgWidth, (pdfHeight - 50) / imgHeight);
+      const imgScaledWidth = imgWidth * ratio;
+      const imgScaledHeight = imgHeight * ratio;
+      
+      const x = (pdfWidth - imgScaledWidth) / 2;
+      const y = 40;
 
-          pdf.addImage(imgData, 'PNG', x, y, imgScaledWidth, imgScaledHeight);
-          
-          pdf.save('comparateur-scenarios.pdf');
-        };
-        logoImg.src = '/lovable-uploads/5fe873bc-2cab-4f69-a4b7-4534f0f0eb17.png';
-      } catch (error) {
-        console.log('Logo not found, proceeding without logo');
-        // Add date
-        pdf.setFontSize(10);
-        pdf.setFont('helvetica', 'normal');
-        pdf.text(`Généré le ${new Date().toLocaleDateString('fr-CA')}`, 148, 30, { align: 'center' });
-
-        // Calculate image dimensions to fit the page
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = pdf.internal.pageSize.getHeight();
-        const imgWidth = canvas.width;
-        const imgHeight = canvas.height;
-        
-        const ratio = Math.min((pdfWidth - 20) / imgWidth, (pdfHeight - 50) / imgHeight);
-        const imgScaledWidth = imgWidth * ratio;
-        const imgScaledHeight = imgHeight * ratio;
-        
-        const x = (pdfWidth - imgScaledWidth) / 2;
-        const y = 40;
-
-        pdf.addImage(imgData, 'PNG', x, y, imgScaledWidth, imgScaledHeight);
-        
-        pdf.save('comparateur-scenarios.pdf');
-      }
+      pdf.addImage(imgData, 'PNG', x, y, imgScaledWidth, imgScaledHeight);
+      
+      pdf.save('comparateur-scenarios.pdf');
     } catch (error) {
       console.error('Erreur lors de la génération du PDF:', error);
       alert('Erreur lors de la génération du PDF');
@@ -464,9 +409,9 @@ const ScenarioComparator = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
       <div className="container mx-auto py-4 pt-40">
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between mb-6 gap-4">
-          <h1 className="text-2xl font-bold">Comparateur de Scénarios</h1>
-          <div className="flex flex-col lg:flex-row gap-2">
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-4">
+            <h1 className="text-2xl font-bold">Comparateur de Scénarios</h1>
             <Button 
               onClick={generatePDF} 
               className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white"
@@ -474,6 +419,8 @@ const ScenarioComparator = () => {
               <Download className="h-4 w-4" />
               Télécharger PDF
             </Button>
+          </div>
+          <div className="flex gap-2">
             <Button onClick={duplicateFirstScenario} className="flex items-center gap-2" variant="outline">
               <Copy className="h-4 w-4" />
               Dupliquer scénario #1
@@ -522,17 +469,14 @@ const ScenarioComparator = () => {
                         <SelectValue placeholder="Choisir" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="Desjardins">Desjardins</SelectItem>
-                        <SelectItem value="Banque Nationale">Banque Nationale</SelectItem>
-                        <SelectItem value="TD">TD</SelectItem>
-                        <SelectItem value="Scotia">Scotia</SelectItem>
-                        <SelectItem value="Laurentienne">Laurentienne</SelectItem>
-                        <SelectItem value="MCAP">MCAP</SelectItem>
-                        <SelectItem value="Merix">Merix</SelectItem>
-                        <SelectItem value="Lendwise">Lendwise</SelectItem>
-                        <SelectItem value="Manulife">Manulife</SelectItem>
-                        <SelectItem value="CMLS">CMLS</SelectItem>
-                        <SelectItem value="First National">First National</SelectItem>
+                        {lenders.map((lender) => (
+                          <SelectItem key={lender.name} value={lender.name}>
+                            <div className="flex items-center gap-2">
+                              <img src={lender.logo} alt={lender.name} className="h-3 w-3 object-contain" />
+                              {lender.name}
+                            </div>
+                          </SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                   </TableCell>
