@@ -80,48 +80,18 @@ export const calculateBorrowingCapacity = (input: BorrowingCapacityInput): Borro
 
   let maxLoanAmount = calculateMaxPrincipal(selectedPayment, interestRate, amortization);
 
-  // Étape 4: Vérification du ratio prêt-valeur et calcul de la prime d'assurance
-  const totalBeforeInsurance = maxLoanAmount + downPayment;
-  const downPaymentRatio = downPayment / totalBeforeInsurance;
-  const loanToValueRatio = (maxLoanAmount / totalBeforeInsurance) * 100;
-
-  let mortgageInsuranceRate = 0;
-  let mortgageInsurancePremium = 0;
-
-  if (downPaymentRatio < 0.20) {
-    // Mise de fonds inférieure à 20%, assurance hypothécaire requise
-    if (loanToValueRatio >= 90.01 && loanToValueRatio <= 95) {
-      mortgageInsuranceRate = 4.0;
-      maxLoanAmount = maxLoanAmount / 1.04;
-    } else if (loanToValueRatio >= 85.01 && loanToValueRatio <= 90) {
-      mortgageInsuranceRate = 3.1;
-      maxLoanAmount = maxLoanAmount / 1.031;
-    } else if (loanToValueRatio >= 80.01 && loanToValueRatio <= 85) {
-      mortgageInsuranceRate = 2.8;
-      maxLoanAmount = maxLoanAmount / 1.028;
-    }
-    
-    // Majoration de 0,2% si amortissement sur 30 ans
-    if (amortization === 30) {
-      mortgageInsuranceRate += 0.2;
-    }
-    
-    mortgageInsurancePremium = maxLoanAmount * (mortgageInsuranceRate / 100);
-  }
-
-  // Étape 5: Prix d'achat maximal avant contraintes
-  let maxPurchasePrice = downPayment + maxLoanAmount + mortgageInsurancePremium;
-
-  // Contrainte 1: La mise de fonds doit représenter au moins 5% du prix d'achat
+  // Contrainte principale: Le ratio prêt-valeur ne peut jamais dépasser 95%
+  // Cela signifie que la mise de fonds doit être au moins 5% du prix d'achat
   const maxPurchasePriceBasedOnDownPayment = downPayment / 0.05;
-  let isConstrainedByDownPayment = false;
+  
+  // Prix d'achat maximal initial basé sur la capacité de paiement
+  let initialMaxPurchasePrice = maxLoanAmount + downPayment;
+  
+  // Appliquer la contrainte de mise de fonds minimale de 5%
+  let maxPurchasePrice = Math.min(initialMaxPurchasePrice, maxPurchasePriceBasedOnDownPayment);
+  let isConstrainedByDownPayment = maxPurchasePriceBasedOnDownPayment < initialMaxPurchasePrice;
 
-  if (maxPurchasePriceBasedOnDownPayment < maxPurchasePrice) {
-    maxPurchasePrice = maxPurchasePriceBasedOnDownPayment;
-    isConstrainedByDownPayment = true;
-  }
-
-  // Contrainte 2: Vérification de la mise de fonds minimale progressive
+  // Contrainte supplémentaire: Vérification de la mise de fonds minimale progressive
   const minimumDownPaymentRequired = calculateMinimumDownPayment(maxPurchasePrice);
   let isConstrainedByMinimumDownPayment = false;
 
@@ -145,7 +115,42 @@ export const calculateBorrowingCapacity = (input: BorrowingCapacityInput): Borro
   }
 
   // Recalculer le montant de prêt final
-  maxLoanAmount = maxPurchasePrice - downPayment - mortgageInsurancePremium;
+  maxLoanAmount = maxPurchasePrice - downPayment;
+
+  // Calcul du ratio prêt-valeur final (ne devrait jamais dépasser 95%)
+  const loanToValueRatio = Math.min((maxLoanAmount / maxPurchasePrice) * 100, 95);
+
+  // Calcul de la prime d'assurance hypothécaire
+  let mortgageInsuranceRate = 0;
+  let mortgageInsurancePremium = 0;
+
+  if (loanToValueRatio > 80) {
+    // Assurance hypothécaire requise
+    if (loanToValueRatio >= 90.01 && loanToValueRatio <= 95) {
+      mortgageInsuranceRate = 4.0;
+    } else if (loanToValueRatio >= 85.01 && loanToValueRatio <= 90) {
+      mortgageInsuranceRate = 3.1;
+    } else if (loanToValueRatio >= 80.01 && loanToValueRatio <= 85) {
+      mortgageInsuranceRate = 2.8;
+    }
+    
+    // Majoration de 0,2% si amortissement sur 30 ans (seulement si déjà assurable)
+    if (amortization === 30 && mortgageInsuranceRate > 0) {
+      mortgageInsuranceRate += 0.2;
+    }
+    
+    mortgageInsurancePremium = maxLoanAmount * (mortgageInsuranceRate / 100);
+  }
+
+  // Ajuster le montant de prêt si nécessaire pour tenir compte de la prime
+  if (mortgageInsurancePremium > 0) {
+    const totalLoanWithInsurance = maxLoanAmount + mortgageInsurancePremium;
+    // Si le total dépasse ce qui était calculé initialement, ajuster
+    if (totalLoanWithInsurance + downPayment > maxPurchasePrice) {
+      maxLoanAmount = maxPurchasePrice - downPayment - mortgageInsurancePremium;
+      maxLoanAmount = Math.max(0, maxLoanAmount);
+    }
+  }
 
   // Calcul du paiement mensuel réel avec le montant final
   const calculateMonthlyPayment = (principal: number, annualRate: number, amortizationYears: number) => {
