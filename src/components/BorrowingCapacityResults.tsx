@@ -1,3 +1,4 @@
+
 import React from "react";
 import { BorrowingCapacityResult } from "@/utils/borrowingCapacityCalculations";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -54,7 +55,7 @@ const BorrowingCapacityResults = ({ results }: BorrowingCapacityResultsProps) =>
               style: 'currency', 
               currency: 'CAD', 
               minimumFractionDigits: 0 
-            })} ({results.mortgageInsuranceRate}%)
+            })} ({results.mortgageInsuranceRate.toFixed(1)}%)
           </p>
           <p className="text-xs text-orange-600 mt-1">
             Ratio prêt-valeur: {results.loanToValueRatio}%
