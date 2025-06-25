@@ -16,7 +16,7 @@ const BorrowingCapacityCalculator = () => {
 
   const results = calculateBorrowingCapacity({
     annualIncome,
-    coborrowersIncome: 0, // Supprimé car maintenant inclus dans annualIncome
+    coborrowersIncome: 0,
     downPayment,
     amortization,
     interestRate: interestRate[0],
