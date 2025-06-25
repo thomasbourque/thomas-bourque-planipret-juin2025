@@ -72,7 +72,7 @@ const MortgagePaymentForm = ({
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div>
         <Label htmlFor="purchasePrice" className="block text-lg font-medium text-slate-900 mb-2">
           Prix d'achat
@@ -91,13 +91,13 @@ const MortgagePaymentForm = ({
       </div>
 
       <div>
-        <Label className="block text-lg font-medium text-slate-900 mb-4">
+        <Label className="block text-lg font-medium text-slate-900 mb-3">
           Mise de fonds
         </Label>
         <RadioGroup
           value={downPaymentType}
           onValueChange={handleDownPaymentTypeChange}
-          className="mb-4"
+          className="mb-3"
         >
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="amount" id="amount" />
@@ -144,7 +144,7 @@ const MortgagePaymentForm = ({
         <Label className="block text-lg font-medium text-slate-900 mb-2">
           Période d'amortissement
         </Label>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-3">
           <div>
             <Label htmlFor="amortizationYears" className="block text-sm text-slate-600 mb-1">
               Années

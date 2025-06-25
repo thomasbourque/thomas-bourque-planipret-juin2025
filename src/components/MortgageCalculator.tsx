@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { calculateMortgagePayments } from "@/utils/mortgageCalculations";
 import MortgageSlider from "./MortgageSlider";
@@ -33,8 +32,8 @@ const MortgageCalculator = () => {
     <section className="section bg-primary/5">
       <div className="container">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="heading-lg text-slate-900 mb-6">
+          <div className="text-center mb-6">
+            <h2 className="heading-lg text-slate-900 mb-4">
               Économisez gros en trouvant le taux le plus bas
             </h2>
             <p className="body-md text-slate-700 max-w-3xl mx-auto">
@@ -42,11 +41,11 @@ const MortgageCalculator = () => {
             </p>
           </div>
 
-          <div className="bg-white rounded-xl shadow-lg p-8 md:p-12 relative pb-20 md:pb-12">
-            <div className="grid md:grid-cols-2 gap-8 md:gap-12">
-              <div className="space-y-8">
+          <div className="bg-white rounded-xl shadow-lg p-4 md:p-6 lg:p-8 relative pb-16 md:pb-8">
+            <div className="grid md:grid-cols-2 gap-4 md:gap-6 lg:gap-8">
+              <div className="space-y-6">
                 <div>
-                  <Label htmlFor="mortgageBalance" className="block text-lg font-medium text-slate-900 mb-4">
+                  <Label htmlFor="mortgageBalance" className="block text-lg font-medium text-slate-900 mb-3">
                     Montant de financement
                   </Label>
                   <div className="relative">
@@ -80,7 +79,7 @@ const MortgageCalculator = () => {
                 />
 
                 <div>
-                  <Label className="block text-lg font-medium text-slate-900 mb-4">
+                  <Label className="block text-lg font-medium text-slate-900 mb-3">
                     Amortissement
                   </Label>
                   <Select value={amortization.toString()} onValueChange={(value) => setAmortization(Number(value))}>

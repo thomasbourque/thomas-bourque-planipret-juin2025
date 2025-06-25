@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { calculateBorrowingCapacity } from "@/utils/borrowingCapacityCalculations";
 import BorrowingCapacityForm from "./BorrowingCapacityForm";
@@ -30,8 +29,8 @@ const BorrowingCapacityCalculator = () => {
     <section className="section bg-slate-50">
       <div className="container">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="heading-lg text-slate-900 mb-6">
+          <div className="text-center mb-6">
+            <h2 className="heading-lg text-slate-900 mb-4">
               Calculateur de capacité d'emprunt
             </h2>
             <p className="body-md text-slate-700 max-w-3xl mx-auto">
@@ -39,8 +38,8 @@ const BorrowingCapacityCalculator = () => {
             </p>
           </div>
 
-          <div className="bg-white rounded-xl shadow-lg p-8 md:p-12">
-            <div className="grid lg:grid-cols-2 gap-8 md:gap-12">
+          <div className="bg-white rounded-xl shadow-lg p-4 md:p-6 lg:p-8">
+            <div className="grid lg:grid-cols-2 gap-4 md:gap-6 lg:gap-8">
               <BorrowingCapacityForm
                 annualIncome={annualIncome}
                 setAnnualIncome={setAnnualIncome}

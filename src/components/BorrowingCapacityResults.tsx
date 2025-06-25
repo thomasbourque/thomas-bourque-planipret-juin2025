@@ -1,4 +1,5 @@
 
+
 import React from "react";
 import { BorrowingCapacityResult } from "@/utils/borrowingCapacityCalculations";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -10,9 +11,9 @@ interface BorrowingCapacityResultsProps {
 
 const BorrowingCapacityResults = ({ results }: BorrowingCapacityResultsProps) => {
   return (
-    <div className="flex flex-col justify-center space-y-6">
+    <div className="flex flex-col justify-center space-y-4">
       {/* Prix d'achat maximal - Encadré principal en évidence */}
-      <div className="text-center p-6 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-lg border border-yellow-500 shadow-lg">
+      <div className="text-center p-4 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-lg border border-yellow-500 shadow-lg">
         <p className="text-sm text-slate-800 mb-2 font-medium">
           Prix d'achat maximal
         </p>
@@ -31,7 +32,7 @@ const BorrowingCapacityResults = ({ results }: BorrowingCapacityResultsProps) =>
       </div>
 
       {/* Capacité d'emprunt */}
-      <div className="text-center p-6 bg-slate-800 rounded-lg border border-slate-700">
+      <div className="text-center p-4 bg-slate-800 rounded-lg border border-slate-700">
         <p className="text-sm text-white mb-2">
           Capacité d'emprunt maximale
         </p>
@@ -46,7 +47,7 @@ const BorrowingCapacityResults = ({ results }: BorrowingCapacityResultsProps) =>
 
       {/* Prime d'assurance hypothécaire (si applicable) */}
       {results.mortgageInsurancePremium > 0 && (
-        <div className="text-center p-4 bg-orange-50 rounded-lg border border-orange-200">
+        <div className="text-center p-3 bg-orange-50 rounded-lg border border-orange-200">
           <p className="text-sm text-orange-700 mb-1">
             Prime d'assurance hypothécaire
           </p>
@@ -65,7 +66,7 @@ const BorrowingCapacityResults = ({ results }: BorrowingCapacityResultsProps) =>
 
       {/* Mise de fonds minimale requise (si contrainte) */}
       {results.isConstrainedByMinimumDownPayment && (
-        <div className="text-center p-4 bg-red-50 rounded-lg border border-red-200">
+        <div className="text-center p-3 bg-red-50 rounded-lg border border-red-200">
           <p className="text-sm text-red-700 mb-1">
             Mise de fonds minimale requise
           </p>
@@ -82,8 +83,8 @@ const BorrowingCapacityResults = ({ results }: BorrowingCapacityResultsProps) =>
         </div>
       )}
 
-      <div className="grid grid-cols-2 gap-4">
-        <div className="text-center p-4 bg-slate-100 rounded-lg">
+      <div className="grid grid-cols-2 gap-3">
+        <div className="text-center p-3 bg-slate-100 rounded-lg">
           <div className="flex items-center justify-center gap-1 mb-1">
             <p className="text-xs text-slate-600">Ratio ABD</p>
             <Popover>
@@ -112,7 +113,7 @@ const BorrowingCapacityResults = ({ results }: BorrowingCapacityResultsProps) =>
           <p className="text-xs text-slate-500">Max: 39%</p>
         </div>
         
-        <div className="text-center p-4 bg-slate-100 rounded-lg">
+        <div className="text-center p-3 bg-slate-100 rounded-lg">
           <div className="flex items-center justify-center gap-1 mb-1">
             <p className="text-xs text-slate-600">Ratio ATD</p>
             <Popover>
@@ -142,7 +143,7 @@ const BorrowingCapacityResults = ({ results }: BorrowingCapacityResultsProps) =>
         </div>
       </div>
 
-      <div className="bg-slate-50 p-4 rounded-lg">
+      <div className="bg-slate-50 p-3 rounded-lg">
         <h4 className="font-semibold text-slate-900 mb-2">Détails du calcul :</h4>
         <div className="text-sm text-slate-700 space-y-1">
           <p>Paiement hypothécaire mensuel : {results.monthlyPayment.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}</p>
@@ -156,8 +157,8 @@ const BorrowingCapacityResults = ({ results }: BorrowingCapacityResultsProps) =>
         </div>
       </div>
 
-      <div className="text-center pt-4">
-        <p className="text-sm text-slate-600 mb-4">
+      <div className="text-center pt-3">
+        <p className="text-sm text-slate-600 mb-3">
           Ces calculs sont basés sur les ratios d'endettement standards. Ces ratios varient d'un prêteur à l'autre. Il ne s'agit que d'une estimation à haut niveau pour vous donner une idée de votre capacité d'emprunt. Consultez-moi pour que l'on revoit vos calculs ensemble.
         </p>
         <a 

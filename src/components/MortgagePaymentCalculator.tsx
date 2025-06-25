@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { calculateMortgagePayment } from "@/utils/mortgagePaymentCalculations";
 import MortgagePaymentForm from "./MortgagePaymentForm";
@@ -44,8 +43,8 @@ const MortgagePaymentCalculator = () => {
     <section className="section bg-slate-50">
       <div className="container">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="heading-lg text-slate-900 mb-6">
+          <div className="text-center mb-6">
+            <h2 className="heading-lg text-slate-900 mb-4">
               Calculateur de paiement hypothécaire
             </h2>
             <p className="body-md text-slate-700 max-w-3xl mx-auto">
@@ -53,8 +52,8 @@ const MortgagePaymentCalculator = () => {
             </p>
           </div>
 
-          <div className="bg-white rounded-xl shadow-lg p-4 md:p-8 lg:p-12">
-            <div className="grid lg:grid-cols-2 gap-6 md:gap-8 lg:gap-12">
+          <div className="bg-white rounded-xl shadow-lg p-4 md:p-6 lg:p-8">
+            <div className="grid lg:grid-cols-2 gap-4 md:gap-6 lg:gap-8">
               <MortgagePaymentForm
                 purchasePrice={purchasePrice}
                 setPurchasePrice={setPurchasePrice}
