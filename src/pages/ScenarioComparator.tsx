@@ -327,6 +327,7 @@ const ScenarioComparator = () => {
         const isInterestRate = htmlInput.type === 'number' && htmlInput.step === '0.01';
         if (isInterestRate && displayValue) {
           displayValue = `${displayValue}%`;
+          span.style.textAlign = 'center';
         }
         
         span.textContent = displayValue;
@@ -545,7 +546,7 @@ const ScenarioComparator = () => {
                 <TableCell className="font-medium p-1">Taux d'intérêt</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1">
-                    <div className="flex items-center">
+                    <div className="flex items-center justify-center">
                       <Input
                         type="number"
                         step="0.01"
@@ -558,10 +559,10 @@ const ScenarioComparator = () => {
                             updateScenario(scenario.id, 'interestRate', value);
                           }
                         }}
-                        className="h-6 text-xs text-center [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
+                        className="h-6 text-xs text-center [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield] w-16"
                         placeholder="4.00"
                       />
-                      <span className="text-xs">%</span>
+                      <span className="text-xs ml-1">%</span>
                     </div>
                   </TableCell>
                 ))}
@@ -636,7 +637,7 @@ const ScenarioComparator = () => {
                 <TableCell className="font-medium p-1">Emprunt de base</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
-                    {calculateBaseLoan(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })} $
+                    {calculateBaseLoan(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 }).replace(/,/g, ' ')} $
                   </TableCell>
                 ))}
               </TableRow>
@@ -663,7 +664,7 @@ const ScenarioComparator = () => {
                 <TableCell className="font-medium p-1">Prime SCHL ($)</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
-                    {calculateCMHCPremium(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })} $
+                    {calculateCMHCPremium(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 }).replace(/,/g, ' ')} $
                   </TableCell>
                 ))}
               </TableRow>
@@ -672,7 +673,7 @@ const ScenarioComparator = () => {
                 <TableCell className="font-medium p-1">Montant financé</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
-                    {calculateTotalFinanced(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })} $
+                    {calculateTotalFinanced(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 }).replace(/,/g, ' ')} $
                   </TableCell>
                 ))}
               </TableRow>
@@ -681,7 +682,7 @@ const ScenarioComparator = () => {
                 <TableCell className="font-medium p-1">Versement mensuel</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
-                    {calculateMonthlyPayment(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 2 })} $
+                    {calculateMonthlyPayment(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 2 }).replace(/,/g, ' ')} $
                   </TableCell>
                 ))}
               </TableRow>
@@ -690,7 +691,7 @@ const ScenarioComparator = () => {
                 <TableCell className="font-medium p-1">Versement aux 2 semaines</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
-                    {calculateBiweeklyPayment(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 2 })} $
+                    {calculateBiweeklyPayment(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 2 }).replace(/,/g, ' ')} $
                   </TableCell>
                 ))}
               </TableRow>
@@ -699,7 +700,7 @@ const ScenarioComparator = () => {
                 <TableCell className="font-medium p-1">Versement par semaine</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
-                    {calculateWeeklyPayment(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 2 })} $
+                    {calculateWeeklyPayment(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 2 }).replace(/,/g, ' ')} $
                   </TableCell>
                 ))}
               </TableRow>
@@ -708,7 +709,7 @@ const ScenarioComparator = () => {
                 <TableCell className="font-medium p-1">Intérêts payés durant le terme</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
-                    {calculateTermInterest(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })} $
+                    {calculateTermInterest(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 }).replace(/,/g, ' ')} $
                   </TableCell>
                 ))}
               </TableRow>
@@ -717,7 +718,7 @@ const ScenarioComparator = () => {
                 <TableCell className="font-medium p-1">Capital remboursé durant le terme</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
-                    {calculateTermPrincipal(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })} $
+                    {calculateTermPrincipal(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 }).replace(/,/g, ' ')} $
                   </TableCell>
                 ))}
               </TableRow>
@@ -726,7 +727,7 @@ const ScenarioComparator = () => {
                 <TableCell className="font-medium p-1">Solde restant à la fin du terme</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
-                    {calculateTermRemainingBalance(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })} $
+                    {calculateTermRemainingBalance(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 }).replace(/,/g, ' ')} $
                   </TableCell>
                 ))}
               </TableRow>
