@@ -75,9 +75,9 @@ const Navbar = () => {
                 Planifier un appel
               </a>
             </Button>
-            <Button asChild variant="outline" size="sm" className="rounded-full">
+            <Button asChild variant="ghost" size="sm" className="rounded-full text-xs px-2 py-1 h-6 opacity-60 hover:opacity-80 text-muted-foreground border border-muted-foreground/20">
               <a href="/comparateur-scenarios">
-                Accès courtiers
+                Courtiers
               </a>
             </Button>
           </div>

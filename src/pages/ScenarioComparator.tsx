@@ -323,10 +323,11 @@ const ScenarioComparator = () => {
           displayValue = `${parseFloat(displayValue).toLocaleString('fr-CA')} $`;
         }
         
-        // Check if this is the interest rate field
+        // Check if this is the interest rate field - fix double % issue
         const isInterestRate = htmlInput.type === 'number' && htmlInput.step === '0.01';
         if (isInterestRate && displayValue) {
-          displayValue = `${displayValue}%`;
+          // Remove any existing % from the value and add only one
+          displayValue = displayValue.replace('%', '') + '%';
           span.style.textAlign = 'center';
         }
         
