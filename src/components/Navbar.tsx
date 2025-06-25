@@ -69,18 +69,11 @@ const Navbar = () => {
           <a href="/#contact" className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
             Contact
           </a>
-          <div className="flex items-center gap-2">
-            <Button asChild size="sm" className="rounded-full">
-              <a href="https://calendly.com/tbourque-planipret" target="_blank" rel="noopener noreferrer">
-                Planifier un appel
-              </a>
-            </Button>
-            <Button asChild variant="ghost" size="sm" className="rounded-full text-xs px-2 py-1 h-6 opacity-60 hover:opacity-80 text-muted-foreground border border-muted-foreground/20">
-              <a href="/comparateur-scenarios">
-                Courtiers
-              </a>
-            </Button>
-          </div>
+          <Button asChild size="sm" className="rounded-full">
+            <a href="https://calendly.com/tbourque-planipret" target="_blank" rel="noopener noreferrer">
+              Planifier un appel
+            </a>
+          </Button>
         </nav>
 
         {/* Mobile Menu Button */}
@@ -158,15 +151,6 @@ const Navbar = () => {
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   Planifier un appel
-                </a>
-              </Button>
-              
-              <Button asChild variant="outline" size="sm" className="w-full rounded-full bg-transparent border-white text-white hover:bg-white/10">
-                <a 
-                  href="/comparateur-scenarios"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  Accès courtiers
                 </a>
               </Button>
               

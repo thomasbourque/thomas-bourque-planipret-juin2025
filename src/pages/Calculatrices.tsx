@@ -3,6 +3,7 @@ import React from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
 import MortgagePaymentCalculator from "@/components/MortgagePaymentCalculator";
 import BorrowingCapacityCalculator from "@/components/BorrowingCapacityCalculator";
 import MortgageCalculator from "@/components/MortgageCalculator";
@@ -14,9 +15,16 @@ const Calculatrices = () => {
       <main className="pt-24">
         <div className="container py-8 md:py-12 px-2 sm:px-4 md:px-6 lg:px-8">
           <div className="text-center mb-8 md:mb-12">
-            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 mb-4 md:mb-6">
-              Calculatrices hypothécaires
-            </h1>
+            <div className="flex flex-col sm:flex-row items-center justify-between mb-4 md:mb-6">
+              <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 mb-4 sm:mb-0">
+                Calculatrices hypothécaires
+              </h1>
+              <Button asChild variant="outline" size="sm" className="rounded-full text-xs px-3 py-2 h-8 text-slate-600 border-slate-300 hover:bg-slate-50">
+                <a href="/comparateur-scenarios">
+                  Scénarios
+                </a>
+              </Button>
+            </div>
             <p className="text-base md:text-lg text-slate-700 max-w-3xl mx-auto px-2 sm:px-4">
               Utilisez nos calculatrices pour planifier votre financement hypothécaire et prendre des décisions éclairées.
             </p>
