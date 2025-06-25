@@ -31,10 +31,14 @@ const lenders = [
   { name: "Laurentienne" },
   { name: "MCAP" },
   { name: "Merix" },
-  { name: "Lendwise" },
-  { name: "Manulife" },
+  { name: "Wiseday" },
+  { name: "Manuvie" },
   { name: "CMLS" },
-  { name: "First National" }
+  { name: "First National" },
+  { name: "Banque Équitable" },
+  { name: "CIBC" },
+  { name: "B2B" },
+  { name: "Home Trust" }
 ];
 
 const ScenarioComparator = () => {
@@ -573,8 +577,24 @@ const ScenarioComparator = () => {
                           updateScenario(scenario.id, 'interestRate', 0);
                         }
                       }}
-                      className="h-6 text-xs text-center"
+                      className="h-6 text-xs text-center [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
                       placeholder="4.00%"
+                    />
+                    <span className="ml-1 text-xs">%</span>
+                  </TableCell>
+                ))}
+              </TableRow>
+
+              <TableRow className="h-8">
+                <TableCell className="font-medium p-1">Remise en argent</TableCell>
+                {scenarios.slice(0, 5).map((scenario) => (
+                  <TableCell key={scenario.id} className="p-1">
+                    <Input
+                      type="number"
+                      value={scenario.cashRebate || ''}
+                      onChange={(e) => updateScenario(scenario.id, 'cashRebate', parseFloat(e.target.value) || 0)}
+                      className="h-6 text-xs text-center [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
+                      placeholder="0 $"
                     />
                   </TableCell>
                 ))}
@@ -608,7 +628,7 @@ const ScenarioComparator = () => {
                       type="number"
                       value={scenario.purchaseValue || ''}
                       onChange={(e) => updateScenario(scenario.id, 'purchaseValue', parseFloat(e.target.value) || 0)}
-                      className="h-6 text-xs text-center"
+                      className="h-6 text-xs text-center [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
                       placeholder="0 $"
                     />
                   </TableCell>
@@ -623,7 +643,7 @@ const ScenarioComparator = () => {
                       type="number"
                       value={scenario.downPayment || ''}
                       onChange={(e) => updateScenario(scenario.id, 'downPayment', parseFloat(e.target.value) || 0)}
-                      className="h-6 text-xs text-center"
+                      className="h-6 text-xs text-center [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
                       placeholder="0 $"
                     />
                   </TableCell>
@@ -670,7 +690,7 @@ const ScenarioComparator = () => {
                 <TableCell className="font-medium p-1">Montant financé</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
-                    {calculateTotalFinanced(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })} $
+                    {calculateTotalFinanced(scenario).toLocaleString('fr-CA', { maximumFraction Digits: 0 })} $
                   </TableCell>
                 ))}
               </TableRow>
@@ -739,21 +759,6 @@ const ScenarioComparator = () => {
                       onChange={(e) => updateScenario(scenario.id, 'cashRebate', parseFloat(e.target.value) || 0)}
                       className="h-6 text-xs text-center"
                       placeholder="0 $"
-                    />
-                  </TableCell>
-                ))}
-              </TableRow>
-
-              <TableRow className="h-8">
-                <TableCell className="font-medium p-1">Notes</TableCell>
-                {scenarios.slice(0, 5).map((scenario) => (
-                  <TableCell key={scenario.id} className="p-1">
-                    <Input
-                      type="text"
-                      value={scenario.notes || ''}
-                      onChange={(e) => updateScenario(scenario.id, 'notes', e.target.value)}
-                      className="h-6 text-xs"
-                      placeholder="Notes..."
                     />
                   </TableCell>
                 ))}
