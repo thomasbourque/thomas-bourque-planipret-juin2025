@@ -20,6 +20,7 @@ interface Scenario {
   interestRate: number;
   amortization: number;
   cashRebate: number;
+  notes: string;
 }
 
 const lenders = [
@@ -30,33 +31,11 @@ const lenders = [
   { name: "Laurentienne" },
   { name: "MCAP" },
   { name: "Merix" },
-  { name: "Manuvie" },
+  { name: "Lendwise" },
+  { name: "Manulife" },
   { name: "CMLS" },
   { name: "First National" }
 ];
-
-const getLenderColor = (lender: string) => {
-  switch (lender) {
-    case "Desjardins":
-    case "TD":
-    case "Manuvie":
-      return "bg-green-100 border-green-300";
-    case "Banque Nationale":
-    case "Scotia":
-      return "bg-red-100 border-red-300";
-    case "Laurentienne":
-    case "First National":
-      return "bg-yellow-100 border-yellow-300";
-    case "MCAP":
-      return "bg-purple-100 border-purple-300";
-    case "Merix":
-      return "bg-pink-100 border-pink-300";
-    case "CMLS":
-      return "bg-blue-100 border-blue-300";
-    default:
-      return "bg-gray-50 border-gray-200";
-  }
-};
 
 const ScenarioComparator = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -71,7 +50,8 @@ const ScenarioComparator = () => {
       downPayment: 0,
       interestRate: 4.00,
       amortization: 25,
-      cashRebate: 0
+      cashRebate: 0,
+      notes: ""
     },
     {
       id: "2",
@@ -82,7 +62,8 @@ const ScenarioComparator = () => {
       downPayment: 0,
       interestRate: 4.00,
       amortization: 25,
-      cashRebate: 0
+      cashRebate: 0,
+      notes: ""
     },
     {
       id: "3",
@@ -93,7 +74,8 @@ const ScenarioComparator = () => {
       downPayment: 0,
       interestRate: 4.00,
       amortization: 25,
-      cashRebate: 0
+      cashRebate: 0,
+      notes: ""
     },
     {
       id: "4",
@@ -104,7 +86,8 @@ const ScenarioComparator = () => {
       downPayment: 0,
       interestRate: 4.00,
       amortization: 25,
-      cashRebate: 0
+      cashRebate: 0,
+      notes: ""
     },
     {
       id: "5",
@@ -115,7 +98,8 @@ const ScenarioComparator = () => {
       downPayment: 0,
       interestRate: 4.00,
       amortization: 25,
-      cashRebate: 0
+      cashRebate: 0,
+      notes: ""
     }
   ]);
 
@@ -138,7 +122,8 @@ const ScenarioComparator = () => {
         downPayment: 0,
         interestRate: 4.00,
         amortization: 25,
-        cashRebate: 0
+        cashRebate: 0,
+        notes: ""
       };
       setScenarios([...scenarios, newScenario]);
     }
@@ -165,7 +150,8 @@ const ScenarioComparator = () => {
           downPayment: firstScenario.downPayment,
           interestRate: firstScenario.interestRate,
           amortization: firstScenario.amortization,
-          cashRebate: firstScenario.cashRebate
+          cashRebate: firstScenario.cashRebate,
+          notes: firstScenario.notes
         };
       });
       setScenarios(updatedScenarios.slice(0, 5));
@@ -303,24 +289,20 @@ const ScenarioComparator = () => {
         table.style.width = '100%';
         table.style.fontSize = '12px';
         table.style.lineHeight = '1.4';
-        table.style.fontWeight = 'bold';
       }
 
-      // Handle all cells
       const cells = clonedTable.querySelectorAll('td, th');
       cells.forEach(cell => {
         const htmlCell = cell as HTMLElement;
-        htmlCell.style.padding = '8px 4px';
+        htmlCell.style.padding = '10px 6px';
         htmlCell.style.verticalAlign = 'middle';
         htmlCell.style.textAlign = 'center';
         htmlCell.style.border = '1px solid #e5e7eb';
         htmlCell.style.backgroundColor = '#ffffff';
-        htmlCell.style.height = 'auto';
-        htmlCell.style.minHeight = '32px';
+        htmlCell.style.height = '40px';
+        htmlCell.style.minHeight = '40px';
         htmlCell.style.display = 'table-cell';
         htmlCell.style.lineHeight = '1.4';
-        htmlCell.style.fontWeight = 'bold';
-        htmlCell.style.fontSize = '11px';
       });
 
       const headerCells = clonedTable.querySelectorAll('th');
@@ -328,40 +310,36 @@ const ScenarioComparator = () => {
         const htmlCell = cell as HTMLElement;
         htmlCell.style.backgroundColor = '#f9fafb';
         htmlCell.style.fontWeight = 'bold';
-        htmlCell.style.padding = '10px 4px';
+        htmlCell.style.padding = '12px 6px';
       });
 
-      // Handle input fields
       const inputs = clonedTable.querySelectorAll('input');
       inputs.forEach(input => {
         const htmlInput = input as HTMLInputElement;
         const span = document.createElement('span');
         
+        // Format values with currency symbols on the right
         let displayValue = htmlInput.value || htmlInput.placeholder || '';
         
-        // Currency fields - put $ at the right
-        if (htmlInput.type === 'number' && htmlInput.parentElement?.closest('tr')?.querySelector('td:first-child')?.textContent?.includes('$')) {
-          if (displayValue && displayValue !== '0') {
-            displayValue = `${parseFloat(displayValue).toLocaleString('fr-CA')} $`;
-          }
+        // Check if this is a currency field
+        const isCurrencyField = htmlInput.parentElement?.querySelector('span')?.textContent === '$';
+        if (isCurrencyField && displayValue && displayValue !== '0') {
+          displayValue = `${parseFloat(displayValue).toLocaleString('fr-CA')} $`;
         }
         
-        // Interest rate field - put % right next to the number
-        if (htmlInput.type === 'number' && htmlInput.step === '0.01') {
-          if (displayValue) {
-            displayValue = `${displayValue}%`;
-          }
+        // Check if this is the interest rate field
+        const isInterestRate = htmlInput.type === 'number' && htmlInput.step === '0.01';
+        if (isInterestRate && displayValue) {
+          displayValue = `${displayValue}%`;
         }
         
         span.textContent = displayValue;
-        span.style.fontSize = '11px';
-        span.style.fontWeight = 'bold';
-        span.style.padding = '2px';
+        span.style.fontSize = '12px';
+        span.style.padding = '4px';
         span.style.lineHeight = '1.4';
         htmlInput.parentNode?.replaceChild(span, htmlInput);
       });
 
-      // Handle select elements
       const selects = clonedTable.querySelectorAll('[role="combobox"]');
       selects.forEach(select => {
         const htmlSelect = select as HTMLElement;
@@ -369,11 +347,22 @@ const ScenarioComparator = () => {
         const valueElement = htmlSelect.querySelector('[data-state="checked"]') || 
                             htmlSelect.querySelector('span');
         span.textContent = valueElement?.textContent || '';
-        span.style.fontSize = '11px';
-        span.style.fontWeight = 'bold';
-        span.style.padding = '2px';
+        span.style.fontSize = '12px';
+        span.style.padding = '4px';
         span.style.lineHeight = '1.4';
         htmlSelect.parentNode?.replaceChild(span, htmlSelect);
+      });
+
+      // Handle textarea elements for notes
+      const textareas = clonedTable.querySelectorAll('textarea');
+      textareas.forEach(textarea => {
+        const htmlTextarea = textarea as HTMLTextAreaElement;
+        const span = document.createElement('span');
+        span.textContent = htmlTextarea.value || '';
+        span.style.fontSize = '12px';
+        span.style.padding = '4px';
+        span.style.lineHeight = '1.4';
+        htmlTextarea.parentNode?.replaceChild(span, htmlTextarea);
       });
 
       tempContainer.appendChild(clonedTable);
@@ -454,21 +443,21 @@ const ScenarioComparator = () => {
     <div className="min-h-screen bg-background">
       <Navbar />
       <div className="container mx-auto py-4 pt-40">
-        <div className="flex flex-col items-start justify-between mb-6 gap-4">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-6 gap-4">
           <h1 className="text-2xl font-bold">Comparateur de Scénarios</h1>
-          <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+          <div className="flex flex-col md:flex-row gap-2 w-full md:w-auto">
             <Button 
               onClick={generatePDF} 
-              className="flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white w-full sm:w-auto"
+              className="flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white w-full md:w-auto"
             >
               <Download className="h-4 w-4" />
               Télécharger PDF
             </Button>
-            <Button onClick={duplicateFirstScenario} className="flex items-center justify-center gap-2 w-full sm:w-auto" variant="outline">
+            <Button onClick={duplicateFirstScenario} className="flex items-center justify-center gap-2 w-full md:w-auto" variant="outline">
               <Copy className="h-4 w-4" />
               Dupliquer scénario #1
             </Button>
-            <Button onClick={addScenario} className="flex items-center justify-center gap-2 w-full sm:w-auto" disabled={scenarios.length >= 5}>
+            <Button onClick={addScenario} className="flex items-center justify-center gap-2 w-full md:w-auto" disabled={scenarios.length >= 5}>
               <Plus className="h-4 w-4" />
               Ajouter un scénario
             </Button>
@@ -481,7 +470,7 @@ const ScenarioComparator = () => {
               <TableRow className="h-8">
                 <TableHead className="w-32 font-semibold p-1"></TableHead>
                 {scenarios.slice(0, 5).map((scenario, index) => (
-                  <TableHead key={scenario.id} className={`text-center min-w-40 p-1 ${getLenderColor(scenario.lender)}`}>
+                  <TableHead key={scenario.id} className="text-center min-w-32 p-1">
                     <div className="flex items-center justify-between">
                       <span className="font-bold text-sm">Scénario #{index + 1}</span>
                       {scenarios.length > 1 && (
@@ -500,15 +489,15 @@ const ScenarioComparator = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow className="h-8 bg-yellow-50 font-bold">
-                <TableCell className="font-bold p-1">Prêteur</TableCell>
+              <TableRow className="h-8">
+                <TableCell className="font-medium p-1">Prêteur</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
-                  <TableCell key={scenario.id} className={`p-1 ${getLenderColor(scenario.lender)}`}>
+                  <TableCell key={scenario.id} className="p-1">
                     <Select 
                       value={scenario.lender} 
                       onValueChange={(value) => updateScenario(scenario.id, 'lender', value)}
                     >
-                      <SelectTrigger className="h-6 text-xs min-w-[150px]">
+                      <SelectTrigger className="h-6 text-xs">
                         <SelectValue placeholder="Choisir" />
                       </SelectTrigger>
                       <SelectContent>
@@ -523,10 +512,10 @@ const ScenarioComparator = () => {
                 ))}
               </TableRow>
 
-              <TableRow className="h-8 bg-yellow-50 font-bold">
-                <TableCell className="font-bold p-1">Terme</TableCell>
+              <TableRow className="h-8">
+                <TableCell className="font-medium p-1">Terme</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
-                  <TableCell key={scenario.id} className={`p-1 ${getLenderColor(scenario.lender)}`}>
+                  <TableCell key={scenario.id} className="p-1">
                     <Select 
                       value={scenario.term.toString()} 
                       onValueChange={(value) => updateScenario(scenario.id, 'term', parseInt(value))}
@@ -546,10 +535,10 @@ const ScenarioComparator = () => {
                 ))}
               </TableRow>
 
-              <TableRow className="h-8 bg-yellow-50 font-bold">
-                <TableCell className="font-bold p-1">Produit</TableCell>
+              <TableRow className="h-8">
+                <TableCell className="font-medium p-1">Produit</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
-                  <TableCell key={scenario.id} className={`p-1 ${getLenderColor(scenario.lender)}`}>
+                  <TableCell key={scenario.id} className="p-1">
                     <Select 
                       value={scenario.product} 
                       onValueChange={(value) => updateScenario(scenario.id, 'product', value)}
@@ -566,48 +555,27 @@ const ScenarioComparator = () => {
                 ))}
               </TableRow>
 
-              <TableRow className="h-8 bg-yellow-50 font-bold">
-                <TableCell className="font-bold p-1">Taux d'intérêt</TableCell>
-                {scenarios.slice(0, 5).map((scenario) => (
-                  <TableCell key={scenario.id} className={`p-1 ${getLenderColor(scenario.lender)}`}>
-                    <div className="flex items-center justify-center">
-                      <Input
-                        type="number"
-                        step="0.01"
-                        min="0"
-                        max="20"
-                        value={scenario.interestRate === 0 ? '' : scenario.interestRate}
-                        onChange={(e) => {
-                          const value = e.target.value === '' ? 0 : parseFloat(e.target.value);
-                          if (!isNaN(value) && value >= 0 && value <= 20) {
-                            updateScenario(scenario.id, 'interestRate', value);
-                          } else if (e.target.value === '') {
-                            updateScenario(scenario.id, 'interestRate', 0);
-                          }
-                        }}
-                        className="h-6 text-xs text-center w-16"
-                        placeholder="4.00"
-                      />
-                      <span className="ml-1 text-xs font-bold">%</span>
-                    </div>
-                  </TableCell>
-                ))}
-              </TableRow>
-
               <TableRow className="h-8">
-                <TableCell className="font-bold p-1">Remise en argent</TableCell>
+                <TableCell className="font-medium p-1">Taux d'intérêt</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
-                  <TableCell key={scenario.id} className={`p-1 ${getLenderColor(scenario.lender)}`}>
-                    <div className="flex items-center justify-center">
-                      <Input
-                        type="number"
-                        value={scenario.cashRebate || ''}
-                        onChange={(e) => updateScenario(scenario.id, 'cashRebate', parseFloat(e.target.value) || 0)}
-                        className="h-6 text-xs text-center w-20"
-                        placeholder="0"
-                      />
-                      <span className="ml-1 text-xs">$</span>
-                    </div>
+                  <TableCell key={scenario.id} className="p-1">
+                    <Input
+                      type="number"
+                      step="0.01"
+                      min="0"
+                      max="20"
+                      value={scenario.interestRate}
+                      onChange={(e) => {
+                        const value = parseFloat(e.target.value);
+                        if (!isNaN(value) && value >= 0 && value <= 20) {
+                          updateScenario(scenario.id, 'interestRate', value);
+                        } else if (e.target.value === '') {
+                          updateScenario(scenario.id, 'interestRate', 0);
+                        }
+                      }}
+                      className="h-6 text-xs text-center"
+                      placeholder="4.00%"
+                    />
                   </TableCell>
                 ))}
               </TableRow>
@@ -615,7 +583,7 @@ const ScenarioComparator = () => {
               <TableRow className="h-8">
                 <TableCell className="font-medium p-1">Amortissement</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
-                  <TableCell key={scenario.id} className={`p-1 ${getLenderColor(scenario.lender)}`}>
+                  <TableCell key={scenario.id} className="p-1">
                     <Select 
                       value={scenario.amortization.toString()} 
                       onValueChange={(value) => updateScenario(scenario.id, 'amortization', parseInt(value))}
@@ -635,17 +603,14 @@ const ScenarioComparator = () => {
               <TableRow className="h-8">
                 <TableCell className="font-medium p-1">Valeur de l'achat</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
-                  <TableCell key={scenario.id} className={`p-1 ${getLenderColor(scenario.lender)}`}>
-                    <div className="flex items-center justify-center">
-                      <Input
-                        type="number"
-                        value={scenario.purchaseValue || ''}
-                        onChange={(e) => updateScenario(scenario.id, 'purchaseValue', parseFloat(e.target.value) || 0)}
-                        className="h-6 text-xs text-center w-20"
-                        placeholder="0"
-                      />
-                      <span className="ml-1 text-xs">$</span>
-                    </div>
+                  <TableCell key={scenario.id} className="p-1">
+                    <Input
+                      type="number"
+                      value={scenario.purchaseValue || ''}
+                      onChange={(e) => updateScenario(scenario.id, 'purchaseValue', parseFloat(e.target.value) || 0)}
+                      className="h-6 text-xs text-center"
+                      placeholder="0 $"
+                    />
                   </TableCell>
                 ))}
               </TableRow>
@@ -653,17 +618,14 @@ const ScenarioComparator = () => {
               <TableRow className="h-8">
                 <TableCell className="font-medium p-1">Mise de fonds</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
-                  <TableCell key={scenario.id} className={`p-1 ${getLenderColor(scenario.lender)}`}>
-                    <div className="flex items-center justify-center">
-                      <Input
-                        type="number"
-                        value={scenario.downPayment || ''}
-                        onChange={(e) => updateScenario(scenario.id, 'downPayment', parseFloat(e.target.value) || 0)}
-                        className="h-6 text-xs text-center w-20"
-                        placeholder="0"
-                      />
-                      <span className="ml-1 text-xs">$</span>
-                    </div>
+                  <TableCell key={scenario.id} className="p-1">
+                    <Input
+                      type="number"
+                      value={scenario.downPayment || ''}
+                      onChange={(e) => updateScenario(scenario.id, 'downPayment', parseFloat(e.target.value) || 0)}
+                      className="h-6 text-xs text-center"
+                      placeholder="0 $"
+                    />
                   </TableCell>
                 ))}
               </TableRow>
@@ -671,7 +633,7 @@ const ScenarioComparator = () => {
               <TableRow className="h-8">
                 <TableCell className="font-medium p-1">Emprunt de base</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
-                  <TableCell key={scenario.id} className={`p-1 text-xs ${getLenderColor(scenario.lender)}`}>
+                  <TableCell key={scenario.id} className="p-1 text-xs">
                     {calculateBaseLoan(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })} $
                   </TableCell>
                 ))}
@@ -680,7 +642,7 @@ const ScenarioComparator = () => {
               <TableRow className="h-8">
                 <TableCell className="font-medium p-1">Ratio prêt-valeur</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
-                  <TableCell key={scenario.id} className={`p-1 text-xs ${getLenderColor(scenario.lender)}`}>
+                  <TableCell key={scenario.id} className="p-1 text-xs">
                     {calculateLTV(scenario).toFixed(2)}%
                   </TableCell>
                 ))}
@@ -689,7 +651,7 @@ const ScenarioComparator = () => {
               <TableRow className="h-8">
                 <TableCell className="font-medium p-1">Prime SCHL (%)</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
-                  <TableCell key={scenario.id} className={`p-1 text-xs ${getLenderColor(scenario.lender)}`}>
+                  <TableCell key={scenario.id} className="p-1 text-xs">
                     {getCMHCPremiumRate(calculateLTV(scenario), scenario.amortization).toFixed(2)}%
                   </TableCell>
                 ))}
@@ -698,7 +660,7 @@ const ScenarioComparator = () => {
               <TableRow className="h-8">
                 <TableCell className="font-medium p-1">Prime SCHL ($)</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
-                  <TableCell key={scenario.id} className={`p-1 text-xs ${getLenderColor(scenario.lender)}`}>
+                  <TableCell key={scenario.id} className="p-1 text-xs">
                     {calculateCMHCPremium(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })} $
                   </TableCell>
                 ))}
@@ -707,16 +669,16 @@ const ScenarioComparator = () => {
               <TableRow className="h-8">
                 <TableCell className="font-medium p-1">Montant financé</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
-                  <TableCell key={scenario.id} className={`p-1 text-xs ${getLenderColor(scenario.lender)}`}>
+                  <TableCell key={scenario.id} className="p-1 text-xs">
                     {calculateTotalFinanced(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })} $
                   </TableCell>
                 ))}
               </TableRow>
 
-              <TableRow className="h-8 bg-yellow-50 font-bold">
-                <TableCell className="font-bold p-1">Versement mensuel</TableCell>
+              <TableRow className="h-8">
+                <TableCell className="font-medium p-1">Versement mensuel</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
-                  <TableCell key={scenario.id} className={`p-1 text-xs font-bold ${getLenderColor(scenario.lender)}`}>
+                  <TableCell key={scenario.id} className="p-1 text-xs">
                     {calculateMonthlyPayment(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 2 })} $
                   </TableCell>
                 ))}
@@ -725,7 +687,7 @@ const ScenarioComparator = () => {
               <TableRow className="h-8">
                 <TableCell className="font-medium p-1">Versement aux 2 semaines</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
-                  <TableCell key={scenario.id} className={`p-1 text-xs ${getLenderColor(scenario.lender)}`}>
+                  <TableCell key={scenario.id} className="p-1 text-xs">
                     {calculateBiweeklyPayment(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 2 })} $
                   </TableCell>
                 ))}
@@ -734,7 +696,7 @@ const ScenarioComparator = () => {
               <TableRow className="h-8">
                 <TableCell className="font-medium p-1">Versement par semaine</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
-                  <TableCell key={scenario.id} className={`p-1 text-xs ${getLenderColor(scenario.lender)}`}>
+                  <TableCell key={scenario.id} className="p-1 text-xs">
                     {calculateWeeklyPayment(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 2 })} $
                   </TableCell>
                 ))}
@@ -743,7 +705,7 @@ const ScenarioComparator = () => {
               <TableRow className="h-8">
                 <TableCell className="font-medium p-1">Intérêts payés durant le terme</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
-                  <TableCell key={scenario.id} className={`p-1 text-xs ${getLenderColor(scenario.lender)}`}>
+                  <TableCell key={scenario.id} className="p-1 text-xs">
                     {calculateTermInterest(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })} $
                   </TableCell>
                 ))}
@@ -752,7 +714,7 @@ const ScenarioComparator = () => {
               <TableRow className="h-8">
                 <TableCell className="font-medium p-1">Capital remboursé durant le terme</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
-                  <TableCell key={scenario.id} className={`p-1 text-xs ${getLenderColor(scenario.lender)}`}>
+                  <TableCell key={scenario.id} className="p-1 text-xs">
                     {calculateTermPrincipal(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })} $
                   </TableCell>
                 ))}
@@ -761,8 +723,38 @@ const ScenarioComparator = () => {
               <TableRow className="h-8">
                 <TableCell className="font-medium p-1">Solde restant à la fin du terme</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
-                  <TableCell key={scenario.id} className={`p-1 text-xs ${getLenderColor(scenario.lender)}`}>
+                  <TableCell key={scenario.id} className="p-1 text-xs">
                     {calculateTermRemainingBalance(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })} $
+                  </TableCell>
+                ))}
+              </TableRow>
+
+              <TableRow className="h-8">
+                <TableCell className="font-medium p-1">Remise en argent</TableCell>
+                {scenarios.slice(0, 5).map((scenario) => (
+                  <TableCell key={scenario.id} className="p-1">
+                    <Input
+                      type="number"
+                      value={scenario.cashRebate || ''}
+                      onChange={(e) => updateScenario(scenario.id, 'cashRebate', parseFloat(e.target.value) || 0)}
+                      className="h-6 text-xs text-center"
+                      placeholder="0 $"
+                    />
+                  </TableCell>
+                ))}
+              </TableRow>
+
+              <TableRow className="h-8">
+                <TableCell className="font-medium p-1">Notes</TableCell>
+                {scenarios.slice(0, 5).map((scenario) => (
+                  <TableCell key={scenario.id} className="p-1">
+                    <Input
+                      type="text"
+                      value={scenario.notes || ''}
+                      onChange={(e) => updateScenario(scenario.id, 'notes', e.target.value)}
+                      className="h-6 text-xs"
+                      placeholder="Notes..."
+                    />
                   </TableCell>
                 ))}
               </TableRow>
