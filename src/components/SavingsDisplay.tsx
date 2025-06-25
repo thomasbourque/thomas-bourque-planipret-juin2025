@@ -63,13 +63,6 @@ const SavingsDisplay = ({ savings, termYears }: SavingsDisplayProps) => {
           </div>
         </div>
       </div>
-
-      <div className="bg-slate-50 p-4 rounded-lg">
-        <p className="text-sm text-slate-600 text-center">
-          Ces calculs montrent l'impact financier d'une différence de taux pendant le terme de votre hypothèque. 
-          Un courtier hypothécaire peut vous aider à obtenir les meilleurs taux disponibles.
-        </p>
-      </div>
     </div>
   );
 };

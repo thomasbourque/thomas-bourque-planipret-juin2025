@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { calculateMortgagePayments } from "@/utils/mortgageCalculations";
 import MortgageSlider from "./MortgageSlider";
@@ -37,11 +38,11 @@ const MortgageCalculator = () => {
               Économisez gros en trouvant le taux le plus bas
             </h2>
             <p className="body-md text-slate-700 max-w-3xl mx-auto">
-              L'offre de financement reçue par votre banque est rarement la meilleure. Cessez de laisser de l'argent sur la table et découvrez combien un taux plus avantageux trouvé par votre courtier hypothécaire peut vous faire économiser!
+              L'offre de financement reçue par votre banque est rarement la meilleure. Cessez de laisser de l'argent sur la table et découvrez combien un taux plus avantageux peut vous faire économiser!
             </p>
           </div>
 
-          <div className="bg-white rounded-xl shadow-lg p-4 md:p-6 lg:p-8 relative pb-16 md:pb-8">
+          <div className="bg-white rounded-xl shadow-lg p-4 md:p-6 lg:p-8">
             <div className="grid md:grid-cols-2 gap-4 md:gap-6 lg:gap-8">
               <div className="space-y-6">
                 <div>
@@ -104,7 +105,7 @@ const MortgageCalculator = () => {
                 />
 
                 <MortgageSlider
-                  label="Taux obtenu par un courtier hypothécaire"
+                  label="Taux plus avantageux"
                   value={brokerRate}
                   onValueChange={setBrokerRate}
                   min={3}
@@ -115,10 +116,6 @@ const MortgageCalculator = () => {
               </div>
 
               <SavingsDisplay savings={savings} termYears={term[0]} />
-            </div>
-            
-            <div className="absolute bottom-2 left-4 right-4 text-xs text-slate-500">
-              *Calculs basés sur un amortissement de {amortization} ans.
             </div>
           </div>
         </div>

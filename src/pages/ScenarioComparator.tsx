@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Plus, X, Copy, Download } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
 interface Scenario {
@@ -28,7 +29,7 @@ const lenders = [
   { name: "Laurentienne", logo: "/lovable-uploads/8b4c71c0-7241-4093-982d-eaaed3ff1efb.png" },
   { name: "MCAP", logo: "/lovable-uploads/b4f91d0a-9255-40cc-bfec-c67b07ffaf9a.png" },
   { name: "Merix", logo: "/lovable-uploads/0341a932-9b2b-4ac8-9507-51acbe1dc9ea.png" },
-  { name: "Lendwise", logo: "/lovable-uploads/488d6693-42ac-4a3e-bc89-c0812b76c8f4.png" },
+  { name: "Lendwise", logo: "/lovable-uploads/ddb28e45-ff43-49de-84e7-3cb508838b06.png" },
   { name: "Manulife", logo: "/lovable-uploads/e68b4b44-21cc-4489-b34e-27d8d6e467c8.png" },
   { name: "CMLS", logo: "/lovable-uploads/d0b615ee-b5fe-461f-8eea-9864af16fdce.png" },
   { name: "First National", logo: "/lovable-uploads/b31c4af3-2ca7-49ce-a958-05195848e807.png" }
@@ -252,140 +253,51 @@ const ScenarioComparator = () => {
     return calculateRemainingBalance(principal, monthlyEquivalentRate, monthlyPayment, termMonths);
   };
 
-  const generatePDF = () => {
-    const pdf = new jsPDF('landscape', 'mm', 'a4');
-    
-    // Add logos
+  const generatePDF = async () => {
     try {
-      // Add Planiprêt logo (top left)
-      pdf.addImage('/logos/planipret-logo.png', 'PNG', 20, 10, 30, 15);
-      
-      // Add TB logo (top right)  
-      pdf.addImage('/lovable-uploads/d334ed50-2338-4946-8525-666d74e2684b.png', 'PNG', 240, 10, 20, 20);
-    } catch (error) {
-      console.log('Logos could not be loaded');
-    }
-    
-    // Date in header area - moved up
-    pdf.setFontSize(8);
-    pdf.setFont('helvetica', 'italic');
-    pdf.text(`Généré le ${new Date().toLocaleDateString('fr-CA')}`, 20, 30);
-    
-    // Title - centered
-    pdf.setFontSize(18);
-    pdf.setFont('helvetica', 'bold');
-    pdf.text('Comparateur de Scénarios Hypothécaires', 148, 40, { align: 'center' });
-    
-    // Subtitle
-    pdf.setFontSize(12);
-    pdf.setFont('helvetica', 'normal');
-    pdf.text('Thomas Bourque - Courtier Hypothécaire', 148, 50, { align: 'center' });
-    
-    // Draw a line under the header
-    pdf.setLineWidth(0.5);
-    pdf.line(20, 55, 277, 55);
-    
-    let yPosition = 70;
-    
-    // Set font size for table
-    pdf.setFontSize(9);
-    pdf.setFont('helvetica', 'normal');
-    
-    // Fixed column widths - keep same width regardless of number of scenarios
-    const firstColWidth = 55;
-    const fixedColWidth = 44; // Fixed width for each scenario column
-    const maxScenarios = 5;
-    
-    // Headers with background color
-    pdf.setFillColor(70, 130, 180); // Steel blue background
-    pdf.setTextColor(255, 255, 255); // White text
-    pdf.rect(20, yPosition - 5, firstColWidth, 10, 'F');
-    pdf.setFont('helvetica', 'bold');
-    pdf.text('Critères', 22, yPosition);
-    
-    scenarios.forEach((_, index) => {
-      const xPos = 20 + firstColWidth + (index * fixedColWidth);
-      pdf.setFillColor(70, 130, 180); // Steel blue background
-      pdf.setTextColor(255, 255, 255); // White text
-      pdf.rect(xPos, yPosition - 5, fixedColWidth, 10, 'F');
-      pdf.text(`Scénario #${index + 1}`, xPos + 2, yPosition);
-    });
-    
-    // Reset text color for table content
-    pdf.setTextColor(0, 0, 0);
-    yPosition += 15;
-    
-    // Table rows data with better formatting
-    const rows = [
-      ['Prêteur', ...scenarios.map(s => s.lender || 'Non sélectionné')],
-      ['Terme', ...scenarios.map(s => `${s.term} an${s.term > 1 ? 's' : ''}`)],
-      ['Produit', ...scenarios.map(s => s.product === 'fixe' ? 'Fixe' : 'Variable')],
-      ['Taux d\'intérêt', ...scenarios.map(s => `${s.interestRate.toFixed(2)}%`)],
-      ['Amortissement', ...scenarios.map(s => `${s.amortization} ans`)],
-      ['Valeur de l\'achat', ...scenarios.map(s => `${s.purchaseValue.toLocaleString('fr-CA')} $`)],
-      ['Mise de fonds', ...scenarios.map(s => `${s.downPayment.toLocaleString('fr-CA')} $`)],
-      ['Emprunt de base', ...scenarios.map(s => `${calculateBaseLoan(s).toLocaleString('fr-CA')} $`)],
-      ['Ratio prêt-valeur', ...scenarios.map(s => `${calculateLTV(s).toFixed(1)}%`)],
-      ['Prime SCHL (%)', ...scenarios.map(s => `${getCMHCPremiumRate(calculateLTV(s), s.amortization).toFixed(2)}%`)],
-      ['Prime SCHL ($)', ...scenarios.map(s => `${calculateCMHCPremium(s).toLocaleString('fr-CA')} $`)],
-      ['Montant financé', ...scenarios.map(s => `${calculateTotalFinanced(s).toLocaleString('fr-CA')} $`)],
-      ['Versement mensuel', ...scenarios.map(s => `${calculateMonthlyPayment(s).toLocaleString('fr-CA', { maximumFractionDigits: 0 })} $`)],
-      ['Versement aux 2 semaines', ...scenarios.map(s => `${calculateBiweeklyPayment(s).toLocaleString('fr-CA', { maximumFractionDigits: 0 })} $`)],
-      ['Versement par semaine', ...scenarios.map(s => `${calculateWeeklyPayment(s).toLocaleString('fr-CA', { maximumFractionDigits: 0 })} $`)],
-      ['Intérêts payés durant le terme', ...scenarios.map(s => `${calculateTermInterest(s).toLocaleString('fr-CA')} $`)],
-      ['Capital remboursé durant le terme', ...scenarios.map(s => `${calculateTermPrincipal(s).toLocaleString('fr-CA')} $`)],
-      ['Solde restant à la fin du terme', ...scenarios.map(s => `${calculateTermRemainingBalance(s).toLocaleString('fr-CA')} $`)],
-    ];
-    
-    // Draw table rows with alternating colors
-    rows.forEach((row, rowIndex) => {
-      // Alternate row colors
-      if (rowIndex % 2 === 1) {
-        pdf.setFillColor(240, 248, 255); // Light blue background
-        pdf.rect(20, yPosition - 3, 20 + firstColWidth + (maxScenarios * fixedColWidth), 8, 'F');
-      }
-      
-      // Draw borders
-      pdf.setDrawColor(200, 200, 200);
-      pdf.setLineWidth(0.1);
-      pdf.rect(20, yPosition - 3, firstColWidth, 8);
-      
-      // First column (criteria) with colored background
-      pdf.setFillColor(250, 250, 250); // Light gray background for criteria
-      if (rowIndex % 2 === 1) {
-        pdf.setFillColor(235, 245, 255); // Slightly darker for alternating rows
-      }
-      pdf.rect(20, yPosition - 3, firstColWidth, 8, 'F');
-      
-      pdf.setFont('helvetica', 'bold');
-      pdf.setTextColor(0, 0, 0);
-      pdf.text(row[0] || '', 22, yPosition);
-      
-      // Data columns
-      pdf.setFont('helvetica', 'normal');
-      row.slice(1).forEach((cell, index) => {
-        const xPos = 20 + firstColWidth + (index * fixedColWidth);
-        pdf.rect(xPos, yPosition - 3, fixedColWidth, 8);
-        
-        // Truncate text if too long for cell
-        let displayText = cell || '';
-        if (displayText.length > 12) {
-          displayText = displayText.substring(0, 9) + '...';
-        }
-        
-        pdf.text(displayText, xPos + 2, yPosition);
+      const tableElement = document.querySelector('.overflow-x-auto');
+      if (!tableElement) return;
+
+      const canvas = await html2canvas(tableElement as HTMLElement, {
+        scale: 2,
+        backgroundColor: '#ffffff',
+        logging: false,
+        useCORS: true
       });
-      yPosition += 8;
-    });
-    
-    // Footer - moved to bottom with more space
-    pdf.setFontSize(8);
-    pdf.setFont('helvetica', 'italic');
-    pdf.setTextColor(100, 100, 100);
-    pdf.text('Thomas Bourque - Courtier Hypothécaire', 200, 200);
-    
-    // Save the PDF
-    pdf.save('comparateur-scenarios.pdf');
+
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('landscape', 'mm', 'a4');
+      
+      // Add title
+      pdf.setFontSize(16);
+      pdf.setFont('helvetica', 'bold');
+      pdf.text('Comparateur de Scénarios Hypothécaires', 148, 20, { align: 'center' });
+      
+      // Add date
+      pdf.setFontSize(10);
+      pdf.setFont('helvetica', 'normal');
+      pdf.text(`Généré le ${new Date().toLocaleDateString('fr-CA')}`, 148, 30, { align: 'center' });
+
+      // Calculate image dimensions to fit the page
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
+      const imgWidth = canvas.width;
+      const imgHeight = canvas.height;
+      
+      const ratio = Math.min((pdfWidth - 20) / imgWidth, (pdfHeight - 50) / imgHeight);
+      const imgScaledWidth = imgWidth * ratio;
+      const imgScaledHeight = imgHeight * ratio;
+      
+      const x = (pdfWidth - imgScaledWidth) / 2;
+      const y = 40;
+
+      pdf.addImage(imgData, 'PNG', x, y, imgScaledWidth, imgScaledHeight);
+      
+      pdf.save('comparateur-scenarios.pdf');
+    } catch (error) {
+      console.error('Erreur lors de la génération du PDF:', error);
+      alert('Erreur lors de la génération du PDF');
+    }
   };
 
   if (!isAuthenticated) {
