@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -41,8 +41,6 @@ const lenders = [
 ];
 
 const ScenarioComparator = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [password, setPassword] = useState("");
   const [scenarios, setScenarios] = useState<Scenario[]>([
     {
       id: "1",
@@ -100,14 +98,6 @@ const ScenarioComparator = () => {
       cashRebate: 0
     }
   ]);
-
-  const handleLogin = () => {
-    if (password === "2025") {
-      setIsAuthenticated(true);
-    } else {
-      alert("Mot de passe incorrect");
-    }
-  };
 
   const addScenario = () => {
     if (scenarios.length < 5) {
@@ -398,34 +388,6 @@ const ScenarioComparator = () => {
       alert('Erreur lors de la génération du PDF');
     }
   };
-
-  if (!isAuthenticated) {
-    return (
-      <div className="min-h-screen bg-background">
-        <Navbar />
-        <div className="flex items-center justify-center min-h-[80vh]">
-          <Card className="w-full max-w-md">
-            <CardHeader>
-              <CardTitle className="text-center">Accès Courtiers</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <Input
-                type="password"
-                placeholder="Mot de passe"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
-              />
-              <Button onClick={handleLogin} className="w-full">
-                Se connecter
-              </Button>
-            </CardContent>
-          </Card>
-        </div>
-        <Footer />
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-background">
