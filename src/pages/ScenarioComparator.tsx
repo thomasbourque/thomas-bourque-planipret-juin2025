@@ -20,7 +20,6 @@ interface Scenario {
   interestRate: number;
   amortization: number;
   cashRebate: number;
-  notes: string;
 }
 
 const lenders = [
@@ -54,8 +53,7 @@ const ScenarioComparator = () => {
       downPayment: 0,
       interestRate: 4.00,
       amortization: 25,
-      cashRebate: 0,
-      notes: ""
+      cashRebate: 0
     },
     {
       id: "2",
@@ -66,8 +64,7 @@ const ScenarioComparator = () => {
       downPayment: 0,
       interestRate: 4.00,
       amortization: 25,
-      cashRebate: 0,
-      notes: ""
+      cashRebate: 0
     },
     {
       id: "3",
@@ -78,8 +75,7 @@ const ScenarioComparator = () => {
       downPayment: 0,
       interestRate: 4.00,
       amortization: 25,
-      cashRebate: 0,
-      notes: ""
+      cashRebate: 0
     },
     {
       id: "4",
@@ -90,8 +86,7 @@ const ScenarioComparator = () => {
       downPayment: 0,
       interestRate: 4.00,
       amortization: 25,
-      cashRebate: 0,
-      notes: ""
+      cashRebate: 0
     },
     {
       id: "5",
@@ -102,8 +97,7 @@ const ScenarioComparator = () => {
       downPayment: 0,
       interestRate: 4.00,
       amortization: 25,
-      cashRebate: 0,
-      notes: ""
+      cashRebate: 0
     }
   ]);
 
@@ -126,8 +120,7 @@ const ScenarioComparator = () => {
         downPayment: 0,
         interestRate: 4.00,
         amortization: 25,
-        cashRebate: 0,
-        notes: ""
+        cashRebate: 0
       };
       setScenarios([...scenarios, newScenario]);
     }
@@ -154,8 +147,7 @@ const ScenarioComparator = () => {
           downPayment: firstScenario.downPayment,
           interestRate: firstScenario.interestRate,
           amortization: firstScenario.amortization,
-          cashRebate: firstScenario.cashRebate,
-          notes: firstScenario.notes
+          cashRebate: firstScenario.cashRebate
         };
       });
       setScenarios(updatedScenarios.slice(0, 5));
@@ -341,6 +333,7 @@ const ScenarioComparator = () => {
         span.style.fontSize = '12px';
         span.style.padding = '4px';
         span.style.lineHeight = '1.4';
+        span.style.fontWeight = 'bold';
         htmlInput.parentNode?.replaceChild(span, htmlInput);
       });
 
@@ -354,19 +347,8 @@ const ScenarioComparator = () => {
         span.style.fontSize = '12px';
         span.style.padding = '4px';
         span.style.lineHeight = '1.4';
+        span.style.fontWeight = 'bold';
         htmlSelect.parentNode?.replaceChild(span, htmlSelect);
-      });
-
-      // Handle textarea elements for notes
-      const textareas = clonedTable.querySelectorAll('textarea');
-      textareas.forEach(textarea => {
-        const htmlTextarea = textarea as HTMLTextAreaElement;
-        const span = document.createElement('span');
-        span.textContent = htmlTextarea.value || '';
-        span.style.fontSize = '12px';
-        span.style.padding = '4px';
-        span.style.lineHeight = '1.4';
-        htmlTextarea.parentNode?.replaceChild(span, htmlTextarea);
       });
 
       tempContainer.appendChild(clonedTable);
@@ -563,24 +545,24 @@ const ScenarioComparator = () => {
                 <TableCell className="font-medium p-1">Taux d'intérêt</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1">
-                    <Input
-                      type="number"
-                      step="0.01"
-                      min="0"
-                      max="20"
-                      value={scenario.interestRate}
-                      onChange={(e) => {
-                        const value = parseFloat(e.target.value);
-                        if (!isNaN(value) && value >= 0 && value <= 20) {
-                          updateScenario(scenario.id, 'interestRate', value);
-                        } else if (e.target.value === '') {
-                          updateScenario(scenario.id, 'interestRate', 0);
-                        }
-                      }}
-                      className="h-6 text-xs text-center [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
-                      placeholder="4.00%"
-                    />
-                    <span className="ml-1 text-xs">%</span>
+                    <div className="flex items-center">
+                      <Input
+                        type="number"
+                        step="0.01"
+                        min="0"
+                        max="20"
+                        value={scenario.interestRate === 0 ? '' : scenario.interestRate}
+                        onChange={(e) => {
+                          const value = e.target.value === '' ? 0 : parseFloat(e.target.value);
+                          if (e.target.value === '' || (!isNaN(value) && value >= 0 && value <= 20)) {
+                            updateScenario(scenario.id, 'interestRate', value);
+                          }
+                        }}
+                        className="h-6 text-xs text-center [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
+                        placeholder="4.00"
+                      />
+                      <span className="text-xs">%</span>
+                    </div>
                   </TableCell>
                 ))}
               </TableRow>
@@ -745,21 +727,6 @@ const ScenarioComparator = () => {
                 {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
                     {calculateTermRemainingBalance(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 })} $
-                  </TableCell>
-                ))}
-              </TableRow>
-
-              <TableRow className="h-8">
-                <TableCell className="font-medium p-1">Remise en argent</TableCell>
-                {scenarios.slice(0, 5).map((scenario) => (
-                  <TableCell key={scenario.id} className="p-1">
-                    <Input
-                      type="number"
-                      value={scenario.cashRebate || ''}
-                      onChange={(e) => updateScenario(scenario.id, 'cashRebate', parseFloat(e.target.value) || 0)}
-                      className="h-6 text-xs text-center"
-                      placeholder="0 $"
-                    />
                   </TableCell>
                 ))}
               </TableRow>
