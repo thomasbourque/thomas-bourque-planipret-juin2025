@@ -236,7 +236,7 @@ const MortgagePaymentForm = ({
         <Input
           id="interestRate"
           type="number"
-          value={interestRate[0] === 0 ? '' : interestRate[0].toFixed(2)}
+          value={interestRate[0] === 0 ? '' : interestRate[0].toString()}
           onChange={handleInterestRateChange}
           step={0.01}
           min={0}
