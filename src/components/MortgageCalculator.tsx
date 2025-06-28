@@ -15,9 +15,14 @@ const MortgageCalculator = () => {
   const [brokerRate, setBrokerRate] = useState([4.2]);
 
   const handleMortgageBalanceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Number(e.target.value);
-    if (!isNaN(value)) {
-      setMortgageBalance(value);
+    const value = e.target.value;
+    if (value === '') {
+      setMortgageBalance(0);
+    } else {
+      const numValue = Number(value);
+      if (!isNaN(numValue)) {
+        setMortgageBalance(numValue);
+      }
     }
   };
 
@@ -54,12 +59,13 @@ const MortgageCalculator = () => {
                     <Input
                       id="mortgageBalance"
                       type="number"
-                      value={mortgageBalance}
+                      value={mortgageBalance === 0 ? '' : mortgageBalance}
                       onChange={handleMortgageBalanceChange}
                       step={1000}
                       min={50000}
                       max={2000000}
                       className="text-lg pl-8"
+                      placeholder="0"
                     />
                   </div>
                   <div className="text-center mt-2">
