@@ -56,33 +56,18 @@
   </head>
 
   <body>
-    <!-- Facebook SDK -->
-    <div id="fb-root"></div>
-    <script>
-      window.fbAsyncInit = function() {
-        FB.init({
-          xfbml: true,
-          version: 'v18.0'
-        });
-      };
-
-      (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = 'https://connect.facebook.net/fr_CA/sdk/xfbml.customerchat.js';
-        fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));
+    <!-- Tawk.to Live Chat -->
+    <script type="text/javascript">
+      var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+      (function(){
+        var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+        s1.async = true;
+        s1.src = 'https://embed.tawk.to/YOUR_PROPERTY_ID/YOUR_WIDGET_ID';
+        s1.charset = 'UTF-8';
+        s1.setAttribute('crossorigin','*');
+        s0.parentNode.insertBefore(s1, s0);
+      })();
     </script>
-
-    <!-- Messenger Customer Chat Plugin -->
-    <div class="fb-customerchat"
-      attribution="setup_tool"
-      page_id="thomasbourque.planipret"
-      theme_color="#0088cc"
-      logged_in_greeting="Salut! Comment puis-je vous aider avec votre hypothèque?"
-      logged_out_greeting="Salut! Comment puis-je vous aider avec votre hypothèque?">
-    </div>
 
     <div id="root"></div>
     <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
