@@ -65,9 +65,38 @@ const MortgagePaymentForm = ({
   };
 
   const handleInterestRateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseFloat(e.target.value);
-    if (!isNaN(value)) {
-      setInterestRate([value]);
+    const value = e.target.value;
+    if (value === '') {
+      setInterestRate([0]);
+    } else {
+      const numValue = parseFloat(value);
+      if (!isNaN(numValue)) {
+        setInterestRate([numValue]);
+      }
+    }
+  };
+
+  const handlePurchasePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (value === '') {
+      setPurchasePrice(0);
+    } else {
+      const numValue = Number(value);
+      if (!isNaN(numValue)) {
+        setPurchasePrice(numValue);
+      }
+    }
+  };
+
+  const handleDownPaymentInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (value === '') {
+      handleDownPaymentAmountChange(0);
+    } else {
+      const numValue = Number(value);
+      if (!isNaN(numValue)) {
+        handleDownPaymentAmountChange(numValue);
+      }
     }
   };
 
@@ -82,10 +111,11 @@ const MortgagePaymentForm = ({
           <Input
             id="purchasePrice"
             type="number"
-            value={purchasePrice}
-            onChange={(e) => setPurchasePrice(Number(e.target.value))}
+            value={purchasePrice === 0 ? '' : purchasePrice}
+            onChange={handlePurchasePriceChange}
             step={25000}
             className="text-lg pl-8"
+            placeholder="0"
           />
         </div>
       </div>
@@ -114,10 +144,11 @@ const MortgagePaymentForm = ({
             <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500">$</span>
             <Input
               type="number"
-              value={downPayment}
-              onChange={(e) => handleDownPaymentAmountChange(Number(e.target.value))}
+              value={downPayment === 0 ? '' : downPayment}
+              onChange={handleDownPaymentInputChange}
               step={5000}
               className="text-lg pl-8"
+              placeholder="0"
             />
           </div>
         ) : (
@@ -205,12 +236,13 @@ const MortgagePaymentForm = ({
         <Input
           id="interestRate"
           type="number"
-          value={interestRate[0].toFixed(2)}
+          value={interestRate[0] === 0 ? '' : interestRate[0].toFixed(2)}
           onChange={handleInterestRateChange}
           step={0.01}
-          min={2}
+          min={0}
           max={10}
           className="text-lg"
+          placeholder="0.00"
         />
       </div>
 
