@@ -94,8 +94,14 @@ const MortgageCalculator = () => {
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="25">25 ans</SelectItem>
-                      <SelectItem value="30">30 ans</SelectItem>
+                      {Array.from({ length: 30 }, (_, i) => {
+                        const years = i + 1;
+                        return (
+                          <SelectItem key={years} value={years.toString()}>
+                            {years} {years === 1 ? 'an' : 'ans'}
+                          </SelectItem>
+                        );
+                      })}
                     </SelectContent>
                   </Select>
                 </div>
