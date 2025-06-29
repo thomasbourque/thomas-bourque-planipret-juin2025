@@ -9,6 +9,8 @@ import Lenders from "./pages/Lenders";
 import FAQ from "./pages/FAQ";
 import Calculatrices from "./pages/Calculatrices";
 import ScenarioComparator from "./pages/ScenarioComparator";
+import PaymentRhythmPreview from "./pages/PaymentRhythmPreview";
+import DownPaymentPreview from "./pages/DownPaymentPreview";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -25,6 +27,8 @@ const App = () => (
           <Route path="/faq" element={<FAQ />} />
           <Route path="/calculatrices" element={<Calculatrices />} />
           <Route path="/comparateur-scenarios" element={<ScenarioComparator />} />
+          <Route path="/preview-rythme-paiement" element={<PaymentRhythmPreview />} />
+          <Route path="/preview-mise-de-fonds" element={<DownPaymentPreview />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
