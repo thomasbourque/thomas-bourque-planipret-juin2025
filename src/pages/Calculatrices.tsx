@@ -6,6 +6,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import MortgagePaymentCalculator from "@/components/MortgagePaymentCalculator";
 import BorrowingCapacityCalculator from "@/components/BorrowingCapacityCalculator";
 import MortgageCalculator from "@/components/MortgageCalculator";
+import PaymentRhythmCalculator from "@/components/PaymentRhythmCalculator";
+import DownPaymentCalculator from "@/components/DownPaymentCalculator";
 
 const Calculatrices = () => {
   const handleScenariosClick = () => {
@@ -27,7 +29,7 @@ const Calculatrices = () => {
           </div>
 
           <Tabs defaultValue="payment" className="w-full max-w-6xl mx-auto">
-            <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 gap-1 mb-6 md:mb-8 h-auto p-1">
+            <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1 mb-6 md:mb-8 h-auto p-1">
               <TabsTrigger value="payment" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center">
                 Paiement hypothécaire
               </TabsTrigger>
@@ -36,6 +38,12 @@ const Calculatrices = () => {
               </TabsTrigger>
               <TabsTrigger value="savings" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center">
                 Écart de taux
+              </TabsTrigger>
+              <TabsTrigger value="rhythm" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center">
+                Rythme de paiement
+              </TabsTrigger>
+              <TabsTrigger value="downpayment" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center">
+                Mise de fonds
               </TabsTrigger>
               <TabsTrigger value="scenarios" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center" onClick={handleScenariosClick}>
                 Scénarios
@@ -57,6 +65,18 @@ const Calculatrices = () => {
             <TabsContent value="savings" className="mt-4 md:mt-8 w-full px-0">
               <div className="w-full">
                 <MortgageCalculator />
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="rhythm" className="mt-4 md:mt-8 w-full px-0">
+              <div className="w-full">
+                <PaymentRhythmCalculator />
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="downpayment" className="mt-4 md:mt-8 w-full px-0">
+              <div className="w-full">
+                <DownPaymentCalculator />
               </div>
             </TabsContent>
             
