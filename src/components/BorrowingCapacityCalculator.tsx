@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { calculateBorrowingCapacity } from "@/utils/borrowingCapacityCalculations";
 import BorrowingCapacityForm from "./BorrowingCapacityForm";
@@ -9,7 +10,7 @@ const BorrowingCapacityCalculator = () => {
   const [amortization, setAmortization] = useState(25);
   const [interestRate, setInterestRate] = useState([4.5]);
   const [monthlyDebts, setMonthlyDebts] = useState(0);
-  const [heatingCosts, setHeatingCosts] = useState(150);
+  const [heatingCosts, setHeatingCosts] = useState(0);
   const [propertyTaxes, setPropertyTaxes] = useState(0);
   const [condoFees, setCondoFees] = useState(0);
 

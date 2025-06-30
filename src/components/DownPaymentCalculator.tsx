@@ -188,6 +188,30 @@ const DownPaymentCalculator = () => {
                       </span>
                     </div>
                   )}
+                  {results.scenario1.monthlyInvestment > 0 && (
+                    <div className="flex justify-between text-sm">
+                      <span className="text-slate-600">Investissement mensuel:</span>
+                      <span>
+                        {results.scenario1.monthlyInvestment.toLocaleString('fr-CA', {
+                          style: 'currency',
+                          currency: 'CAD',
+                          minimumFractionDigits: 0
+                        })}
+                      </span>
+                    </div>
+                  )}
+                  <div className="border-t pt-3 mt-4">
+                    <div className="flex justify-between font-semibold text-blue-700">
+                      <span>Valeur finale des investissements:</span>
+                      <span>
+                        {results.scenario1.finalInvestmentValue.toLocaleString('fr-CA', {
+                          style: 'currency',
+                          currency: 'CAD',
+                          minimumFractionDigits: 0
+                        })}
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -239,6 +263,16 @@ const DownPaymentCalculator = () => {
                       </span>
                     </div>
                   )}
+                  <div className="flex justify-between text-sm">
+                    <span className="text-slate-600">Investissement initial:</span>
+                    <span>
+                      {(results.scenario1.downPayment - results.scenario2.downPayment).toLocaleString('fr-CA', {
+                        style: 'currency',
+                        currency: 'CAD',
+                        minimumFractionDigits: 0
+                      })}
+                    </span>
+                  </div>
                   <div className="border-t pt-3 mt-4">
                     <div className="flex justify-between font-semibold text-green-700">
                       <span>Valeur finale des investissements:</span>

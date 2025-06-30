@@ -23,6 +23,19 @@ const PaymentRhythmCalculator = () => {
     }
   };
 
+  const formatTimeInYearsAndMonths = (totalMonths: number) => {
+    const years = Math.floor(totalMonths / 12);
+    const months = Math.round(totalMonths % 12);
+    
+    if (years === 0) {
+      return `${months} mois`;
+    } else if (months === 0) {
+      return `${years} ${years === 1 ? 'an' : 'ans'}`;
+    } else {
+      return `${years} ${years === 1 ? 'an' : 'ans'} et ${months} mois`;
+    }
+  };
+
   const results = calculatePaymentRhythms(mortgageAmount, interestRate[0], amortization);
   
   // Calcul des économies par rapport au mensuel
@@ -162,7 +175,8 @@ const PaymentRhythmCalculator = () => {
                           {option.payment.toLocaleString('fr-CA', { 
                             style: 'currency', 
                             currency: 'CAD',
-                            minimumFractionDigits: 0 
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
                           })}
                         </p>
                       </div>
@@ -181,7 +195,7 @@ const PaymentRhythmCalculator = () => {
                       <div className="text-center">
                         <p className="text-sm text-slate-600">Durée</p>
                         <p className="font-semibold">
-                          {Math.round(option.details.payoffTime)} mois
+                          {formatTimeInYearsAndMonths(option.details.payoffTime)}
                         </p>
                       </div>
                       
@@ -201,7 +215,7 @@ const PaymentRhythmCalculator = () => {
                           <div className="text-center">
                             <p className="text-sm text-green-600">Économie de temps</p>
                             <p className="font-semibold text-green-700">
-                              {Math.round(option.details.timeSavings)} mois
+                              {formatTimeInYearsAndMonths(option.details.timeSavings)}
                             </p>
                           </div>
                         </>
