@@ -34,6 +34,15 @@ const DownPaymentCalculator = () => {
     investmentReturn[0]
   );
 
+  const formatCurrency = (amount: number) => {
+    return amount.toLocaleString('fr-CA', {
+      style: 'currency',
+      currency: 'CAD',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+  };
+
   return (
     <section className="section bg-slate-50">
       <div className="container">
@@ -149,42 +158,26 @@ const DownPaymentCalculator = () => {
                   <div className="flex justify-between">
                     <span className="text-slate-700">Mise de fonds:</span>
                     <span className="font-semibold">
-                      {results.scenario1.downPayment.toLocaleString('fr-CA', {
-                        style: 'currency',
-                        currency: 'CAD',
-                        minimumFractionDigits: 0
-                      })}
+                      {formatCurrency(results.scenario1.downPayment)}
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-slate-700">Montant hypothécaire:</span>
                     <span className="font-semibold">
-                      {results.scenario1.mortgageAmount.toLocaleString('fr-CA', {
-                        style: 'currency',
-                        currency: 'CAD',
-                        minimumFractionDigits: 0
-                      })}
+                      {formatCurrency(results.scenario1.mortgageAmount)}
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-slate-700">Paiement mensuel:</span>
                     <span className="font-semibold">
-                      {results.scenario1.monthlyPayment.toLocaleString('fr-CA', {
-                        style: 'currency',
-                        currency: 'CAD',
-                        minimumFractionDigits: 0
-                      })}
+                      {formatCurrency(results.scenario1.monthlyPayment)}
                     </span>
                   </div>
                   {results.scenario1.insurancePremium > 0 && (
                     <div className="flex justify-between text-sm">
                       <span className="text-slate-600">Prime d'assurance SCHL:</span>
                       <span>
-                        {results.scenario1.insurancePremium.toLocaleString('fr-CA', {
-                          style: 'currency',
-                          currency: 'CAD',
-                          minimumFractionDigits: 0
-                        })}
+                        {formatCurrency(results.scenario1.insurancePremium)}
                       </span>
                     </div>
                   )}
@@ -192,11 +185,7 @@ const DownPaymentCalculator = () => {
                     <div className="flex justify-between text-sm">
                       <span className="text-slate-600">Investissement mensuel:</span>
                       <span>
-                        {results.scenario1.monthlyInvestment.toLocaleString('fr-CA', {
-                          style: 'currency',
-                          currency: 'CAD',
-                          minimumFractionDigits: 0
-                        })}
+                        {formatCurrency(results.scenario1.monthlyInvestment)}
                       </span>
                     </div>
                   )}
@@ -204,11 +193,7 @@ const DownPaymentCalculator = () => {
                     <div className="flex justify-between font-semibold text-blue-700">
                       <span>Valeur finale des investissements:</span>
                       <span>
-                        {results.scenario1.finalInvestmentValue.toLocaleString('fr-CA', {
-                          style: 'currency',
-                          currency: 'CAD',
-                          minimumFractionDigits: 0
-                        })}
+                        {formatCurrency(results.scenario1.finalInvestmentValue)}
                       </span>
                     </div>
                   </div>
@@ -224,64 +209,40 @@ const DownPaymentCalculator = () => {
                   <div className="flex justify-between">
                     <span className="text-slate-700">Mise de fonds:</span>
                     <span className="font-semibold">
-                      {results.scenario2.downPayment.toLocaleString('fr-CA', {
-                        style: 'currency',
-                        currency: 'CAD',
-                        minimumFractionDigits: 0
-                      })}
+                      {formatCurrency(results.scenario2.downPayment)}
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-slate-700">Montant hypothécaire:</span>
                     <span className="font-semibold">
-                      {results.scenario2.mortgageAmount.toLocaleString('fr-CA', {
-                        style: 'currency',
-                        currency: 'CAD',
-                        minimumFractionDigits: 0
-                      })}
+                      {formatCurrency(results.scenario2.mortgageAmount)}
                     </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-slate-700">Paiement mensuel:</span>
                     <span className="font-semibold">
-                      {results.scenario2.monthlyPayment.toLocaleString('fr-CA', {
-                        style: 'currency',
-                        currency: 'CAD',
-                        minimumFractionDigits: 0
-                      })}
+                      {formatCurrency(results.scenario2.monthlyPayment)}
                     </span>
                   </div>
                   {results.scenario2.insurancePremium > 0 && (
                     <div className="flex justify-between text-sm">
                       <span className="text-slate-600">Prime d'assurance SCHL:</span>
                       <span>
-                        {results.scenario2.insurancePremium.toLocaleString('fr-CA', {
-                          style: 'currency',
-                          currency: 'CAD',
-                          minimumFractionDigits: 0
-                        })}
+                        {formatCurrency(results.scenario2.insurancePremium)}
                       </span>
                     </div>
                   )}
                   <div className="flex justify-between text-sm">
                     <span className="text-slate-600">Investissement initial:</span>
                     <span>
-                      {(results.scenario1.downPayment - results.scenario2.downPayment).toLocaleString('fr-CA', {
-                        style: 'currency',
-                        currency: 'CAD',
-                        minimumFractionDigits: 0
-                      })}
+                      {formatCurrency(results.scenario1.downPayment - results.scenario2.downPayment)}
                     </span>
                   </div>
                   <div className="border-t pt-3 mt-4">
                     <div className="flex justify-between font-semibold text-green-700">
                       <span>Valeur finale des investissements:</span>
                       <span>
-                        {results.scenario2.finalInvestmentValue.toLocaleString('fr-CA', {
-                          style: 'currency',
-                          currency: 'CAD',
-                          minimumFractionDigits: 0
-                        })}
+                        {formatCurrency(results.scenario2.finalInvestmentValue)}
                       </span>
                     </div>
                   </div>
@@ -303,11 +264,7 @@ const DownPaymentCalculator = () => {
                 <p className="text-lg">
                   Avantage de{' '}
                   <span className="font-bold">
-                    {results.difference.toLocaleString('fr-CA', {
-                      style: 'currency',
-                      currency: 'CAD',
-                      minimumFractionDigits: 0
-                    })}
+                    {formatCurrency(results.difference)}
                   </span>
                   {' '}après {amortization} ans
                 </p>

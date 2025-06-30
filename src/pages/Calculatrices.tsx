@@ -8,6 +8,7 @@ import BorrowingCapacityCalculator from "@/components/BorrowingCapacityCalculato
 import MortgageCalculator from "@/components/MortgageCalculator";
 import PaymentRhythmCalculator from "@/components/PaymentRhythmCalculator";
 import DownPaymentCalculator from "@/components/DownPaymentCalculator";
+import RatioCalculator from "@/components/RatioCalculator";
 
 const Calculatrices = () => {
   const handleScenariosClick = () => {
@@ -29,7 +30,7 @@ const Calculatrices = () => {
           </div>
 
           <Tabs defaultValue="payment" className="w-full max-w-6xl mx-auto">
-            <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1 mb-6 md:mb-8 h-auto p-1">
+            <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-1 mb-6 md:mb-8 h-auto p-1">
               <TabsTrigger value="payment" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center">
                 Paiement hypothécaire
               </TabsTrigger>
@@ -44,6 +45,9 @@ const Calculatrices = () => {
               </TabsTrigger>
               <TabsTrigger value="downpayment" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center">
                 Mise de fonds
+              </TabsTrigger>
+              <TabsTrigger value="ratios" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center">
+                Ratios ABD/ATD
               </TabsTrigger>
               <TabsTrigger value="scenarios" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center" onClick={handleScenariosClick}>
                 Scénarios
@@ -77,6 +81,12 @@ const Calculatrices = () => {
             <TabsContent value="downpayment" className="mt-4 md:mt-8 w-full px-0">
               <div className="w-full">
                 <DownPaymentCalculator />
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="ratios" className="mt-4 md:mt-8 w-full px-0">
+              <div className="w-full">
+                <RatioCalculator />
               </div>
             </TabsContent>
             
