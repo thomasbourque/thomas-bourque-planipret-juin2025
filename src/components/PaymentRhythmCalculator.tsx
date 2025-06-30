@@ -24,8 +24,14 @@ const PaymentRhythmCalculator = () => {
   };
 
   const formatTimeInYearsAndMonths = (totalMonths: number) => {
-    const years = Math.floor(totalMonths / 12);
-    const months = Math.round(totalMonths % 12);
+    let years = Math.floor(totalMonths / 12);
+    let months = Math.round(totalMonths % 12);
+    
+    // Si on a 12 mois, on les convertit en 1 année supplémentaire
+    if (months === 12) {
+      years += 1;
+      months = 0;
+    }
     
     if (years === 0) {
       return `${months} mois`;

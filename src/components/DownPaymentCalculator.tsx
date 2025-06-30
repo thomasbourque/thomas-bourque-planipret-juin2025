@@ -143,7 +143,7 @@ const DownPaymentCalculator = () => {
               {/* Scénario 1 */}
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
                 <h3 className="text-xl font-semibold text-blue-900 mb-4">
-                  Scénario 1: Maximiser la mise de fonds
+                  Scénario 1: Maximiser la mise de fonds et investir mensuellement l'économie de paiement
                 </h3>
                 <div className="space-y-3">
                   <div className="flex justify-between">
@@ -218,7 +218,7 @@ const DownPaymentCalculator = () => {
               {/* Scénario 2 */}
               <div className="bg-green-50 border border-green-200 rounded-lg p-6">
                 <h3 className="text-xl font-semibold text-green-900 mb-4">
-                  Scénario 2: Réduire la mise de fonds et investir
+                  Scénario 2: Réduire la mise de fonds et investir le reste des économies dès le jour 1
                 </h3>
                 <div className="space-y-3">
                   <div className="flex justify-between">

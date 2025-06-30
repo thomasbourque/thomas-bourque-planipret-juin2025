@@ -40,16 +40,41 @@ export const calculateDownPaymentComparison = (
     interestRate,
     amortizationYears,
     investmentReturn,
-    'scenario2',
-    scenario1
+    'scenario2'
   );
 
-  const advantageousScenario = scenario1.finalInvestmentValue > scenario2.finalInvestmentValue ? 'scenario1' : 'scenario2';
-  const difference = Math.abs(scenario1.finalInvestmentValue - scenario2.finalInvestmentValue);
+  // Maintenant calculer les investissements en fonction des différences
+  const downPaymentDifference = scenario1.downPayment - scenario2.downPayment;
+  const monthlyPaymentDifference = scenario2.monthlyPayment - scenario1.monthlyPayment;
+
+  // Scénario 1: investir l'économie de paiement mensuel
+  const scenario1FinalInvestment = monthlyPaymentDifference > 0 
+    ? calculateInvestmentValue(0, monthlyPaymentDifference, investmentReturn, amortizationYears)
+    : 0;
+
+  // Scénario 2: investir la différence de mise de fonds dès le jour 1
+  const scenario2FinalInvestment = downPaymentDifference > 0
+    ? calculateInvestmentValue(downPaymentDifference, 0, investmentReturn, amortizationYears)
+    : 0;
+
+  const updatedScenario1 = {
+    ...scenario1,
+    finalInvestmentValue: scenario1FinalInvestment,
+    monthlyInvestment: monthlyPaymentDifference > 0 ? monthlyPaymentDifference : 0
+  };
+
+  const updatedScenario2 = {
+    ...scenario2,
+    finalInvestmentValue: scenario2FinalInvestment,
+    monthlyInvestment: 0
+  };
+
+  const advantageousScenario = updatedScenario1.finalInvestmentValue > updatedScenario2.finalInvestmentValue ? 'scenario1' : 'scenario2';
+  const difference = Math.abs(updatedScenario1.finalInvestmentValue - updatedScenario2.finalInvestmentValue);
 
   return {
-    scenario1,
-    scenario2,
+    scenario1: updatedScenario1,
+    scenario2: updatedScenario2,
     advantageousScenario,
     difference
   };
@@ -61,8 +86,7 @@ const calculateScenario = (
   interestRate: number,
   amortizationYears: number,
   investmentReturn: number,
-  scenarioType: 'scenario1' | 'scenario2',
-  referenceScenario?: ScenarioResults
+  scenarioType: 'scenario1' | 'scenario2'
 ): ScenarioResults => {
   const downPayment = purchasePrice * (downPaymentPercent / 100);
   const mortgageAmount = purchasePrice - downPayment;
@@ -80,26 +104,6 @@ const calculateScenario = (
   // Calcul du paiement mensuel (capitalisation semi-annuelle)
   const monthlyPayment = calculateMonthlyPayment(totalMortgageAmount, interestRate, amortizationYears);
   
-  let finalInvestmentValue = 0;
-  let monthlyInvestment = 0;
-  
-  if (scenarioType === 'scenario1') {
-    // Scénario 1: Maximiser la mise de fonds, pas d'investissement initial
-    // Mais investir l'économie de paiement mensuellement s'il y en a une
-    if (referenceScenario) {
-      monthlyInvestment = referenceScenario.monthlyPayment - monthlyPayment;
-      if (monthlyInvestment > 0) {
-        finalInvestmentValue = calculateInvestmentValue(0, monthlyInvestment, investmentReturn, amortizationYears);
-      }
-    }
-  } else {
-    // Scénario 2: Réduire la mise de fonds et investir la différence dès le jour 1
-    if (referenceScenario) {
-      const downPaymentDifference = referenceScenario.downPayment - downPayment;
-      finalInvestmentValue = calculateInvestmentValue(downPaymentDifference, 0, investmentReturn, amortizationYears);
-    }
-  }
-  
   return {
     downPayment,
     mortgageAmount: totalMortgageAmount,
@@ -107,8 +111,8 @@ const calculateScenario = (
     monthlyPaymentWithInsurance: monthlyPayment,
     insurancePremium,
     totalInvestment: 0,
-    finalInvestmentValue,
-    monthlyInvestment
+    finalInvestmentValue: 0, // Sera calculé dans la fonction principale
+    monthlyInvestment: 0 // Sera calculé dans la fonction principale
   };
 };
 
