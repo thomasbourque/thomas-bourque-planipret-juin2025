@@ -210,41 +210,14 @@ const RatioCalculator = () => {
             </div>
 
             <div className="grid lg:grid-cols-2 gap-6">
-              {/* Résultats des calculs */}
+              {/* Paiement hypothécaire mensuel */}
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
                 <h3 className="text-xl font-semibold text-blue-900 mb-4">
-                  Détails des calculs
+                  Paiement hypothécaire mensuel
                 </h3>
-                <div className="space-y-3">
-                  <div className="flex justify-between">
-                    <span className="text-slate-700">Paiement hypothécaire mensuel:</span>
-                    <span className="font-semibold">
-                      {formatCurrency(monthlyPayment)}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-slate-700">Revenus mensuels:</span>
-                    <span className="font-semibold">
-                      {formatCurrency(monthlyIncome)}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-slate-700">Taxes mensuelles:</span>
-                    <span className="font-semibold">
-                      {formatCurrency(monthlyTaxes)}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-slate-700">Coûts de logement totaux:</span>
-                    <span className="font-semibold">
-                      {formatCurrency(housingCosts)}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-slate-700">Service de la dette total:</span>
-                    <span className="font-semibold">
-                      {formatCurrency(totalDebtService)}
-                    </span>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-blue-700">
+                    {formatCurrency(monthlyPayment)}
                   </div>
                 </div>
               </div>
