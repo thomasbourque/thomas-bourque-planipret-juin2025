@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -217,7 +218,7 @@ const LtvCalculator = () => {
                     onCheckedChange={(checked) => setHasExistingCreditLine(checked === true)}
                   />
                   <Label htmlFor="hasExistingCreditLine" className="text-lg font-medium text-slate-900">
-                    J'ai déjà une marge de crédit hypothécaire
+                    Marge de crédit hypothécaire
                   </Label>
                 </div>
               </div>
@@ -244,9 +245,7 @@ const LtvCalculator = () => {
                 
                 <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
                   <div className="text-sm font-semibold text-blue-800 mb-1">
-                    {hasExistingCreditLine && currentLTV <= 65 ? 'Refinancement maximal' : 
-                     hasExistingCreditLine && currentLTV <= 80 ? 'Refinancement maximal / Prêt lié max.' : 
-                     'Refinancement maximal'}
+                    Refinancement maximal
                   </div>
                   <div className="text-xl font-bold text-blue-700">
                     {formatCurrency(maxRefinancing)}
@@ -381,7 +380,9 @@ const LtvCalculator = () => {
                     <TableHead>Valeur de la maison</TableHead>
                     <TableHead>Équité</TableHead>
                     <TableHead>RPV (%)</TableHead>
-                    <TableHead>Montant disponible dans la marge</TableHead>
+                    {hasExistingCreditLine && (
+                      <TableHead>Montant disponible dans la marge</TableHead>
+                    )}
                     <TableHead>Refinancement maximal</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -405,7 +406,9 @@ const LtvCalculator = () => {
                           </span>
                         )}
                       </TableCell>
-                      <TableCell>{formatCurrency(row.maxOpenCreditLine)}</TableCell>
+                      {hasExistingCreditLine && (
+                        <TableCell>{formatCurrency(row.maxOpenCreditLine)}</TableCell>
+                      )}
                       <TableCell>{formatCurrency(row.maxRefinancing)}</TableCell>
                     </TableRow>
                   ))}
