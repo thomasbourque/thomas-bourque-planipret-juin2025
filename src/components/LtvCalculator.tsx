@@ -232,7 +232,7 @@ const LtvCalculator = () => {
                 <p className="text-green-700">Acces a une marge de credit hypothecaire ouverte</p>
               </div>
               <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                <div className="font-semibold text-yellow-800 mb-2">65% < RPV ≤ 80%</div>
+                <div className="font-semibold text-yellow-800 mb-2">65% &lt; RPV ≤ 80%</div>
                 <p className="text-yellow-700">Acces a une marge de credit hypothecaire avec pret ferme</p>
               </div>
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
