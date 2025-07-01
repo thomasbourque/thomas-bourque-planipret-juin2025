@@ -116,10 +116,10 @@ const LtvCalculator = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-6">
             <h2 className="heading-lg text-slate-900 mb-4">
-              Calculateur RPV évolutif
+              Calculateur RPV evolutif
             </h2>
             <p className="body-md text-slate-700 max-w-3xl mx-auto">
-              Calculez l'évolution de votre ratio prêt-valeur et vos options de refinancement année après année.
+              Calculez l evolution de votre ratio pret-valeur et vos options de refinancement annee apres annee.
             </p>
           </div>
 
@@ -127,7 +127,7 @@ const LtvCalculator = () => {
             <div className="grid lg:grid-cols-3 gap-6 mb-8">
               <div>
                 <Label htmlFor="purchasePrice" className="block text-lg font-medium text-slate-900 mb-3">
-                  Prix d'achat
+                  Prix d achat
                 </Label>
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500">$</span>
@@ -163,7 +163,7 @@ const LtvCalculator = () => {
 
               <div>
                 <Label htmlFor="interestRate" className="block text-lg font-medium text-slate-900 mb-3">
-                  Taux d'intérêt (%)
+                  Taux d interet (%)
                 </Label>
                 <Input
                   id="interestRate"
@@ -203,7 +203,7 @@ const LtvCalculator = () => {
 
               <div>
                 <MortgageSlider
-                  label="Appréciation annuelle de la propriété"
+                  label="Appreciation annuelle de la propriete"
                   value={appreciationRate}
                   onValueChange={setAppreciationRate}
                   min={0}
@@ -216,12 +216,12 @@ const LtvCalculator = () => {
 
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
               <h3 className="text-xl font-semibold text-blue-900 mb-4">
-                Remboursements anticipés (optionnel)
+                Remboursements anticipes (optionnel)
               </h3>
               <div className="grid md:grid-cols-3 gap-4">
                 <div>
                   <Label htmlFor="extraPayment" className="block text-sm font-medium text-slate-700 mb-2">
-                    Montant du remboursement anticipé
+                    Montant du remboursement anticipe
                   </Label>
                   <div className="relative">
                     <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500">$</span>
@@ -240,7 +240,7 @@ const LtvCalculator = () => {
                 
                 <div>
                   <Label className="block text-sm font-medium text-slate-700 mb-2">
-                    Fréquence
+                    Frequence
                   </Label>
                   <Select value={extraPaymentFrequency} onValueChange={setExtraPaymentFrequency}>
                     <SelectTrigger>
@@ -256,7 +256,7 @@ const LtvCalculator = () => {
                 
                 <div>
                   <Label className="block text-sm font-medium text-slate-700 mb-2">
-                    À partir de l'année
+                    A partir de l annee
                   </Label>
                   <Select value={extraPaymentStartYear.toString()} onValueChange={(value) => setExtraPaymentStartYear(Number(value))}>
                     <SelectTrigger>
@@ -267,7 +267,7 @@ const LtvCalculator = () => {
                         const year = i + 1;
                         return (
                           <SelectItem key={year} value={year.toString()}>
-                            Année {year}
+                            Annee {year}
                           </SelectItem>
                         );
                       })}
@@ -281,10 +281,10 @@ const LtvCalculator = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Année</TableHead>
-                    <TableHead>Solde hypothécaire</TableHead>
+                    <TableHead>Annee</TableHead>
+                    <TableHead>Solde hypothecaire</TableHead>
                     <TableHead>Valeur de la maison</TableHead>
-                    <TableHead>Équité</TableHead>
+                    <TableHead>Equite</TableHead>
                     <TableHead>RPV (%)</TableHead>
                     <TableHead>Refinancement max.</TableHead>
                   </TableRow>
@@ -305,7 +305,7 @@ const LtvCalculator = () => {
                         )}
                         {row.ltv > 65 && row.ltv <= 80 && (
                           <span className="ml-2 text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">
-                            Marge fermée
+                            Marge fermee
                           </span>
                         )}
                       </TableCell>
@@ -319,15 +319,15 @@ const LtvCalculator = () => {
             <div className="mt-6 grid md:grid-cols-3 gap-4 text-sm">
               <div className="bg-green-50 border border-green-200 rounded-lg p-4">
                 <div className="font-semibold text-green-800 mb-2">RPV ≤ 65%</div>
-                <p className="text-green-700">Accès à une marge de crédit hypothécaire ouverte</p>
+                <p className="text-green-700">Acces a une marge de credit hypothecaire ouverte</p>
               </div>
               <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                 <div className="font-semibold text-yellow-800 mb-2">65% < RPV ≤ 80%</div>
-                <p className="text-yellow-700">Accès à une marge de crédit hypothécaire avec prêt fermé</p>
+                <p className="text-yellow-700">Acces a une marge de credit hypothecaire avec pret ferme</p>
               </div>
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                 <div className="font-semibold text-blue-800 mb-2">Refinancement</div>
-                <p className="text-blue-700">Montant maximum disponible pour refinancement à 80% de la valeur</p>
+                <p className="text-blue-700">Montant maximum disponible pour refinancement a 80% de la valeur</p>
               </div>
             </div>
           </div>
