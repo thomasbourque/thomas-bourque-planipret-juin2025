@@ -1,3 +1,4 @@
+
 import React from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -7,6 +8,7 @@ import BorrowingCapacityCalculator from "@/components/BorrowingCapacityCalculato
 import MortgageCalculator from "@/components/MortgageCalculator";
 import PaymentRhythmCalculator from "@/components/PaymentRhythmCalculator";
 import DownPaymentCalculator from "@/components/DownPaymentCalculator";
+import MinimumDownPaymentCalculator from "@/components/MinimumDownPaymentCalculator";
 import RatioCalculator from "@/components/RatioCalculator";
 import FixedVariableCalculator from "@/components/FixedVariableCalculator";
 import LtvCalculator from "@/components/LtvCalculator";
@@ -50,8 +52,11 @@ const Calculatrices = () => {
             </TabsList>
             
             <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-1 mb-6 md:mb-8 h-auto p-1">
+              <TabsTrigger value="minimum-downpayment" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center">
+                Mise de fonds minimale
+              </TabsTrigger>
               <TabsTrigger value="downpayment" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center">
-                Mise de fonds
+                Investir sa mise de fonds
               </TabsTrigger>
               <TabsTrigger value="ratios" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center">
                 Ratios ABD/ATD
@@ -62,6 +67,9 @@ const Calculatrices = () => {
               <TabsTrigger value="ltv" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center">
                 RPV évolutif
               </TabsTrigger>
+            </TabsList>
+            
+            <TabsList className="grid w-full grid-cols-1 gap-1 mb-6 md:mb-8 h-auto p-1">
               <TabsTrigger value="scenarios" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center" onClick={handleScenariosClick}>
                 Scénarios
               </TabsTrigger>
@@ -88,6 +96,12 @@ const Calculatrices = () => {
             <TabsContent value="rhythm" className="mt-4 md:mt-8 w-full px-0">
               <div className="w-full">
                 <PaymentRhythmCalculator />
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="minimum-downpayment" className="mt-4 md:mt-8 w-full px-0">
+              <div className="w-full">
+                <MinimumDownPaymentCalculator />
               </div>
             </TabsContent>
             

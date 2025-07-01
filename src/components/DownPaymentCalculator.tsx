@@ -49,7 +49,7 @@ const DownPaymentCalculator = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-6">
             <h2 className="heading-lg text-slate-900 mb-4">
-              Calculateur de mise de fonds
+              Investir sa mise de fonds
             </h2>
             <p className="body-md text-slate-700 max-w-3xl mx-auto">
               Comparez l'impact d'augmenter votre mise de fonds versus investir l'argent économisé en bourse.
