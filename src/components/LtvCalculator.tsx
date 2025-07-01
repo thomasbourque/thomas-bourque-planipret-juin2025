@@ -7,13 +7,23 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import MortgageSlider from "./MortgageSlider";
 
 const LtvCalculator = () => {
-  const [purchasePrice, setPurchasePrice] = useState(500000);
-  const [downPayment, setDownPayment] = useState(100000);
-  const [interestRate, setInterestRate] = useState(5.0);
-  const [amortization, setAmortization] = useState(25);
-  const [appreciationRate, setAppreciationRate] = useState([5]);
+  const [currentHomeValue, setCurrentHomeValue] = useState(600000);
+  const [currentMortgageBalance, setCurrentMortgageBalance] = useState(300000);
+  const [currentInterestRate, setCurrentInterestRate] = useState(5.5);
+  const [newInterestRate, setNewInterestRate] = useState(4.5);
+  const [newAmortization, setNewAmortization] = useState(25);
+  const [appreciationRate, setAppreciationRate] = useState([3]);
+  const [refinancingAmount, setRefinancingAmount] = useState(0);
 
-  const mortgageAmount = purchasePrice - downPayment;
+  // Calcul du RPV actuel
+  const currentLTV = (currentMortgageBalance / currentHomeValue) * 100;
+
+  // Calcul du refinancement maximum (80% de la valeur)
+  const maxRefinancing = Math.max(0, currentHomeValue * 0.8 - currentMortgageBalance);
+
+  // Calcul du montant total après refinancement
+  const totalNewMortgage = currentMortgageBalance + refinancingAmount;
+  const newLTV = (totalNewMortgage / currentHomeValue) * 100;
 
   const calculateMonthlyPayment = (principal: number, annualRate: number, amortizationYears: number) => {
     if (principal === 0 || annualRate === 0) return principal / (amortizationYears * 12);
@@ -28,15 +38,24 @@ const LtvCalculator = () => {
     return numerator / denominator;
   };
 
-  const calculateAmortizationSchedule = () => {
-    const monthlyPayment = calculateMonthlyPayment(mortgageAmount, interestRate, amortization);
-    const semiAnnualRate = interestRate / 2;
-    const monthlyRate = Math.pow(1 + semiAnnualRate / 100, 2/12) - 1;
-    
-    let balance = mortgageAmount;
-    const schedule = [];
+  // Paiement mensuel actuel (estimé sur l'amortissement restant)
+  const currentMonthlyPayment = calculateMonthlyPayment(currentMortgageBalance, currentInterestRate, 20);
+  
+  // Nouveau paiement mensuel après refinancement
+  const newMonthlyPayment = calculateMonthlyPayment(totalNewMortgage, newInterestRate, newAmortization);
 
-    for (let year = 1; year <= amortization; year++) {
+  // Économies/différence mensuelle
+  const monthlyDifference = currentMonthlyPayment - newMonthlyPayment;
+
+  const calculateFutureSchedule = () => {
+    const schedule = [];
+    let balance = totalNewMortgage;
+    const semiAnnualRate = newInterestRate / 2;
+    const monthlyRate = Math.pow(1 + semiAnnualRate / 100, 2/12) - 1;
+    const monthlyPayment = newMonthlyPayment;
+
+    for (let year = 1; year <= Math.min(newAmortization, 30); year++) {
+      // Calcul du solde après une année de paiements
       for (let month = 1; month <= 12 && balance > 0; month++) {
         const interestPayment = balance * monthlyRate;
         const principalPayment = monthlyPayment - interestPayment;
@@ -46,18 +65,18 @@ const LtvCalculator = () => {
         if (balance <= 0) break;
       }
       
-      const homeValue = purchasePrice * Math.pow(1 + appreciationRate[0] / 100, year);
-      const equity = homeValue - balance;
-      const ltv = balance > 0 ? (balance / homeValue) * 100 : 0;
-      const maxRefinancing = Math.max(0, homeValue * 0.8 - balance);
+      const futureHomeValue = currentHomeValue * Math.pow(1 + appreciationRate[0] / 100, year);
+      const equity = futureHomeValue - balance;
+      const ltv = balance > 0 ? (balance / futureHomeValue) * 100 : 0;
+      const maxRefinancingFuture = Math.max(0, futureHomeValue * 0.8 - balance);
       
       schedule.push({
         year,
         balance: Math.round(balance),
         equity: Math.round(equity),
-        homeValue: Math.round(homeValue),
+        homeValue: Math.round(futureHomeValue),
         ltv: ltv,
-        maxRefinancing: Math.round(maxRefinancing)
+        maxRefinancing: Math.round(maxRefinancingFuture)
       });
       
       if (balance <= 0) break;
@@ -66,7 +85,7 @@ const LtvCalculator = () => {
     return schedule;
   };
 
-  const schedule = calculateAmortizationSchedule();
+  const schedule = calculateFutureSchedule();
 
   const formatCurrency = (amount: number) => {
     return amount.toLocaleString('fr-CA', {
@@ -80,7 +99,13 @@ const LtvCalculator = () => {
   const getLtvRowClass = (ltv: number) => {
     if (ltv <= 65) return "bg-green-50 border-green-200";
     if (ltv <= 80) return "bg-yellow-50 border-yellow-200";
-    return "";
+    return "bg-red-50 border-red-200";
+  };
+
+  const getCurrentLtvClass = (ltv: number) => {
+    if (ltv <= 65) return "text-green-600 font-bold";
+    if (ltv <= 80) return "text-yellow-600 font-bold";
+    return "text-red-600 font-bold";
   };
 
   return (
@@ -89,94 +114,157 @@ const LtvCalculator = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-6">
             <h2 className="heading-lg text-slate-900 mb-4">
-              Calculateur RPV evolutif
+              Calculateur RPV évolutif
             </h2>
             <p className="body-md text-slate-700 max-w-3xl mx-auto">
-              Calculez l evolution de votre ratio pret-valeur et vos options de refinancement annee apres annee.
+              Calculez votre ratio prêt-valeur actuel et explorez vos options de refinancement année après année.
             </p>
           </div>
 
           <div className="bg-white rounded-xl shadow-lg p-4 md:p-6 lg:p-8">
-            <div className="grid lg:grid-cols-3 gap-6 mb-8">
-              <div>
-                <Label htmlFor="purchasePrice" className="block text-lg font-medium text-slate-900 mb-3">
-                  Prix d achat
-                </Label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500">$</span>
+            {/* Situation actuelle */}
+            <div className="mb-8">
+              <h3 className="text-xl font-semibold text-slate-900 mb-4">Situation actuelle</h3>
+              <div className="grid lg:grid-cols-3 gap-6">
+                <div>
+                  <Label htmlFor="currentHomeValue" className="block text-lg font-medium text-slate-900 mb-3">
+                    Valeur actuelle de la maison
+                  </Label>
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500">$</span>
+                    <Input
+                      id="currentHomeValue"
+                      type="number"
+                      value={currentHomeValue === 0 ? '' : currentHomeValue}
+                      onChange={(e) => setCurrentHomeValue(Number(e.target.value) || 0)}
+                      step={25000}
+                      className="text-lg pl-8"
+                      placeholder="0"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <Label htmlFor="currentMortgageBalance" className="block text-lg font-medium text-slate-900 mb-3">
+                    Solde hypothécaire actuel
+                  </Label>
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500">$</span>
+                    <Input
+                      id="currentMortgageBalance"
+                      type="number"
+                      value={currentMortgageBalance === 0 ? '' : currentMortgageBalance}
+                      onChange={(e) => setCurrentMortgageBalance(Number(e.target.value) || 0)}
+                      step={5000}
+                      className="text-lg pl-8"
+                      placeholder="0"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <Label htmlFor="currentInterestRate" className="block text-lg font-medium text-slate-900 mb-3">
+                    Taux d'intérêt actuel (%)
+                  </Label>
                   <Input
-                    id="purchasePrice"
+                    id="currentInterestRate"
                     type="number"
-                    value={purchasePrice === 0 ? '' : purchasePrice}
-                    onChange={(e) => setPurchasePrice(Number(e.target.value) || 0)}
-                    step={25000}
-                    className="text-lg pl-8"
-                    placeholder="0"
+                    value={currentInterestRate === 0 ? '' : currentInterestRate.toFixed(2)}
+                    onChange={(e) => setCurrentInterestRate(Number(e.target.value) || 0)}
+                    step={0.01}
+                    min={0}
+                    max={15}
+                    className="text-lg"
+                    placeholder="0.00"
                   />
                 </div>
               </div>
 
-              <div>
-                <Label htmlFor="downPayment" className="block text-lg font-medium text-slate-900 mb-3">
-                  Mise de fonds
-                </Label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500">$</span>
-                  <Input
-                    id="downPayment"
-                    type="number"
-                    value={downPayment === 0 ? '' : downPayment}
-                    onChange={(e) => setDownPayment(Number(e.target.value) || 0)}
-                    step={5000}
-                    className="text-lg pl-8"
-                    placeholder="0"
-                  />
+              {/* RPV actuel */}
+              <div className="mt-6 p-4 bg-slate-100 rounded-lg">
+                <div className="flex justify-between items-center">
+                  <span className="text-lg font-medium text-slate-900">RPV actuel :</span>
+                  <span className={`text-2xl ${getCurrentLtvClass(currentLTV)}`}>
+                    {currentLTV.toFixed(2)}%
+                  </span>
                 </div>
-              </div>
-
-              <div>
-                <Label htmlFor="interestRate" className="block text-lg font-medium text-slate-900 mb-3">
-                  Taux d interet (%)
-                </Label>
-                <Input
-                  id="interestRate"
-                  type="number"
-                  value={interestRate === 0 ? '' : interestRate.toFixed(2)}
-                  onChange={(e) => setInterestRate(Number(e.target.value) || 0)}
-                  step={0.01}
-                  min={0}
-                  max={15}
-                  className="text-lg"
-                  placeholder="0.00"
-                />
+                <div className="flex justify-between items-center mt-2">
+                  <span className="text-lg font-medium text-slate-900">Refinancement maximum disponible :</span>
+                  <span className="text-xl font-semibold text-blue-600">
+                    {formatCurrency(maxRefinancing)}
+                  </span>
+                </div>
               </div>
             </div>
 
-            <div className="grid lg:grid-cols-2 gap-6 mb-8">
-              <div>
-                <Label className="block text-lg font-medium text-slate-900 mb-3">
-                  Amortissement
-                </Label>
-                <Select value={amortization.toString()} onValueChange={(value) => setAmortization(Number(value))}>
-                  <SelectTrigger className="text-lg">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {Array.from({ length: 30 }, (_, i) => {
-                      const years = i + 1;
-                      return (
-                        <SelectItem key={years} value={years.toString()}>
-                          {years} {years === 1 ? 'an' : 'ans'}
-                        </SelectItem>
-                      );
-                    })}
-                  </SelectContent>
-                </Select>
+            {/* Options de refinancement */}
+            <div className="mb-8">
+              <h3 className="text-xl font-semibold text-slate-900 mb-4">Options de refinancement</h3>
+              <div className="grid lg:grid-cols-3 gap-6">
+                <div>
+                  <Label htmlFor="refinancingAmount" className="block text-lg font-medium text-slate-900 mb-3">
+                    Montant de refinancement souhaité
+                  </Label>
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500">$</span>
+                    <Input
+                      id="refinancingAmount"
+                      type="number"
+                      value={refinancingAmount === 0 ? '' : refinancingAmount}
+                      onChange={(e) => setRefinancingAmount(Number(e.target.value) || 0)}
+                      step={5000}
+                      max={maxRefinancing}
+                      className="text-lg pl-8"
+                      placeholder="0"
+                    />
+                  </div>
+                  <p className="text-sm text-slate-600 mt-1">
+                    Maximum : {formatCurrency(maxRefinancing)}
+                  </p>
+                </div>
+
+                <div>
+                  <Label htmlFor="newInterestRate" className="block text-lg font-medium text-slate-900 mb-3">
+                    Nouveau taux d'intérêt (%)
+                  </Label>
+                  <Input
+                    id="newInterestRate"
+                    type="number"
+                    value={newInterestRate === 0 ? '' : newInterestRate.toFixed(2)}
+                    onChange={(e) => setNewInterestRate(Number(e.target.value) || 0)}
+                    step={0.01}
+                    min={0}
+                    max={15}
+                    className="text-lg"
+                    placeholder="0.00"
+                  />
+                </div>
+
+                <div>
+                  <Label className="block text-lg font-medium text-slate-900 mb-3">
+                    Nouvel amortissement
+                  </Label>
+                  <Select value={newAmortization.toString()} onValueChange={(value) => setNewAmortization(Number(value))}>
+                    <SelectTrigger className="text-lg">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {Array.from({ length: 30 }, (_, i) => {
+                        const years = i + 1;
+                        return (
+                          <SelectItem key={years} value={years.toString()}>
+                            {years} {years === 1 ? 'an' : 'ans'}
+                          </SelectItem>
+                        );
+                      })}
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
 
-              <div>
+              <div className="mt-6">
                 <MortgageSlider
-                  label="Appreciation annuelle de la propriete"
+                  label="Appréciation annuelle de la propriété"
                   value={appreciationRate}
                   onValueChange={setAppreciationRate}
                   min={0}
@@ -185,16 +273,55 @@ const LtvCalculator = () => {
                   formatValue={(value) => `${value.toFixed(1)}%`}
                 />
               </div>
+
+              {/* Comparaison des paiements */}
+              <div className="mt-6 grid md:grid-cols-3 gap-4">
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                  <div className="font-semibold text-blue-800 mb-2">Paiement mensuel actuel</div>
+                  <p className="text-2xl font-bold text-blue-900">{formatCurrency(currentMonthlyPayment)}</p>
+                </div>
+                <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                  <div className="font-semibold text-green-800 mb-2">Nouveau paiement mensuel</div>
+                  <p className="text-2xl font-bold text-green-900">{formatCurrency(newMonthlyPayment)}</p>
+                </div>
+                <div className={`border rounded-lg p-4 ${monthlyDifference >= 0 ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`}>
+                  <div className={`font-semibold mb-2 ${monthlyDifference >= 0 ? 'text-green-800' : 'text-red-800'}`}>
+                    {monthlyDifference >= 0 ? 'Économie mensuelle' : 'Augmentation mensuelle'}
+                  </div>
+                  <p className={`text-2xl font-bold ${monthlyDifference >= 0 ? 'text-green-900' : 'text-red-900'}`}>
+                    {formatCurrency(Math.abs(monthlyDifference))}
+                  </p>
+                </div>
+              </div>
+
+              {refinancingAmount > 0 && (
+                <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                  <div className="flex justify-between items-center">
+                    <span className="text-lg font-medium text-blue-900">Nouveau RPV après refinancement :</span>
+                    <span className={`text-2xl font-bold ${getCurrentLtvClass(newLTV)}`}>
+                      {newLTV.toFixed(2)}%
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center mt-2">
+                    <span className="text-lg font-medium text-blue-900">Montant total du nouveau prêt :</span>
+                    <span className="text-xl font-semibold text-blue-800">
+                      {formatCurrency(totalNewMortgage)}
+                    </span>
+                  </div>
+                </div>
+              )}
             </div>
 
+            {/* Tableau de projection */}
             <div className="overflow-x-auto">
+              <h3 className="text-xl font-semibold text-slate-900 mb-4">Projection future</h3>
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Annee</TableHead>
-                    <TableHead>Solde hypothecaire</TableHead>
+                    <TableHead>Année</TableHead>
+                    <TableHead>Solde hypothécaire</TableHead>
                     <TableHead>Valeur de la maison</TableHead>
-                    <TableHead>Equite</TableHead>
+                    <TableHead>Équité</TableHead>
                     <TableHead>RPV (%)</TableHead>
                     <TableHead>Refinancement max.</TableHead>
                   </TableRow>
@@ -215,7 +342,7 @@ const LtvCalculator = () => {
                         )}
                         {row.ltv > 65 && row.ltv <= 80 && (
                           <span className="ml-2 text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">
-                            Marge fermee
+                            Marge fermée
                           </span>
                         )}
                       </TableCell>
@@ -229,15 +356,15 @@ const LtvCalculator = () => {
             <div className="mt-6 grid md:grid-cols-3 gap-4 text-sm">
               <div className="bg-green-50 border border-green-200 rounded-lg p-4">
                 <div className="font-semibold text-green-800 mb-2">RPV ≤ 65%</div>
-                <p className="text-green-700">Acces a une marge de credit hypothecaire ouverte</p>
+                <p className="text-green-700">Accès à une marge de crédit hypothécaire ouverte</p>
               </div>
               <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                 <div className="font-semibold text-yellow-800 mb-2">65% &lt; RPV ≤ 80%</div>
-                <p className="text-yellow-700">Acces a une marge de credit hypothecaire avec pret ferme</p>
+                <p className="text-yellow-700">Accès à une marge de crédit hypothécaire avec prêt fermé</p>
               </div>
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                 <div className="font-semibold text-blue-800 mb-2">Refinancement</div>
-                <p className="text-blue-700">Montant maximum disponible pour refinancement a 80% de la valeur</p>
+                <p className="text-blue-700">Montant maximum disponible pour refinancement à 80% de la valeur</p>
               </div>
             </div>
           </div>
