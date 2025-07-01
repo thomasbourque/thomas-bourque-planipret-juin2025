@@ -13,6 +13,9 @@ const MortgagePaymentCalculator = () => {
   const [term, setTerm] = useState(5);
   const [interestRate, setInterestRate] = useState([4.5]);
   const [paymentFrequency, setPaymentFrequency] = useState('monthly');
+  const [extraPayment, setExtraPayment] = useState(0);
+  const [extraPaymentFrequency, setExtraPaymentFrequency] = useState('monthly');
+  const [extraPaymentStartYear, setExtraPaymentStartYear] = useState(1);
 
   // Update percentage when amount changes
   useEffect(() => {
@@ -36,7 +39,10 @@ const MortgagePaymentCalculator = () => {
     amortization: totalAmortizationYears,
     term,
     interestRate: interestRate[0],
-    paymentFrequency: paymentFrequency as 'monthly' | 'biweekly' | 'biweekly-accelerated' | 'weekly'
+    paymentFrequency: paymentFrequency as 'monthly' | 'biweekly' | 'biweekly-accelerated' | 'weekly',
+    extraPayment,
+    extraPaymentFrequency: extraPaymentFrequency as 'monthly' | 'yearly' | 'one-time',
+    extraPaymentStartYear
   });
 
   return (
@@ -73,6 +79,12 @@ const MortgagePaymentCalculator = () => {
                 setInterestRate={setInterestRate}
                 paymentFrequency={paymentFrequency}
                 setPaymentFrequency={setPaymentFrequency}
+                extraPayment={extraPayment}
+                setExtraPayment={setExtraPayment}
+                extraPaymentFrequency={extraPaymentFrequency}
+                setExtraPaymentFrequency={setExtraPaymentFrequency}
+                extraPaymentStartYear={extraPaymentStartYear}
+                setExtraPaymentStartYear={setExtraPaymentStartYear}
               />
               
               <MortgagePaymentResults 

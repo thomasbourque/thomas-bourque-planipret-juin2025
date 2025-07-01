@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -24,6 +23,12 @@ interface MortgagePaymentFormProps {
   setInterestRate: (value: number[]) => void;
   paymentFrequency: string;
   setPaymentFrequency: (value: string) => void;
+  extraPayment?: number;
+  setExtraPayment?: (value: number) => void;
+  extraPaymentFrequency?: string;
+  setExtraPaymentFrequency?: (value: string) => void;
+  extraPaymentStartYear?: number;
+  setExtraPaymentStartYear?: (value: number) => void;
 }
 
 const MortgagePaymentForm = ({
@@ -44,7 +49,13 @@ const MortgagePaymentForm = ({
   interestRate,
   setInterestRate,
   paymentFrequency,
-  setPaymentFrequency
+  setPaymentFrequency,
+  extraPayment = 0,
+  setExtraPayment,
+  extraPaymentFrequency = 'monthly',
+  setExtraPaymentFrequency,
+  extraPaymentStartYear = 1,
+  setExtraPaymentStartYear
 }: MortgagePaymentFormProps) => {
   
   const handleDownPaymentTypeChange = (type: 'amount' | 'percentage') => {
@@ -236,7 +247,7 @@ const MortgagePaymentForm = ({
         <Input
           id="interestRate"
           type="number"
-          value={interestRate[0] === 0 ? '' : interestRate[0].toString()}
+          value={interestRate[0] === 0 ? '' : interestRate[0].toFixed(2)}
           onChange={handleInterestRateChange}
           step={0.01}
           min={0}
@@ -260,6 +271,74 @@ const MortgagePaymentForm = ({
           </SelectContent>
         </Select>
       </div>
+
+      {/* Extra Payment Section */}
+      {setExtraPayment && setExtraPaymentFrequency && setExtraPaymentStartYear && (
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-6">
+          <h3 className="text-lg font-semibold text-blue-900 mb-4">
+            Remboursements anticipés (optionnel)
+          </h3>
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="extraPayment" className="block text-sm font-medium text-slate-700 mb-2">
+                Montant du remboursement anticipé
+              </Label>
+              <div className="relative">
+                <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500">$</span>
+                <Input
+                  id="extraPayment"
+                  type="number"
+                  value={extraPayment === 0 ? '' : extraPayment}
+                  onChange={(e) => setExtraPayment(Number(e.target.value) || 0)}
+                  step={100}
+                  min={0}
+                  className="pl-8"
+                  placeholder="0"
+                />
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <Label className="block text-sm font-medium text-slate-700 mb-2">
+                  Fréquence
+                </Label>
+                <Select value={extraPaymentFrequency} onValueChange={setExtraPaymentFrequency}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="monthly">Mensuel</SelectItem>
+                    <SelectItem value="yearly">Annuel</SelectItem>
+                    <SelectItem value="one-time">Une seule fois</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              
+              <div>
+                <Label className="block text-sm font-medium text-slate-700 mb-2">
+                  À partir de l'année
+                </Label>
+                <Select value={extraPaymentStartYear.toString()} onValueChange={(value) => setExtraPaymentStartYear(Number(value))}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {Array.from({ length: amortizationYears }, (_, i) => {
+                      const year = i + 1;
+                      return (
+                        <SelectItem key={year} value={year.toString()}>
+                          Année {year}
+                        </SelectItem>
+                      );
+                    })}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

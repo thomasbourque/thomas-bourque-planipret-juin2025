@@ -1,4 +1,3 @@
-
 export interface MortgagePaymentInput {
   purchasePrice: number;
   downPayment: number;
@@ -8,6 +7,7 @@ export interface MortgagePaymentInput {
   paymentFrequency: 'monthly' | 'biweekly' | 'biweekly-accelerated' | 'weekly';
   extraPayment?: number;
   extraPaymentFrequency?: 'monthly' | 'yearly' | 'one-time';
+  extraPaymentStartYear?: number;
 }
 
 export interface MortgagePaymentResult {
@@ -49,7 +49,8 @@ export const calculateMortgagePayment = (input: MortgagePaymentInput): MortgageP
     interestRate,
     paymentFrequency,
     extraPayment = 0,
-    extraPaymentFrequency = 'monthly'
+    extraPaymentFrequency = 'monthly',
+    extraPaymentStartYear = 1
   } = input;
 
   let mortgageAmount = purchasePrice - downPayment;
@@ -132,7 +133,7 @@ export const calculateMortgagePayment = (input: MortgagePaymentInput): MortgageP
     regularPayment = calculateRegularPayment(mortgageAmount, periodicRate, totalAmortizationPayments);
   }
   
-  // Detailed simulation for exact payment count and final payment
+  // Enhanced simulation with extra payments
   let balance = mortgageAmount;
   let totalInterestPaid = 0;
   let paymentCount = 0;
@@ -140,11 +141,41 @@ export const calculateMortgagePayment = (input: MortgagePaymentInput): MortgageP
   
   const epsilon = 0.01; // Tolerance for balance close to zero
   
+  // Calculate extra payment per period
+  let extraPerPeriod = 0;
+  if (extraPayment > 0) {
+    switch (extraPaymentFrequency) {
+      case 'monthly':
+        extraPerPeriod = extraPayment * (12 / paymentsPerYear);
+        break;
+      case 'yearly':
+        extraPerPeriod = extraPayment / paymentsPerYear;
+        break;
+      case 'one-time':
+        // Will be handled separately
+        break;
+    }
+  }
+  
+  const extraPaymentStartPayment = (extraPaymentStartYear - 1) * paymentsPerYear;
+  
   while (balance > epsilon && paymentCount < totalAmortizationPayments * 2) {
     const interestPayment = balance * periodicRate;
     let principalPayment = regularPayment - interestPayment;
     
-    if (principalPayment >= balance) {
+    // Add extra payment if applicable
+    let extraThisPeriod = 0;
+    if (paymentCount >= extraPaymentStartPayment) {
+      if (extraPaymentFrequency === 'monthly' || extraPaymentFrequency === 'yearly') {
+        extraThisPeriod = extraPerPeriod;
+      } else if (extraPaymentFrequency === 'one-time' && paymentCount === extraPaymentStartPayment) {
+        extraThisPeriod = extraPayment;
+      }
+    }
+    
+    const totalPrincipalPayment = Math.min(principalPayment + extraThisPeriod, balance);
+    
+    if (totalPrincipalPayment >= balance) {
       // Final payment
       finalPayment = balance + interestPayment;
       totalInterestPaid += interestPayment;
@@ -153,7 +184,7 @@ export const calculateMortgagePayment = (input: MortgagePaymentInput): MortgageP
       break;
     } else {
       totalInterestPaid += interestPayment;
-      balance -= principalPayment;
+      balance -= totalPrincipalPayment;
       paymentCount++;
     }
   }
@@ -163,7 +194,7 @@ export const calculateMortgagePayment = (input: MortgagePaymentInput): MortgageP
   
   // Calculate interest savings compared to monthly payments
   let interestSavings = 0;
-  if (paymentFrequency !== 'monthly') {
+  if (paymentFrequency !== 'monthly' || extraPayment > 0) {
     // Calculate monthly scenario
     let monthlyBalance = mortgageAmount;
     let monthlyTotalInterest = 0;

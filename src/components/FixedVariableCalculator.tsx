@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -48,7 +47,6 @@ const FixedVariableCalculator = () => {
     }
   };
 
-  // Calcul du paiement hypothécaire mensuel
   const calculateMonthlyPayment = (principal: number, annualRate: number, amortizationYears: number) => {
     if (principal === 0 || annualRate === 0) return 0;
     
@@ -153,7 +151,7 @@ const FixedVariableCalculator = () => {
                     <Input
                       id="fixedRate"
                       type="number"
-                      value={fixedRate === 0 ? '' : fixedRate}
+                      value={fixedRate === 0 ? '' : fixedRate.toFixed(2)}
                       onChange={handleFixedRateChange}
                       step={0.01}
                       min={0}
@@ -184,7 +182,7 @@ const FixedVariableCalculator = () => {
                     <Input
                       id="variableRate"
                       type="number"
-                      value={variableRate === 0 ? '' : variableRate}
+                      value={variableRate === 0 ? '' : variableRate.toFixed(2)}
                       onChange={handleVariableRateChange}
                       step={0.01}
                       min={0}

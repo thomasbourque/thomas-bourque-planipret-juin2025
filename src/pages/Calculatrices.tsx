@@ -1,4 +1,3 @@
-
 import React from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -10,6 +9,7 @@ import PaymentRhythmCalculator from "@/components/PaymentRhythmCalculator";
 import DownPaymentCalculator from "@/components/DownPaymentCalculator";
 import RatioCalculator from "@/components/RatioCalculator";
 import FixedVariableCalculator from "@/components/FixedVariableCalculator";
+import LtvCalculator from "@/components/LtvCalculator";
 
 const Calculatrices = () => {
   const handleScenariosClick = () => {
@@ -25,13 +25,16 @@ const Calculatrices = () => {
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 mb-4 md:mb-6">
               Calculatrices hypothécaires
             </h1>
-            <p className="text-base md:text-lg text-slate-700 max-w-3xl mx-auto px-2 sm:px-4">
+            <p className="text-base md:text-lg text-slate-700 max-w-3xl mx-auto px-2 sm:px-4 mb-2">
               Utilisez nos calculatrices pour planifier votre financement hypothécaire et prendre des décisions éclairées.
+            </p>
+            <p className="text-sm md:text-base text-slate-600 max-w-2xl mx-auto px-2 sm:px-4">
+              Explorez différents scénarios et optimisez votre stratégie de financement immobilier.
             </p>
           </div>
 
           <Tabs defaultValue="payment" className="w-full max-w-6xl mx-auto">
-            <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-8 gap-1 mb-6 md:mb-8 h-auto p-1">
+            <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-1 mb-4 h-auto p-1">
               <TabsTrigger value="payment" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center">
                 Paiement hypothécaire
               </TabsTrigger>
@@ -44,6 +47,9 @@ const Calculatrices = () => {
               <TabsTrigger value="rhythm" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center">
                 Rythme de paiement
               </TabsTrigger>
+            </TabsList>
+            
+            <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-1 mb-6 md:mb-8 h-auto p-1">
               <TabsTrigger value="downpayment" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center">
                 Mise de fonds
               </TabsTrigger>
@@ -52,6 +58,9 @@ const Calculatrices = () => {
               </TabsTrigger>
               <TabsTrigger value="fixedvariable" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center">
                 Fixe ou variable
+              </TabsTrigger>
+              <TabsTrigger value="ltv" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center">
+                RPV évolutif
               </TabsTrigger>
               <TabsTrigger value="scenarios" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center" onClick={handleScenariosClick}>
                 Scénarios
@@ -97,6 +106,12 @@ const Calculatrices = () => {
             <TabsContent value="fixedvariable" className="mt-4 md:mt-8 w-full px-0">
               <div className="w-full">
                 <FixedVariableCalculator />
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="ltv" className="mt-4 md:mt-8 w-full px-0">
+              <div className="w-full">
+                <LtvCalculator />
               </div>
             </TabsContent>
             
