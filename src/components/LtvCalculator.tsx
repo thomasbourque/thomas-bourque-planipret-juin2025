@@ -39,7 +39,6 @@ const LtvCalculator = () => {
     let balance = mortgageAmount;
     const schedule = [];
     
-    // Calculate extra payment per month
     let extraPerMonth = 0;
     if (extraPayment > 0) {
       switch (extraPaymentFrequency) {
@@ -50,19 +49,15 @@ const LtvCalculator = () => {
           extraPerMonth = extraPayment / 12;
           break;
         case 'one-time':
-          // Will be handled separately
           break;
       }
     }
 
     for (let year = 1; year <= amortization; year++) {
-      const startBalance = balance;
-      
       for (let month = 1; month <= 12 && balance > 0; month++) {
         const interestPayment = balance * monthlyRate;
         let principalPayment = monthlyPayment - interestPayment;
         
-        // Add extra payment if applicable
         let extraThisMonth = 0;
         if (year >= extraPaymentStartYear) {
           if (extraPaymentFrequency === 'monthly' || extraPaymentFrequency === 'yearly') {
@@ -219,7 +214,6 @@ const LtvCalculator = () => {
               </div>
             </div>
 
-            {/* Extra Payment Section */}
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
               <h3 className="text-xl font-semibold text-blue-900 mb-4">
                 Remboursements anticipés (optionnel)
@@ -283,7 +277,6 @@ const LtvCalculator = () => {
               </div>
             </div>
 
-            {/* Results Table */}
             <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
