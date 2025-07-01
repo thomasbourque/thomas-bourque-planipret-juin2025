@@ -1,7 +1,7 @@
-
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import MortgageSlider from "./MortgageSlider";
@@ -15,6 +15,7 @@ const LtvCalculator = () => {
   const [newAmortization, setNewAmortization] = useState(25);
   const [appreciationRate, setAppreciationRate] = useState([3]);
   const [refinancingAmount, setRefinancingAmount] = useState(0);
+  const [hasExistingCreditLine, setHasExistingCreditLine] = useState(true);
 
   // Calcul du RPV actuel
   const currentLTV = (currentMortgageBalance / currentHomeValue) * 100;
@@ -207,6 +208,20 @@ const LtvCalculator = () => {
                 </div>
               </div>
 
+              {/* Case à cocher pour la marge existante */}
+              <div className="mt-6">
+                <div className="flex items-center space-x-2">
+                  <Checkbox 
+                    id="hasExistingCreditLine" 
+                    checked={hasExistingCreditLine}
+                    onCheckedChange={(checked) => setHasExistingCreditLine(checked === true)}
+                  />
+                  <Label htmlFor="hasExistingCreditLine" className="text-lg font-medium text-slate-900">
+                    J'ai déjà une marge de crédit hypothécaire
+                  </Label>
+                </div>
+              </div>
+
               {/* RPV actuel et marges disponibles */}
               <div className="mt-6 grid md:grid-cols-3 gap-4">
                 <div className="p-4 bg-slate-100 rounded-lg">
@@ -218,9 +233,9 @@ const LtvCalculator = () => {
                   </div>
                 </div>
                 
-                {currentLTV <= 65 && (
+                {hasExistingCreditLine && currentLTV <= 65 && (
                   <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
-                    <div className="text-sm font-semibold text-green-800 mb-1">Marge ouverte disponible</div>
+                    <div className="text-sm font-semibold text-green-800 mb-1">Montant disponible dans la marge</div>
                     <div className="text-xl font-bold text-green-700">
                       {formatCurrency(maxOpenCreditLine)}
                     </div>
@@ -229,7 +244,9 @@ const LtvCalculator = () => {
                 
                 <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
                   <div className="text-sm font-semibold text-blue-800 mb-1">
-                    {currentLTV <= 65 ? 'Refinancement additionnel max.' : 'Refinancement max. / Prêt lié max.'}
+                    {hasExistingCreditLine && currentLTV <= 65 ? 'Refinancement maximal' : 
+                     hasExistingCreditLine && currentLTV <= 80 ? 'Refinancement maximal / Prêt lié max.' : 
+                     'Refinancement maximal'}
                   </div>
                   <div className="text-xl font-bold text-blue-700">
                     {formatCurrency(maxRefinancing)}
@@ -364,8 +381,8 @@ const LtvCalculator = () => {
                     <TableHead>Valeur de la maison</TableHead>
                     <TableHead>Équité</TableHead>
                     <TableHead>RPV (%)</TableHead>
-                    <TableHead>Marge ouverte max.</TableHead>
-                    <TableHead>Refinancement max.</TableHead>
+                    <TableHead>Montant disponible dans la marge</TableHead>
+                    <TableHead>Refinancement maximal</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -377,13 +394,13 @@ const LtvCalculator = () => {
                       <TableCell>{formatCurrency(row.equity)}</TableCell>
                       <TableCell className="font-semibold">
                         {row.ltv.toFixed(2)}%
-                        {row.ltv <= 65 && (
-                          <span className="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded">
+                        {hasExistingCreditLine && row.ltv <= 65 && (
+                          <span className="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded whitespace-nowrap">
                             Marge ouverte
                           </span>
                         )}
-                        {row.ltv > 65 && row.ltv <= 80 && (
-                          <span className="ml-2 text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">
+                        {hasExistingCreditLine && row.ltv > 65 && row.ltv <= 80 && (
+                          <span className="ml-2 text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded whitespace-nowrap">
                             Prêt lié
                           </span>
                         )}
@@ -399,11 +416,19 @@ const LtvCalculator = () => {
             <div className="mt-6 grid md:grid-cols-3 gap-4 text-sm">
               <div className="bg-green-50 border border-green-200 rounded-lg p-4">
                 <div className="font-semibold text-green-800 mb-2">RPV ≤ 65%</div>
-                <p className="text-green-700">Accès à une marge de crédit hypothécaire ouverte</p>
+                <p className="text-green-700">
+                  {hasExistingCreditLine ? 
+                    "Accès à une marge de crédit hypothécaire ouverte" : 
+                    "Refinancement jusqu'à 65% de la valeur"}
+                </p>
               </div>
               <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                 <div className="font-semibold text-yellow-800 mb-2">65% &lt; RPV ≤ 80%</div>
-                <p className="text-yellow-700">Accès à un prêt lié dans la marge</p>
+                <p className="text-yellow-700">
+                  {hasExistingCreditLine ? 
+                    "Accès à un prêt lié dans la marge" : 
+                    "Refinancement jusqu'à 80% de la valeur"}
+                </p>
               </div>
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                 <div className="font-semibold text-blue-800 mb-2">Refinancement</div>
