@@ -12,9 +12,6 @@ const LtvCalculator = () => {
   const [interestRate, setInterestRate] = useState(5.0);
   const [amortization, setAmortization] = useState(25);
   const [appreciationRate, setAppreciationRate] = useState([5]);
-  const [extraPayment, setExtraPayment] = useState(0);
-  const [extraPaymentFrequency, setExtraPaymentFrequency] = useState('monthly');
-  const [extraPaymentStartYear, setExtraPaymentStartYear] = useState(1);
 
   const mortgageAmount = purchasePrice - downPayment;
 
@@ -38,37 +35,13 @@ const LtvCalculator = () => {
     
     let balance = mortgageAmount;
     const schedule = [];
-    
-    let extraPerMonth = 0;
-    if (extraPayment > 0) {
-      switch (extraPaymentFrequency) {
-        case 'monthly':
-          extraPerMonth = extraPayment;
-          break;
-        case 'yearly':
-          extraPerMonth = extraPayment / 12;
-          break;
-        case 'one-time':
-          break;
-      }
-    }
 
     for (let year = 1; year <= amortization; year++) {
       for (let month = 1; month <= 12 && balance > 0; month++) {
         const interestPayment = balance * monthlyRate;
-        let principalPayment = monthlyPayment - interestPayment;
+        const principalPayment = monthlyPayment - interestPayment;
         
-        let extraThisMonth = 0;
-        if (year >= extraPaymentStartYear) {
-          if (extraPaymentFrequency === 'monthly' || extraPaymentFrequency === 'yearly') {
-            extraThisMonth = extraPerMonth;
-          } else if (extraPaymentFrequency === 'one-time' && year === extraPaymentStartYear && month === 1) {
-            extraThisMonth = extraPayment;
-          }
-        }
-        
-        const totalPrincipalPayment = Math.min(principalPayment + extraThisMonth, balance);
-        balance = Math.max(0, balance - totalPrincipalPayment);
+        balance = Math.max(0, balance - principalPayment);
         
         if (balance <= 0) break;
       }
@@ -211,69 +184,6 @@ const LtvCalculator = () => {
                   step={0.5}
                   formatValue={(value) => `${value.toFixed(1)}%`}
                 />
-              </div>
-            </div>
-
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
-              <h3 className="text-xl font-semibold text-blue-900 mb-4">
-                Remboursements anticipes (optionnel)
-              </h3>
-              <div className="grid md:grid-cols-3 gap-4">
-                <div>
-                  <Label htmlFor="extraPayment" className="block text-sm font-medium text-slate-700 mb-2">
-                    Montant du remboursement anticipe
-                  </Label>
-                  <div className="relative">
-                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500">$</span>
-                    <Input
-                      id="extraPayment"
-                      type="number"
-                      value={extraPayment === 0 ? '' : extraPayment}
-                      onChange={(e) => setExtraPayment(Number(e.target.value) || 0)}
-                      step={100}
-                      min={0}
-                      className="pl-8"
-                      placeholder="0"
-                    />
-                  </div>
-                </div>
-                
-                <div>
-                  <Label className="block text-sm font-medium text-slate-700 mb-2">
-                    Frequence
-                  </Label>
-                  <Select value={extraPaymentFrequency} onValueChange={setExtraPaymentFrequency}>
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="monthly">Mensuel</SelectItem>
-                      <SelectItem value="yearly">Annuel</SelectItem>
-                      <SelectItem value="one-time">Une seule fois</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                
-                <div>
-                  <Label className="block text-sm font-medium text-slate-700 mb-2">
-                    A partir de l annee
-                  </Label>
-                  <Select value={extraPaymentStartYear.toString()} onValueChange={(value) => setExtraPaymentStartYear(Number(value))}>
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {Array.from({ length: amortization }, (_, i) => {
-                        const year = i + 1;
-                        return (
-                          <SelectItem key={year} value={year.toString()}>
-                            Annee {year}
-                          </SelectItem>
-                        );
-                      })}
-                    </SelectContent>
-                  </Select>
-                </div>
               </div>
             </div>
 
