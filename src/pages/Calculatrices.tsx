@@ -9,7 +9,8 @@ import MortgageCalculator from "@/components/MortgageCalculator";
 import PaymentRhythmCalculator from "@/components/PaymentRhythmCalculator";
 import DownPaymentCalculator from "@/components/DownPaymentCalculator";
 import MinimumDownPaymentCalculator from "@/components/MinimumDownPaymentCalculator";
-import DelayPurchaseCalculator from "@/components/DelayPurchaseCalculator";
+import PayoffTimeCalculator from "@/components/PayoffTimeCalculator";
+import MortgageInsuranceCalculator from "@/components/MortgageInsuranceCalculator";
 import RatioCalculator from "@/components/RatioCalculator";
 import FixedVariableCalculator from "@/components/FixedVariableCalculator";
 import LtvCalculator from "@/components/LtvCalculator";
@@ -59,8 +60,11 @@ const Calculatrices = () => {
               <TabsTrigger value="downpayment" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center">
                 Investir sa mise de fonds
               </TabsTrigger>
-              <TabsTrigger value="delay-purchase" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center">
-                Retarder son achat
+              <TabsTrigger value="payoff-time" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center">
+                Temps pour rembourser
+              </TabsTrigger>
+              <TabsTrigger value="mortgage-insurance" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center">
+                Prime d'assurance
               </TabsTrigger>
               <TabsTrigger value="ratios" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center">
                 Ratios ABD/ATD
@@ -68,12 +72,12 @@ const Calculatrices = () => {
               <TabsTrigger value="fixedvariable" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center">
                 Fixe ou variable
               </TabsTrigger>
+            </TabsList>
+            
+            <TabsList className="grid w-full grid-cols-2 gap-1 mb-6 md:mb-8 h-auto p-1">
               <TabsTrigger value="ltv" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center">
                 RPV évolutif
               </TabsTrigger>
-            </TabsList>
-            
-            <TabsList className="grid w-full grid-cols-1 gap-1 mb-6 md:mb-8 h-auto p-1">
               <TabsTrigger value="scenarios" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center" onClick={handleScenariosClick}>
                 Scénarios
               </TabsTrigger>
@@ -115,9 +119,15 @@ const Calculatrices = () => {
               </div>
             </TabsContent>
             
-            <TabsContent value="delay-purchase" className="mt-4 md:mt-8 w-full px-0">
+            <TabsContent value="payoff-time" className="mt-4 md:mt-8 w-full px-0">
               <div className="w-full">
-                <DelayPurchaseCalculator />
+                <PayoffTimeCalculator />
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="mortgage-insurance" className="mt-4 md:mt-8 w-full px-0">
+              <div className="w-full">
+                <MortgageInsuranceCalculator />
               </div>
             </TabsContent>
             
