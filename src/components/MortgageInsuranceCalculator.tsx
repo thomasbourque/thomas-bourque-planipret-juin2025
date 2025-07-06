@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Slider } from "@/components/ui/slider";
 import { Shield, AlertCircle } from "lucide-react";
 
 const MortgageInsuranceCalculator = () => {
@@ -56,6 +57,7 @@ const MortgageInsuranceCalculator = () => {
         premiumRate: 0,
         premiumAmount: 0,
         totalLoanAmount: loanAmount,
+        loanAmountWithoutInsurance: loanAmount,
         downPaymentRatio
       };
     }
@@ -89,6 +91,7 @@ const MortgageInsuranceCalculator = () => {
       premiumRate,
       premiumAmount,
       totalLoanAmount,
+      loanAmountWithoutInsurance: loanAmount,
       downPaymentRatio
     };
   };
@@ -149,19 +152,36 @@ const MortgageInsuranceCalculator = () => {
                 <Label htmlFor="downPaymentValue" className="block text-lg font-medium text-slate-900 mb-3">
                   Mise de fonds {isPercentage ? '(%)' : '($)'}
                 </Label>
-                <div className="relative">
-                  {!isPercentage && <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500">$</span>}
-                  <Input
-                    id="downPaymentValue"
-                    type="number"
-                    value={downPaymentValue === 0 ? '' : downPaymentValue}
-                    onChange={handleDownPaymentValueChange}
-                    step={isPercentage ? 0.5 : 5000}
-                    min={isPercentage ? 5 : 5000}
-                    max={isPercentage ? 100 : purchasePrice}
-                    className={`text-lg ${!isPercentage ? 'pl-8' : ''}`}
-                    placeholder="0"
-                  />
+                <div className="space-y-3">
+                  <div className="relative">
+                    {!isPercentage && <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500">$</span>}
+                    <Input
+                      id="downPaymentValue"
+                      type="number"
+                      value={downPaymentValue === 0 ? '' : downPaymentValue}
+                      onChange={handleDownPaymentValueChange}
+                      step={isPercentage ? 0.5 : 5000}
+                      min={isPercentage ? 5 : 5000}
+                      max={isPercentage ? 100 : purchasePrice}
+                      className={`text-lg ${!isPercentage ? 'pl-8' : ''}`}
+                      placeholder="0"
+                    />
+                  </div>
+                  {isPercentage && (
+                    <div>
+                      <Label className="block text-sm text-slate-600 mb-2">
+                        Curseur de pourcentage: {downPaymentValue}%
+                      </Label>
+                      <Slider
+                        value={[downPaymentValue]}
+                        onValueChange={(value) => setDownPaymentValue(value[0])}
+                        max={100}
+                        min={5}
+                        step={0.5}
+                        className="w-full"
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -198,13 +218,29 @@ const MortgageInsuranceCalculator = () => {
                   </p>
                   <div className="mt-4 p-4 bg-green-100 rounded-lg">
                     <div className="text-2xl font-bold text-green-700">
-                      Montant du prêt: {formatCurrency(purchasePrice - downPaymentAmount)}
+                      Montant du prêt: {formatCurrency(insuranceData.loanAmountWithoutInsurance)}
                     </div>
                   </div>
                 </CardContent>
               </Card>
             ) : (
-              <div className="grid lg:grid-cols-3 gap-6 mb-6">
+              <div className="grid lg:grid-cols-4 gap-6 mb-6">
+                <Card className="border-slate-200 bg-slate-50">
+                  <CardHeader>
+                    <CardTitle className="text-slate-900 text-lg">
+                      Montant du prêt
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold text-slate-700">
+                      {formatCurrency(insuranceData.loanAmountWithoutInsurance)}
+                    </div>
+                    <div className="text-sm text-slate-600 mt-2">
+                      Sans l'assurance
+                    </div>
+                  </CardContent>
+                </Card>
+
                 <Card className="border-blue-200 bg-blue-50">
                   <CardHeader>
                     <CardTitle className="text-blue-900 text-lg">

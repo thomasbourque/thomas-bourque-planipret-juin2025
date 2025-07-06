@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -247,7 +248,7 @@ const MortgagePaymentForm = ({
         <Input
           id="interestRate"
           type="number"
-          value={interestRate[0] === 0 ? '' : interestRate[0].toFixed(2)}
+          value={interestRate[0] === 0 ? '' : interestRate[0]}
           onChange={handleInterestRateChange}
           step={0.01}
           min={0}
