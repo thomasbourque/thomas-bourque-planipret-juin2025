@@ -21,7 +21,7 @@ const PayoffTimeCalculator = () => {
       setInterestRate(0);
     } else {
       const numValue = parseFloat(value);
-      if (!isNaN(numValue)) {
+      if (!isNaN(numValue) && numValue >= 0) {
         setInterestRate(numValue);
       }
     }
@@ -154,7 +154,7 @@ const PayoffTimeCalculator = () => {
                     <Input
                       id="loanAmount"
                       type="number"
-                      value={loanAmount === 0 ? '' : loanAmount}
+                      value={loanAmount || ''}
                       onChange={(e) => setLoanAmount(Number(e.target.value) || 0)}
                       step={10000}
                       className="text-lg pl-8"
@@ -170,7 +170,7 @@ const PayoffTimeCalculator = () => {
                   <Input
                     id="interestRate"
                     type="number"
-                    value={interestRate === 0 ? '' : interestRate.toFixed(2)}
+                    value={interestRate || ''}
                     onChange={handleInterestRateChange}
                     step={0.01}
                     min={0}
@@ -205,7 +205,7 @@ const PayoffTimeCalculator = () => {
                     <Input
                       id="monthlyPayment"
                       type="number"
-                      value={monthlyPayment === 0 ? '' : monthlyPayment}
+                      value={monthlyPayment || ''}
                       onChange={(e) => setMonthlyPayment(Number(e.target.value) || 0)}
                       step={50}
                       className="text-lg pl-8"
@@ -231,7 +231,7 @@ const PayoffTimeCalculator = () => {
                         <Input
                           id="extraPayment"
                           type="number"
-                          value={extraPayment === 0 ? '' : extraPayment}
+                          value={extraPayment || ''}
                           onChange={(e) => setExtraPayment(Number(e.target.value) || 0)}
                           step={50}
                           min={0}
@@ -298,13 +298,15 @@ const PayoffTimeCalculator = () => {
                     <div className="text-2xl font-bold text-green-700">
                       {formatTime(results.payoffTimeYears, results.payoffTimeMonths)}
                     </div>
-                    <div className="text-sm text-green-600 mt-2">
-                      Avec remboursements anticipés
-                    </div>
+                    {extraPayment > 0 && (
+                      <div className="text-sm text-green-600 mt-2">
+                        Avec remboursements anticipés
+                      </div>
+                    )}
                   </CardContent>
                 </Card>
 
-                {results.timeSavedMonths > 0 && (
+                {results.timeSavedMonths > 0 && extraPayment > 0 && (
                   <Card className="border-blue-200 bg-blue-50">
                     <CardHeader>
                       <CardTitle className="text-blue-900 text-lg">
@@ -338,7 +340,7 @@ const PayoffTimeCalculator = () => {
                   </CardContent>
                 </Card>
 
-                {results.interestSaved > 0 && (
+                {results.interestSaved > 0 && extraPayment > 0 && (
                   <Card className="border-purple-200 bg-purple-50">
                     <CardHeader>
                       <CardTitle className="text-purple-900 text-lg">
