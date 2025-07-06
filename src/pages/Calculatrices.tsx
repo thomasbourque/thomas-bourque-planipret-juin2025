@@ -2,22 +2,106 @@
 import React from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import MortgagePaymentCalculator from "@/components/MortgagePaymentCalculator";
-import BorrowingCapacityCalculator from "@/components/BorrowingCapacityCalculator";
-import MortgageCalculator from "@/components/MortgageCalculator";
-import PaymentRhythmCalculator from "@/components/PaymentRhythmCalculator";
-import DownPaymentCalculator from "@/components/DownPaymentCalculator";
-import MinimumDownPaymentCalculator from "@/components/MinimumDownPaymentCalculator";
-import PayoffTimeCalculator from "@/components/PayoffTimeCalculator";
-import MortgageInsuranceCalculator from "@/components/MortgageInsuranceCalculator";
-import RatioCalculator from "@/components/RatioCalculator";
-import FixedVariableCalculator from "@/components/FixedVariableCalculator";
-import LtvCalculator from "@/components/LtvCalculator";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Calculator, DollarSign, TrendingUp, Calendar, Shield, PieChart, BarChart3, Target, Clock, Home, Percent, GitCompare } from "lucide-react";
 
 const Calculatrices = () => {
-  const handleScenariosClick = () => {
-    window.location.href = '/comparateur-scenarios';
+  const calculators = [
+    {
+      id: "payment",
+      title: "Paiement hypothécaire",
+      description: "Calculez votre paiement mensuel en fonction du prix d'achat, de la mise de fonds et du taux d'intérêt.",
+      icon: Calculator,
+      color: "bg-blue-50 hover:bg-blue-100"
+    },
+    {
+      id: "capacity",
+      title: "Capacité d'emprunt",
+      description: "Déterminez le montant maximum que vous pouvez emprunter selon vos revenus et vos dépenses.",
+      icon: DollarSign,
+      color: "bg-green-50 hover:bg-green-100"
+    },
+    {
+      id: "savings",
+      title: "Écart de taux",
+      description: "Comparez les économies réalisées en choisissant un taux d'intérêt plus avantageux.",
+      icon: TrendingUp,
+      color: "bg-orange-50 hover:bg-orange-100"
+    },
+    {
+      id: "rhythm",
+      title: "Rythme de paiement",
+      description: "Analysez l'impact de différentes fréquences de paiement sur votre hypothèque.",
+      icon: Calendar,
+      color: "bg-purple-50 hover:bg-purple-100"
+    },
+    {
+      id: "minimum-downpayment",
+      title: "Mise de fonds minimale",
+      description: "Calculez la mise de fonds minimale requise selon le prix de votre propriété.",
+      icon: Home,
+      color: "bg-cyan-50 hover:bg-cyan-100"
+    },
+    {
+      id: "downpayment",
+      title: "Investir sa mise de fonds",
+      description: "Comparez les avantages d'investir votre mise de fonds versus l'augmenter.",
+      icon: Target,
+      color: "bg-indigo-50 hover:bg-indigo-100"
+    },
+    {
+      id: "payoff-time",
+      title: "Temps pour rembourser",
+      description: "Découvrez combien de temps il faudra pour rembourser complètement votre hypothèque.",
+      icon: Clock,
+      color: "bg-pink-50 hover:bg-pink-100"
+    },
+    {
+      id: "mortgage-insurance",
+      title: "Prime d'assurance",
+      description: "Calculez le coût de l'assurance hypothécaire selon votre mise de fonds.",
+      icon: Shield,
+      color: "bg-red-50 hover:bg-red-100"
+    },
+    {
+      id: "ratios",
+      title: "Ratios ABD/ATD",
+      description: "Vérifiez vos ratios de service de la dette brute et totale pour l'approbation.",
+      icon: PieChart,
+      color: "bg-yellow-50 hover:bg-yellow-100"
+    },
+    {
+      id: "fixedvariable",
+      title: "Fixe ou variable",
+      description: "Comparez les coûts entre un taux fixe et un taux variable sur différentes périodes.",
+      icon: BarChart3,
+      color: "bg-teal-50 hover:bg-teal-100"
+    },
+    {
+      id: "ltv",
+      title: "RPV évolutif",
+      description: "Suivez l'évolution du ratio prêt-valeur de votre propriété dans le temps.",
+      icon: Percent,
+      color: "bg-lime-50 hover:bg-lime-100"
+    },
+    {
+      id: "scenarios",
+      title: "Comparateur de scénarios",
+      description: "Comparez côte à côte différents scénarios hypothécaires pour prendre la meilleure décision.",
+      icon: GitCompare,
+      color: "bg-violet-50 hover:bg-violet-100"
+    }
+  ];
+
+  const handleCalculatorClick = (calculatorId: string) => {
+    if (calculatorId === 'scenarios') {
+      window.location.href = '/comparateur-scenarios';
+    } else {
+      // For now, we'll just scroll to top and show an alert
+      // In the future, you could implement individual calculator pages
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      console.log(`Selected calculator: ${calculatorId}`);
+    }
   };
 
   return (
@@ -37,122 +121,32 @@ const Calculatrices = () => {
             </p>
           </div>
 
-          <Tabs defaultValue="payment" className="w-full max-w-6xl mx-auto">
-            <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-1 mb-4 h-auto p-1">
-              <TabsTrigger value="payment" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center">
-                Paiement hypothécaire
-              </TabsTrigger>
-              <TabsTrigger value="capacity" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center">
-                Capacité d'emprunt
-              </TabsTrigger>
-              <TabsTrigger value="savings" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center">
-                Écart de taux
-              </TabsTrigger>
-              <TabsTrigger value="rhythm" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center">
-                Rythme de paiement
-              </TabsTrigger>
-            </TabsList>
-            
-            <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1 mb-4 h-auto p-1">
-              <TabsTrigger value="minimum-downpayment" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center">
-                Mise de fonds minimale
-              </TabsTrigger>
-              <TabsTrigger value="downpayment" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center">
-                Investir sa mise de fonds
-              </TabsTrigger>
-              <TabsTrigger value="payoff-time" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center">
-                Temps pour rembourser
-              </TabsTrigger>
-              <TabsTrigger value="mortgage-insurance" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center">
-                Prime d'assurance
-              </TabsTrigger>
-              <TabsTrigger value="ratios" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center">
-                Ratios ABD/ATD
-              </TabsTrigger>
-              <TabsTrigger value="fixedvariable" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center">
-                Fixe ou variable
-              </TabsTrigger>
-            </TabsList>
-            
-            <TabsList className="grid w-full grid-cols-2 gap-1 mb-6 md:mb-8 h-auto p-1">
-              <TabsTrigger value="ltv" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center">
-                RPV évolutif
-              </TabsTrigger>
-              <TabsTrigger value="scenarios" className="text-xs sm:text-sm py-2 sm:py-3 px-1 sm:px-3 w-full text-center" onClick={handleScenariosClick}>
-                Scénarios
-              </TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="payment" className="mt-4 md:mt-8 w-full px-0">
-              <div className="w-full">
-                <MortgagePaymentCalculator />
-              </div>
-            </TabsContent>
-            
-            <TabsContent value="capacity" className="mt-4 md:mt-8 w-full px-0">
-              <div className="w-full">
-                <BorrowingCapacityCalculator />
-              </div>
-            </TabsContent>
-            
-            <TabsContent value="savings" className="mt-4 md:mt-8 w-full px-0">
-              <div className="w-full">
-                <MortgageCalculator />
-              </div>
-            </TabsContent>
-            
-            <TabsContent value="rhythm" className="mt-4 md:mt-8 w-full px-0">
-              <div className="w-full">
-                <PaymentRhythmCalculator />
-              </div>
-            </TabsContent>
-            
-            <TabsContent value="minimum-downpayment" className="mt-4 md:mt-8 w-full px-0">
-              <div className="w-full">
-                <MinimumDownPaymentCalculator />
-              </div>
-            </TabsContent>
-            
-            <TabsContent value="downpayment" className="mt-4 md:mt-8 w-full px-0">
-              <div className="w-full">
-                <DownPaymentCalculator />
-              </div>
-            </TabsContent>
-            
-            <TabsContent value="payoff-time" className="mt-4 md:mt-8 w-full px-0">
-              <div className="w-full">
-                <PayoffTimeCalculator />
-              </div>
-            </TabsContent>
-            
-            <TabsContent value="mortgage-insurance" className="mt-4 md:mt-8 w-full px-0">
-              <div className="w-full">
-                <MortgageInsuranceCalculator />
-              </div>
-            </TabsContent>
-            
-            <TabsContent value="ratios" className="mt-4 md:mt-8 w-full px-0">
-              <div className="w-full">
-                <RatioCalculator />
-              </div>
-            </TabsContent>
-            
-            <TabsContent value="fixedvariable" className="mt-4 md:mt-8 w-full px-0">
-              <div className="w-full">
-                <FixedVariableCalculator />
-              </div>
-            </TabsContent>
-            
-            <TabsContent value="ltv" className="mt-4 md:mt-8 w-full px-0">
-              <div className="w-full">
-                <LtvCalculator />
-              </div>
-            </TabsContent>
-            
-            <TabsContent value="scenarios" className="mt-4 md:mt-8 w-full px-0">
-              {/* This content won't be shown as we redirect to /comparateur-scenarios */}
-            </TabsContent>
-          </Tabs>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 max-w-7xl mx-auto">
+            {calculators.map((calculator) => {
+              const IconComponent = calculator.icon;
+              return (
+                <Card 
+                  key={calculator.id}
+                  className={`cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-105 ${calculator.color} border-2 hover:border-slate-300`}
+                  onClick={() => handleCalculatorClick(calculator.id)}
+                >
+                  <CardHeader className="pb-3">
+                    <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-white shadow-sm mb-3 mx-auto">
+                      <IconComponent className="w-6 h-6 text-slate-700" />
+                    </div>
+                    <CardTitle className="text-lg font-semibold text-center text-slate-900">
+                      {calculator.title}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="pt-0">
+                    <CardDescription className="text-sm text-slate-600 text-center leading-relaxed">
+                      {calculator.description}
+                    </CardDescription>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
         </div>
       </main>
       <Footer />
