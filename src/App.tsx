@@ -11,6 +11,15 @@ import Calculatrices from "./pages/Calculatrices";
 import ScenarioComparator from "./pages/ScenarioComparator";
 import PaymentRhythmPreview from "./pages/PaymentRhythmPreview";
 import DownPaymentPreview from "./pages/DownPaymentPreview";
+import PayoffTimePreview from "./pages/PayoffTimePreview";
+import MortgagePaymentPreview from "./pages/MortgagePaymentPreview";
+import BorrowingCapacityPreview from "./pages/BorrowingCapacityPreview";
+import SavingsPreview from "./pages/SavingsPreview";
+import MinimumDownPaymentPreview from "./pages/MinimumDownPaymentPreview";
+import MortgageInsurancePreview from "./pages/MortgageInsurancePreview";
+import RatioPreview from "./pages/RatioPreview";
+import FixedVariablePreview from "./pages/FixedVariablePreview";
+import LtvPreview from "./pages/LtvPreview";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -29,6 +38,15 @@ const App = () => (
           <Route path="/comparateur-scenarios" element={<ScenarioComparator />} />
           <Route path="/preview-rythme-paiement" element={<PaymentRhythmPreview />} />
           <Route path="/preview-mise-de-fonds" element={<DownPaymentPreview />} />
+          <Route path="/preview-temps-remboursement" element={<PayoffTimePreview />} />
+          <Route path="/preview-paiement-hypothecaire" element={<MortgagePaymentPreview />} />
+          <Route path="/preview-capacite-emprunt" element={<BorrowingCapacityPreview />} />
+          <Route path="/preview-ecart-taux" element={<SavingsPreview />} />
+          <Route path="/preview-mise-fonds-minimale" element={<MinimumDownPaymentPreview />} />
+          <Route path="/preview-assurance-hypothecaire" element={<MortgageInsurancePreview />} />
+          <Route path="/preview-ratios" element={<RatioPreview />} />
+          <Route path="/preview-fixe-variable" element={<FixedVariablePreview />} />
+          <Route path="/preview-rpv" element={<LtvPreview />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

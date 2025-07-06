@@ -1,4 +1,3 @@
-
 import React from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -16,7 +15,7 @@ const Calculatrices = () => {
       description: "Calculez votre paiement mensuel en fonction du prix d'achat, de la mise de fonds et du taux d'intérêt.",
       icon: Calculator,
       color: "bg-blue-50 hover:bg-blue-100 border-blue-200",
-      route: "/"
+      route: "/preview-paiement-hypothecaire"
     },
     {
       id: "capacity",
@@ -24,7 +23,7 @@ const Calculatrices = () => {
       description: "Déterminez le montant maximum que vous pouvez emprunter selon vos revenus et vos dépenses.",
       icon: DollarSign,
       color: "bg-amber-50 hover:bg-amber-100 border-amber-200",
-      route: "/"
+      route: "/preview-capacite-emprunt"
     },
     {
       id: "savings",
@@ -32,7 +31,7 @@ const Calculatrices = () => {
       description: "Comparez les économies réalisées en choisissant un taux d'intérêt plus avantageux.",
       icon: TrendingUp,
       color: "bg-blue-100 hover:bg-blue-200 border-blue-300",
-      route: "/"
+      route: "/preview-ecart-taux"
     },
     {
       id: "rhythm",
@@ -48,7 +47,7 @@ const Calculatrices = () => {
       description: "Calculez la mise de fonds minimale requise selon le prix de votre propriété.",
       icon: Home,
       color: "bg-blue-200 hover:bg-blue-300 border-blue-400",
-      route: "/"
+      route: "/preview-mise-fonds-minimale"
     },
     {
       id: "downpayment",
@@ -64,7 +63,7 @@ const Calculatrices = () => {
       description: "Découvrez combien de temps il faudra pour rembourser complètement votre hypothèque.",
       icon: Clock,
       color: "bg-blue-300 hover:bg-blue-400 border-blue-500",
-      route: "/"
+      route: "/preview-temps-remboursement"
     },
     {
       id: "mortgage-insurance",
@@ -72,7 +71,7 @@ const Calculatrices = () => {
       description: "Calculez le coût de l'assurance hypothécaire selon votre mise de fonds.",
       icon: Shield,
       color: "bg-yellow-100 hover:bg-yellow-200 border-yellow-300",
-      route: "/"
+      route: "/preview-assurance-hypothecaire"
     },
     {
       id: "ratios",
@@ -80,7 +79,7 @@ const Calculatrices = () => {
       description: "Vérifiez vos ratios de service de la dette brute et totale pour l'approbation.",
       icon: PieChart,
       color: "bg-amber-200 hover:bg-amber-300 border-amber-400",
-      route: "/"
+      route: "/preview-ratios"
     },
     {
       id: "fixedvariable",
@@ -88,7 +87,7 @@ const Calculatrices = () => {
       description: "Comparez les coûts entre un taux fixe et un taux variable sur différentes périodes.",
       icon: BarChart3,
       color: "bg-blue-400 hover:bg-blue-500 border-blue-600",
-      route: "/"
+      route: "/preview-fixe-variable"
     },
     {
       id: "ltv",
@@ -96,7 +95,7 @@ const Calculatrices = () => {
       description: "Suivez l'évolution du ratio prêt-valeur de votre propriété dans le temps.",
       icon: Percent,
       color: "bg-yellow-200 hover:bg-yellow-300 border-yellow-400",
-      route: "/"
+      route: "/preview-rpv"
     },
     {
       id: "scenarios",
@@ -110,24 +109,7 @@ const Calculatrices = () => {
 
   const handleCalculatorClick = (calculator: typeof calculators[0]) => {
     console.log(`Clicking calculator: ${calculator.id}`);
-    
-    // Navigate to the specific route for each calculator
-    if (calculator.route === "/") {
-      // For calculators that are on the homepage, navigate there and scroll to the calculator section
-      navigate("/");
-      // Add a small delay to ensure navigation is complete before scrolling
-      setTimeout(() => {
-        const calculatorSection = document.querySelector('[data-calculator-section]');
-        if (calculatorSection) {
-          calculatorSection.scrollIntoView({ behavior: 'smooth' });
-        } else {
-          window.scrollTo({ top: 800, behavior: 'smooth' });
-        }
-      }, 200);
-    } else {
-      // For calculators with dedicated pages, navigate directly
-      navigate(calculator.route);
-    }
+    navigate(calculator.route);
   };
 
   return (
