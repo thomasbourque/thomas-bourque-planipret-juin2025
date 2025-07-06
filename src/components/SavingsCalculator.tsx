@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { calculateMortgageSavings, MortgageSavings } from "@/utils/mortgageCalculations";
+import { calculateMortgagePayments, MortgageSavings } from "@/utils/mortgageCalculations";
 import SavingsDisplay from "./SavingsDisplay";
 
 const SavingsCalculator = () => {
@@ -27,11 +27,11 @@ const SavingsCalculator = () => {
 
     if (price && down && current && newRateValue && term && amortization) {
       const mortgageAmount = price - down;
-      const calculatedSavings = calculateMortgageSavings(
+      const calculatedSavings = calculateMortgagePayments(
         mortgageAmount,
+        term,
         current,
         newRateValue,
-        term,
         amortization
       );
       setSavings(calculatedSavings);
