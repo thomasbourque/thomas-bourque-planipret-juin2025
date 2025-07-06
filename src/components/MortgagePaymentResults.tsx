@@ -86,20 +86,17 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
                     minimumFractionDigits: 0 
                   })}
                 </div>
-                <div className="text-xs mt-1">
-                  comparé aux paiements mensuels
-                </div>
               </div>
             )}
 
-            {/* Première ligne: Solde et Capital payé */}
+            {/* Première ligne: Capital payé et Solde - INVERSÉS */}
             <div className="grid grid-cols-2 gap-2">
               <div className="bg-white border border-slate-200 p-2.5 rounded-lg text-slate-700 text-center">
                 <div className="text-xs font-medium mb-1">
-                  Solde à la fin du terme
+                  Capital payé
                 </div>
                 <div className="text-md font-bold">
-                  {results.termResults.remainingBalance.toLocaleString('fr-CA', { 
+                  {results.termResults.totalPrincipal.toLocaleString('fr-CA', { 
                     style: 'currency', 
                     currency: 'CAD',
                     minimumFractionDigits: 0 
@@ -109,10 +106,10 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
 
               <div className="bg-white border border-slate-200 p-2.5 rounded-lg text-slate-700 text-center">
                 <div className="text-xs font-medium mb-1">
-                  Capital payé
+                  Solde à la fin du terme
                 </div>
                 <div className="text-md font-bold">
-                  {results.termResults.totalPrincipal.toLocaleString('fr-CA', { 
+                  {results.termResults.remainingBalance.toLocaleString('fr-CA', { 
                     style: 'currency', 
                     currency: 'CAD',
                     minimumFractionDigits: 0 
@@ -172,23 +169,11 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
                     minimumFractionDigits: 0 
                   })}
                 </div>
-                <div className="text-xs mt-1">
-                  comparé aux paiements mensuels (amortissement complet)
-                </div>
               </div>
             )}
 
-            {/* Première ligne: Solde et Capital payé */}
+            {/* Première ligne: Capital payé et Solde - INVERSÉS */}
             <div className="grid grid-cols-2 gap-2">
-              <div className="bg-white border border-slate-200 p-2.5 rounded-lg text-slate-700 text-center">
-                <div className="text-xs font-medium mb-1">
-                  Solde à la fin de l'amortissement
-                </div>
-                <div className="text-md font-bold">
-                  0 $
-                </div>
-              </div>
-
               <div className="bg-white border border-slate-200 p-2.5 rounded-lg text-slate-700 text-center">
                 <div className="text-xs font-medium mb-1">
                   Capital payé
@@ -199,6 +184,15 @@ const MortgagePaymentResults = ({ results, term, amortization, paymentFrequency 
                     currency: 'CAD',
                     minimumFractionDigits: 0 
                   })}
+                </div>
+              </div>
+
+              <div className="bg-white border border-slate-200 p-2.5 rounded-lg text-slate-700 text-center">
+                <div className="text-xs font-medium mb-1">
+                  Solde à la fin de l'amortissement
+                </div>
+                <div className="text-md font-bold">
+                  0 $
                 </div>
               </div>
             </div>

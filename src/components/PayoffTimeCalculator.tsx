@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,6 +14,18 @@ const PayoffTimeCalculator = () => {
   const [extraPayment, setExtraPayment] = useState(200);
   const [extraPaymentFrequency, setExtraPaymentFrequency] = useState('monthly');
   const [extraPaymentStartYear, setExtraPaymentStartYear] = useState(1);
+
+  const handleInterestRateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (value === '') {
+      setInterestRate(0);
+    } else {
+      const numValue = parseFloat(value);
+      if (!isNaN(numValue)) {
+        setInterestRate(numValue);
+      }
+    }
+  };
 
   const calculatePayoffTime = () => {
     const monthlyRate = interestRate / 100 / 12;
@@ -141,10 +154,11 @@ const PayoffTimeCalculator = () => {
                     <Input
                       id="loanAmount"
                       type="number"
-                      value={loanAmount}
-                      onChange={(e) => setLoanAmount(Number(e.target.value))}
+                      value={loanAmount === 0 ? '' : loanAmount}
+                      onChange={(e) => setLoanAmount(Number(e.target.value) || 0)}
                       step={10000}
                       className="text-lg pl-8"
+                      placeholder="0"
                     />
                   </div>
                 </div>
@@ -156,12 +170,13 @@ const PayoffTimeCalculator = () => {
                   <Input
                     id="interestRate"
                     type="number"
-                    value={interestRate}
-                    onChange={(e) => setInterestRate(Number(e.target.value))}
+                    value={interestRate === 0 ? '' : interestRate.toFixed(2)}
+                    onChange={handleInterestRateChange}
                     step={0.01}
                     min={0}
                     max={15}
                     className="text-lg"
+                    placeholder="0.00"
                   />
                 </div>
 
@@ -190,10 +205,11 @@ const PayoffTimeCalculator = () => {
                     <Input
                       id="monthlyPayment"
                       type="number"
-                      value={monthlyPayment}
-                      onChange={(e) => setMonthlyPayment(Number(e.target.value))}
+                      value={monthlyPayment === 0 ? '' : monthlyPayment}
+                      onChange={(e) => setMonthlyPayment(Number(e.target.value) || 0)}
                       step={50}
                       className="text-lg pl-8"
+                      placeholder="0"
                     />
                   </div>
                 </div>
@@ -215,11 +231,12 @@ const PayoffTimeCalculator = () => {
                         <Input
                           id="extraPayment"
                           type="number"
-                          value={extraPayment}
-                          onChange={(e) => setExtraPayment(Number(e.target.value))}
+                          value={extraPayment === 0 ? '' : extraPayment}
+                          onChange={(e) => setExtraPayment(Number(e.target.value) || 0)}
                           step={50}
                           min={0}
                           className="pl-8"
+                          placeholder="0"
                         />
                       </div>
                     </div>

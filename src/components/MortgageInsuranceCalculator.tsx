@@ -9,7 +9,7 @@ import { Shield, AlertCircle } from "lucide-react";
 
 const MortgageInsuranceCalculator = () => {
   const [purchasePrice, setPurchasePrice] = useState(400000);
-  const [downPaymentValue, setDownPaymentValue] = useState(10);
+  const [downPaymentPercentage, setDownPaymentPercentage] = useState(10);
   const [amortization, setAmortization] = useState(25);
 
   const handlePurchasePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,30 +24,11 @@ const MortgageInsuranceCalculator = () => {
     }
   };
 
-  const handleDownPaymentValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    if (value === '') {
-      setDownPaymentValue(0);
-    } else {
-      const numValue = Number(value);
-      if (!isNaN(numValue)) {
-        setDownPaymentValue(numValue);
-      }
-    }
-  };
-
-  // Déterminer automatiquement si c'est un pourcentage ou un montant
-  const isPercentage = downPaymentValue <= 100;
-  const downPaymentAmount = isPercentage 
-    ? purchasePrice * downPaymentValue / 100 
-    : downPaymentValue;
-  const downPaymentPercent = isPercentage 
-    ? downPaymentValue 
-    : purchasePrice > 0 ? (downPaymentValue / purchasePrice) * 100 : 0;
+  const downPaymentAmount = purchasePrice * downPaymentPercentage / 100;
 
   // Calculate mortgage insurance
   const calculateMortgageInsurance = () => {
-    const downPaymentRatio = purchasePrice > 0 ? (downPaymentAmount / purchasePrice) * 100 : 0;
+    const downPaymentRatio = downPaymentPercentage;
     const loanAmount = purchasePrice - downPaymentAmount;
 
     // No insurance needed if down payment >= 20%
@@ -149,40 +130,17 @@ const MortgageInsuranceCalculator = () => {
               </div>
 
               <div>
-                <Label htmlFor="downPaymentValue" className="block text-lg font-medium text-slate-900 mb-3">
-                  Mise de fonds {isPercentage ? '(%)' : '($)'}
+                <Label className="block text-lg font-medium text-slate-900 mb-3">
+                  Mise de fonds: {downPaymentPercentage}% ({formatCurrency(downPaymentAmount)})
                 </Label>
-                <div className="space-y-3">
-                  <div className="relative">
-                    {!isPercentage && <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500">$</span>}
-                    <Input
-                      id="downPaymentValue"
-                      type="number"
-                      value={downPaymentValue === 0 ? '' : downPaymentValue}
-                      onChange={handleDownPaymentValueChange}
-                      step={isPercentage ? 0.5 : 5000}
-                      min={isPercentage ? 5 : 5000}
-                      max={isPercentage ? 100 : purchasePrice}
-                      className={`text-lg ${!isPercentage ? 'pl-8' : ''}`}
-                      placeholder="0"
-                    />
-                  </div>
-                  {isPercentage && (
-                    <div>
-                      <Label className="block text-sm text-slate-600 mb-2">
-                        Curseur de pourcentage: {downPaymentValue}%
-                      </Label>
-                      <Slider
-                        value={[downPaymentValue]}
-                        onValueChange={(value) => setDownPaymentValue(value[0])}
-                        max={100}
-                        min={5}
-                        step={0.5}
-                        className="w-full"
-                      />
-                    </div>
-                  )}
-                </div>
+                <Slider
+                  value={[downPaymentPercentage]}
+                  onValueChange={(value) => setDownPaymentPercentage(value[0])}
+                  max={100}
+                  min={5}
+                  step={0.5}
+                  className="w-full"
+                />
               </div>
 
               <div>
