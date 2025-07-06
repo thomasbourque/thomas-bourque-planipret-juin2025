@@ -170,7 +170,7 @@ const PayoffTimeCalculator = () => {
                   <Input
                     id="interestRate"
                     type="number"
-                    value={interestRate || ''}
+                    value={interestRate === 0 ? '' : interestRate}
                     onChange={handleInterestRateChange}
                     step={0.01}
                     min={0}
