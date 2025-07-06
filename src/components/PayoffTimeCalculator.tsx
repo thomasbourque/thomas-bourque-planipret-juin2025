@@ -4,12 +4,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Clock, Calculator, TrendingUp } from "lucide-react";
+import { Clock, TrendingUp } from "lucide-react";
 
 const PayoffTimeCalculator = () => {
   const [loanAmount, setLoanAmount] = useState(300000);
   const [interestRate, setInterestRate] = useState(5.5);
-  const [amortizationYears, setAmortizationYears] = useState(25);
   const [monthlyPayment, setMonthlyPayment] = useState(1850);
   const [extraPaymentAmount, setExtraPaymentAmount] = useState(0);
   const [extraPaymentType, setExtraPaymentType] = useState("monthly");
@@ -222,22 +221,6 @@ const PayoffTimeCalculator = () => {
               </div>
 
               <div>
-                <Label htmlFor="amortizationYears" className="block text-lg font-medium text-slate-900 mb-3">
-                  Amortissement (années)
-                </Label>
-                <Select value={amortizationYears.toString()} onValueChange={(value) => setAmortizationYears(Number(value))}>
-                  <SelectTrigger className="text-lg">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="20">20 ans</SelectItem>
-                    <SelectItem value="25">25 ans</SelectItem>
-                    <SelectItem value="30">30 ans</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div>
                 <Label htmlFor="monthlyPayment" className="block text-lg font-medium text-slate-900 mb-3">
                   Paiement mensuel
                 </Label>
@@ -291,28 +274,28 @@ const PayoffTimeCalculator = () => {
                   </SelectContent>
                 </Select>
               </div>
+
+              {extraPaymentAmount > 0 && (
+                <div>
+                  <Label htmlFor="extraPaymentStartMonth" className="block text-lg font-medium text-slate-900 mb-3">
+                    Débuter au versement #
+                  </Label>
+                  <Input
+                    id="extraPaymentStartMonth"
+                    type="number"
+                    value={extraPaymentStartMonth}
+                    onChange={handleExtraPaymentStartMonthChange}
+                    step={1}
+                    min={1}
+                    max={360}
+                    className="text-lg"
+                  />
+                </div>
+              )}
             </div>
 
-            {extraPaymentAmount > 0 && (
-              <div className="mb-8">
-                <Label htmlFor="extraPaymentStartMonth" className="block text-lg font-medium text-slate-900 mb-3">
-                  Débuter les remboursements anticipés au versement #
-                </Label>
-                <Input
-                  id="extraPaymentStartMonth"
-                  type="number"
-                  value={extraPaymentStartMonth}
-                  onChange={handleExtraPaymentStartMonthChange}
-                  step={1}
-                  min={1}
-                  max={360}
-                  className="text-lg max-w-xs"
-                />
-              </div>
-            )}
-
             {/* Results */}
-            <div className="grid lg:grid-cols-3 gap-6 mb-8">
+            <div className="grid lg:grid-cols-3 gap-6">
               <Card className="border-blue-200 bg-blue-50">
                 <CardHeader>
                   <CardTitle className="text-blue-900 text-lg flex items-center gap-2">
@@ -378,36 +361,6 @@ const PayoffTimeCalculator = () => {
                 </Card>
               )}
             </div>
-
-            {/* Analysis Summary */}
-            {months > 0 && (
-              <div className="p-6 bg-slate-100 rounded-lg">
-                <h3 className="text-lg font-semibold text-slate-900 mb-4 flex items-center gap-2">
-                  <Calculator className="h-5 w-5" />
-                  Analyse de votre situation
-                </h3>
-                
-                <div className="space-y-3 text-sm text-slate-700">
-                  <p>
-                    <strong>Résumé de votre prêt:</strong>
-                  </p>
-                  
-                  <ul className="list-disc list-inside space-y-2 ml-4">
-                    <li>
-                      Avec un paiement mensuel de {formatCurrency(monthlyPayment)}, votre prêt sera remboursé en {years} an{years > 1 ? 's' : ''} et {remainingMonths} mois.
-                    </li>
-                    <li>
-                      Vous paierez un total de {formatCurrency(totalInterest)} en intérêts sur la durée du prêt.
-                    </li>
-                    {extraPaymentAmount > 0 && (
-                      <li>
-                        Grâce à vos remboursements anticipés de {formatCurrency(extraPaymentAmount)} {extraPaymentType === 'monthly' ? 'par mois' : 'par année'}, vous économiserez {formatCurrency(interestSaved)} en intérêts et terminerez votre prêt {Math.floor(timeSaved / 12)} an{Math.floor(timeSaved / 12) > 1 ? 's' : ''} et {timeSaved % 12} mois plus tôt.
-                      </li>
-                    )}
-                  </ul>
-                </div>
-              </div>
-            )}
           </div>
         </div>
       </div>
