@@ -1,45 +1,10 @@
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Star } from "lucide-react";
+import { useGoogleReviews } from "@/hooks/useGoogleReviews";
 
 const GoogleReviews = () => {
-  const reviews = [
-    {
-      name: "Dominic Latour",
-      rating: 5,
-      comment: "Excellent service from A to Z!!!",
-      date: "Il y a 4 jours",
-      reviewCount: "5 avis"
-    },
-    {
-      name: "Elyse Busque",
-      rating: 5,
-      comment: "",
-      date: "Il y a 4 jours",
-      reviewCount: "1 avis"
-    },
-    {
-      name: "Mélanie Beauvais",
-      rating: 5,
-      comment: "",
-      date: "Il y a 4 jours",
-      reviewCount: ""
-    },
-    {
-      name: "Odile Paquin",
-      rating: 5,
-      comment: "",
-      date: "Il y a 4 jours",
-      reviewCount: "1 avis"
-    },
-    {
-      name: "Sophie Boucher-Morel",
-      rating: 5,
-      comment: "",
-      date: "Il y a 4 jours",
-      reviewCount: "2 avis"
-    }
-  ];
+  const { reviews, averageRating, totalReviews } = useGoogleReviews();
 
   const renderStars = (rating: number) => {
     return (
@@ -56,9 +21,6 @@ const GoogleReviews = () => {
       </div>
     );
   };
-
-  const averageRating = 5.0; // Tous les avis sont 5 étoiles
-  const totalReviews = 5;
 
   return (
     <section className="section bg-slate-50">

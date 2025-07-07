@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Star } from "lucide-react";
+import { useGoogleReviews } from "@/hooks/useGoogleReviews";
 
 const Testimonials = () => {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const { averageRating, totalReviews } = useGoogleReviews();
   
   const testimonials = [
     {
       name: "Alexis Drouin",
-      position: "Breakeyville",
+      position: "Breakeyville", 
       content: "Nous avons eu une expérience exceptionnelle avec Thomas. Son service était impeccable du début à la fin. Thomas a fait preuve de professionnalisme en plus de répondre super rapidement. Il a su répondre à toutes nos questions avec clarté et beaucoup de patience! Nous avons obtenu un prêt hypothécaire facilement pour l'achat de notre première maison. Nous recommandons vivement Thomas à tous ceux qui recherchent un courtier humain et dévoué.",
     },
     {
@@ -27,9 +29,6 @@ const Testimonials = () => {
       content: "Un service impeccable sur toute la ligne! Thomas est toujours à l'écoute de nos besoins et nous a négocié un meilleur taux que partout ailleurs. Je suis très satisfait du service et surtout de la patience dont il a fait preuve. Plus jamais je ne passerai par la banque directement dans le futur!",
     },
   ];
-
-  const averageRating = 5.0;
-  const totalReviews = 5;
 
   return (
     <section id="testimonials" className="section bg-white">

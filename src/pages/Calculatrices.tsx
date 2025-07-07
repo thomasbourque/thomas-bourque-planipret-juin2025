@@ -107,10 +107,10 @@ const Calculatrices = () => {
         <div className="container py-8 md:py-12 px-2 sm:px-4 md:px-6 lg:px-8">
           <div className="text-center mb-8 md:mb-12">
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 mb-4 md:mb-6">
-              Calculatrices hypothécaires
+              Vos décisions éclairées commencent ici!
             </h1>
             <p className="text-base md:text-lg text-slate-700 max-w-3xl mx-auto px-2 sm:px-4 mb-2">
-              Utilisez nos calculatrices pour planifier votre financement hypothécaire et prendre des décisions éclairées.
+              Mes calculateurs vous aident à y voir plus clair pour prendre la bonne décision avec les bons chiffres.
             </p>
             <p className="text-sm md:text-base text-slate-600 max-w-2xl mx-auto px-2 sm:px-4">
               Explorez différents scénarios et optimisez votre stratégie de financement immobilier.
