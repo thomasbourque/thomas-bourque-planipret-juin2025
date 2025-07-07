@@ -42,12 +42,6 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* SEO Hidden Content for Keywords */}
-      <div className="sr-only">
-        <h1>Thomas Bourque - Courtier hypothécaire au Québec</h1>
-        <p>Meilleur courtier hypothécaire Québec, taux hypothécaire avantageux, prêt hypothécaire, financement immobilier, refinancement, achat maison, courtier Planiprêt, service gratuit</p>
-      </div>
-      
       <Navbar />
       <main>
         <Hero />

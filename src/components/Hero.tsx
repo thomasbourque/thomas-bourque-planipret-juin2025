@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Mail, Linkedin, Facebook, Instagram, Phone } from "lucide-react";
@@ -6,7 +5,7 @@ import { Mail, Linkedin, Facebook, Instagram, Phone } from "lucide-react";
 const Hero = () => {
   return (
     <>
-      {/* Section héros optimisée pour SEO */}
+      {/* Nouvelle section héros avec image de maison en arrière-plan */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -18,16 +17,16 @@ const Hero = () => {
         
         <div className="container relative z-10 text-center text-white">
           <h1 className="heading-xl mb-6">
-            Courtier hypothécaire Québec - L'hypothèque, sans les maux de tête
+            L'hypothèque, sans les maux de tête
           </h1>
           <p className="body-lg mb-8 max-w-3xl mx-auto">
-            Thomas Bourque, courtier hypothécaire professionnel. Accompagnement hypothécaire complet <span className="font-semibold" style={{ color: '#D4AF37' }}>100 % gratuit</span> pour vos projets immobiliers partout au Québec. Meilleurs taux garantis parmi 20+ prêteurs.
+            Un accompagnement hypothécaire complet <span className="font-semibold" style={{ color: '#D4AF37' }}>100 % gratuit</span> pour vos projets immobiliers partout au Québec.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" className="rounded-full" asChild>
               <a href="https://calendly.com/tbourque-planipret" target="_blank" rel="noopener noreferrer">
-                Planifier un appel gratuit
+                Planifier un appel
               </a>
             </Button>
             <Button size="lg" variant="outline" className="bg-white/10 border-white text-white hover:bg-white hover:text-slate-900 rounded-full" asChild>
@@ -37,7 +36,7 @@ const Hero = () => {
         </div>
       </section>
 
-      {/* Section avec optimisation SEO pour courtier hypothécaire */}
+      {/* Section avec votre photo et informations déplacée plus bas */}
       <section className="relative pt-24 pb-24 md:pt-32 md:pb-32 overflow-hidden" id="thomas-bourque">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-blue-100 -z-10"></div>
         <div className="container grid md:grid-cols-2 gap-12 items-center">
@@ -49,7 +48,7 @@ const Hero = () => {
               Thomas Bourque
             </h2>
             <p className="text-xl font-medium text-slate-600 mb-4">
-              Courtier hypothécaire certifié, B.A.A. - Planiprêt
+              Courtier hypothécaire, B.A.A.
             </p>
             
             {/* Photo pour mobile - s'affiche ici sur mobile */}
@@ -57,7 +56,7 @@ const Hero = () => {
               <div className="aspect-[4/5] bg-slate-200 rounded-full overflow-hidden shadow-xl w-64 mx-auto">
                 <img 
                   src="/lovable-uploads/e890eb15-6fc3-48da-a825-ef289e0a40df.png" 
-                  alt="Thomas Bourque, courtier hypothécaire professionnel au Québec" 
+                  alt="Thomas Bourque, courtier hypothécaire" 
                   className="h-full w-full object-cover brightness-100 contrast-110 saturate-75"
                 />
               </div>
@@ -68,8 +67,7 @@ const Hero = () => {
               <a 
                 href="mailto:tbourque@planipret.com" 
                 className="flex items-center justify-center w-10 h-10 bg-primary text-white rounded-full hover:bg-primary/80 transition-colors"
-                title="Contactez Thomas Bourque par courriel"
-                aria-label="Envoyer un courriel à Thomas Bourque"
+                title="Courriel"
               >
                 <Mail className="w-5 h-5" />
               </a>
@@ -78,8 +76,7 @@ const Hero = () => {
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="flex items-center justify-center w-10 h-10 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors"
-                title="Profil LinkedIn Thomas Bourque"
-                aria-label="Voir le profil LinkedIn de Thomas Bourque"
+                title="LinkedIn"
               >
                 <Linkedin className="w-5 h-5" />
               </a>
@@ -88,8 +85,7 @@ const Hero = () => {
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="flex items-center justify-center w-10 h-10 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors"
-                title="Page Facebook Thomas Bourque courtier"
-                aria-label="Voir la page Facebook de Thomas Bourque"
+                title="Facebook"
               >
                 <Facebook className="w-5 h-5" />
               </a>
@@ -98,14 +94,13 @@ const Hero = () => {
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="flex items-center justify-center w-10 h-10 bg-pink-500 text-white rounded-full hover:bg-pink-600 transition-colors"
-                title="Instagram Thomas Bourque courtier hypothécaire"
-                aria-label="Voir le profil Instagram de Thomas Bourque"
+                title="Instagram"
               >
                 <Instagram className="w-5 h-5" />
               </a>
             </div>
 
-            {/* Numéro de cellulaire avec markup schema */}
+            {/* Numéro de cellulaire */}
             <div className="flex items-center gap-3 mb-6">
               <div className="flex items-center justify-center w-10 h-10 bg-slate-600 text-white rounded-full">
                 <Phone className="w-5 h-5" />
@@ -116,9 +111,6 @@ const Hero = () => {
             </div>
             
             <div className="space-y-4">
-              <h3 className="text-xl font-bold text-slate-900 mb-4">
-                Votre expert en financement hypothécaire au Québec
-              </h3>
               <p className="body-md text-slate-700 mb-4">
                 <strong>Je travaille pour vos intérêts, pas ceux de la banque!</strong>
               </p>
@@ -129,10 +121,10 @@ const Hero = () => {
                 Détenteur d'un baccalauréat en administration des affaires de l'Université Laval et ayant travaillé durant 7 ans en analyse quantitative, je carbure à faire parler les chiffres. Mon approche à la fois humaine et analytique poursuit un objectif clair : vous permettre de prendre une décision éclairée pour votre projet de financement hypothécaire.
               </p>
               <p className="body-md text-slate-700 mb-4">
-                Mes services de courtage hypothécaire complètement sans frais vous assurent d'obtenir le taux d'intérêt le plus avantageux et les meilleures conditions d'emprunt sur le marché québécois parmi une vingtaine d'institutions financières partenaires.
+                Mes services complètement sans frais vous assurent d'obtenir le taux d'intérêt le plus avantageux et les meilleures conditions d'emprunt sur le marché parmi une vingtaine d'institutions financières.
               </p>
               <p className="body-md text-slate-700">
-                Basé à Québec, je peux vous servir à distance où que vous soyez au Québec. Prenons quelques minutes pour discuter ensemble de votre projet hypothécaire. Vous serez surpris, un simple appel de quelques minutes peut souvent mener à des économies substantielles ou conduire à une solution de financement à laquelle vous n'aviez pas pensé.
+                Basé à Québec, je peux vous servir à distance où que vous soyez au Québec. Prenons quelques minutes pour discuter ensemble de votre projet. Vous serez surpris, un simple appel de quelques minutes peut souvent mener à des économies substantielles ou conduire à une solution à laquelle vous n'aviez pas pensé.
               </p>
             </div>
             
@@ -140,7 +132,7 @@ const Hero = () => {
             <div className="space-y-3">
               <div className="flex items-center">
                 <span className="bg-yellow-500 text-slate-900 text-sm font-semibold px-3 py-1 rounded-full">
-                  Service de courtage 100% GRATUIT
+                  Service 100% GRATUIT
                 </span>
               </div>
             </div>
@@ -148,11 +140,11 @@ const Hero = () => {
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <Button size="lg" className="rounded-full" asChild>
                 <a href="https://calendly.com/tbourque-planipret" target="_blank" rel="noopener noreferrer">
-                  Consultation gratuite
+                  Planifier un appel
                 </a>
               </Button>
               <Button size="lg" variant="outline" className="rounded-full" asChild>
-                <a href="#services">Mes services hypothécaires</a>
+                <a href="#services">Découvrir mes services</a>
               </Button>
             </div>
           </div>
@@ -160,7 +152,7 @@ const Hero = () => {
             <div className="aspect-[4/5] bg-slate-200 rounded-full overflow-hidden shadow-xl w-4/5 mx-auto">
               <img 
                 src="/lovable-uploads/e890eb15-6fc3-48da-a825-ef289e0a40df.png" 
-                alt="Thomas Bourque, meilleur courtier hypothécaire au Québec" 
+                alt="Thomas Bourque, courtier hypothécaire" 
                 className="h-full w-full object-cover brightness-100 contrast-110 saturate-75"
               />
             </div>
