@@ -39,7 +39,7 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // On specific pages, always use dark colors. On other pages, use conditional colors based on scroll
+  // On calculator pages, always use dark colors regardless of scroll position
   const getTextColor = () => {
     if (isDarkPage) return 'text-slate-900';
     return isScrolled ? 'text-slate-900' : 'text-white';

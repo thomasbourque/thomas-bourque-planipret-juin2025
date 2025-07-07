@@ -1,175 +1,138 @@
 
 import React, { useState } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { calculateMortgagePayments } from "@/utils/mortgageCalculations";
+import MortgageSlider from "./MortgageSlider";
+import SavingsDisplay from "./SavingsDisplay";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { calculateMortgagePayments } from "@/utils/mortgageCalculations";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const SavingsCalculator = () => {
   const [mortgageBalance, setMortgageBalance] = useState(400000);
-  const [termYears, setTermYears] = useState(5);
-  const [bankRate, setBankRate] = useState(5.5);
-  const [brokerRate, setBrokerRate] = useState(4.8);
-  const [amortizationYears, setAmortizationYears] = useState(25);
-  const [results, setResults] = useState(null);
+  const [term, setTerm] = useState([5]);
+  const [amortization, setAmortization] = useState(25);
+  const [bankRate, setBankRate] = useState([4.5]);
+  const [brokerRate, setBrokerRate] = useState([4.1]);
 
-  const handleCalculate = () => {
-    const savings = calculateMortgagePayments(
-      mortgageBalance,
-      termYears,
-      bankRate,
-      brokerRate,
-      amortizationYears
-    );
-    setResults(savings);
+  const handleMortgageBalanceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (value === '') {
+      setMortgageBalance(0);
+    } else {
+      const numValue = Number(value);
+      if (!isNaN(numValue)) {
+        setMortgageBalance(numValue);
+      }
+    }
   };
 
+  const savings = calculateMortgagePayments(
+    mortgageBalance,
+    term[0],
+    bankRate[0],
+    brokerRate[0],
+    amortization
+  );
+
   return (
-    <div className="container py-8 md:py-12 px-2 sm:px-4 md:px-6 lg:px-8">
-      <div className="text-center mb-8 md:mb-12">
-        <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 mb-4 md:mb-6">
-          Calculateur d'écart de taux
-        </h1>
-        <p className="text-base md:text-lg text-slate-700 max-w-3xl mx-auto px-2 sm:px-4">
-          Comparez les économies potentielles entre différents taux d'intérêt hypothécaires.
-        </p>
-      </div>
+    <section className="section bg-primary/5">
+      <div className="container">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-6">
+            <h2 className="heading-lg text-slate-900 mb-4">
+              Économisez gros en trouvant le taux le plus bas
+            </h2>
+            <p className="body-md text-slate-700 max-w-3xl mx-auto">
+              L'offre de financement reçue par votre banque est rarement la meilleure. Cessez de laisser de l'argent sur la table et découvrez combien un taux plus avantageux peut vous faire économiser!
+            </p>
+          </div>
 
-      <div className="max-w-4xl mx-auto">
-        <Card className="mb-8">
-          <CardHeader>
-            <CardTitle>Paramètres de comparaison</CardTitle>
-            <CardDescription>
-              Entrez les détails de votre hypothèque pour comparer les taux
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <Label htmlFor="mortgageBalance">Solde hypothécaire ($)</Label>
-                <Input
-                  id="mortgageBalance"
-                  type="number"
-                  value={mortgageBalance}
-                  onChange={(e) => setMortgageBalance(Number(e.target.value))}
-                  placeholder="400000"
-                />
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="termYears">Durée du terme (années)</Label>
-                <Input
-                  id="termYears"
-                  type="number"
-                  value={termYears}
-                  onChange={(e) => setTermYears(Number(e.target.value))}
-                  placeholder="5"
-                />
-              </div>
+          <div className="bg-white rounded-xl shadow-lg p-4 md:p-6 lg:p-8">
+            <div className="grid md:grid-cols-2 gap-4 md:gap-6 lg:gap-8">
+              <div className="space-y-6">
+                <div>
+                  <Label htmlFor="mortgageBalance" className="block text-lg font-medium text-slate-900 mb-3">
+                    Montant de financement
+                  </Label>
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500">$</span>
+                    <Input
+                      id="mortgageBalance"
+                      type="number"
+                      value={mortgageBalance === 0 ? '' : mortgageBalance}
+                      onChange={handleMortgageBalanceChange}
+                      step={1000}
+                      min={50000}
+                      max={2000000}
+                      className="text-lg pl-8"
+                      placeholder="0"
+                    />
+                  </div>
+                  <div className="text-center mt-2">
+                    <span className="text-xl font-semibold text-slate-700">
+                      {mortgageBalance.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
+                    </span>
+                  </div>
+                </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="bankRate">Taux de la banque (%)</Label>
-                <Input
-                  id="bankRate"
-                  type="number"
-                  step="0.01"
+                <MortgageSlider
+                  label="Terme"
+                  value={term}
+                  onValueChange={setTerm}
+                  min={1}
+                  max={7}
+                  step={1}
+                  formatValue={(value) => `${value} ${value === 1 ? 'an' : 'ans'}`}
+                />
+
+                <div>
+                  <Label className="block text-lg font-medium text-slate-900 mb-3">
+                    Amortissement
+                  </Label>
+                  <Select value={amortization.toString()} onValueChange={(value) => setAmortization(Number(value))}>
+                    <SelectTrigger className="text-lg">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {Array.from({ length: 30 }, (_, i) => {
+                        const years = i + 1;
+                        return (
+                          <SelectItem key={years} value={years.toString()}>
+                            {years} {years === 1 ? 'an' : 'ans'}
+                          </SelectItem>
+                        );
+                      })}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <MortgageSlider
+                  label="Taux proposé par votre banque"
                   value={bankRate}
-                  onChange={(e) => setBankRate(Number(e.target.value))}
-                  placeholder="5.5"
+                  onValueChange={setBankRate}
+                  min={3}
+                  max={6}
+                  step={0.01}
+                  formatValue={(value) => `${value.toFixed(2)}%`}
                 />
-              </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="brokerRate">Taux du courtier (%)</Label>
-                <Input
-                  id="brokerRate"
-                  type="number"
-                  step="0.01"
+                <MortgageSlider
+                  label="Taux plus avantageux"
                   value={brokerRate}
-                  onChange={(e) => setBrokerRate(Number(e.target.value))}
-                  placeholder="4.8"
+                  onValueChange={setBrokerRate}
+                  min={3}
+                  max={6}
+                  step={0.01}
+                  formatValue={(value) => `${value.toFixed(2)}%`}
                 />
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="amortizationYears">Amortissement (années)</Label>
-                <Input
-                  id="amortizationYears"
-                  type="number"
-                  value={amortizationYears}
-                  onChange={(e) => setAmortizationYears(Number(e.target.value))}
-                  placeholder="25"
-                />
-              </div>
+              <SavingsDisplay savings={savings} termYears={term[0]} />
             </div>
-
-            <Button onClick={handleCalculate} className="w-full">
-              Calculer les économies
-            </Button>
-          </CardContent>
-        </Card>
-
-        {results && (
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-center">Vos économies potentielles</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid gap-4">
-                <div className="bg-gradient-to-r from-slate-700 to-slate-800 p-6 rounded-xl border text-white text-center">
-                  <div className="text-sm font-medium mb-1 text-slate-200">
-                    Économie sur les paiements
-                  </div>
-                  <div className="text-2xl font-bold">
-                    {results.termPaymentSavings.toLocaleString('fr-CA', { 
-                      style: 'currency', 
-                      currency: 'CAD',
-                      minimumFractionDigits: 0 
-                    })}
-                  </div>
-                  <div className="text-xs text-slate-300 mt-1">
-                    à la fin du terme de {termYears} {termYears === 1 ? 'an' : 'ans'}
-                  </div>
-                </div>
-
-                <div className="bg-gradient-to-r from-slate-700 to-slate-800 p-6 rounded-xl border text-white text-center">
-                  <div className="text-sm font-medium mb-1 text-slate-200">
-                    Économie sur le solde en capital
-                  </div>
-                  <div className="text-2xl font-bold">
-                    {results.principalBalanceDifference.toLocaleString('fr-CA', { 
-                      style: 'currency', 
-                      currency: 'CAD',
-                      minimumFractionDigits: 0 
-                    })}
-                  </div>
-                  <div className="text-xs text-slate-300 mt-1">
-                    à la fin du terme de {termYears} {termYears === 1 ? 'an' : 'ans'}
-                  </div>
-                </div>
-
-                <div className="bg-gradient-to-r from-yellow-400 to-yellow-500 p-6 rounded-xl border text-slate-900 text-center">
-                  <div className="text-sm font-medium mb-1">
-                    Économie totale
-                  </div>
-                  <div className="text-3xl font-bold">
-                    {results.totalTermSavings.toLocaleString('fr-CA', { 
-                      style: 'currency', 
-                      currency: 'CAD',
-                      minimumFractionDigits: 0 
-                    })}
-                  </div>
-                  <div className="text-xs mt-1">
-                    à la fin du terme de {termYears} {termYears === 1 ? 'an' : 'ans'}
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        )}
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 
