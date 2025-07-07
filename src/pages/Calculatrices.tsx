@@ -110,7 +110,7 @@ const Calculatrices = () => {
               Calculatrices hypothécaires
             </h2>
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 mb-4 md:mb-6">
-              Une bonne décision commence avec les bons chiffres!
+              La bonne décision commence avec les bons chiffres!
             </h1>
             <p className="text-base md:text-lg text-slate-700 max-w-3xl mx-auto px-2 sm:px-4">
               Mes calculateurs vous aident à explorer différents scénarios et à optimiser votre stratégie de financement immobilier.

@@ -86,17 +86,27 @@ export const useGoogleReviews = () => {
   // Fonction pour simuler la récupération des nouveaux avis
   const fetchGoogleReviews = async () => {
     try {
-      // Ici vous pourriez intégrer une vraie API Google Reviews
-      // Pour l'instant, on simule avec les données existantes
+      // Simulation d'une vraie API Google Reviews
       console.log('Actualisation des avis Google...');
+      
+      // Ici vous pourriez faire un appel à votre API backend qui récupère les avis Google
+      // const response = await fetch('/api/google-reviews');
+      // const data = await response.json();
+      
+      // Pour l'instant, on met à jour automatiquement le nombre total basé sur les avis existants
+      const currentReviews = reviewsData.reviews;
+      const updatedData = {
+        ...reviewsData,
+        totalReviews: currentReviews.length,
+        averageRating: currentReviews.reduce((sum, review) => sum + review.rating, 0) / currentReviews.length
+      };
+      
+      setReviewsData(updatedData);
       
       // Marquer comme mis à jour
       const now = new Date().toISOString();
       setLastUpdated(now);
       localStorage.setItem('googleReviewsLastUpdated', now);
-      
-      // Vous pouvez ici ajouter la logique pour récupérer de vrais avis
-      // et mettre à jour reviewsData si nécessaire
       
     } catch (error) {
       console.error('Erreur lors de l\'actualisation des avis Google:', error);
@@ -108,8 +118,8 @@ export const useGoogleReviews = () => {
       const now = new Date();
       const lastUpdate = lastUpdated ? new Date(lastUpdated) : null;
       
-      // Vérifier si plus de 24 heures se sont écoulées
-      if (!lastUpdate || now.getTime() - lastUpdate.getTime() > 24 * 60 * 60 * 1000) {
+      // Vérifier si plus de 1 heure s'est écoulée pour une actualisation plus fréquente
+      if (!lastUpdate || now.getTime() - lastUpdate.getTime() > 60 * 60 * 1000) {
         fetchGoogleReviews();
       }
     };
@@ -117,8 +127,8 @@ export const useGoogleReviews = () => {
     // Vérifier immédiatement
     checkForUpdates();
 
-    // Configurer un intervalle pour vérifier toutes les heures
-    const interval = setInterval(checkForUpdates, 60 * 60 * 1000);
+    // Configurer un intervalle pour vérifier toutes les 30 minutes
+    const interval = setInterval(checkForUpdates, 30 * 60 * 1000);
 
     return () => clearInterval(interval);
   }, [lastUpdated]);
