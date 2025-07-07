@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import BourqueHypothequesLogo from "./BourqueHypothequesLogo";
@@ -10,7 +9,22 @@ const Navbar = () => {
   const location = useLocation();
   
   // Check if we're on pages that should always have dark colors
-  const isDarkPage = ['/faq', '/calculatrices', '/comparateur-scenarios'].includes(location.pathname);
+  const isDarkPage = [
+    '/faq', 
+    '/calculatrices', 
+    '/comparateur-scenarios',
+    '/preview-rythme-paiement',
+    '/preview-mise-de-fonds',
+    '/preview-paiement-hypothecaire',
+    '/preview-capacite-emprunt',
+    '/preview-ecart-taux',
+    '/preview-mise-fonds-minimale',
+    '/preview-temps-remboursement',
+    '/preview-assurance-hypothecaire',
+    '/preview-ratios',
+    '/preview-fixe-variable',
+    '/preview-rpv-evolutif'
+  ].includes(location.pathname);
 
   useEffect(() => {
     const handleScroll = () => {
