@@ -1,8 +1,15 @@
+
+User-agent: *
+Allow: /
+
+# Directives spécifiques pour les principaux moteurs de recherche
 User-agent: Googlebot
 Allow: /
+Crawl-delay: 1
 
 User-agent: Bingbot
 Allow: /
+Crawl-delay: 1
 
 User-agent: Twitterbot
 Allow: /
@@ -10,5 +17,11 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
-User-agent: *
-Allow: /
+# Sitemap
+Sitemap: https://www.thomasbourque.com/sitemap.xml
+
+# Disallow des fichiers non nécessaires pour SEO
+Disallow: /src/
+Disallow: /*.json
+Disallow: /vite.config.ts
+Disallow: /tsconfig.json
