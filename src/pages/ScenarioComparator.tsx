@@ -49,7 +49,7 @@ const ScenarioComparator = () => {
       product: 'fixe',
       purchaseValue: 0,
       downPayment: 0,
-      interestRate: 4.00,
+      interestRate: 0,
       amortization: 25,
       cashRebate: 0
     },
@@ -60,7 +60,7 @@ const ScenarioComparator = () => {
       product: 'fixe',
       purchaseValue: 0,
       downPayment: 0,
-      interestRate: 4.00,
+      interestRate: 0,
       amortization: 25,
       cashRebate: 0
     },
@@ -71,7 +71,7 @@ const ScenarioComparator = () => {
       product: 'fixe',
       purchaseValue: 0,
       downPayment: 0,
-      interestRate: 4.00,
+      interestRate: 0,
       amortization: 25,
       cashRebate: 0
     },
@@ -82,7 +82,7 @@ const ScenarioComparator = () => {
       product: 'fixe',
       purchaseValue: 0,
       downPayment: 0,
-      interestRate: 4.00,
+      interestRate: 0,
       amortization: 25,
       cashRebate: 0
     },
@@ -93,7 +93,7 @@ const ScenarioComparator = () => {
       product: 'fixe',
       purchaseValue: 0,
       downPayment: 0,
-      interestRate: 4.00,
+      interestRate: 0,
       amortization: 25,
       cashRebate: 0
     }
@@ -108,7 +108,7 @@ const ScenarioComparator = () => {
         product: 'fixe',
         purchaseValue: 0,
         downPayment: 0,
-        interestRate: 4.00,
+        interestRate: 0,
         amortization: 25,
         cashRebate: 0
       };
@@ -312,7 +312,7 @@ const ScenarioComparator = () => {
         }
         
         const isInterestRate = htmlInput.type === 'number' && htmlInput.step === '0.01' && htmlInput.parentElement?.querySelector('span')?.textContent === '%';
-        if (isInterestRate && displayValue) {
+        if (isInterestRate && displayValue && displayValue !== '0') {
           displayValue = `${displayValue}%`;
           span.style.textAlign = 'center';
         }
@@ -470,7 +470,7 @@ const ScenarioComparator = () => {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        {[1, 2, 3, 4, 5].map((year) => (
+                        {[1, 2, 3, 4, 5, 6, 7].map((year) => (
                           <SelectItem key={year} value={year.toString()}>
                             {year} an{year > 1 ? 's' : ''}
                           </SelectItem>
@@ -519,7 +519,7 @@ const ScenarioComparator = () => {
                           }
                         }}
                         className="h-6 text-xs text-center [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield] w-full"
-                        placeholder="4.00"
+                        placeholder="0.00"
                       />
                       <span className="text-xs ml-1">%</span>
                     </div>
@@ -531,13 +531,16 @@ const ScenarioComparator = () => {
                 <TableCell className="font-medium p-1">Remise en argent</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1">
-                    <Input
-                      type="number"
-                      value={scenario.cashRebate || ''}
-                      onChange={(e) => updateScenario(scenario.id, 'cashRebate', parseFloat(e.target.value) || 0)}
-                      className="h-6 text-xs text-center [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
-                      placeholder="0 $"
-                    />
+                    <div className="flex items-center justify-center w-full">
+                      <Input
+                        type="number"
+                        value={scenario.cashRebate || ''}
+                        onChange={(e) => updateScenario(scenario.id, 'cashRebate', parseFloat(e.target.value) || 0)}
+                        className="h-6 text-xs text-center [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield] w-full"
+                        placeholder="0"
+                      />
+                      <span className="text-xs ml-1">$</span>
+                    </div>
                   </TableCell>
                 ))}
               </TableRow>
@@ -566,13 +569,16 @@ const ScenarioComparator = () => {
                 <TableCell className="font-medium p-1">Valeur de l'achat</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1">
-                    <Input
-                      type="number"
-                      value={scenario.purchaseValue || ''}
-                      onChange={(e) => updateScenario(scenario.id, 'purchaseValue', parseFloat(e.target.value) || 0)}
-                      className="h-6 text-xs text-center [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
-                      placeholder="0 $"
-                    />
+                    <div className="flex items-center justify-center w-full">
+                      <Input
+                        type="number"
+                        value={scenario.purchaseValue || ''}
+                        onChange={(e) => updateScenario(scenario.id, 'purchaseValue', parseFloat(e.target.value) || 0)}
+                        className="h-6 text-xs text-center [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield] w-full"
+                        placeholder="0"
+                      />
+                      <span className="text-xs ml-1">$</span>
+                    </div>
                   </TableCell>
                 ))}
               </TableRow>
@@ -581,13 +587,16 @@ const ScenarioComparator = () => {
                 <TableCell className="font-medium p-1">Mise de fonds</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1">
-                    <Input
-                      type="number"
-                      value={scenario.downPayment || ''}
-                      onChange={(e) => updateScenario(scenario.id, 'downPayment', parseFloat(e.target.value) || 0)}
-                      className="h-6 text-xs text-center [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield]"
-                      placeholder="0 $"
-                    />
+                    <div className="flex items-center justify-center w-full">
+                      <Input
+                        type="number"
+                        value={scenario.downPayment || ''}
+                        onChange={(e) => updateScenario(scenario.id, 'downPayment', parseFloat(e.target.value) || 0)}
+                        className="h-6 text-xs text-center [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield] w-full"
+                        placeholder="0"
+                      />
+                      <span className="text-xs ml-1">$</span>
+                    </div>
                   </TableCell>
                 ))}
               </TableRow>
@@ -611,7 +620,7 @@ const ScenarioComparator = () => {
               </TableRow>
 
               <TableRow className="h-8">
-                <TableCell className="font-medium p-1">Prime SCHL (%)</TableCell>
+                <TableCell className="font-medium p-1">Prime assurance prêt (%)</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
                     {getCMHCPremiumRate(calculateLTV(scenario), scenario.amortization).toFixed(2)}%
@@ -620,7 +629,7 @@ const ScenarioComparator = () => {
               </TableRow>
 
               <TableRow className="h-8">
-                <TableCell className="font-medium p-1">Prime SCHL ($)</TableCell>
+                <TableCell className="font-medium p-1">Prime assurance prêt ($)</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
                     {calculateCMHCPremium(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 }).replace(/,/g, ' ')} $
@@ -641,7 +650,7 @@ const ScenarioComparator = () => {
                 <TableCell className="font-medium p-1">Versement mensuel</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
-                    {calculateMonthlyPayment(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 2 }).replace(/,/g, ' ')} $
+                    {calculateMonthlyPayment(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 }).replace(/,/g, ' ')} $
                   </TableCell>
                 ))}
               </TableRow>
@@ -650,7 +659,7 @@ const ScenarioComparator = () => {
                 <TableCell className="font-medium p-1">Versement aux 2 semaines</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
-                    {calculateBiweeklyPayment(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 2 }).replace(/,/g, ' ')} $
+                    {calculateBiweeklyPayment(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 }).replace(/,/g, ' ')} $
                   </TableCell>
                 ))}
               </TableRow>
@@ -659,7 +668,7 @@ const ScenarioComparator = () => {
                 <TableCell className="font-medium p-1">Versement par semaine</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1 text-xs">
-                    {calculateWeeklyPayment(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 2 }).replace(/,/g, ' ')} $
+                    {calculateWeeklyPayment(scenario).toLocaleString('fr-CA', { maximumFractionDigits: 0 }).replace(/,/g, ' ')} $
                   </TableCell>
                 ))}
               </TableRow>
