@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -138,12 +139,12 @@ const FixedVariableCalculator = () => {
             </div>
 
             <div className="grid lg:grid-cols-2 gap-6">
-              {/* Taux fixe */}
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-                <h3 className="text-xl font-semibold text-blue-900 mb-4">
+              {/* Taux fixe - reduced size */}
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <h3 className="text-xl font-semibold text-blue-900 mb-3">
                   Taux fixe
                 </h3>
-                <div className="space-y-4">
+                <div className="space-y-3">
                   <div>
                     <Label htmlFor="fixedRate" className="block text-sm font-medium text-slate-700 mb-2">
                       Taux d'intérêt fixe (%)
@@ -160,9 +161,9 @@ const FixedVariableCalculator = () => {
                       placeholder="0.00"
                     />
                   </div>
-                  <div className="text-center pt-4">
+                  <div className="text-center pt-2">
                     <div className="text-sm text-slate-600 mb-1">Paiement mensuel</div>
-                    <div className="text-2xl font-bold text-blue-700">
+                    <div className="text-xl font-bold text-blue-700">
                       {formatCurrency(fixedMonthlyPayment)}
                     </div>
                   </div>
@@ -170,8 +171,8 @@ const FixedVariableCalculator = () => {
               </div>
 
               {/* Taux variable */}
-              <div className="bg-green-50 border border-green-200 rounded-lg p-6">
-                <h3 className="text-xl font-semibold text-green-900 mb-4">
+              <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                <h3 className="text-xl font-semibold text-green-900 mb-3">
                   Taux variable
                 </h3>
                 <div className="space-y-4">
@@ -204,13 +205,13 @@ const FixedVariableCalculator = () => {
                     />
                   </div>
 
-                  <div className="text-center pt-4 space-y-2">
+                  <div className="text-center pt-2 space-y-2">
                     <div className="text-sm text-slate-600">Taux ajusté</div>
                     <div className="text-lg font-semibold text-green-700">
                       {adjustedVariableRate.toFixed(2)}%
                     </div>
                     <div className="text-sm text-slate-600">Paiement mensuel</div>
-                    <div className="text-2xl font-bold text-green-700">
+                    <div className="text-xl font-bold text-green-700">
                       {formatCurrency(adjustedVariablePayment)}
                     </div>
                   </div>

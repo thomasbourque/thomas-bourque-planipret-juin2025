@@ -304,20 +304,16 @@ const ScenarioComparator = () => {
         const htmlInput = input as HTMLInputElement;
         const span = document.createElement('span');
         
-        // Format values with currency symbols on the right
         let displayValue = htmlInput.value || htmlInput.placeholder || '';
         
-        // Check if this is a currency field
         const isCurrencyField = htmlInput.parentElement?.querySelector('span')?.textContent === '$';
         if (isCurrencyField && displayValue && displayValue !== '0') {
           displayValue = `${parseFloat(displayValue).toLocaleString('fr-CA')} $`;
         }
         
-        // Check if this is the interest rate field - fix double % issue
-        const isInterestRate = htmlInput.type === 'number' && htmlInput.step === '0.01';
+        const isInterestRate = htmlInput.type === 'number' && htmlInput.step === '0.01' && htmlInput.parentElement?.querySelector('span')?.textContent === '%';
         if (isInterestRate && displayValue) {
-          // Remove any existing % from the value and add only one
-          displayValue = displayValue.replace('%', '') + '%';
+          displayValue = `${displayValue}%`;
           span.style.textAlign = 'center';
         }
         
@@ -509,7 +505,7 @@ const ScenarioComparator = () => {
                 <TableCell className="font-medium p-1">Taux d'intérêt</TableCell>
                 {scenarios.slice(0, 5).map((scenario) => (
                   <TableCell key={scenario.id} className="p-1">
-                    <div className="flex items-center justify-center">
+                    <div className="flex items-center justify-center w-full">
                       <Input
                         type="number"
                         step="0.01"
@@ -522,7 +518,7 @@ const ScenarioComparator = () => {
                             updateScenario(scenario.id, 'interestRate', value);
                           }
                         }}
-                        className="h-6 text-xs text-center [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield] w-16"
+                        className="h-6 text-xs text-center [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield] w-full"
                         placeholder="4.00"
                       />
                       <span className="text-xs ml-1">%</span>

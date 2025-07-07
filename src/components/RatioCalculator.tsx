@@ -65,6 +65,18 @@ const RatioCalculator = () => {
     return `${value.toFixed(2)}%`;
   };
 
+  const getRatioColor = (ratio: number, type: 'abd' | 'atd') => {
+    if (type === 'abd') {
+      if (ratio <= 35) return 'text-green-600';
+      if (ratio <= 39) return 'text-orange-500';
+      return 'text-red-600';
+    } else { // atd
+      if (ratio <= 40) return 'text-green-600';
+      if (ratio <= 44) return 'text-orange-500';
+      return 'text-red-600';
+    }
+  };
+
   return (
     <section className="section bg-slate-50">
       <div className="container">
@@ -74,7 +86,7 @@ const RatioCalculator = () => {
               Calculateur de ratios ABD et ATD
             </h2>
             <p className="body-md text-slate-700 max-w-3xl mx-auto">
-              Calculez vos ratios d'amortissement brut de la dette (ABD) et d'amortissement total de la dette (ATD).
+              Vérifiez vos ratios d'amortissement brut de la dette (ABD) et d'amortissement total de la dette (ATD).
             </p>
           </div>
 
@@ -230,7 +242,7 @@ const RatioCalculator = () => {
                 <div className="space-y-6">
                   <div className="text-center">
                     <div className="text-sm text-slate-600 mb-1">Ratio ABD</div>
-                    <div className={`text-3xl font-bold ${abdRatio <= 39 ? 'text-green-600' : 'text-red-600'}`}>
+                    <div className={`text-3xl font-bold ${getRatioColor(abdRatio, 'abd')}`}>
                       {formatPercentage(abdRatio)}
                     </div>
                     <div className="text-xs text-slate-500 mt-1">
@@ -240,7 +252,7 @@ const RatioCalculator = () => {
                   
                   <div className="text-center">
                     <div className="text-sm text-slate-600 mb-1">Ratio ATD</div>
-                    <div className={`text-3xl font-bold ${atdRatio <= 44 ? 'text-green-600' : 'text-red-600'}`}>
+                    <div className={`text-3xl font-bold ${getRatioColor(atdRatio, 'atd')}`}>
                       {formatPercentage(atdRatio)}
                     </div>
                     <div className="text-xs text-slate-500 mt-1">

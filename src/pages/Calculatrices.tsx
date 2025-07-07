@@ -1,4 +1,3 @@
-
 import React from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -33,8 +32,8 @@ const Calculatrices = () => {
     },
     {
       id: "rhythm",
-      title: "Rythme de paiement",
-      description: "Analysez l'impact de différents rythmes de paiement sur votre hypothèque (mensuel, bimensuel, hebdomadaire).",
+      title: "Fréquence de paiement",
+      description: "Analysez l'impact de différentes fréquences de paiement sur votre hypothèque (mensuel, bimensuel, hebdomadaire).",
       icon: Calendar,
       route: "/preview-rythme-paiement"
     },
