@@ -32,8 +32,14 @@ const Partners = () => {
           <p className="body-md text-slate-700 max-w-2xl mx-auto mb-6">
             Je travaille avec une vingtaine d'institutions financières reconnues pour vous offrir les meilleures conditions d'emprunt sur le marché.
           </p>
+          <p className="body-md text-slate-700 max-w-3xl mx-auto mb-6">
+            Imaginez un instant devoir contacter chacune de ces institutions pour comparer leurs offres entre elles, un véritable travail de moine!
+          </p>
+          <p className="body-md text-slate-700 max-w-3xl mx-auto mb-6">
+            En passant par un courtier hypothécaire, vous n'avez qu'un seul point de contact unique qui vous donne accès à tous ces prêteurs.
+          </p>
           <p className="body-md text-slate-700 max-w-3xl mx-auto">
-            Imaginez un instant devoir contacter chacune de ces institutions pour comparer leurs offres entre elles, un véritable travail de moine! En passant par un courtier hypothécaire, vous n'avez qu'un seul point de contact unique qui vous donne accès à tous ces prêteurs. Vous m'envoyez vos documents, je m'occupe du reste!
+            Vous m'envoyez vos documents, je m'occupe du reste!
           </p>
         </div>
         

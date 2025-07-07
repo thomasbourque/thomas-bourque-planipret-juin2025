@@ -35,6 +35,16 @@ const Services = () => {
       ),
     },
     {
+      title: "Achat-revente synchronisé",
+      description: "Pour ceux qui vendent et achètent en même temps : éviter le stress des délais et de la coordination des deux transactions. Plusieurs stratégies existent pour faciliter la transition.",
+      icon: (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
+          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+        </svg>
+      ),
+    },
+    {
       title: "Renouvellement",
       description: "Négociation des meilleurs taux et conditions lors du renouvellement de votre prêt hypothécaire existant.",
       icon: (

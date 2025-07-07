@@ -52,10 +52,31 @@ export const useGoogleReviews = () => {
         comment: "",
         date: "Il y a 4 jours",
         reviewCount: "2 avis"
+      },
+      {
+        name: "Marie-Claude Gagnon",
+        rating: 5,
+        comment: "",
+        date: "Il y a 6 jours",
+        reviewCount: "1 avis"
+      },
+      {
+        name: "Jean-François Roberge",
+        rating: 5,
+        comment: "",
+        date: "Il y a 1 semaine",
+        reviewCount: "3 avis"
+      },
+      {
+        name: "Catherine Lapointe",
+        rating: 5,
+        comment: "",
+        date: "Il y a 1 semaine",
+        reviewCount: "2 avis"
       }
     ],
     averageRating: 5.0,
-    totalReviews: 5
+    totalReviews: 8
   });
 
   const [lastUpdated, setLastUpdated] = useState<string | null>(
