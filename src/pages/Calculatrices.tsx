@@ -1,3 +1,4 @@
+
 import React from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -105,6 +106,9 @@ const Calculatrices = () => {
       <main className="pt-24">
         <div className="container py-8 md:py-12 px-2 sm:px-4 md:px-6 lg:px-8">
           <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-lg md:text-xl text-primary font-semibold mb-4">
+              Calculatrices hypothécaires
+            </h2>
             <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 mb-4 md:mb-6">
               Une bonne décision commence avec les bons chiffres!
             </h1>
