@@ -65,13 +65,55 @@ const Navbar = () => {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-8">
-          <a href="/#thomas-bourque" onClick={() => window.location.href = '/#thomas-bourque'} className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
+          <a 
+            href="/#thomas-bourque" 
+            onClick={(e) => {
+              e.preventDefault();
+              if (window.location.pathname === '/') {
+                document.getElementById('thomas-bourque')?.scrollIntoView({ behavior: 'smooth' });
+              } else {
+                window.location.href = '/#thomas-bourque';
+                setTimeout(() => {
+                  document.getElementById('thomas-bourque')?.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+              }
+            }}
+            className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}
+          >
             À propos
           </a>
-          <a href="/#fonctionnement" onClick={() => window.location.href = '/#fonctionnement'} className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
+          <a 
+            href="/#fonctionnement" 
+            onClick={(e) => {
+              e.preventDefault();
+              if (window.location.pathname === '/') {
+                document.getElementById('fonctionnement')?.scrollIntoView({ behavior: 'smooth' });
+              } else {
+                window.location.href = '/#fonctionnement';
+                setTimeout(() => {
+                  document.getElementById('fonctionnement')?.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+              }
+            }}
+            className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}
+          >
             Approche
           </a>
-          <a href="/#services" onClick={() => window.location.href = '/#services'} className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
+          <a 
+            href="/#services" 
+            onClick={(e) => {
+              e.preventDefault();
+              if (window.location.pathname === '/') {
+                document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
+              } else {
+                window.location.href = '/#services';
+                setTimeout(() => {
+                  document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+              }
+            }}
+            className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}
+          >
             Services
           </a>
           <a href="/calculatrices" className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
@@ -80,7 +122,21 @@ const Navbar = () => {
           <a href="/faq" className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
             FAQ
           </a>
-          <a href="/#contact" onClick={() => window.location.href = '/#contact'} className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
+          <a 
+            href="/#contact" 
+            onClick={(e) => {
+              e.preventDefault();
+              if (window.location.pathname === '/') {
+                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+              } else {
+                window.location.href = '/#contact';
+                setTimeout(() => {
+                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+              }
+            }}
+            className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}
+          >
             Contact
           </a>
           <Button asChild size="sm" className="rounded-full">
@@ -117,9 +173,17 @@ const Navbar = () => {
             <a
               href="/#thomas-bourque"
               className="block px-4 py-3 text-white font-medium hover:bg-white/10 rounded-lg transition-colors"
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault();
                 setIsMobileMenuOpen(false);
-                window.location.href = '/#thomas-bourque';
+                if (window.location.pathname === '/') {
+                  document.getElementById('thomas-bourque')?.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                  window.location.href = '/#thomas-bourque';
+                  setTimeout(() => {
+                    document.getElementById('thomas-bourque')?.scrollIntoView({ behavior: 'smooth' });
+                  }, 100);
+                }
               }}
             >
               À propos
@@ -127,9 +191,17 @@ const Navbar = () => {
             <a
               href="/#fonctionnement"
               className="block px-4 py-3 text-white font-medium hover:bg-white/10 rounded-lg transition-colors"
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault();
                 setIsMobileMenuOpen(false);
-                window.location.href = '/#fonctionnement';
+                if (window.location.pathname === '/') {
+                  document.getElementById('fonctionnement')?.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                  window.location.href = '/#fonctionnement';
+                  setTimeout(() => {
+                    document.getElementById('fonctionnement')?.scrollIntoView({ behavior: 'smooth' });
+                  }, 100);
+                }
               }}
             >
               Approche
@@ -137,9 +209,17 @@ const Navbar = () => {
             <a
               href="/#services"
               className="block px-4 py-3 text-white font-medium hover:bg-white/10 rounded-lg transition-colors"
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault();
                 setIsMobileMenuOpen(false);
-                window.location.href = '/#services';
+                if (window.location.pathname === '/') {
+                  document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                  window.location.href = '/#services';
+                  setTimeout(() => {
+                    document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
+                  }, 100);
+                }
               }}
             >
               Services
@@ -161,9 +241,17 @@ const Navbar = () => {
             <a
               href="/#contact"
               className="block px-4 py-3 text-white font-medium hover:bg-white/10 rounded-lg transition-colors"
-              onClick={() => {
+              onClick={(e) => {
+                e.preventDefault();
                 setIsMobileMenuOpen(false);
-                window.location.href = '/#contact';
+                if (window.location.pathname === '/') {
+                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                  window.location.href = '/#contact';
+                  setTimeout(() => {
+                    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                  }, 100);
+                }
               }}
             >
               Contact
