@@ -50,6 +50,16 @@ const Navbar = () => {
     return isScrolled ? 'text-slate-900' : 'text-white';
   };
 
+  const handleSectionNavigation = (sectionId: string) => {
+    if (window.location.pathname === '/') {
+      // Si on est déjà sur la page d'accueil, scroll direct
+      document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      // Si on est sur une autre page, rediriger avec le hash
+      window.location.href = `/#${sectionId}`;
+    }
+  };
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -65,80 +75,36 @@ const Navbar = () => {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-8">
-          <a 
-            href="/#thomas-bourque" 
-            onClick={(e) => {
-              e.preventDefault();
-              if (window.location.pathname === '/') {
-                document.getElementById('thomas-bourque')?.scrollIntoView({ behavior: 'smooth' });
-              } else {
-                window.location.href = '/#thomas-bourque';
-                setTimeout(() => {
-                  document.getElementById('thomas-bourque')?.scrollIntoView({ behavior: 'smooth' });
-                }, 100);
-              }
-            }}
-            className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}
+          <button 
+            onClick={() => handleSectionNavigation('thomas-bourque')}
+            className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()} cursor-pointer`}
           >
             À propos
-          </a>
-          <a 
-            href="/#fonctionnement" 
-            onClick={(e) => {
-              e.preventDefault();
-              if (window.location.pathname === '/') {
-                document.getElementById('fonctionnement')?.scrollIntoView({ behavior: 'smooth' });
-              } else {
-                window.location.href = '/#fonctionnement';
-                setTimeout(() => {
-                  document.getElementById('fonctionnement')?.scrollIntoView({ behavior: 'smooth' });
-                }, 100);
-              }
-            }}
-            className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}
+          </button>
+          <button 
+            onClick={() => handleSectionNavigation('fonctionnement')}
+            className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()} cursor-pointer`}
           >
             Approche
-          </a>
-          <a 
-            href="/#services" 
-            onClick={(e) => {
-              e.preventDefault();
-              if (window.location.pathname === '/') {
-                document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
-              } else {
-                window.location.href = '/#services';
-                setTimeout(() => {
-                  document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
-                }, 100);
-              }
-            }}
-            className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}
+          </button>
+          <button 
+            onClick={() => handleSectionNavigation('services')}
+            className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()} cursor-pointer`}
           >
             Services
-          </a>
+          </button>
           <a href="/calculatrices" className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
             Calculatrices
           </a>
           <a href="/faq" className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
             FAQ
           </a>
-          <a 
-            href="/#contact" 
-            onClick={(e) => {
-              e.preventDefault();
-              if (window.location.pathname === '/') {
-                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-              } else {
-                window.location.href = '/#contact';
-                setTimeout(() => {
-                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-                }, 100);
-              }
-            }}
-            className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}
+          <button 
+            onClick={() => handleSectionNavigation('contact')}
+            className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()} cursor-pointer`}
           >
             Contact
-          </a>
+          </button>
           <Button asChild size="sm" className="rounded-full">
             <a href="https://calendly.com/tbourque-planipret" target="_blank" rel="noopener noreferrer">
               Planifier un appel
@@ -170,60 +136,33 @@ const Navbar = () => {
       {isMobileMenuOpen && (
         <div className="md:hidden absolute top-full left-0 right-0 bg-gradient-to-br from-primary via-primary/95 to-primary/90 backdrop-blur-md shadow-xl border-t border-white/20">
           <div className="p-6 space-y-2">
-            <a
-              href="/#thomas-bourque"
-              className="block px-4 py-3 text-white font-medium hover:bg-white/10 rounded-lg transition-colors"
-              onClick={(e) => {
-                e.preventDefault();
+            <button
+              onClick={() => {
                 setIsMobileMenuOpen(false);
-                if (window.location.pathname === '/') {
-                  document.getElementById('thomas-bourque')?.scrollIntoView({ behavior: 'smooth' });
-                } else {
-                  window.location.href = '/#thomas-bourque';
-                  setTimeout(() => {
-                    document.getElementById('thomas-bourque')?.scrollIntoView({ behavior: 'smooth' });
-                  }, 100);
-                }
+                handleSectionNavigation('thomas-bourque');
               }}
+              className="block w-full text-left px-4 py-3 text-white font-medium hover:bg-white/10 rounded-lg transition-colors"
             >
               À propos
-            </a>
-            <a
-              href="/#fonctionnement"
-              className="block px-4 py-3 text-white font-medium hover:bg-white/10 rounded-lg transition-colors"
-              onClick={(e) => {
-                e.preventDefault();
+            </button>
+            <button
+              onClick={() => {
                 setIsMobileMenuOpen(false);
-                if (window.location.pathname === '/') {
-                  document.getElementById('fonctionnement')?.scrollIntoView({ behavior: 'smooth' });
-                } else {
-                  window.location.href = '/#fonctionnement';
-                  setTimeout(() => {
-                    document.getElementById('fonctionnement')?.scrollIntoView({ behavior: 'smooth' });
-                  }, 100);
-                }
+                handleSectionNavigation('fonctionnement');
               }}
+              className="block w-full text-left px-4 py-3 text-white font-medium hover:bg-white/10 rounded-lg transition-colors"
             >
               Approche
-            </a>
-            <a
-              href="/#services"
-              className="block px-4 py-3 text-white font-medium hover:bg-white/10 rounded-lg transition-colors"
-              onClick={(e) => {
-                e.preventDefault();
+            </button>
+            <button
+              onClick={() => {
                 setIsMobileMenuOpen(false);
-                if (window.location.pathname === '/') {
-                  document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
-                } else {
-                  window.location.href = '/#services';
-                  setTimeout(() => {
-                    document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
-                  }, 100);
-                }
+                handleSectionNavigation('services');
               }}
+              className="block w-full text-left px-4 py-3 text-white font-medium hover:bg-white/10 rounded-lg transition-colors"
             >
               Services
-            </a>
+            </button>
             <a
               href="/calculatrices"
               className="block px-4 py-3 text-white font-medium hover:bg-white/10 rounded-lg transition-colors"
@@ -238,24 +177,16 @@ const Navbar = () => {
             >
               FAQ
             </a>
-            <a
-              href="/#contact"
-              className="block px-4 py-3 text-white font-medium hover:bg-white/10 rounded-lg transition-colors"
-              onClick={(e) => {
-                e.preventDefault();
+            <button
+              onClick={() => {
                 setIsMobileMenuOpen(false);
-                if (window.location.pathname === '/') {
-                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-                } else {
-                  window.location.href = '/#contact';
-                  setTimeout(() => {
-                    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-                  }, 100);
-                }
+                handleSectionNavigation('contact');
               }}
+              className="block w-full text-left px-4 py-3 text-white font-medium hover:bg-white/10 rounded-lg transition-colors"
             >
               Contact
-            </a>
+            </button>
+            
             <div className="pt-4 space-y-2">
               <Button asChild size="sm" className="w-full rounded-full bg-white text-primary hover:bg-white/90">
                 <a 
