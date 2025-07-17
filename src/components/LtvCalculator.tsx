@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -171,8 +172,11 @@ const LtvCalculator = () => {
                   <Input
                     id="currentInterestRate"
                     type="number"
-                    value={currentInterestRate}
-                    onChange={(e) => setCurrentInterestRate(Number(e.target.value) || 0)}
+                    value={currentInterestRate === 0 ? '' : currentInterestRate}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setCurrentInterestRate(value === '' ? 0 : Number(value));
+                    }}
                     step={0.01}
                     min={0}
                     max={15}
@@ -258,8 +262,11 @@ const LtvCalculator = () => {
                   <Input
                     id="newInterestRate"
                     type="number"
-                    value={newInterestRate}
-                    onChange={(e) => setNewInterestRate(Number(e.target.value) || 0)}
+                    value={newInterestRate === 0 ? '' : newInterestRate}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      setNewInterestRate(value === '' ? 0 : Number(value));
+                    }}
                     step={0.01}
                     min={0}
                     max={15}
