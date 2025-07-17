@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -315,6 +316,11 @@ const ScenarioComparator = () => {
         if (isInterestRate && displayValue && displayValue !== '0') {
           displayValue = `${displayValue}%`;
           span.style.textAlign = 'center';
+          // Supprimer le span % qui sera en double
+          const percentSpan = htmlInput.parentElement?.querySelector('span');
+          if (percentSpan && percentSpan.textContent === '%') {
+            percentSpan.remove();
+          }
         }
         
         span.textContent = displayValue;
