@@ -171,7 +171,7 @@ const LtvCalculator = () => {
                   <Input
                     id="currentInterestRate"
                     type="number"
-                    value={currentInterestRate === 0 ? '' : currentInterestRate.toFixed(2)}
+                    value={currentInterestRate}
                     onChange={(e) => setCurrentInterestRate(Number(e.target.value) || 0)}
                     step={0.01}
                     min={0}
@@ -258,7 +258,7 @@ const LtvCalculator = () => {
                   <Input
                     id="newInterestRate"
                     type="number"
-                    value={newInterestRate === 0 ? '' : newInterestRate.toFixed(2)}
+                    value={newInterestRate}
                     onChange={(e) => setNewInterestRate(Number(e.target.value) || 0)}
                     step={0.01}
                     min={0}
