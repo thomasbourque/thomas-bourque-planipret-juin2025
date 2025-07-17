@@ -65,13 +65,13 @@ const Navbar = () => {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-8">
-          <a href="/#thomas-bourque" className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
+          <a href="/#thomas-bourque" onClick={() => window.location.href = '/#thomas-bourque'} className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
             À propos
           </a>
-          <a href="/#fonctionnement" className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
+          <a href="/#fonctionnement" onClick={() => window.location.href = '/#fonctionnement'} className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
             Approche
           </a>
-          <a href="/#services" className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
+          <a href="/#services" onClick={() => window.location.href = '/#services'} className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
             Services
           </a>
           <a href="/calculatrices" className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
@@ -80,7 +80,7 @@ const Navbar = () => {
           <a href="/faq" className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
             FAQ
           </a>
-          <a href="/#contact" className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
+          <a href="/#contact" onClick={() => window.location.href = '/#contact'} className={`text-sm font-medium hover:opacity-80 transition-opacity ${getTextColor()}`}>
             Contact
           </a>
           <Button asChild size="sm" className="rounded-full">
@@ -117,21 +117,30 @@ const Navbar = () => {
             <a
               href="/#thomas-bourque"
               className="block px-4 py-3 text-white font-medium hover:bg-white/10 rounded-lg transition-colors"
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                window.location.href = '/#thomas-bourque';
+              }}
             >
               À propos
             </a>
             <a
               href="/#fonctionnement"
               className="block px-4 py-3 text-white font-medium hover:bg-white/10 rounded-lg transition-colors"
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                window.location.href = '/#fonctionnement';
+              }}
             >
               Approche
             </a>
             <a
               href="/#services"
               className="block px-4 py-3 text-white font-medium hover:bg-white/10 rounded-lg transition-colors"
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                window.location.href = '/#services';
+              }}
             >
               Services
             </a>
@@ -152,7 +161,10 @@ const Navbar = () => {
             <a
               href="/#contact"
               className="block px-4 py-3 text-white font-medium hover:bg-white/10 rounded-lg transition-colors"
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                window.location.href = '/#contact';
+              }}
             >
               Contact
             </a>
