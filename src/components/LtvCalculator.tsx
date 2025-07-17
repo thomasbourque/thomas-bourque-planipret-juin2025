@@ -15,7 +15,9 @@ const LtvCalculator = () => {
   const [newAmortization, setNewAmortization] = useState(25);
   const [appreciationRate, setAppreciationRate] = useState([3]);
   const [refinancingAmount, setRefinancingAmount] = useState(0);
-  const [hasExistingCreditLine, setHasExistingCreditLine] = useState(true);
+
+  // Always treat as having existing credit line
+  const hasExistingCreditLine = true;
 
   // Calcul du RPV actuel
   const currentLTV = (currentMortgageBalance / currentHomeValue) * 100;
@@ -201,20 +203,6 @@ const LtvCalculator = () => {
                 </div>
               </div>
 
-              {/* Case à cocher pour la marge existante */}
-              <div className="mt-6">
-                <div className="flex items-center space-x-2">
-                  <Checkbox 
-                    id="hasExistingCreditLine" 
-                    checked={hasExistingCreditLine}
-                    onCheckedChange={(checked) => setHasExistingCreditLine(checked === true)}
-                  />
-                  <Label htmlFor="hasExistingCreditLine" className="text-lg font-medium text-slate-900">
-                    Marge de crédit hypothécaire
-                  </Label>
-                </div>
-              </div>
-
               {/* RPV actuel et montant disponible */}
               <div className="mt-6 grid md:grid-cols-2 gap-4">
                 <div className="p-4 bg-slate-100 rounded-lg">
@@ -364,6 +352,7 @@ const LtvCalculator = () => {
                     <TableHead>Équité</TableHead>
                     <TableHead>RPV (%)</TableHead>
                     <TableHead>Montant disponible</TableHead>
+                    <TableHead>Statut</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -375,28 +364,26 @@ const LtvCalculator = () => {
                       <TableCell>{formatCurrency(row.equity)}</TableCell>
                       <TableCell className="font-semibold">
                         {row.ltv.toFixed(2)}%
-                        {hasExistingCreditLine && row.ltv <= 80 && (
-                          <span className="ml-2 text-xs bg-green-100 text-green-800 px-2 py-1 rounded whitespace-nowrap">
+                      </TableCell>
+                      <TableCell>{formatCurrency(row.availableAmount)}</TableCell>
+                      <TableCell>
+                        {row.ltv <= 80 ? (
+                          <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded whitespace-nowrap">
                             Marge ou refinancement possible
+                          </span>
+                        ) : (
+                          <span className="text-xs bg-red-100 text-red-800 px-2 py-1 rounded whitespace-nowrap">
+                            Marge ou refinancement non disponible
                           </span>
                         )}
                       </TableCell>
-                      <TableCell>{formatCurrency(row.availableAmount)}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
               </Table>
             </div>
 
-            <div className="mt-6 grid md:grid-cols-2 gap-4 text-sm">
-              <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                <div className="font-semibold text-green-800 mb-2">RPV ≤ 80%</div>
-                <p className="text-green-700">
-                  {hasExistingCreditLine ? 
-                    "Accès à une marge de crédit hypothécaire ou refinancement jusqu'à 80% de la valeur" : 
-                    "Refinancement jusqu'à 80% de la valeur"}
-                </p>
-              </div>
+            <div className="mt-6 grid md:grid-cols-1 gap-4 text-sm">
               <div className="bg-green-50 border border-green-200 rounded-lg p-4">
                 <div className="font-semibold text-green-800 mb-2">Montant disponible</div>
                 <p className="text-green-700">Montant disponible en marge ou en refinancement à 80% de la valeur</p>
