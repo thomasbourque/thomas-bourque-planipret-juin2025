@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -100,14 +99,12 @@ const LtvCalculator = () => {
   };
 
   const getLtvRowClass = (ltv: number) => {
-    if (ltv <= 65) return "bg-green-50 border-green-200";
-    if (ltv <= 80) return "bg-yellow-50 border-yellow-200";
+    if (ltv <= 80) return "bg-green-50 border-green-200";
     return "bg-red-50 border-red-200";
   };
 
   const getCurrentLtvClass = (ltv: number) => {
-    if (ltv <= 65) return "text-green-600 font-bold";
-    if (ltv <= 80) return "text-yellow-600 font-bold";
+    if (ltv <= 80) return "text-green-600 font-bold";
     return "text-red-600 font-bold";
   };
 
@@ -229,11 +226,11 @@ const LtvCalculator = () => {
                   </div>
                 </div>
                 
-                <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                  <div className="text-sm font-semibold text-blue-800 mb-1">
+                <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+                  <div className="text-sm font-semibold text-green-800 mb-1">
                     Montant disponible en marge ou en refinancement
                   </div>
-                  <div className="text-xl font-bold text-blue-700">
+                  <div className="text-xl font-bold text-green-700">
                     {formatCurrency(availableAmount)}
                   </div>
                 </div>
@@ -391,26 +388,18 @@ const LtvCalculator = () => {
               </Table>
             </div>
 
-            <div className="mt-6 grid md:grid-cols-3 gap-4 text-sm">
+            <div className="mt-6 grid md:grid-cols-2 gap-4 text-sm">
               <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                <div className="font-semibold text-green-800 mb-2">RPV ≤ 65%</div>
+                <div className="font-semibold text-green-800 mb-2">RPV ≤ 80%</div>
                 <p className="text-green-700">
                   {hasExistingCreditLine ? 
-                    "Accès à une marge de crédit hypothécaire ouverte" : 
+                    "Accès à une marge de crédit hypothécaire ou refinancement jusqu'à 80% de la valeur" : 
                     "Refinancement jusqu'à 80% de la valeur"}
                 </p>
               </div>
-              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                <div className="font-semibold text-yellow-800 mb-2">65% &lt; RPV ≤ 80%</div>
-                <p className="text-yellow-700">
-                  {hasExistingCreditLine ? 
-                    "Accès à un prêt lié dans la marge" : 
-                    "Refinancement jusqu'à 80% de la valeur"}
-                </p>
-              </div>
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                <div className="font-semibold text-blue-800 mb-2">Montant disponible</div>
-                <p className="text-blue-700">Montant disponible en marge ou en refinancement à 80% de la valeur</p>
+              <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                <div className="font-semibold text-green-800 mb-2">Montant disponible</div>
+                <p className="text-green-700">Montant disponible en marge ou en refinancement à 80% de la valeur</p>
               </div>
             </div>
           </div>
