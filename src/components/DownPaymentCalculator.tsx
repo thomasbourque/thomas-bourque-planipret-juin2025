@@ -25,6 +25,20 @@ const DownPaymentCalculator = () => {
     }
   };
 
+  const handleDownPayment1Change = (value: number[]) => {
+    setDownPayment1(value);
+    // Si le scénario 2 devient supérieur au scénario 1, l'ajuster
+    if (downPayment2[0] > value[0]) {
+      setDownPayment2([value[0]]);
+    }
+  };
+
+  const handleDownPayment2Change = (value: number[]) => {
+    // S'assurer que le scénario 2 ne dépasse jamais le scénario 1
+    const maxValue = Math.min(value[0], downPayment1[0]);
+    setDownPayment2([maxValue]);
+  };
+
   const results = calculateDownPaymentComparison(
     purchasePrice,
     downPayment1[0],
@@ -115,7 +129,7 @@ const DownPaymentCalculator = () => {
                 <MortgageSlider
                   label="Mise de fonds - Scénario 1"
                   value={downPayment1}
-                  onValueChange={setDownPayment1}
+                  onValueChange={handleDownPayment1Change}
                   min={5}
                   max={50}
                   step={1}
@@ -127,9 +141,9 @@ const DownPaymentCalculator = () => {
                 <MortgageSlider
                   label="Mise de fonds - Scénario 2"
                   value={downPayment2}
-                  onValueChange={setDownPayment2}
+                  onValueChange={handleDownPayment2Change}
                   min={5}
-                  max={50}
+                  max={downPayment1[0]}
                   step={1}
                   formatValue={(value) => `${value}%`}
                 />
