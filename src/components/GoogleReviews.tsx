@@ -54,7 +54,6 @@ const GoogleReviews = () => {
             <span className="ml-3 text-xl font-semibold text-slate-900">
               {averageRating}/5
             </span>
-            <span className="ml-2 text-slate-600">({totalReviews} avis)</span>
           </div>
           <p className="body-md text-slate-700">
             Découvrez ce que nos clients disent de nos services sur Google.

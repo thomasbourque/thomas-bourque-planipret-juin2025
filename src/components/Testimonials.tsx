@@ -5,7 +5,7 @@ import { useGoogleReviews } from "@/hooks/useGoogleReviews";
 
 const Testimonials = () => {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
-  const { averageRating, totalReviews } = useGoogleReviews();
+  const { averageRating } = useGoogleReviews();
   
   const testimonials = [
     {
@@ -133,7 +133,6 @@ const Testimonials = () => {
               <span className="ml-3 text-2xl font-semibold text-slate-900">
                 {averageRating}/5
               </span>
-              <span className="ml-2 text-lg text-slate-600">({totalReviews} avis)</span>
             </div>
             <a
               href="https://www.google.com/search?q=thomas+bourque+courtier+hypothecaire+quebec"
