@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import BourqueHypothequesLogo from "./BourqueHypothequesLogo";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   
   // Check if we're on pages that should always have dark colors
   const isDarkPage = [
@@ -39,6 +40,19 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Effect to handle scrolling to section when arriving from another page with hash
+  useEffect(() => {
+    if (location.pathname === '/' && location.hash) {
+      const sectionId = location.hash.substring(1);
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100); // Small delay to ensure page is loaded
+    }
+  }, [location]);
+
   // On calculator pages, always use dark colors regardless of scroll position
   const getTextColor = () => {
     if (isDarkPage) return 'text-slate-900';
@@ -51,12 +65,12 @@ const Navbar = () => {
   };
 
   const handleSectionNavigation = (sectionId: string) => {
-    if (window.location.pathname === '/') {
+    if (location.pathname === '/') {
       // Si on est déjà sur la page d'accueil, scroll direct
       document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
     } else {
-      // Si on est sur une autre page, rediriger avec le hash
-      window.location.href = `/#${sectionId}`;
+      // Si on est sur une autre page, utiliser navigate avec hash pour React Router
+      navigate(`/#${sectionId}`);
     }
   };
 
