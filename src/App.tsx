@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Lenders from "./pages/Lenders";
 import FAQ from "./pages/FAQ";
+import Blog from "./pages/Blog";
 import Calculatrices from "./pages/Calculatrices";
 import ScenarioComparator from "./pages/ScenarioComparator";
 import PaymentRhythmPreview from "./pages/PaymentRhythmPreview";
@@ -33,6 +34,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/preteurs" element={<Lenders />} />
+          <Route path="/blog" element={<Blog />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/calculatrices" element={<Calculatrices />} />
           <Route path="/comparateur-scenarios" element={<ScenarioComparator />} />
