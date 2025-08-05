@@ -169,12 +169,13 @@ const MortgagePaymentForm = ({
               <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-500">%</span>
               <Input
                 type="number"
-                value={downPaymentPercentage.toFixed(2)}
+                value={downPaymentPercentage === 0 ? '' : downPaymentPercentage}
                 onChange={(e) => handleDownPaymentPercentageChange(Number(e.target.value))}
                 className="text-lg pr-8"
                 min="5"
                 max="100"
                 step="0.01"
+                placeholder="0.00"
               />
             </div>
             <p className="text-sm text-slate-600">
