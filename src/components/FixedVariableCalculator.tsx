@@ -161,7 +161,7 @@ const FixedVariableCalculator = () => {
                       placeholder="0.00"
                     />
                   </div>
-                  <div className="text-center pt-2">
+                  <div className="text-center">
                     <div className="text-sm text-slate-600 mb-1">Paiement mensuel</div>
                     <div className="text-xl font-bold text-blue-700">
                       {formatCurrency(fixedMonthlyPayment)}
