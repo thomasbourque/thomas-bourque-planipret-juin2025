@@ -179,7 +179,7 @@ const MortgagePaymentForm = ({
               />
             </div>
             <p className="text-sm text-slate-600">
-              Montant: {downPayment.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}
+              Montant: {downPayment.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })} ({downPaymentPercentage.toFixed(2)}%)
             </p>
           </div>
         )}

@@ -157,8 +157,15 @@ const LtvCalculator = () => {
                       id="currentMortgageBalance"
                       type="number"
                       value={currentMortgageBalance === 0 ? '' : currentMortgageBalance}
-                      onChange={(e) => setCurrentMortgageBalance(Number(e.target.value) || 0)}
+                      onChange={(e) => {
+                        const value = Number(e.target.value) || 0;
+                        // Validate that mortgage balance doesn't exceed home value
+                        if (value <= currentHomeValue) {
+                          setCurrentMortgageBalance(value);
+                        }
+                      }}
                       step={5000}
+                      max={currentHomeValue}
                       className="text-lg pl-8"
                       placeholder="0"
                     />
