@@ -411,7 +411,9 @@ const RefinancingCalculatorSteps = () => {
                           data={(() => {
                             const chartData = [];
                             const years = Math.ceil(remainingAmortization);
-                            const monthlyPayment = calculateMonthlyPayment(currentBalance, currentRate, remainingAmortization);
+                            // Nouveau solde total = solde initial + montant de refinancement
+                            const newTotalBalance = currentBalance + effectiveRefinancingAmount;
+                            const newAmortizationMonths = remainingAmortization * 12;
                             
                             for (let year = 0; year <= years; year++) {
                               // Croissance en bourse à 6,5% avec capitalisation semi-annuelle
@@ -420,8 +422,9 @@ const RefinancingCalculatorSteps = () => {
                               const mortgageCost = effectiveRefinancingAmount * Math.pow(1 + (newRate/100)/2, year * 2);
                               // Économie (écart entre investissement et coût hypothécaire)
                               const savings = investmentValue - mortgageCost;
-                              // Solde hypothécaire restant après les paiements
-                              const remainingBalance = calculateRemainingBalance(currentBalance, currentRate, remainingAmortization, year * 12);
+                              // Solde hypothécaire restant du nouveau prêt total (solde initial + refinancement)
+                              const monthsPaid = year * 12;
+                              const remainingBalance = calculateRemainingBalance(newTotalBalance, newRate, newAmortizationMonths, monthsPaid);
                               
                               chartData.push({
                                 year,
