@@ -68,7 +68,8 @@ const RefinancingCalculator = () => {
   const investmentStrategy = calculateInvestmentStrategy(
     refinancingAmount,
     newRate[0],
-    remainingAmortization
+    remainingAmortization,
+    currentBalance
   );
 
   return (
@@ -312,7 +313,7 @@ const RefinancingCalculator = () => {
                         </p>
                         <div className="bg-blue-50 p-3 rounded-lg border border-blue-200">
                           <p className="text-blue-800 font-semibold">
-                            Vous pourriez payer votre maison {investmentStrategy.yearsMonthsSaved.years} {investmentStrategy.yearsMonthsSaved.years === 1 ? 'an' : 'ans'} 
+                            Vous pourriez payer votre maison {investmentStrategy.yearsMonthsSaved.years} {investmentStrategy.yearsMonthsSaved.years === 1 ? "an" : "ans"} 
                             {investmentStrategy.yearsMonthsSaved.months > 0 && ` et ${investmentStrategy.yearsMonthsSaved.months} mois`} plus vite
                           </p>
                         </div>

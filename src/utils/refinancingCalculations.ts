@@ -13,6 +13,33 @@ export interface InvestmentStrategy {
   yearsMonthsSaved: { years: number; months: number };
 }
 
+// Calcul du paiement mensuel selon la formule canadienne (composition semi-annuelle)
+const calculateMonthlyPayment = (principal: number, annualRate: number, totalMonths: number) => {
+  if (annualRate === 0) return principal / totalMonths;
+  
+  const semiAnnualRate = annualRate / 2;
+  const monthlyEquivalentRate = Math.pow(1 + semiAnnualRate / 100, 2/12) - 1;
+  
+  const numerator = principal * monthlyEquivalentRate * Math.pow(1 + monthlyEquivalentRate, totalMonths);
+  const denominator = Math.pow(1 + monthlyEquivalentRate, totalMonths) - 1;
+  
+  return numerator / denominator;
+};
+
+// Calcul du solde restant après les mois jusqu'à échéance
+const calculateRemainingBalance = (principal: number, annualRate: number, totalMonths: number, monthsPaid: number) => {
+  if (annualRate === 0) return principal * (1 - monthsPaid / totalMonths);
+  
+  const semiAnnualRate = annualRate / 2;
+  const monthlyEquivalentRate = Math.pow(1 + semiAnnualRate / 100, 2/12) - 1;
+  
+  const monthlyPayment = calculateMonthlyPayment(principal, annualRate, totalMonths);
+  
+  const numerator = principal * Math.pow(1 + monthlyEquivalentRate, monthsPaid) - monthlyPayment * (Math.pow(1 + monthlyEquivalentRate, monthsPaid) - 1) / monthlyEquivalentRate;
+  
+  return numerator;
+};
+
 export const calculateRefinancingSavings = (
   currentBalance: number,
   currentRate: number,
@@ -25,33 +52,6 @@ export const calculateRefinancingSavings = (
   const today = new Date();
   const termEnd = new Date(termEndDate);
   const monthsToTermEnd = Math.ceil((termEnd.getTime() - today.getTime()) / (1000 * 60 * 60 * 24 * 30));
-
-  // Calcul du paiement mensuel selon la formule canadienne (composition semi-annuelle)
-  const calculateMonthlyPayment = (principal: number, annualRate: number, totalMonths: number) => {
-    if (annualRate === 0) return principal / totalMonths;
-    
-    const semiAnnualRate = annualRate / 2;
-    const monthlyEquivalentRate = Math.pow(1 + semiAnnualRate / 100, 2/12) - 1;
-    
-    const numerator = principal * monthlyEquivalentRate * Math.pow(1 + monthlyEquivalentRate, totalMonths);
-    const denominator = Math.pow(1 + monthlyEquivalentRate, totalMonths) - 1;
-    
-    return numerator / denominator;
-  };
-
-  // Calcul du solde restant après les mois jusqu'à échéance
-  const calculateRemainingBalance = (principal: number, annualRate: number, totalMonths: number, monthsPaid: number) => {
-    if (annualRate === 0) return principal * (1 - monthsPaid / totalMonths);
-    
-    const semiAnnualRate = annualRate / 2;
-    const monthlyEquivalentRate = Math.pow(1 + semiAnnualRate / 100, 2/12) - 1;
-    
-    const monthlyPayment = calculateMonthlyPayment(principal, annualRate, totalMonths);
-    
-    const numerator = principal * Math.pow(1 + monthlyEquivalentRate, monthsPaid) - monthlyPayment * (Math.pow(1 + monthlyEquivalentRate, monthsPaid) - 1) / monthlyEquivalentRate;
-    
-    return numerator;
-  };
 
   const currentMonthlyPayment = calculateMonthlyPayment(currentBalance, currentRate, totalAmortizationMonths);
   const newMonthlyPayment = calculateMonthlyPayment(currentBalance, newRate, totalAmortizationMonths);
@@ -88,9 +88,11 @@ export const calculateInvestmentStrategy = (
   refinancingAmount: number,
   newRate: number,
   remainingAmortizationYears: number,
+  currentBalance: number,
   investmentReturn: number = 6.5
 ): InvestmentStrategy => {
   const years = remainingAmortizationYears;
+  const newLoanAmount = currentBalance + refinancingAmount;
   
   // Croissance de l'investissement en bourse (capitalisation semi-annuelle)
   const semiAnnualInvestmentRate = investmentReturn / 100 / 2;
@@ -102,17 +104,32 @@ export const calculateInvestmentStrategy = (
   
   // Bénéfice net = valeur de l'investissement - valeur totale hypothécaire
   const netBenefit = investmentGrowth - mortgageValue;
+
+  // Calcul du tableau d'amortissement pour trouver quand on peut payer la maison plus vite
+  const monthlyEquivalentRate = Math.pow(1 + semiAnnualMortgageRate, 2/12) - 1;
+  const totalMonths = years * 12;
+  const monthlyPayment = calculateMonthlyPayment(newLoanAmount, newRate, totalMonths);
   
-  // Calcul du temps économisé en utilisant le bénéfice net pour rembourser plus rapidement
-  // Estimation basée sur le fait qu'avec le bénéfice net, on peut rembourser une partie du capital plus tôt
-  const monthlyNetBenefit = netBenefit / (years * 12);
-  const currentMonthlyPayment = refinancingAmount / (years * 12); // Estimation simple
-  const acceleratedPayment = currentMonthlyPayment + monthlyNetBenefit;
+  let remainingBalance = newLoanAmount;
+  let yearsSaved = 0;
   
-  // Calcul approximatif du temps économisé avec paiements accélérés
-  const accelerationFactor = acceleratedPayment / currentMonthlyPayment;
-  const timeReduction = years * (1 - 1/accelerationFactor);
-  const yearsSaved = Math.max(0, Math.min(timeReduction, years * 0.5)); // Limité à 50% du temps
+  // Simuler année par année pour trouver quand les économies dépassent le solde
+  for (let year = 1; year <= years; year++) {
+    // Calculer le solde restant après cette année
+    const monthsPaid = year * 12;
+    remainingBalance = calculateRemainingBalance(newLoanAmount, newRate, totalMonths, monthsPaid);
+    
+    // Calculer les économies accumulées à cette date
+    const investmentValueAtYear = refinancingAmount * Math.pow(1 + semiAnnualInvestmentRate, year * 2);
+    const mortgageValueAtYear = refinancingAmount * Math.pow(1 + semiAnnualMortgageRate, year * 2);
+    const savingsAtYear = investmentValueAtYear - mortgageValueAtYear;
+    
+    // Si les économies dépassent le solde restant, on peut payer la maison
+    if (savingsAtYear >= remainingBalance) {
+      yearsSaved = years - year;
+      break;
+    }
+  }
   
   const totalMonthsSaved = Math.round(yearsSaved * 12);
   const yearsMonthsSaved = {
