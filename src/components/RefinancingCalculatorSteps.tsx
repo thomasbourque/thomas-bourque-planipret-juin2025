@@ -226,7 +226,7 @@ const RefinancingCalculatorSteps = () => {
             <Input
               id="currentRate"
               type="number"
-              value={currentRate}
+              value={currentRate.toFixed(2)}
               onChange={(e) => setCurrentRate(Number(e.target.value))}
               step={0.01}
               min={3}
@@ -283,6 +283,9 @@ const RefinancingCalculatorSteps = () => {
               placeholder={refinancingCapacity.toString()}
             />
           </div>
+          <p className="text-sm text-slate-600">
+            Montant de refinancement maximal possible : {refinancingCapacity.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
+          </p>
         </div>
       )
     }
@@ -391,7 +394,7 @@ const RefinancingCalculatorSteps = () => {
 
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-xl text-slate-900">Progression de votre investissement</CardTitle>
+                    <CardTitle className="text-xl text-slate-900">Stratégie d'investissement</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-6">
                     <div className="text-center p-4 bg-blue-50 rounded-lg">
@@ -467,7 +470,7 @@ const RefinancingCalculatorSteps = () => {
                             stroke="#dc2626" 
                             strokeWidth={3}
                             dot={false}
-                            name="Coût hypothécaire cumulé"
+                            name={`Coût hypothécaire (${newRate.toFixed(2)}%)`}
                           />
                         </LineChart>
                       </ResponsiveContainer>
@@ -487,6 +490,16 @@ const RefinancingCalculatorSteps = () => {
                             {investmentStrategy.yearsMonthsSaved.months > 0 && ` et ${investmentStrategy.yearsMonthsSaved.months} mois`} plus vite avec ces économies, et ce, sans aucun frais ni effort supplémentaire.
                           </p>
                         </div>
+                      </div>
+                      
+                      <div className="text-center mt-6">
+                        <Button 
+                          size="lg"
+                          style={{ backgroundColor: 'hsl(217, 91%, 60%)', color: 'white' }}
+                          className="hover:opacity-90 transition-opacity"
+                        >
+                          Contactez-nous pour passer à l'action
+                        </Button>
                       </div>
                     </div>
                   </CardContent>
