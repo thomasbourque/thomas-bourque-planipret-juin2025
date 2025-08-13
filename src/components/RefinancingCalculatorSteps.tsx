@@ -505,7 +505,7 @@ const RefinancingCalculatorSteps = () => {
                           <Line 
                             type="monotone" 
                             dataKey="remainingBalance" 
-                            stroke="#f59e0b" 
+                            stroke="#9ca3af" 
                             strokeWidth={2}
                             dot={false}
                             strokeDasharray="5 5"
@@ -516,15 +516,15 @@ const RefinancingCalculatorSteps = () => {
                     </div>
 
                     <div className="space-y-4">
-                      <div className="text-center p-4 bg-green-50 rounded-lg border border-green-200">
-                        <p className="text-lg font-semibold text-green-800 mb-3">
+                      <div className="text-center p-4 bg-yellow-50 rounded-lg border border-yellow-200">
+                        <p className="text-lg font-semibold text-yellow-800 mb-3">
                           Vous pourriez avoir {investmentStrategy.netBenefit.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })} de plus dans vos poches
                         </p>
-                        <p className="text-green-700 mb-3">
+                        <p className="text-yellow-700 mb-3">
                           au bout de {Math.round(remainingAmortization)} ans avec cette stratégie d'investissement.
                         </p>
-                        <div className="bg-blue-50 p-3 rounded-lg border border-blue-200">
-                          <p className="text-blue-800 font-semibold">
+                        <div className="bg-yellow-100 p-3 rounded-lg border border-yellow-300">
+                          <p className="text-yellow-800 font-semibold">
                             Vous pourriez décider de payer votre maison au complet {investmentStrategy.yearsMonthsSaved.years} {investmentStrategy.yearsMonthsSaved.years === 1 ? "an" : "ans"}
                             {investmentStrategy.yearsMonthsSaved.months > 0 && ` et ${investmentStrategy.yearsMonthsSaved.months} mois`} plus vite avec ces économies, et ce, sans aucun frais ni effort supplémentaire.
                           </p>
