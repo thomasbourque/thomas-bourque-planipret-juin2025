@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { calculateRefinancingSavings, calculateRefinancingCapacity, calculateInvestmentStrategy } from "@/utils/refinancingCalculations";
-import MortgageSlider from "./MortgageSlider";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle } from "lucide-react";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 
 const RefinancingCalculatorSteps = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -283,9 +283,6 @@ const RefinancingCalculatorSteps = () => {
               placeholder={refinancingCapacity.toString()}
             />
           </div>
-          <p className="text-sm text-slate-600">
-            Maximum disponible: {refinancingCapacity.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
-          </p>
         </div>
       )
     }
@@ -352,22 +349,9 @@ const RefinancingCalculatorSteps = () => {
             ))}
 
             {/* Results */}
-            {currentStep > steps.length && (
+            {showResults && (
               <div className="space-y-6">
-                <div className="text-center">
-                  <Button 
-                    onClick={() => setShowResults(!showResults)}
-                    size="lg"
-                    className="w-full"
-                    style={{ backgroundColor: 'hsl(45, 93%, 47%)', color: 'hsl(217, 91%, 60%)' }}
-                  >
-                    Calculer l'impact de mon refinancement
-                  </Button>
-                </div>
-
-                {showResults && (
-                  <>
-                    <Card>
+                <Card>
                       <CardHeader>
                         <CardTitle className="text-xl text-slate-900">Économies de refinancement</CardTitle>
                       </CardHeader>
@@ -405,63 +389,119 @@ const RefinancingCalculatorSteps = () => {
                       </CardContent>
                     </Card>
 
-                    <Card>
-                      <CardHeader>
-                        <CardTitle className="text-xl text-slate-900">Stratégie d'investissement</CardTitle>
-                      </CardHeader>
-                      <CardContent className="space-y-4">
-                        <div className="text-center p-4 bg-blue-50 rounded-lg">
-                          <p className="text-sm text-slate-600 mb-2">Espace de refinancement disponible</p>
-                          <p className="text-2xl font-bold text-blue-600">
-                            {refinancingCapacity.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
-                          </p>
-                          <p className="text-xs text-slate-500 mt-1">80% de la valeur - solde hypothécaire</p>
-                        </div>
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-xl text-slate-900">Progression de votre investissement</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-6">
+                    <div className="text-center p-4 bg-blue-50 rounded-lg">
+                      <p className="text-sm text-slate-600 mb-2">Montant de refinancement</p>
+                      <p className="text-2xl font-bold text-blue-600">
+                        {effectiveRefinancingAmount.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
+                      </p>
+                    </div>
 
-                        <div className="grid grid-cols-2 gap-4 text-center">
-                          <div className="p-3 bg-slate-50 rounded-lg">
-                            <p className="text-sm text-slate-600">Croissance en bourse (6,5%)</p>
-                            <p className="text-lg font-semibold text-green-600">
-                              {investmentStrategy.investmentGrowth.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
-                            </p>
-                          </div>
-                          <div className="p-3 bg-slate-50 rounded-lg">
-                            <p className="text-sm text-slate-600">Coût hypothécaire total</p>
-                            <p className="text-lg font-semibold text-red-600">
-                              {investmentStrategy.mortgageInterestCost.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
-                            </p>
-                          </div>
-                        </div>
+                    {/* Chart */}
+                    <div className="h-80 w-full">
+                      <ResponsiveContainer width="100%" height="100%">
+                        <LineChart
+                          data={(() => {
+                            const chartData = [];
+                            const years = Math.ceil(remainingAmortization);
+                            for (let year = 0; year <= years; year++) {
+                              const investmentValue = effectiveRefinancingAmount * Math.pow(1.065, year);
+                              const mortgageCost = effectiveRefinancingAmount * (newRate / 100) * year;
+                              chartData.push({
+                                year,
+                                investment: Math.round(investmentValue),
+                                mortgageCost: Math.round(mortgageCost),
+                              });
+                            }
+                            return chartData;
+                          })()}
+                          margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+                        >
+                          <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                          <XAxis 
+                            dataKey="year" 
+                            stroke="#64748b"
+                            fontSize={12}
+                            tickLine={false}
+                            axisLine={false}
+                          />
+                          <YAxis 
+                            stroke="#64748b"
+                            fontSize={12}
+                            tickLine={false}
+                            axisLine={false}
+                            tickFormatter={(value) => `${(value / 1000).toFixed(0)}k`}
+                          />
+                          <Tooltip 
+                            formatter={(value: number, name: string) => [
+                              value.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 }),
+                              name === 'investment' ? 'Croissance en bourse' : 'Coût hypothécaire'
+                            ]}
+                            labelFormatter={(label) => `Année ${label}`}
+                            contentStyle={{
+                              backgroundColor: 'white',
+                              border: '1px solid #e2e8f0',
+                              borderRadius: '8px',
+                              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                            }}
+                          />
+                          <Legend 
+                            wrapperStyle={{ paddingTop: '20px' }}
+                            iconType="line"
+                          />
+                          <Line 
+                            type="monotone" 
+                            dataKey="investment" 
+                            stroke="#16a34a" 
+                            strokeWidth={3}
+                            dot={false}
+                            name="Croissance en bourse (6,5%)"
+                          />
+                          <Line 
+                            type="monotone" 
+                            dataKey="mortgageCost" 
+                            stroke="#dc2626" 
+                            strokeWidth={3}
+                            dot={false}
+                            name="Coût hypothécaire cumulé"
+                          />
+                        </LineChart>
+                      </ResponsiveContainer>
+                    </div>
 
-                        <div className="text-center p-4 bg-green-50 rounded-lg border border-green-200">
-                          <p className="text-lg font-semibold text-green-800 mb-3">
-                            Vous pourriez avoir {investmentStrategy.netBenefit.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })} de plus dans vos poches
+                    <div className="space-y-4">
+                      <div className="text-center p-4 bg-green-50 rounded-lg border border-green-200">
+                        <p className="text-lg font-semibold text-green-800 mb-3">
+                          Vous pourriez avoir {investmentStrategy.netBenefit.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })} de plus dans vos poches
+                        </p>
+                        <p className="text-green-700 mb-3">
+                          au bout de {Math.round(remainingAmortization)} ans avec cette stratégie d'investissement.
+                        </p>
+                        <div className="bg-blue-50 p-3 rounded-lg border border-blue-200">
+                          <p className="text-blue-800 font-semibold">
+                            Vous pourriez décider de payer votre maison au complet {investmentStrategy.yearsMonthsSaved.years} {investmentStrategy.yearsMonthsSaved.years === 1 ? "an" : "ans"}
+                            {investmentStrategy.yearsMonthsSaved.months > 0 && ` et ${investmentStrategy.yearsMonthsSaved.months} mois`} plus vite avec ces économies, et ce, sans aucun frais ni effort supplémentaire.
                           </p>
-                          <p className="text-green-700 mb-3">
-                            au bout de {Math.round(remainingAmortization)} ans avec cette stratégie d'investissement.
-                          </p>
-                          <div className="bg-blue-50 p-3 rounded-lg border border-blue-200">
-                            <p className="text-blue-800 font-semibold">
-                              Vous pourriez payer votre maison {investmentStrategy.yearsMonthsSaved.years} {investmentStrategy.yearsMonthsSaved.years === 1 ? "an" : "ans"}
-                              {investmentStrategy.yearsMonthsSaved.months > 0 && ` et ${investmentStrategy.yearsMonthsSaved.months} mois`} plus vite
-                            </p>
-                          </div>
                         </div>
-                      </CardContent>
-                    </Card>
-                  </>
-                )}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
             )}
 
-            {currentStep === steps.length && !showResults && (
+            {currentStep === steps.length && (
               <div className="text-center">
                 <Button 
-                  onClick={() => setCurrentStep(prev => prev + 1)}
+                  onClick={() => setShowResults(true)}
                   size="lg"
                   style={{ backgroundColor: 'hsl(45, 93%, 47%)', color: 'hsl(217, 91%, 60%)' }}
                 >
-                  Voir mes résultats
+                  Calculer mes économies
                 </Button>
               </div>
             )}
