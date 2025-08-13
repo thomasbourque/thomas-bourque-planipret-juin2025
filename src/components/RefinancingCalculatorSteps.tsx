@@ -412,8 +412,10 @@ const RefinancingCalculatorSteps = () => {
                             const chartData = [];
                             const years = Math.ceil(remainingAmortization);
                             for (let year = 0; year <= years; year++) {
-                              const investmentValue = effectiveRefinancingAmount * Math.pow(1.065, year);
-                              const mortgageCost = effectiveRefinancingAmount * (newRate / 100) * year;
+                              // Croissance en bourse à 6,5% avec capitalisation semi-annuelle
+                              const investmentValue = effectiveRefinancingAmount * Math.pow(1 + 0.065/2, year * 2);
+                              // Coût hypothécaire au nouveau taux avec capitalisation semi-annuelle
+                              const mortgageCost = effectiveRefinancingAmount * Math.pow(1 + (newRate/100)/2, year * 2);
                               chartData.push({
                                 year,
                                 investment: Math.round(investmentValue),
@@ -507,7 +509,7 @@ const RefinancingCalculatorSteps = () => {
               </div>
             )}
 
-            {currentStep === steps.length && (
+            {currentStep === steps.length && !showResults && (
               <div className="text-center">
                 <Button 
                   onClick={() => setShowResults(true)}
