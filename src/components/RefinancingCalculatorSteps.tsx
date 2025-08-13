@@ -17,7 +17,7 @@ const RefinancingCalculatorSteps = () => {
   const [amortizationMonths, setAmortizationMonths] = useState(0);
   const [currentRate, setCurrentRate] = useState([5.5]);
   const [newRate, setNewRate] = useState([4.25]);
-  const [refinancingAmount, setRefinancingAmount] = useState(0);
+  const [refinancingAmount, setRefinancingAmount] = useState(50000);
   const [showResults, setShowResults] = useState(false);
 
   const handleCurrentBalanceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,14 +83,6 @@ const RefinancingCalculatorSteps = () => {
   );
 
   const refinancingCapacity = calculateRefinancingCapacity(homeValue, currentBalance);
-  
-  // Set refinancing amount to maximum capacity if not set
-  React.useEffect(() => {
-    if (refinancingCapacity > 0 && refinancingAmount === 0) {
-      setRefinancingAmount(refinancingCapacity);
-    }
-  }, [refinancingCapacity, refinancingAmount]);
-  
   const remainingAmortization = amortizationYears + amortizationMonths / 12;
   const investmentStrategy = calculateInvestmentStrategy(
     refinancingAmount,
@@ -223,23 +215,18 @@ const RefinancingCalculatorSteps = () => {
       title: "Taux actuel",
       content: (
         <div className="space-y-4">
-          <Label htmlFor="currentRate" className="block text-lg font-medium text-slate-900">
+          <Label className="block text-lg font-medium text-slate-900">
             Quel est votre taux d'intérêt actuel?
           </Label>
-          <div className="relative">
-            <Input
-              id="currentRate"
-              type="number"
-              value={currentRate[0]}
-              onChange={(e) => setCurrentRate([Number(e.target.value)])}
-              step={0.01}
-              min={3}
-              max={8}
-              className="text-lg pr-8"
-              placeholder="5.50"
-            />
-            <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-500">%</span>
-          </div>
+          <MortgageSlider
+            label=""
+            value={currentRate}
+            onValueChange={setCurrentRate}
+            min={3}
+            max={8}
+            step={0.01}
+            formatValue={(value) => `${value.toFixed(2)}%`}
+          />
         </div>
       )
     },
@@ -248,23 +235,18 @@ const RefinancingCalculatorSteps = () => {
       title: "Nouveau taux",
       content: (
         <div className="space-y-4">
-          <Label htmlFor="newRate" className="block text-lg font-medium text-slate-900">
+          <Label className="block text-lg font-medium text-slate-900">
             Quel est le nouveau taux proposé?
           </Label>
-          <div className="relative">
-            <Input
-              id="newRate"
-              type="number"
-              value={newRate[0]}
-              onChange={(e) => setNewRate([Number(e.target.value)])}
-              step={0.01}
-              min={3}
-              max={8}
-              className="text-lg pr-8"
-              placeholder="4.25"
-            />
-            <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-500">%</span>
-          </div>
+          <MortgageSlider
+            label=""
+            value={newRate}
+            onValueChange={setNewRate}
+            min={3}
+            max={8}
+            step={0.01}
+            formatValue={(value) => `${value.toFixed(2)}%`}
+          />
         </div>
       )
     },
@@ -273,6 +255,9 @@ const RefinancingCalculatorSteps = () => {
       title: "Montant de refinancement",
       content: (
         <div className="space-y-4">
+          <Label htmlFor="refinancingAmount" className="block text-lg font-medium text-slate-900">
+            Combien souhaitez-vous refinancer?
+          </Label>
           <div className="relative">
             <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500">$</span>
             <Input
@@ -398,60 +383,61 @@ const RefinancingCalculatorSteps = () => {
                           </div>
                         </div>
 
-                         <div className="text-center p-4 bg-green-50 rounded-lg border border-green-200">
-                           <p className="text-lg font-semibold text-green-800">
-                             Vous économisez {savings.termSavings.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })} d'ici à la fin de votre terme
-                           </p>
-                           <p className="text-green-700 mt-2">
-                             en conservant le même montant de prêt.
-                           </p>
-                         </div>
+                        <div className="text-center p-4 bg-green-50 rounded-lg border border-green-200">
+                          <p className="text-lg font-semibold text-green-800">
+                            Vous économisez {savings.termSavings.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })} d'ici à la fin de votre terme
+                          </p>
+                          <p className="text-green-700 mt-2">
+                            en plus d'avoir accès à votre montant de {refinancingAmount.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })} en refinancement.
+                          </p>
+                        </div>
                       </CardContent>
                     </Card>
 
-                     <Card>
-                       <CardHeader>
-                         <CardTitle className="text-xl text-slate-900">Stratégie d'investissement</CardTitle>
-                       </CardHeader>
-                       <CardContent className="space-y-4">
-                         <div className="text-center p-4 bg-blue-50 rounded-lg">
-                           <p className="text-sm text-slate-600 mb-2">Refinancer votre propriété de {homeValue.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}</p>
-                           <p className="text-lg text-slate-700">
-                             en mettant le montant de {refinancingAmount.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })} choisi plus haut dans le formulaire.
-                           </p>
-                         </div>
+                    <Card>
+                      <CardHeader>
+                        <CardTitle className="text-xl text-slate-900">Stratégie d'investissement</CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-4">
+                        <div className="text-center p-4 bg-blue-50 rounded-lg">
+                          <p className="text-sm text-slate-600 mb-2">Espace de refinancement disponible</p>
+                          <p className="text-2xl font-bold text-blue-600">
+                            {refinancingCapacity.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
+                          </p>
+                          <p className="text-xs text-slate-500 mt-1">80% de la valeur - solde hypothécaire</p>
+                        </div>
 
-                         <div className="text-center p-4 bg-slate-50 rounded-lg">
-                           <p className="text-lg text-slate-700 mb-2">
-                             Investir cette somme en bourse pour la durée restante de votre prêt.
-                           </p>
-                           <p className="text-lg text-slate-700">
-                             Au bout de {Math.round(remainingAmortization)} ans, votre montant de {refinancingAmount.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })} vaudra {investmentStrategy.investmentGrowth.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}.
-                           </p>
-                         </div>
+                        <div className="grid grid-cols-2 gap-4 text-center">
+                          <div className="p-3 bg-slate-50 rounded-lg">
+                            <p className="text-sm text-slate-600">Croissance en bourse (6,5%)</p>
+                            <p className="text-lg font-semibold text-green-600">
+                              {investmentStrategy.investmentGrowth.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
+                            </p>
+                          </div>
+                          <div className="p-3 bg-slate-50 rounded-lg">
+                            <p className="text-sm text-slate-600">Coût hypothécaire total</p>
+                            <p className="text-lg font-semibold text-red-600">
+                              {investmentStrategy.mortgageInterestCost.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
+                            </p>
+                          </div>
+                        </div>
 
-                         <div className="text-center p-4 bg-red-50 rounded-lg">
-                           <p className="text-lg text-slate-700">
-                             Votre montant de prêt supplémentaire de {refinancingAmount.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })} vous aura coûté {investmentStrategy.mortgageInterestCost.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}.
-                           </p>
-                         </div>
-
-                         <div className="text-center p-4 bg-green-50 rounded-lg border border-green-200">
-                           <p className="text-lg font-semibold text-green-800 mb-3">
-                             Vous pourriez avoir {investmentStrategy.netBenefit.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })} de plus dans vos poches
-                           </p>
-                           <p className="text-green-700 mb-3">
-                             au bout de {Math.round(remainingAmortization)} ans avec cette stratégie d'investissement.
-                           </p>
-                           <div className="bg-blue-50 p-3 rounded-lg border border-blue-200">
-                             <p className="text-blue-800 font-semibold">
-                               Vous pourriez décider de payer votre maison au complet {investmentStrategy.yearsMonthsSaved.years} {investmentStrategy.yearsMonthsSaved.years === 1 ? "an" : "ans"}
-                               {investmentStrategy.yearsMonthsSaved.months > 0 && ` et ${investmentStrategy.yearsMonthsSaved.months} mois`} plus vite avec ces économies, et ce, sans aucun frais ni effort supplémentaire.
-                             </p>
-                           </div>
-                         </div>
-                       </CardContent>
-                     </Card>
+                        <div className="text-center p-4 bg-green-50 rounded-lg border border-green-200">
+                          <p className="text-lg font-semibold text-green-800 mb-3">
+                            Vous pourriez avoir {investmentStrategy.netBenefit.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })} de plus dans vos poches
+                          </p>
+                          <p className="text-green-700 mb-3">
+                            au bout de {Math.round(remainingAmortization)} ans avec cette stratégie d'investissement.
+                          </p>
+                          <div className="bg-blue-50 p-3 rounded-lg border border-blue-200">
+                            <p className="text-blue-800 font-semibold">
+                              Vous pourriez payer votre maison {investmentStrategy.yearsMonthsSaved.years} {investmentStrategy.yearsMonthsSaved.years === 1 ? "an" : "ans"}
+                              {investmentStrategy.yearsMonthsSaved.months > 0 && ` et ${investmentStrategy.yearsMonthsSaved.months} mois`} plus vite
+                            </p>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
                   </>
                 )}
               </div>
