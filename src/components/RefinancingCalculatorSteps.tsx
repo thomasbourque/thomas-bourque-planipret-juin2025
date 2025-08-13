@@ -516,11 +516,11 @@ const RefinancingCalculatorSteps = () => {
                     </div>
 
                     <div className="space-y-4">
-                      <div className="text-center p-4 bg-yellow-50 rounded-lg border border-yellow-200">
-                        <p className="text-lg font-semibold text-yellow-800 mb-3">
+                      <div className="text-center p-4 bg-green-50 rounded-lg border border-green-200">
+                        <p className="text-lg font-semibold text-green-800 mb-3">
                           Vous pourriez avoir {investmentStrategy.netBenefit.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })} de plus dans vos poches
                         </p>
-                        <p className="text-yellow-700 mb-3">
+                        <p className="text-green-700 mb-3">
                           au bout de {Math.round(remainingAmortization)} ans avec cette stratégie d'investissement.
                         </p>
                         <div className="bg-yellow-100 p-3 rounded-lg border border-yellow-300">
