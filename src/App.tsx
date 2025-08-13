@@ -21,6 +21,7 @@ import RatiosPreview from "./pages/RatiosPreview";
 import FixedVariablePreview from "./pages/FixedVariablePreview";
 import LtvPreview from "./pages/LtvPreview";
 import NotFound from "./pages/NotFound";
+import RefinancingSecret from "./pages/RefinancingSecret";
 
 const queryClient = new QueryClient();
 
@@ -47,6 +48,7 @@ const App = () => (
           <Route path="/preview-ratios" element={<RatiosPreview />} />
           <Route path="/preview-fixe-variable" element={<FixedVariablePreview />} />
           <Route path="/preview-rpv-evolutif" element={<LtvPreview />} />
+          <Route path="/refinancement-secret" element={<RefinancingSecret />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
