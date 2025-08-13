@@ -96,19 +96,23 @@ export const calculateInvestmentStrategy = (
   const semiAnnualInvestmentRate = investmentReturn / 100 / 2;
   const investmentGrowth = refinancingAmount * Math.pow(1 + semiAnnualInvestmentRate, years * 2);
   
-  // Coût de la nouvelle tranche hypothécaire (capitalisation semi-annuelle)
+  // Coût de la nouvelle tranche hypothécaire (capitalisation semi-annuelle) - valeur totale
   const semiAnnualMortgageRate = newRate / 100 / 2;
   const mortgageValue = refinancingAmount * Math.pow(1 + semiAnnualMortgageRate, years * 2);
-  const mortgageInterestCost = mortgageValue - refinancingAmount;
   
-  // Bénéfice net = valeur de l'investissement - capital initial - coût hypothécaire
-  const netBenefit = investmentGrowth - refinancingAmount - mortgageInterestCost;
+  // Bénéfice net = valeur de l'investissement - valeur totale hypothécaire
+  const netBenefit = investmentGrowth - mortgageValue;
   
-  // Pour les années économisées, on garde le calcul précédent comme estimation
-  const monthlyBenefit = netBenefit / (years * 12);
-  const paymentIncrease = monthlyBenefit / years;
-  const percentIncrease = paymentIncrease / (refinancingAmount / (years * 12));
-  const yearsSaved = Math.min(years * 0.3, percentIncrease * years * 10);
+  // Calcul du temps économisé en utilisant le bénéfice net pour rembourser plus rapidement
+  // Estimation basée sur le fait qu'avec le bénéfice net, on peut rembourser une partie du capital plus tôt
+  const monthlyNetBenefit = netBenefit / (years * 12);
+  const currentMonthlyPayment = refinancingAmount / (years * 12); // Estimation simple
+  const acceleratedPayment = currentMonthlyPayment + monthlyNetBenefit;
+  
+  // Calcul approximatif du temps économisé avec paiements accélérés
+  const accelerationFactor = acceleratedPayment / currentMonthlyPayment;
+  const timeReduction = years * (1 - 1/accelerationFactor);
+  const yearsSaved = Math.max(0, Math.min(timeReduction, years * 0.5)); // Limité à 50% du temps
   
   const totalMonthsSaved = Math.round(yearsSaved * 12);
   const yearsMonthsSaved = {
@@ -118,7 +122,7 @@ export const calculateInvestmentStrategy = (
 
   return {
     investmentGrowth: Math.round(investmentGrowth),
-    mortgageInterestCost: Math.round(mortgageInterestCost),
+    mortgageInterestCost: Math.round(mortgageValue),
     netBenefit: Math.round(netBenefit),
     yearsMonthsSaved
   };

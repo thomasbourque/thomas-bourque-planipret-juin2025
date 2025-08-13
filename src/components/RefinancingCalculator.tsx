@@ -296,7 +296,7 @@ const RefinancingCalculator = () => {
                           </p>
                         </div>
                         <div className="p-3 bg-slate-50 rounded-lg">
-                          <p className="text-sm text-slate-600">Coût hypothécaire (4,25%)</p>
+                          <p className="text-sm text-slate-600">Valeur hypothécaire (4,25%)</p>
                           <p className="text-lg font-semibold text-red-600">
                             {investmentStrategy.mortgageInterestCost.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
                           </p>
@@ -307,9 +307,15 @@ const RefinancingCalculator = () => {
                         <p className="text-lg font-semibold text-green-800 mb-3">
                           Vous pourriez avoir {investmentStrategy.netBenefit.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })} de plus dans vos poches
                         </p>
-                        <p className="text-green-700">
+                        <p className="text-green-700 mb-3">
                           au bout de {Math.round(remainingAmortization)} ans avec cette stratégie d'investissement.
                         </p>
+                        <div className="bg-blue-50 p-3 rounded-lg border border-blue-200">
+                          <p className="text-blue-800 font-semibold">
+                            Vous pourriez payer votre maison {investmentStrategy.yearsMonthsSaved.years} {investmentStrategy.yearsMonthsSaved.years === 1 ? 'an' : 'ans'} 
+                            {investmentStrategy.yearsMonthsSaved.months > 0 && ` et ${investmentStrategy.yearsMonthsSaved.months} mois`} plus vite
+                          </p>
+                        </div>
                       </div>
                     </CardContent>
                   </Card>
