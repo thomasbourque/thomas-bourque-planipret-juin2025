@@ -523,8 +523,8 @@ const RefinancingCalculatorSteps = () => {
                         <p className="text-green-700 mb-3">
                           au bout de {Math.round(remainingAmortization)} ans avec cette stratégie d'investissement.
                         </p>
-                        <div className="bg-yellow-100 p-3 rounded-lg border border-yellow-300">
-                          <p className="text-yellow-800 font-semibold">
+                        <div className="bg-green-100 p-3 rounded-lg border border-green-300">
+                          <p className="text-green-800 font-semibold">
                             Vous pourriez décider de payer votre maison au complet {investmentStrategy.yearsMonthsSaved.years} {investmentStrategy.yearsMonthsSaved.years === 1 ? "an" : "ans"}
                             {investmentStrategy.yearsMonthsSaved.months > 0 && ` et ${investmentStrategy.yearsMonthsSaved.months} mois`} plus vite avec ces économies, et ce, sans aucun frais ni effort supplémentaire.
                           </p>
