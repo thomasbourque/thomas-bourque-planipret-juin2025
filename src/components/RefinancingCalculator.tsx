@@ -305,11 +305,10 @@ const RefinancingCalculator = () => {
 
                       <div className="text-center p-4 bg-green-50 rounded-lg border border-green-200">
                         <p className="text-lg font-semibold text-green-800 mb-3">
-                          Vous pourriez payer votre maison {investmentStrategy.yearsMonthsSaved.years} ans 
-                          {investmentStrategy.yearsMonthsSaved.months > 0 && ` et ${investmentStrategy.yearsMonthsSaved.months} mois`} plus rapidement
+                          Vous pourriez avoir {investmentStrategy.netBenefit.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })} de plus dans vos poches
                         </p>
                         <p className="text-green-700">
-                          en utilisant cette stratégie d'investissement.
+                          au bout de {Math.round(remainingAmortization)} ans avec cette stratégie d'investissement.
                         </p>
                       </div>
                     </CardContent>

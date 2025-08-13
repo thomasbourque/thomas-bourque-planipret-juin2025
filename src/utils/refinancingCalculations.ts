@@ -39,11 +39,34 @@ export const calculateRefinancingSavings = (
     return numerator / denominator;
   };
 
+  // Calcul du solde restant après les mois jusqu'à échéance
+  const calculateRemainingBalance = (principal: number, annualRate: number, totalMonths: number, monthsPaid: number) => {
+    if (annualRate === 0) return principal * (1 - monthsPaid / totalMonths);
+    
+    const semiAnnualRate = annualRate / 2;
+    const monthlyEquivalentRate = Math.pow(1 + semiAnnualRate / 100, 2/12) - 1;
+    
+    const monthlyPayment = calculateMonthlyPayment(principal, annualRate, totalMonths);
+    
+    const numerator = principal * Math.pow(1 + monthlyEquivalentRate, monthsPaid) - monthlyPayment * (Math.pow(1 + monthlyEquivalentRate, monthsPaid) - 1) / monthlyEquivalentRate;
+    
+    return numerator;
+  };
+
   const currentMonthlyPayment = calculateMonthlyPayment(currentBalance, currentRate, totalAmortizationMonths);
   const newMonthlyPayment = calculateMonthlyPayment(currentBalance, newRate, totalAmortizationMonths);
   
+  // Économies de paiement mensuel
   const monthlySavings = currentMonthlyPayment - newMonthlyPayment;
-  const termSavings = monthlySavings * monthsToTermEnd;
+  const paymentSavings = monthlySavings * monthsToTermEnd;
+  
+  // Calcul de l'écart de solde en capital à l'échéance
+  const currentBalanceAtTerm = calculateRemainingBalance(currentBalance, currentRate, totalAmortizationMonths, monthsToTermEnd);
+  const newBalanceAtTerm = calculateRemainingBalance(currentBalance, newRate, totalAmortizationMonths, monthsToTermEnd);
+  const capitalSavings = currentBalanceAtTerm - newBalanceAtTerm;
+  
+  // Économies totales = économies de paiement + écart de capital
+  const termSavings = paymentSavings + capitalSavings;
 
   return {
     termSavings: Math.round(termSavings),
@@ -68,26 +91,24 @@ export const calculateInvestmentStrategy = (
   investmentReturn: number = 6.5
 ): InvestmentStrategy => {
   const years = remainingAmortizationYears;
-  const monthlyInvestmentReturn = investmentReturn / 100 / 12;
-  const monthlyMortgageRate = Math.pow(1 + newRate / 100 / 2, 2/12) - 1;
   
-  // Croissance de l'investissement en bourse
-  const investmentGrowth = refinancingAmount * Math.pow(1 + investmentReturn / 100, years);
+  // Croissance de l'investissement en bourse (capitalisation semi-annuelle)
+  const semiAnnualInvestmentRate = investmentReturn / 100 / 2;
+  const investmentGrowth = refinancingAmount * Math.pow(1 + semiAnnualInvestmentRate, years * 2);
   
-  // Coût d'intérêt hypothécaire sur le refinancement
-  const mortgageInterestCost = refinancingAmount * Math.pow(1 + monthlyMortgageRate, years * 12) - refinancingAmount;
+  // Coût de la nouvelle tranche hypothécaire (capitalisation semi-annuelle)
+  const semiAnnualMortgageRate = newRate / 100 / 2;
+  const mortgageValue = refinancingAmount * Math.pow(1 + semiAnnualMortgageRate, years * 2);
+  const mortgageInterestCost = mortgageValue - refinancingAmount;
   
-  // Bénéfice net
+  // Bénéfice net = valeur de l'investissement - capital initial - coût hypothécaire
   const netBenefit = investmentGrowth - refinancingAmount - mortgageInterestCost;
   
-  // Calcul approximatif du nombre d'années économisées
-  // Si on utilise le bénéfice net pour rembourser plus rapidement
+  // Pour les années économisées, on garde le calcul précédent comme estimation
   const monthlyBenefit = netBenefit / (years * 12);
-  const paymentIncrease = monthlyBenefit / years; // Répartition du bénéfice sur les paiements
-  
-  // Estimation simplifiée: chaque 1% d'augmentation de paiement = ~1 an d'économie
+  const paymentIncrease = monthlyBenefit / years;
   const percentIncrease = paymentIncrease / (refinancingAmount / (years * 12));
-  const yearsSaved = Math.min(years * 0.3, percentIncrease * years * 10); // Cap à 30% du terme
+  const yearsSaved = Math.min(years * 0.3, percentIncrease * years * 10);
   
   const totalMonthsSaved = Math.round(yearsSaved * 12);
   const yearsMonthsSaved = {
