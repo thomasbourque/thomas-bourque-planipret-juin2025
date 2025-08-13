@@ -15,9 +15,9 @@ const RefinancingCalculatorSteps = () => {
   const [termEndDate, setTermEndDate] = useState("2027-12-31");
   const [amortizationYears, setAmortizationYears] = useState(25);
   const [amortizationMonths, setAmortizationMonths] = useState(0);
-  const [currentRate, setCurrentRate] = useState([5.5]);
-  const [newRate, setNewRate] = useState([4.25]);
-  const [refinancingAmount, setRefinancingAmount] = useState(50000);
+  const [currentRate, setCurrentRate] = useState(5.5);
+  const [newRate, setNewRate] = useState(4.25);
+  const [refinancingAmount, setRefinancingAmount] = useState(0);
   const [showResults, setShowResults] = useState(false);
 
   const handleCurrentBalanceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,8 +66,8 @@ const RefinancingCalculatorSteps = () => {
       case 2: return homeValue > 0;
       case 3: return termEndDate !== "";
       case 4: return true; // Amortization has defaults
-      case 5: return currentRate[0] > 0;
-      case 6: return newRate[0] > 0;
+      case 5: return currentRate > 0;
+      case 6: return newRate > 0;
       case 7: return refinancingAmount >= 0;
       default: return false;
     }
@@ -75,8 +75,8 @@ const RefinancingCalculatorSteps = () => {
 
   const savings = calculateRefinancingSavings(
     currentBalance,
-    currentRate[0],
-    newRate[0],
+    currentRate,
+    newRate,
     amortizationYears,
     amortizationMonths,
     termEndDate
@@ -84,9 +84,13 @@ const RefinancingCalculatorSteps = () => {
 
   const refinancingCapacity = calculateRefinancingCapacity(homeValue, currentBalance);
   const remainingAmortization = amortizationYears + amortizationMonths / 12;
+  
+  // Set refinancing amount to max capacity if not set yet
+  const effectiveRefinancingAmount = refinancingAmount > 0 ? refinancingAmount : refinancingCapacity;
+  
   const investmentStrategy = calculateInvestmentStrategy(
-    refinancingAmount,
-    newRate[0],
+    effectiveRefinancingAmount,
+    newRate,
     remainingAmortization,
     currentBalance
   );
@@ -215,18 +219,23 @@ const RefinancingCalculatorSteps = () => {
       title: "Taux actuel",
       content: (
         <div className="space-y-4">
-          <Label className="block text-lg font-medium text-slate-900">
+          <Label htmlFor="currentRate" className="block text-lg font-medium text-slate-900">
             Quel est votre taux d'intérêt actuel?
           </Label>
-          <MortgageSlider
-            label=""
-            value={currentRate}
-            onValueChange={setCurrentRate}
-            min={3}
-            max={8}
-            step={0.01}
-            formatValue={(value) => `${value.toFixed(2)}%`}
-          />
+          <div className="relative">
+            <Input
+              id="currentRate"
+              type="number"
+              value={currentRate}
+              onChange={(e) => setCurrentRate(Number(e.target.value))}
+              step={0.01}
+              min={3}
+              max={8}
+              className="text-lg pr-8"
+              placeholder="5.50"
+            />
+            <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-500">%</span>
+          </div>
         </div>
       )
     },
@@ -235,18 +244,23 @@ const RefinancingCalculatorSteps = () => {
       title: "Nouveau taux",
       content: (
         <div className="space-y-4">
-          <Label className="block text-lg font-medium text-slate-900">
+          <Label htmlFor="newRate" className="block text-lg font-medium text-slate-900">
             Quel est le nouveau taux proposé?
           </Label>
-          <MortgageSlider
-            label=""
-            value={newRate}
-            onValueChange={setNewRate}
-            min={3}
-            max={8}
-            step={0.01}
-            formatValue={(value) => `${value.toFixed(2)}%`}
-          />
+          <div className="relative">
+            <Input
+              id="newRate"
+              type="number"
+              value={newRate}
+              onChange={(e) => setNewRate(Number(e.target.value))}
+              step={0.01}
+              min={3}
+              max={8}
+              className="text-lg pr-8"
+              placeholder="4.25"
+            />
+            <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-500">%</span>
+          </div>
         </div>
       )
     },
@@ -255,21 +269,18 @@ const RefinancingCalculatorSteps = () => {
       title: "Montant de refinancement",
       content: (
         <div className="space-y-4">
-          <Label htmlFor="refinancingAmount" className="block text-lg font-medium text-slate-900">
-            Combien souhaitez-vous refinancer?
-          </Label>
           <div className="relative">
             <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500">$</span>
             <Input
               id="refinancingAmount"
               type="number"
-              value={refinancingAmount === 0 ? '' : refinancingAmount}
+              value={refinancingAmount === 0 ? refinancingCapacity : refinancingAmount}
               onChange={handleRefinancingAmountChange}
               step={1000}
               min={0}
               max={refinancingCapacity}
               className="text-lg pl-8"
-              placeholder="0"
+              placeholder={refinancingCapacity.toString()}
             />
           </div>
           <p className="text-sm text-slate-600">
@@ -285,10 +296,10 @@ const RefinancingCalculatorSteps = () => {
       <div className="container max-w-4xl mx-auto">
         <div className="text-center mb-8">
           <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
-            Calculatrice de refinancement
+            Calculateur de refinancement
           </h2>
           <p className="text-blue-100 text-lg max-w-3xl mx-auto">
-            Déterminez le montant économisé en refinançant avec un nouveau taux plus bas et optimisez votre stratégie d'investissement.
+            Découvrez en quelques secondes combien vous pourriez économiser en faisant travailler la valeur de votre maison.
           </p>
         </div>
 
@@ -388,7 +399,7 @@ const RefinancingCalculatorSteps = () => {
                             Vous économisez {savings.termSavings.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })} d'ici à la fin de votre terme
                           </p>
                           <p className="text-green-700 mt-2">
-                            en plus d'avoir accès à votre montant de {refinancingAmount.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })} en refinancement.
+                            en conservant le même montant de prêt.
                           </p>
                         </div>
                       </CardContent>

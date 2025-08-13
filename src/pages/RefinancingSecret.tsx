@@ -10,9 +10,7 @@ const RefinancingSecret = () => {
           <div className="flex flex-col lg:flex-row items-center justify-between">
             <div className="w-full text-center">
               <h1 className="text-4xl lg:text-5xl font-bold mb-4 leading-tight">
-                Réduisez vos paiements.
-                <br />
-                Augmentez vos placements.
+                Faites travailler votre maison pour vous!
               </h1>
               <button className="bg-yellow-400 text-blue-900 px-8 py-4 rounded-lg font-semibold text-lg hover:bg-yellow-300 transition-colors inline-flex items-center gap-2 mx-auto">
                 Testez notre calculateur gratuit →
