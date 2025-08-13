@@ -14,7 +14,7 @@ export interface InvestmentStrategy {
 }
 
 // Calcul du paiement mensuel selon la formule canadienne (composition semi-annuelle)
-const calculateMonthlyPayment = (principal: number, annualRate: number, totalMonths: number) => {
+export const calculateMonthlyPayment = (principal: number, annualRate: number, totalMonths: number) => {
   if (annualRate === 0) return principal / totalMonths;
   
   const semiAnnualRate = annualRate / 2;
@@ -27,7 +27,7 @@ const calculateMonthlyPayment = (principal: number, annualRate: number, totalMon
 };
 
 // Calcul du solde restant après les mois jusqu'à échéance
-const calculateRemainingBalance = (principal: number, annualRate: number, totalMonths: number, monthsPaid: number) => {
+export const calculateRemainingBalance = (principal: number, annualRate: number, totalMonths: number, monthsPaid: number) => {
   if (annualRate === 0) return principal * (1 - monthsPaid / totalMonths);
   
   const semiAnnualRate = annualRate / 2;

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { calculateRefinancingSavings, calculateRefinancingCapacity, calculateInvestmentStrategy } from "@/utils/refinancingCalculations";
+import { calculateRefinancingSavings, calculateRefinancingCapacity, calculateInvestmentStrategy, calculateMonthlyPayment, calculateRemainingBalance } from "@/utils/refinancingCalculations";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -411,15 +411,24 @@ const RefinancingCalculatorSteps = () => {
                           data={(() => {
                             const chartData = [];
                             const years = Math.ceil(remainingAmortization);
+                            const monthlyPayment = calculateMonthlyPayment(currentBalance, currentRate, remainingAmortization);
+                            
                             for (let year = 0; year <= years; year++) {
                               // Croissance en bourse à 6,5% avec capitalisation semi-annuelle
                               const investmentValue = effectiveRefinancingAmount * Math.pow(1 + 0.065/2, year * 2);
                               // Coût hypothécaire au nouveau taux avec capitalisation semi-annuelle
                               const mortgageCost = effectiveRefinancingAmount * Math.pow(1 + (newRate/100)/2, year * 2);
+                              // Économie (écart entre investissement et coût hypothécaire)
+                              const savings = investmentValue - mortgageCost;
+                              // Solde hypothécaire restant après les paiements
+                              const remainingBalance = calculateRemainingBalance(currentBalance, currentRate, remainingAmortization, year * 12);
+                              
                               chartData.push({
                                 year,
                                 investment: Math.round(investmentValue),
                                 mortgageCost: Math.round(mortgageCost),
+                                savings: Math.round(savings),
+                                remainingBalance: Math.round(Math.max(0, remainingBalance)),
                               });
                             }
                             return chartData;
@@ -442,10 +451,18 @@ const RefinancingCalculatorSteps = () => {
                             tickFormatter={(value) => `${(value / 1000).toFixed(0)}k`}
                           />
                           <Tooltip 
-                            formatter={(value: number, name: string) => [
-                              value.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 }),
-                              name === 'investment' ? 'Croissance en bourse' : 'Coût hypothécaire'
-                            ]}
+                            formatter={(value: number, name: string) => {
+                              const labelMap = {
+                                'investment': 'Croissance en bourse',
+                                'mortgageCost': 'Coût hypothécaire',
+                                'savings': 'Économie',
+                                'remainingBalance': 'Solde hypothécaire restant'
+                              };
+                              return [
+                                value.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 }),
+                                labelMap[name] || name
+                              ];
+                            }}
                             labelFormatter={(label) => `Année ${label}`}
                             contentStyle={{
                               backgroundColor: 'white',
@@ -473,6 +490,23 @@ const RefinancingCalculatorSteps = () => {
                             strokeWidth={3}
                             dot={false}
                             name={`Coût hypothécaire (${newRate.toFixed(2)}%)`}
+                          />
+                          <Line 
+                            type="monotone" 
+                            dataKey="savings" 
+                            stroke="#3b82f6" 
+                            strokeWidth={2}
+                            dot={false}
+                            name="Économie"
+                          />
+                          <Line 
+                            type="monotone" 
+                            dataKey="remainingBalance" 
+                            stroke="#f59e0b" 
+                            strokeWidth={2}
+                            dot={false}
+                            strokeDasharray="5 5"
+                            name="Solde hypothécaire restant"
                           />
                         </LineChart>
                       </ResponsiveContainer>
