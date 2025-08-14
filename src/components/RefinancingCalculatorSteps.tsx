@@ -305,18 +305,41 @@ const RefinancingCalculatorSteps = () => {
           </p>
         </div>
 
-        <div className="bg-white rounded-xl shadow-lg p-4 lg:p-8 mx-2 lg:mx-auto max-w-none lg:max-w-6xl">
-          {/* Layout avec timeline à gauche */}
-          <div className="flex flex-col lg:flex-row gap-6 lg:gap-8">
+        <div className="bg-white rounded-xl shadow-lg p-6 lg:p-8">
+          {/* Step Progress */}
+          <div className="mb-8">
+            {/* Desktop Progress */}
+            <div className="hidden md:block">
+              <div className="flex items-center justify-between mb-4">
+                {steps.map((step, index) => (
+                  <div key={step.id} className="flex items-center">
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
+                      currentStep > step.id 
+                        ? 'bg-green-500 text-white' 
+                        : currentStep === step.id 
+                          ? 'bg-blue-600 text-white' 
+                          : 'bg-gray-200 text-gray-600'
+                    }`}>
+                      {currentStep > step.id ? <CheckCircle className="w-5 h-5" /> : step.id}
+                    </div>
+                    {index < steps.length - 1 && (
+                      <div className={`w-12 h-0.5 mx-2 ${
+                        currentStep > step.id ? 'bg-green-500' : 'bg-gray-200'
+                      }`} />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
             
-            {/* Timeline verticale à gauche */}
-            <div className="lg:w-64 flex-shrink-0">
+            {/* Mobile Progress - Timeline verticale */}
+            <div className="md:hidden">
               <div className="relative">
                 {steps.map((step, index) => (
-                  <div key={step.id} className="relative flex items-start pb-8 last:pb-0">
-                    {/* Ligne verticale continue */}
+                  <div key={step.id} className="relative flex items-start pb-6 last:pb-0">
+                    {/* Ligne verticale */}
                     {index < steps.length - 1 && (
-                      <div className="absolute left-4 top-8 w-0.5 h-full bg-gray-200 z-0"></div>
+                      <div className="absolute left-4 top-8 w-0.5 h-full bg-gray-200"></div>
                     )}
                     
                     {/* Cercle de l'étape */}
@@ -330,28 +353,32 @@ const RefinancingCalculatorSteps = () => {
                       {currentStep > step.id ? <CheckCircle className="w-5 h-5" /> : step.id}
                     </div>
                     
-                    {/* Titre de l'étape */}
-                    <div className="flex-1 min-w-0 pt-1">
+                    {/* Contenu de l'étape */}
+                    <div className="flex-1 min-w-0">
                       <h4 className={`text-sm font-medium ${
                         currentStep >= step.id ? 'text-gray-900' : 'text-gray-500'
                       }`}>
                         {step.title}
                       </h4>
+                      {currentStep > step.id && (
+                        <p className="text-xs text-green-600 mt-1">Terminé</p>
+                      )}
+                      {currentStep === step.id && (
+                        <p className="text-xs text-blue-600 mt-1">En cours</p>
+                      )}
                     </div>
                   </div>
                 ))}
               </div>
-              
-              <div className="text-center mt-4 lg:text-left">
-                <p className="text-sm text-gray-600">
-                  Étape {currentStep} sur {steps.length}
-                </p>
-              </div>
             </div>
+            
+            <p className="text-center text-gray-600">
+              Étape {currentStep} sur {steps.length}
+            </p>
+          </div>
 
-            {/* Contenu des étapes à droite */}
-            <div className="flex-1 min-w-0">
-              <div className="space-y-6">
+          {/* Current Step */}
+          <div className="space-y-6">
             {steps.slice(0, currentStep).map((step) => (
               <div key={step.id} className={`${currentStep === step.id ? '' : 'opacity-60'}`}>
                 <h3 className="text-xl font-semibold text-slate-900 mb-4">
@@ -617,8 +644,6 @@ const RefinancingCalculatorSteps = () => {
                 </Button>
               </div>
             )}
-              </div>
-            </div>
           </div>
         </div>
       </div>
