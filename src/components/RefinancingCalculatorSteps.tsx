@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const RefinancingCalculatorSteps = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -19,6 +20,22 @@ const RefinancingCalculatorSteps = () => {
   const [newRate, setNewRate] = useState(4.25);
   const [refinancingAmount, setRefinancingAmount] = useState(0);
   const [showResults, setShowResults] = useState(false);
+  const isMobile = useIsMobile();
+
+  // Auto-scroll to calculator section on mobile when component mounts
+  useEffect(() => {
+    if (isMobile) {
+      setTimeout(() => {
+        const calculatorElement = document.querySelector('[data-calculator="refinancing"]');
+        if (calculatorElement) {
+          calculatorElement.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'start' 
+          });
+        }
+      }, 500);
+    }
+  }, [isMobile]);
 
   const handleCurrentBalanceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -66,7 +83,7 @@ const RefinancingCalculatorSteps = () => {
       // Small delay to ensure the content is rendered
       setTimeout(() => {
         const nextStepElement = document.querySelector(`[data-step="${currentStep}"]`);
-        if (nextStepElement && window.innerWidth < 768) {
+        if (nextStepElement && isMobile) {
           nextStepElement.scrollIntoView({ 
             behavior: 'smooth', 
             block: 'center' 
@@ -74,7 +91,7 @@ const RefinancingCalculatorSteps = () => {
         }
       }, 100);
     }
-  }, [currentStep]);
+  }, [currentStep, isMobile]);
 
   const isStepValid = (step: number) => {
     switch (step) {
@@ -310,7 +327,7 @@ const RefinancingCalculatorSteps = () => {
   ];
 
   return (
-    <section className="py-16 px-4 min-h-screen" style={{ backgroundColor: 'hsl(217, 91%, 60%)' }}>
+    <section className="py-16 px-4 min-h-screen" style={{ backgroundColor: 'hsl(217, 91%, 60%)' }} data-calculator="refinancing">
       <div className="container max-w-4xl mx-auto">
         <div className="text-center mb-8">
           <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
