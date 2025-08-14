@@ -154,13 +154,15 @@ const RefinancingCalculatorSteps = () => {
           <Label htmlFor="termEndDate" className="block text-lg font-medium text-slate-900">
             Quand votre terme actuel se termine-t-il?
           </Label>
-          <Input
-            id="termEndDate"
-            type="date"
-            value={termEndDate}
-            onChange={(e) => setTermEndDate(e.target.value)}
-            className="text-lg"
-          />
+          <div className="flex justify-center">
+            <Input
+              id="termEndDate"
+              type="date"
+              value={termEndDate}
+              onChange={(e) => setTermEndDate(e.target.value)}
+              className="text-lg max-w-xs"
+            />
+          </div>
         </div>
       )
     },
@@ -306,26 +308,55 @@ const RefinancingCalculatorSteps = () => {
         <div className="bg-white rounded-xl shadow-lg p-6 lg:p-8">
           {/* Step Progress */}
           <div className="mb-8">
-            <div className="flex items-center justify-between mb-4">
-              {steps.map((step, index) => (
-                <div key={step.id} className="flex items-center">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
-                    currentStep > step.id 
-                      ? 'bg-green-500 text-white' 
-                      : currentStep === step.id 
-                        ? 'bg-blue-600 text-white' 
-                        : 'bg-gray-200 text-gray-600'
-                  }`}>
-                    {currentStep > step.id ? <CheckCircle className="w-5 h-5" /> : step.id}
+            {/* Desktop Progress */}
+            <div className="hidden md:block">
+              <div className="flex items-center justify-between mb-4">
+                {steps.map((step, index) => (
+                  <div key={step.id} className="flex items-center">
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
+                      currentStep > step.id 
+                        ? 'bg-green-500 text-white' 
+                        : currentStep === step.id 
+                          ? 'bg-blue-600 text-white' 
+                          : 'bg-gray-200 text-gray-600'
+                    }`}>
+                      {currentStep > step.id ? <CheckCircle className="w-5 h-5" /> : step.id}
+                    </div>
+                    {index < steps.length - 1 && (
+                      <div className={`w-12 h-0.5 mx-2 ${
+                        currentStep > step.id ? 'bg-green-500' : 'bg-gray-200'
+                      }`} />
+                    )}
                   </div>
-                  {index < steps.length - 1 && (
-                    <div className={`w-12 h-0.5 mx-2 ${
-                      currentStep > step.id ? 'bg-green-500' : 'bg-gray-200'
-                    }`} />
-                  )}
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
+            
+            {/* Mobile Progress */}
+            <div className="md:hidden">
+              <div className="flex flex-col items-center space-y-2 mb-4">
+                {steps.map((step, index) => (
+                  <div key={step.id} className="flex items-center w-full max-w-xs">
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
+                      currentStep > step.id 
+                        ? 'bg-green-500 text-white' 
+                        : currentStep === step.id 
+                          ? 'bg-blue-600 text-white' 
+                          : 'bg-gray-200 text-gray-600'
+                    }`}>
+                      {currentStep > step.id ? <CheckCircle className="w-5 h-5" /> : step.id}
+                    </div>
+                    <span className="ml-3 text-sm font-medium text-gray-900">{step.title}</span>
+                    {index < steps.length - 1 && (
+                      <div className={`w-0.5 h-8 ml-4 ${
+                        currentStep > step.id ? 'bg-green-500' : 'bg-gray-200'
+                      }`} />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+            
             <p className="text-center text-gray-600">
               Étape {currentStep} sur {steps.length}
             </p>
@@ -535,7 +566,8 @@ const RefinancingCalculatorSteps = () => {
                         <Button 
                           size="lg"
                           style={{ backgroundColor: 'hsl(217, 91%, 60%)', color: 'white' }}
-                          className="hover:opacity-90 transition-opacity"
+                          className="hover:opacity-90 transition-opacity w-full max-w-sm mx-auto block px-4 py-2"
+                          onClick={() => window.open('https://calendly.com/thomas-bourque/appel-exploration-de-15-minutes', '_blank')}
                         >
                           Contactez-nous pour passer à l'action
                         </Button>
