@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { calculateRefinancingSavings, calculateRefinancingCapacity, calculateInvestmentStrategy, calculateMonthlyPayment, calculateRemainingBalance } from "@/utils/refinancingCalculations";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -59,6 +59,22 @@ const RefinancingCalculatorSteps = () => {
   const nextStep = () => {
     setCurrentStep(prev => prev + 1);
   };
+
+  // Auto-scroll on mobile when step changes
+  useEffect(() => {
+    if (currentStep > 1) {
+      // Small delay to ensure the content is rendered
+      setTimeout(() => {
+        const nextStepElement = document.querySelector(`[data-step="${currentStep}"]`);
+        if (nextStepElement && window.innerWidth < 768) {
+          nextStepElement.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'center' 
+          });
+        }
+      }, 100);
+    }
+  }, [currentStep]);
 
   const isStepValid = (step: number) => {
     switch (step) {
@@ -332,58 +348,36 @@ const RefinancingCalculatorSteps = () => {
               </div>
             </div>
             
-            {/* Mobile Progress - Timeline verticale */}
+            {/* Mobile Progress - Pastilles simples */}
             <div className="md:hidden">
-              <div className="relative">
-                {steps.map((step, index) => (
-                  <div key={step.id} className="relative flex items-start pb-6 last:pb-0">
-                    {/* Ligne verticale */}
-                    {index < steps.length - 1 && (
-                      <div className="absolute left-4 top-8 w-0.5 h-full bg-gray-200"></div>
-                    )}
-                    
-                    {/* Cercle de l'étape */}
-                    <div className={`relative z-10 w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold mr-4 ${
-                      currentStep > step.id 
-                        ? 'bg-green-500 text-white' 
-                        : currentStep === step.id 
-                          ? 'bg-blue-600 text-white' 
-                          : 'bg-gray-200 text-gray-600'
-                    }`}>
-                      {currentStep > step.id ? <CheckCircle className="w-5 h-5" /> : step.id}
-                    </div>
-                    
-                    {/* Contenu de l'étape */}
-                    <div className="flex-1 min-w-0">
-                      <h4 className={`text-sm font-medium ${
-                        currentStep >= step.id ? 'text-gray-900' : 'text-gray-500'
-                      }`}>
-                        {step.title}
-                      </h4>
-                      {currentStep > step.id && (
-                        <p className="text-xs text-green-600 mt-1">Terminé</p>
-                      )}
-                      {currentStep === step.id && (
-                        <p className="text-xs text-blue-600 mt-1">En cours</p>
-                      )}
-                    </div>
-                  </div>
-                ))}
+              <div className="text-center mb-6">
+                <p className="text-lg font-semibold text-gray-700">
+                  Étape {currentStep} sur {steps.length}
+                </p>
               </div>
             </div>
-            
-            <p className="text-center text-gray-600">
-              Étape {currentStep} sur {steps.length}
-            </p>
           </div>
 
           {/* Current Step */}
           <div className="space-y-6">
             {steps.slice(0, currentStep).map((step) => (
-              <div key={step.id} className={`${currentStep === step.id ? '' : 'opacity-60'}`}>
-                <h3 className="text-xl font-semibold text-slate-900 mb-4">
-                  {step.title}
-                </h3>
+              <div key={step.id} className={`${currentStep === step.id ? '' : 'opacity-60'}`} data-step={step.id}>
+                <div className="flex items-center gap-3 mb-4">
+                  {/* Pastille sur mobile */}
+                  <div className={`md:hidden w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
+                    currentStep > step.id 
+                      ? 'bg-green-500 text-white' 
+                      : currentStep === step.id 
+                        ? 'bg-blue-600 text-white' 
+                        : 'bg-gray-200 text-gray-600'
+                  }`}>
+                    {currentStep > step.id ? <CheckCircle className="w-5 h-5" /> : step.id}
+                  </div>
+                  
+                  <h3 className="text-xl font-semibold text-slate-900">
+                    {step.title}
+                  </h3>
+                </div>
                 {step.content}
                 {currentStep === step.id && isStepValid(step.id) && currentStep < steps.length && (
                   <Button 
@@ -570,26 +564,26 @@ const RefinancingCalculatorSteps = () => {
                           
                           return (
                             <>
-                              <div className="grid grid-cols-2 gap-3">
+                               <div className="grid grid-cols-2 gap-3">
                                  <div className="bg-green-50 p-4 rounded-lg text-center border border-green-200">
-                                   <div className="text-xl font-bold text-green-700">
+                                   <div className="text-lg font-bold text-green-700">
                                      {Math.round(investmentValue).toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
                                    </div>
-                                   <div className="text-sm text-green-600 mt-1">Croissance bourse</div>
+                                   <div className="text-xs text-green-600 mt-1">Croissance bourse</div>
                                    <div className="text-xs text-green-500">après {finalYear} ans</div>
                                  </div>
                                  
                                  <div className="bg-red-50 p-4 rounded-lg text-center border border-red-200">
-                                   <div className="text-xl font-bold text-red-700">
+                                   <div className="text-lg font-bold text-red-700">
                                      {Math.round(mortgageCost).toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
                                    </div>
-                                   <div className="text-sm text-red-600 mt-1">Coût hypothécaire</div>
+                                   <div className="text-xs text-red-600 mt-1">Coût hypothécaire</div>
                                    <div className="text-xs text-red-500">après {finalYear} ans</div>
                                  </div>
-                              </div>
+                               </div>
                               
                                <div className="bg-blue-50 p-4 rounded-lg text-center border border-blue-200">
-                                 <div className="text-2xl font-bold text-blue-700">
+                                 <div className="text-xl font-bold text-blue-700">
                                    {Math.round(savings).toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
                                  </div>
                                  <div className="text-sm text-blue-600 mt-1">Économie nette</div>
@@ -624,7 +618,7 @@ const RefinancingCalculatorSteps = () => {
                            className="hover:opacity-90 transition-opacity w-full max-w-xs mx-auto block text-sm px-3 py-2"
                            onClick={() => window.open('https://expertisegestionprivee.com/contact/', '_blank')}
                          >
-                           Refinancez dès maintenant!
+                           Refinancez maintenant!
                          </Button>
                       </div>
                     </div>
