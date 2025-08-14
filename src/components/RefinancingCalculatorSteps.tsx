@@ -310,7 +310,7 @@ const RefinancingCalculatorSteps = () => {
   ];
 
   return (
-    <section className="py-16 px-4" style={{ backgroundColor: 'hsl(217, 91%, 60%)' }}>
+    <section className="py-16 px-4 min-h-screen" style={{ backgroundColor: 'hsl(217, 91%, 60%)' }}>
       <div className="container max-w-4xl mx-auto">
         <div className="text-center mb-8">
           <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
@@ -321,7 +321,7 @@ const RefinancingCalculatorSteps = () => {
           </p>
         </div>
 
-        <div className="bg-white rounded-xl shadow-lg p-6 lg:p-8">
+        <div className="bg-white rounded-xl shadow-lg p-6 lg:p-8 w-full md:max-w-4xl mx-auto">
           {/* Step Progress */}
           <div className="mb-8">
             {/* Desktop Progress */}
@@ -393,7 +393,7 @@ const RefinancingCalculatorSteps = () => {
 
             {/* Results */}
             {showResults && (
-              <div className="space-y-6">
+              <div className="space-y-6" data-results="true">
                 <Card>
                       <CardHeader>
                         <CardTitle className="text-xl text-slate-900">Économies de refinancement</CardTitle>
@@ -564,23 +564,23 @@ const RefinancingCalculatorSteps = () => {
                           
                           return (
                             <>
-                               <div className="grid grid-cols-2 gap-3">
-                                 <div className="bg-green-50 p-4 rounded-lg text-center border border-green-200">
-                                   <div className="text-lg font-bold text-green-700">
-                                     {Math.round(investmentValue).toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
-                                   </div>
-                                   <div className="text-xs text-green-600 mt-1">Croissance bourse</div>
-                                   <div className="text-xs text-green-500">après {finalYear} ans</div>
-                                 </div>
-                                 
-                                 <div className="bg-red-50 p-4 rounded-lg text-center border border-red-200">
-                                   <div className="text-lg font-bold text-red-700">
-                                     {Math.round(mortgageCost).toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
-                                   </div>
-                                   <div className="text-xs text-red-600 mt-1">Coût hypothécaire</div>
-                                   <div className="text-xs text-red-500">après {finalYear} ans</div>
-                                 </div>
-                               </div>
+                                <div className="grid grid-cols-2 gap-3">
+                                  <div className="bg-green-50 p-3 rounded-lg text-center border border-green-200">
+                                    <div className="text-sm font-bold text-green-700 break-words">
+                                      {Math.round(investmentValue).toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
+                                    </div>
+                                    <div className="text-xs text-green-600 mt-1">Croissance bourse</div>
+                                    <div className="text-xs text-green-500">après {finalYear} ans</div>
+                                  </div>
+                                  
+                                  <div className="bg-red-50 p-3 rounded-lg text-center border border-red-200">
+                                    <div className="text-sm font-bold text-red-700 break-words">
+                                      {Math.round(mortgageCost).toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
+                                    </div>
+                                    <div className="text-xs text-red-600 mt-1">Coût hypothécaire</div>
+                                    <div className="text-xs text-red-500">après {finalYear} ans</div>
+                                  </div>
+                                </div>
                               
                                <div className="bg-blue-50 p-4 rounded-lg text-center border border-blue-200">
                                  <div className="text-xl font-bold text-blue-700">
@@ -630,7 +630,19 @@ const RefinancingCalculatorSteps = () => {
             {currentStep === steps.length && !showResults && (
               <div className="text-center">
                 <Button 
-                  onClick={() => setShowResults(true)}
+                  onClick={() => {
+                    setShowResults(true);
+                    // Auto-scroll to results after a short delay
+                    setTimeout(() => {
+                      const resultsElement = document.querySelector('[data-results="true"]');
+                      if (resultsElement) {
+                        resultsElement.scrollIntoView({ 
+                          behavior: 'smooth', 
+                          block: 'start' 
+                        });
+                      }
+                    }, 200);
+                  }}
                   size="lg"
                   style={{ backgroundColor: 'hsl(45, 93%, 47%)', color: 'hsl(217, 91%, 60%)' }}
                 >
