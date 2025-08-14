@@ -296,6 +296,9 @@ const RefinancingCalculatorSteps = () => {
             />
             <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-500">%</span>
           </div>
+          <p className="text-sm text-slate-600">
+            * Le taux présenté par défaut (4,25 %) correspond à un taux compétitif actuellement sur le marché pour un prêt conventionnel fixe 5 ans.
+          </p>
         </div>
       )
     },
@@ -586,8 +589,8 @@ const RefinancingCalculatorSteps = () => {
                                     <div className="text-xs font-bold text-green-700 whitespace-nowrap">
                                       {Math.round(investmentValue).toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
                                     </div>
-                                    <div className="text-xs text-green-600 mt-1">Croissance bourse</div>
-                                    <div className="text-xs text-green-500">après {finalYear} ans</div>
+                                    <div className="text-xs text-green-600 mt-1">Croissance des investissements</div>
+                                    <div className="text-xs" style={{ color: 'hsl(217, 91%, 60%)' }}>après {finalYear} ans</div>
                                   </div>
                                   
                                   <div className="bg-red-50 p-2 rounded-lg text-center border border-red-200">
@@ -595,7 +598,7 @@ const RefinancingCalculatorSteps = () => {
                                       {Math.round(mortgageCost).toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
                                     </div>
                                     <div className="text-xs text-red-600 mt-1">Coût hypothécaire</div>
-                                    <div className="text-xs text-red-500">après {finalYear} ans</div>
+                                    <div className="text-xs" style={{ color: 'hsl(217, 91%, 60%)' }}>après {finalYear} ans</div>
                                   </div>
                                </div>
                               
@@ -627,20 +630,20 @@ const RefinancingCalculatorSteps = () => {
                       <div className="mt-6 text-center">
                         <p className="text-lg md:text-xl font-bold text-primary leading-tight">
                           C'est assez pour payer votre maison{" "}
-                          <span className="text-yellow-400">
-                            {investmentStrategy.yearsMonthsSaved.years} {investmentStrategy.yearsMonthsSaved.years === 1 ? "an" : "ans"}
-                          </span>{" "}
-                          plus vite… ou si vous préférez, pour commander une pizza par jour pendant{" "}
-                          <span className="text-yellow-400">
-                            {(() => {
-                              const dailyPizzaCost = 15;
-                              const totalSavings = investmentStrategy.netBenefit;
-                              const daysOfPizza = Math.floor(totalSavings / dailyPizzaCost);
-                              const years = Math.floor(daysOfPizza / 365);
-                              
-                              return `${years} ${years === 1 ? 'an' : 'ans'}`;
-                            })()}
-                          </span>
+                           <span style={{ color: 'hsl(217, 91%, 60%)' }}>
+                             {investmentStrategy.yearsMonthsSaved.years} {investmentStrategy.yearsMonthsSaved.years === 1 ? "an" : "ans"}
+                           </span>{" "}
+                           plus vite… ou si vous préférez, pour commander une pizza par jour pendant{" "}
+                           <span style={{ color: 'hsl(217, 91%, 60%)' }}>
+                             {(() => {
+                               const dailyPizzaCost = 15;
+                               const totalSavings = investmentStrategy.netBenefit;
+                               const daysOfPizza = Math.floor(totalSavings / dailyPizzaCost);
+                               const years = Math.floor(daysOfPizza / 365);
+                               
+                               return `${years} ${years === 1 ? 'an' : 'ans'}`;
+                             })()}
+                           </span>
                           ! 🏠🍕
                         </p>
                       </div>
