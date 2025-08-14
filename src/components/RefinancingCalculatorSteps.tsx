@@ -621,28 +621,28 @@ const RefinancingCalculatorSteps = () => {
                         <p className="text-green-700 mb-3">
                           au bout de {Math.round(remainingAmortization)} ans avec cette stratégie d'investissement.
                         </p>
-                        
-                        {/* Slogan punché en dehors de tout encadré */}
-                        <div className="mt-6 text-center">
-                          <p className="text-2xl md:text-3xl font-bold text-primary leading-tight">
-                            C'est assez pour payer votre maison{" "}
-                            <span className="text-yellow-500">
-                              {investmentStrategy.yearsMonthsSaved.years} {investmentStrategy.yearsMonthsSaved.years === 1 ? "an" : "ans"}
-                            </span>{" "}
-                            plus vite… ou si vous préférez, pour commander une pizza par jour pendant{" "}
-                            <span className="text-yellow-500">
-                              {(() => {
-                                const dailyPizzaCost = 15;
-                                const totalSavings = investmentStrategy.netBenefit;
-                                const daysOfPizza = Math.floor(totalSavings / dailyPizzaCost);
-                                const years = Math.floor(daysOfPizza / 365);
-                                
-                                return `${years} ${years === 1 ? 'an' : 'ans'}`;
-                              })()}
-                            </span>
-                            ! 🏠🍕
-                          </p>
-                        </div>
+                      </div>
+                      
+                      {/* Slogan punché en dehors de l'encadré */}
+                      <div className="mt-6 text-center">
+                        <p className="text-2xl md:text-3xl font-bold text-primary leading-tight">
+                          C'est assez pour payer votre maison{" "}
+                          <span className="text-yellow-400">
+                            {investmentStrategy.yearsMonthsSaved.years} {investmentStrategy.yearsMonthsSaved.years === 1 ? "an" : "ans"}
+                          </span>{" "}
+                          plus vite… ou si vous préférez, pour commander une pizza par jour pendant{" "}
+                          <span className="text-yellow-400">
+                            {(() => {
+                              const dailyPizzaCost = 15;
+                              const totalSavings = investmentStrategy.netBenefit;
+                              const daysOfPizza = Math.floor(totalSavings / dailyPizzaCost);
+                              const years = Math.floor(daysOfPizza / 365);
+                              
+                              return `${years} ${years === 1 ? 'an' : 'ans'}`;
+                            })()}
+                          </span>
+                          ! 🏠🍕
+                        </p>
                       </div>
                       
                       <div className="text-center mt-6">
