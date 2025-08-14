@@ -625,7 +625,7 @@ const RefinancingCalculatorSteps = () => {
                       
                       {/* Slogan punché en dehors de l'encadré */}
                       <div className="mt-6 text-center">
-                        <p className="text-2xl md:text-3xl font-bold text-primary leading-tight">
+                        <p className="text-lg md:text-xl font-bold text-primary leading-tight">
                           C'est assez pour payer votre maison{" "}
                           <span className="text-yellow-400">
                             {investmentStrategy.yearsMonthsSaved.years} {investmentStrategy.yearsMonthsSaved.years === 1 ? "an" : "ans"}
@@ -649,7 +649,7 @@ const RefinancingCalculatorSteps = () => {
                          <Button 
                            size="lg"
                            style={{ backgroundColor: 'hsl(217, 91%, 60%)', color: 'white' }}
-                           className="hover:opacity-90 transition-opacity w-full max-w-xs mx-auto block text-sm px-3 py-2"
+                           className="hover:opacity-90 transition-opacity w-full max-w-md mx-auto block text-lg px-8 py-4"
                            onClick={() => window.open('https://expertisegestionprivee.com/contact/', '_blank')}
                          >
                            Refinancez maintenant!
