@@ -622,24 +622,17 @@ const RefinancingCalculatorSteps = () => {
                           au bout de {Math.round(remainingAmortization)} ans avec cette stratégie d'investissement.
                         </p>
                         
-                        {/* Examples of what you can do with the savings */}
-                        <div className="space-y-3 mt-4">
-                          <div className="bg-green-100 p-3 rounded-lg border border-green-300">
-                            <p className="text-green-800 font-semibold">
-                              💰 Payer votre maison {investmentStrategy.yearsMonthsSaved.years} {investmentStrategy.yearsMonthsSaved.years === 1 ? "an" : "ans"}
-                              {investmentStrategy.yearsMonthsSaved.months > 0 && ` et ${investmentStrategy.yearsMonthsSaved.months} mois`} plus vite avec ces économies
-                            </p>
-                          </div>
-                          
-                          <div className="bg-blue-100 p-3 rounded-lg border border-blue-300">
-                            <p className="text-blue-800 font-semibold">
-                              📈 Investir ce montant en bourse pour générer encore plus de rendement à long terme
-                            </p>
-                          </div>
-                          
-                          <div className="bg-orange-100 p-3 rounded-lg border border-orange-300">
-                            <p className="text-orange-800 font-semibold">
-                              🍕 Commander une pizza par jour pendant {(() => {
+                        {/* Slogan punché */}
+                        <div className="mt-6 text-center">
+                          <p className="text-2xl md:text-3xl font-bold text-primary leading-tight">
+                            C'est assez pour payer votre maison{" "}
+                            <span className="text-green-600">
+                              {investmentStrategy.yearsMonthsSaved.years} {investmentStrategy.yearsMonthsSaved.years === 1 ? "an" : "ans"}
+                              {investmentStrategy.yearsMonthsSaved.months > 0 && ` et ${investmentStrategy.yearsMonthsSaved.months} mois`}
+                            </span>{" "}
+                            plus vite ou pour commander une pizza par jour pendant{" "}
+                            <span className="text-orange-600">
+                              {(() => {
                                 const dailyPizzaCost = 15;
                                 const totalSavings = investmentStrategy.netBenefit;
                                 const daysOfPizza = Math.floor(totalSavings / dailyPizzaCost);
@@ -653,9 +646,10 @@ const RefinancingCalculatorSteps = () => {
                                 } else {
                                   return `${remainingDays} jours`;
                                 }
-                              })()} avec vos économies!
-                            </p>
-                          </div>
+                              })()}
+                            </span>
+                            ! 🏠🍕
+                          </p>
                         </div>
                       </div>
                       
