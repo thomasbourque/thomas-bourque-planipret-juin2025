@@ -471,13 +471,13 @@ const RefinancingCalculatorSteps = () => {
                                const monthsPaid = year * 12;
                                const remainingBalance = calculateRemainingBalance(newTotalBalance, newRate, newAmortizationMonths, monthsPaid);
                                
-                               chartData.push({
-                                 year,
-                                 investment: Math.round(investmentValue),
-                                 mortgageCost: Math.round(mortgageCost),
-                                 savings: Math.round(savings),
-                                 remainingBalance: Math.round(Math.max(0, remainingBalance)),
-                               });
+                                chartData.push({
+                                  year,
+                                  investment: Math.round(investmentValue),
+                                  mortgageCost: Math.round(mortgageCost),
+                                  savings: Math.round(savings),
+                                  remainingBalance: Math.round(Math.max(0, remainingBalance)),
+                                });
                              }
                              return chartData;
                            })()}
@@ -571,30 +571,30 @@ const RefinancingCalculatorSteps = () => {
                           return (
                             <>
                               <div className="grid grid-cols-2 gap-3">
-                                <div className="bg-green-50 p-4 rounded-lg text-center border border-green-200">
-                                  <div className="text-xl font-bold text-green-700">
-                                    {investmentValue.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
-                                  </div>
-                                  <div className="text-sm text-green-600 mt-1">Croissance bourse</div>
-                                  <div className="text-xs text-green-500">après {finalYear} ans</div>
-                                </div>
-                                
-                                <div className="bg-red-50 p-4 rounded-lg text-center border border-red-200">
-                                  <div className="text-xl font-bold text-red-700">
-                                    {mortgageCost.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
-                                  </div>
-                                  <div className="text-sm text-red-600 mt-1">Coût hypothécaire</div>
-                                  <div className="text-xs text-red-500">après {finalYear} ans</div>
-                                </div>
+                                 <div className="bg-green-50 p-4 rounded-lg text-center border border-green-200">
+                                   <div className="text-xl font-bold text-green-700">
+                                     {Math.round(investmentValue).toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
+                                   </div>
+                                   <div className="text-sm text-green-600 mt-1">Croissance bourse</div>
+                                   <div className="text-xs text-green-500">après {finalYear} ans</div>
+                                 </div>
+                                 
+                                 <div className="bg-red-50 p-4 rounded-lg text-center border border-red-200">
+                                   <div className="text-xl font-bold text-red-700">
+                                     {Math.round(mortgageCost).toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
+                                   </div>
+                                   <div className="text-sm text-red-600 mt-1">Coût hypothécaire</div>
+                                   <div className="text-xs text-red-500">après {finalYear} ans</div>
+                                 </div>
                               </div>
                               
-                              <div className="bg-blue-50 p-4 rounded-lg text-center border border-blue-200">
-                                <div className="text-2xl font-bold text-blue-700">
-                                  {savings.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
-                                </div>
-                                <div className="text-sm text-blue-600 mt-1">Économie nette</div>
-                                <div className="text-xs text-blue-500">Différence après {finalYear} ans</div>
-                              </div>
+                               <div className="bg-blue-50 p-4 rounded-lg text-center border border-blue-200">
+                                 <div className="text-2xl font-bold text-blue-700">
+                                   {Math.round(savings).toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
+                                 </div>
+                                 <div className="text-sm text-blue-600 mt-1">Économie nette</div>
+                                 <div className="text-xs text-blue-500">Différence après {finalYear} ans</div>
+                               </div>
                             </>
                           );
                         })()}
@@ -618,14 +618,14 @@ const RefinancingCalculatorSteps = () => {
                       </div>
                       
                       <div className="text-center mt-6">
-                        <Button 
-                          size="lg"
-                          style={{ backgroundColor: 'hsl(217, 91%, 60%)', color: 'white' }}
-                          className="hover:opacity-90 transition-opacity w-full max-w-xs mx-auto block text-sm px-3 py-2"
-                          onClick={() => window.open('https://calendly.com/thomas-bourque/appel-exploration-de-15-minutes', '_blank')}
-                        >
-                          Contactez-nous
-                        </Button>
+                         <Button 
+                           size="lg"
+                           style={{ backgroundColor: 'hsl(217, 91%, 60%)', color: 'white' }}
+                           className="hover:opacity-90 transition-opacity w-full max-w-xs mx-auto block text-sm px-3 py-2"
+                           onClick={() => window.open('https://expertisegestionprivee.com/contact/', '_blank')}
+                         >
+                           Refinancez dès maintenant!
+                         </Button>
                       </div>
                     </div>
                   </CardContent>
