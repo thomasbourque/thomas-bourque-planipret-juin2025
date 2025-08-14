@@ -622,30 +622,22 @@ const RefinancingCalculatorSteps = () => {
                           au bout de {Math.round(remainingAmortization)} ans avec cette stratégie d'investissement.
                         </p>
                         
-                        {/* Slogan punché */}
+                        {/* Slogan punché en dehors de tout encadré */}
                         <div className="mt-6 text-center">
                           <p className="text-2xl md:text-3xl font-bold text-primary leading-tight">
                             C'est assez pour payer votre maison{" "}
-                            <span className="text-green-600">
+                            <span className="text-yellow-500">
                               {investmentStrategy.yearsMonthsSaved.years} {investmentStrategy.yearsMonthsSaved.years === 1 ? "an" : "ans"}
-                              {investmentStrategy.yearsMonthsSaved.months > 0 && ` et ${investmentStrategy.yearsMonthsSaved.months} mois`}
                             </span>{" "}
-                            plus vite ou pour commander une pizza par jour pendant{" "}
-                            <span className="text-orange-600">
+                            plus vite… ou si vous préférez, pour commander une pizza par jour pendant{" "}
+                            <span className="text-yellow-500">
                               {(() => {
                                 const dailyPizzaCost = 15;
                                 const totalSavings = investmentStrategy.netBenefit;
                                 const daysOfPizza = Math.floor(totalSavings / dailyPizzaCost);
                                 const years = Math.floor(daysOfPizza / 365);
-                                const remainingDays = daysOfPizza % 365;
                                 
-                                if (years > 0) {
-                                  return `${years} ${years === 1 ? 'an' : 'ans'}${remainingDays > 30 ? ` et ${Math.floor(remainingDays / 30)} mois` : ''}`;
-                                } else if (remainingDays > 30) {
-                                  return `${Math.floor(remainingDays / 30)} mois`;
-                                } else {
-                                  return `${remainingDays} jours`;
-                                }
+                                return `${years} ${years === 1 ? 'an' : 'ans'}`;
                               })()}
                             </span>
                             ! 🏠🍕
