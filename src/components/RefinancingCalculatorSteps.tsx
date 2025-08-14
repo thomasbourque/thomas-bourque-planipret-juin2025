@@ -513,13 +513,13 @@ const RefinancingCalculatorSteps = () => {
                              tickFormatter={(value) => `${(value / 1000).toFixed(0)}k`}
                            />
                            <Tooltip 
-                             formatter={(value: number, name: string) => {
-                               const labelMap = {
-                                 'investment': 'Croissance en bourse',
-                                 'mortgageCost': 'Coût hypothécaire',
-                                 'savings': 'Économie',
-                                 'remainingBalance': 'Solde hypothécaire restant'
-                               };
+                              formatter={(value: number, name: string) => {
+                                const labelMap = {
+                                  'investment': 'Croissance des investissements',
+                                  'mortgageCost': 'Coût hypothécaire',
+                                  'savings': 'Économie',
+                                  'remainingBalance': 'Solde hypothécaire restant'
+                                };
                                return [
                                  value.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 }),
                                  labelMap[name] || name
@@ -543,7 +543,7 @@ const RefinancingCalculatorSteps = () => {
                              stroke="#16a34a" 
                              strokeWidth={3}
                              dot={false}
-                             name="Croissance en bourse (6,5%)"
+                             name="Croissance des investissements (6,5%)"
                            />
                            <Line 
                              type="monotone" 
