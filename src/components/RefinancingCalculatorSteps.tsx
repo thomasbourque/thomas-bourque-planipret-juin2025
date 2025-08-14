@@ -83,7 +83,7 @@ const RefinancingCalculatorSteps = () => {
       // Small delay to ensure the content is rendered
       setTimeout(() => {
         const nextStepElement = document.querySelector(`[data-step="${currentStep}"]`);
-        if (nextStepElement && isMobile) {
+        if (nextStepElement) {
           nextStepElement.scrollIntoView({ 
             behavior: 'smooth', 
             block: 'center' 
@@ -582,16 +582,16 @@ const RefinancingCalculatorSteps = () => {
                           return (
                             <>
                                 <div className="grid grid-cols-2 gap-3">
-                                  <div className="bg-green-50 p-3 rounded-lg text-center border border-green-200">
-                                    <div className="text-sm font-bold text-green-700 break-words">
+                                  <div className="bg-green-50 p-2 rounded-lg text-center border border-green-200">
+                                    <div className="text-xs font-bold text-green-700 whitespace-nowrap">
                                       {Math.round(investmentValue).toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
                                     </div>
                                     <div className="text-xs text-green-600 mt-1">Croissance bourse</div>
                                     <div className="text-xs text-green-500">après {finalYear} ans</div>
                                   </div>
                                   
-                                  <div className="bg-red-50 p-3 rounded-lg text-center border border-red-200">
-                                    <div className="text-sm font-bold text-red-700 break-words">
+                                  <div className="bg-red-50 p-2 rounded-lg text-center border border-red-200">
+                                    <div className="text-xs font-bold text-red-700 whitespace-nowrap">
                                       {Math.round(mortgageCost).toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
                                     </div>
                                     <div className="text-xs text-red-600 mt-1">Coût hypothécaire</div>
