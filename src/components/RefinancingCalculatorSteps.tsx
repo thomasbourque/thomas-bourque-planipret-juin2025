@@ -649,7 +649,7 @@ const RefinancingCalculatorSteps = () => {
                          <Button 
                            size="lg"
                            style={{ backgroundColor: 'hsl(217, 91%, 60%)', color: 'white' }}
-                           className="hover:opacity-90 transition-opacity w-full max-w-md mx-auto block text-lg px-8 py-4"
+                           className="hover:opacity-90 transition-opacity w-full max-w-md mx-auto flex items-center justify-center text-lg px-8 py-4"
                            onClick={() => window.open('https://expertisegestionprivee.com/contact/', '_blank')}
                          >
                            Refinancez maintenant!
