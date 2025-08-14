@@ -332,12 +332,18 @@ const RefinancingCalculatorSteps = () => {
               </div>
             </div>
             
-            {/* Mobile Progress */}
+            {/* Mobile Progress - Timeline verticale */}
             <div className="md:hidden">
-              <div className="flex flex-col items-center space-y-2 mb-4">
+              <div className="relative">
                 {steps.map((step, index) => (
-                  <div key={step.id} className="flex items-center w-full max-w-xs">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
+                  <div key={step.id} className="relative flex items-start pb-6 last:pb-0">
+                    {/* Ligne verticale */}
+                    {index < steps.length - 1 && (
+                      <div className="absolute left-4 top-8 w-0.5 h-full bg-gray-200"></div>
+                    )}
+                    
+                    {/* Cercle de l'étape */}
+                    <div className={`relative z-10 w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold mr-4 ${
                       currentStep > step.id 
                         ? 'bg-green-500 text-white' 
                         : currentStep === step.id 
@@ -346,12 +352,21 @@ const RefinancingCalculatorSteps = () => {
                     }`}>
                       {currentStep > step.id ? <CheckCircle className="w-5 h-5" /> : step.id}
                     </div>
-                    <span className="ml-3 text-sm font-medium text-gray-900">{step.title}</span>
-                    {index < steps.length - 1 && (
-                      <div className={`w-0.5 h-8 ml-4 ${
-                        currentStep > step.id ? 'bg-green-500' : 'bg-gray-200'
-                      }`} />
-                    )}
+                    
+                    {/* Contenu de l'étape */}
+                    <div className="flex-1 min-w-0">
+                      <h4 className={`text-sm font-medium ${
+                        currentStep >= step.id ? 'text-gray-900' : 'text-gray-500'
+                      }`}>
+                        {step.title}
+                      </h4>
+                      {currentStep > step.id && (
+                        <p className="text-xs text-green-600 mt-1">Terminé</p>
+                      )}
+                      {currentStep === step.id && (
+                        <p className="text-xs text-blue-600 mt-1">En cours</p>
+                      )}
+                    </div>
                   </div>
                 ))}
               </div>
@@ -435,115 +450,155 @@ const RefinancingCalculatorSteps = () => {
                       </p>
                     </div>
 
-                    {/* Chart */}
-                    <div className="h-80 w-full">
-                      <ResponsiveContainer width="100%" height="100%">
-                        <LineChart
-                          data={(() => {
-                            const chartData = [];
-                            const years = Math.ceil(remainingAmortization);
-                            // Nouveau solde total = solde initial + montant de refinancement
-                            const newTotalBalance = currentBalance + effectiveRefinancingAmount;
-                            const newAmortizationMonths = remainingAmortization * 12;
-                            
-                            for (let year = 0; year <= years; year++) {
-                              // Croissance en bourse à 6,5% avec capitalisation semi-annuelle
-                              const investmentValue = effectiveRefinancingAmount * Math.pow(1 + 0.065/2, year * 2);
-                              // Coût hypothécaire au nouveau taux avec capitalisation semi-annuelle
-                              const mortgageCost = effectiveRefinancingAmount * Math.pow(1 + (newRate/100)/2, year * 2);
-                              // Économie (écart entre investissement et coût hypothécaire)
-                              const savings = investmentValue - mortgageCost;
-                              // Solde hypothécaire restant du nouveau prêt total (solde initial + refinancement)
-                              const monthsPaid = year * 12;
-                              const remainingBalance = calculateRemainingBalance(newTotalBalance, newRate, newAmortizationMonths, monthsPaid);
+                    {/* Graphique adaptatif */}
+                    <div className="mt-6">
+                      <h4 className="text-lg font-semibold text-slate-900 mb-4">Évolution financière</h4>
+                      
+                      {/* Version desktop - Graphique linéaire */}
+                      <div className="hidden md:block h-80">
+                        <ResponsiveContainer width="100%" height="100%">
+                         <LineChart 
+                           data={(() => {
+                             const chartData = [];
+                             const years = Math.ceil(remainingAmortization);
+                             const newTotalBalance = currentBalance + effectiveRefinancingAmount;
+                             const newAmortizationMonths = remainingAmortization * 12;
+                             
+                             for (let year = 0; year <= years; year++) {
+                               const investmentValue = effectiveRefinancingAmount * Math.pow(1 + 0.065/2, year * 2);
+                               const mortgageCost = effectiveRefinancingAmount * Math.pow(1 + (newRate/100)/2, year * 2);
+                               const savings = investmentValue - mortgageCost;
+                               const monthsPaid = year * 12;
+                               const remainingBalance = calculateRemainingBalance(newTotalBalance, newRate, newAmortizationMonths, monthsPaid);
+                               
+                               chartData.push({
+                                 year,
+                                 investment: Math.round(investmentValue),
+                                 mortgageCost: Math.round(mortgageCost),
+                                 savings: Math.round(savings),
+                                 remainingBalance: Math.round(Math.max(0, remainingBalance)),
+                               });
+                             }
+                             return chartData;
+                           })()}
+                           margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
+                         >
+                           <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                           <XAxis 
+                             dataKey="year" 
+                             stroke="#64748b"
+                             fontSize={12}
+                             tickLine={false}
+                             axisLine={false}
+                           />
+                           <YAxis 
+                             stroke="#64748b"
+                             fontSize={12}
+                             tickLine={false}
+                             axisLine={false}
+                             tickFormatter={(value) => `${(value / 1000).toFixed(0)}k`}
+                           />
+                           <Tooltip 
+                             formatter={(value: number, name: string) => {
+                               const labelMap = {
+                                 'investment': 'Croissance en bourse',
+                                 'mortgageCost': 'Coût hypothécaire',
+                                 'savings': 'Économie',
+                                 'remainingBalance': 'Solde hypothécaire restant'
+                               };
+                               return [
+                                 value.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 }),
+                                 labelMap[name] || name
+                               ];
+                             }}
+                             labelFormatter={(label) => `Année ${label}`}
+                             contentStyle={{
+                               backgroundColor: 'white',
+                               border: '1px solid #e2e8f0',
+                               borderRadius: '8px',
+                               boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                             }}
+                           />
+                           <Legend 
+                             wrapperStyle={{ paddingTop: '20px' }}
+                             iconType="line"
+                           />
+                           <Line 
+                             type="monotone" 
+                             dataKey="investment" 
+                             stroke="#16a34a" 
+                             strokeWidth={3}
+                             dot={false}
+                             name="Croissance en bourse (6,5%)"
+                           />
+                           <Line 
+                             type="monotone" 
+                             dataKey="mortgageCost" 
+                             stroke="#dc2626" 
+                             strokeWidth={3}
+                             dot={false}
+                             name={`Coût hypothécaire (${newRate.toFixed(2)}%)`}
+                           />
+                           <Line 
+                             type="monotone" 
+                             dataKey="savings" 
+                             stroke="#3b82f6" 
+                             strokeWidth={2}
+                             dot={false}
+                             name="Économie"
+                           />
+                           <Line 
+                             type="monotone" 
+                             dataKey="remainingBalance" 
+                             stroke="#9ca3af" 
+                             strokeWidth={2}
+                             dot={false}
+                             strokeDasharray="5 5"
+                             name="Solde hypothécaire restant"
+                           />
+                         </LineChart>
+                        </ResponsiveContainer>
+                      </div>
+                      
+                      {/* Version mobile - Cartes de données */}
+                      <div className="md:hidden space-y-4">
+                        {(() => {
+                          const finalYear = Math.round(remainingAmortization);
+                          const investmentValue = effectiveRefinancingAmount * Math.pow(1 + 0.065/2, finalYear * 2);
+                          const mortgageCost = effectiveRefinancingAmount * Math.pow(1 + (newRate/100)/2, finalYear * 2);
+                          const savings = investmentValue - mortgageCost;
+                          
+                          return (
+                            <>
+                              <div className="grid grid-cols-2 gap-3">
+                                <div className="bg-green-50 p-4 rounded-lg text-center border border-green-200">
+                                  <div className="text-xl font-bold text-green-700">
+                                    {investmentValue.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
+                                  </div>
+                                  <div className="text-sm text-green-600 mt-1">Croissance bourse</div>
+                                  <div className="text-xs text-green-500">après {finalYear} ans</div>
+                                </div>
+                                
+                                <div className="bg-red-50 p-4 rounded-lg text-center border border-red-200">
+                                  <div className="text-xl font-bold text-red-700">
+                                    {mortgageCost.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
+                                  </div>
+                                  <div className="text-sm text-red-600 mt-1">Coût hypothécaire</div>
+                                  <div className="text-xs text-red-500">après {finalYear} ans</div>
+                                </div>
+                              </div>
                               
-                              chartData.push({
-                                year,
-                                investment: Math.round(investmentValue),
-                                mortgageCost: Math.round(mortgageCost),
-                                savings: Math.round(savings),
-                                remainingBalance: Math.round(Math.max(0, remainingBalance)),
-                              });
-                            }
-                            return chartData;
-                          })()}
-                          margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
-                        >
-                          <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                          <XAxis 
-                            dataKey="year" 
-                            stroke="#64748b"
-                            fontSize={12}
-                            tickLine={false}
-                            axisLine={false}
-                          />
-                          <YAxis 
-                            stroke="#64748b"
-                            fontSize={12}
-                            tickLine={false}
-                            axisLine={false}
-                            tickFormatter={(value) => `${(value / 1000).toFixed(0)}k`}
-                          />
-                          <Tooltip 
-                            formatter={(value: number, name: string) => {
-                              const labelMap = {
-                                'investment': 'Croissance en bourse',
-                                'mortgageCost': 'Coût hypothécaire',
-                                'savings': 'Économie',
-                                'remainingBalance': 'Solde hypothécaire restant'
-                              };
-                              return [
-                                value.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 }),
-                                labelMap[name] || name
-                              ];
-                            }}
-                            labelFormatter={(label) => `Année ${label}`}
-                            contentStyle={{
-                              backgroundColor: 'white',
-                              border: '1px solid #e2e8f0',
-                              borderRadius: '8px',
-                              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-                            }}
-                          />
-                          <Legend 
-                            wrapperStyle={{ paddingTop: '20px' }}
-                            iconType="line"
-                          />
-                          <Line 
-                            type="monotone" 
-                            dataKey="investment" 
-                            stroke="#16a34a" 
-                            strokeWidth={3}
-                            dot={false}
-                            name="Croissance en bourse (6,5%)"
-                          />
-                          <Line 
-                            type="monotone" 
-                            dataKey="mortgageCost" 
-                            stroke="#dc2626" 
-                            strokeWidth={3}
-                            dot={false}
-                            name={`Coût hypothécaire (${newRate.toFixed(2)}%)`}
-                          />
-                          <Line 
-                            type="monotone" 
-                            dataKey="savings" 
-                            stroke="#3b82f6" 
-                            strokeWidth={2}
-                            dot={false}
-                            name="Économie"
-                          />
-                          <Line 
-                            type="monotone" 
-                            dataKey="remainingBalance" 
-                            stroke="#9ca3af" 
-                            strokeWidth={2}
-                            dot={false}
-                            strokeDasharray="5 5"
-                            name="Solde hypothécaire restant"
-                          />
-                        </LineChart>
-                      </ResponsiveContainer>
+                              <div className="bg-blue-50 p-4 rounded-lg text-center border border-blue-200">
+                                <div className="text-2xl font-bold text-blue-700">
+                                  {savings.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
+                                </div>
+                                <div className="text-sm text-blue-600 mt-1">Économie nette</div>
+                                <div className="text-xs text-blue-500">Différence après {finalYear} ans</div>
+                              </div>
+                            </>
+                          );
+                        })()}
+                      </div>
                     </div>
 
                     <div className="space-y-4">
@@ -566,10 +621,10 @@ const RefinancingCalculatorSteps = () => {
                         <Button 
                           size="lg"
                           style={{ backgroundColor: 'hsl(217, 91%, 60%)', color: 'white' }}
-                          className="hover:opacity-90 transition-opacity w-full max-w-sm mx-auto block px-4 py-2"
+                          className="hover:opacity-90 transition-opacity w-full max-w-xs mx-auto block text-sm px-3 py-2"
                           onClick={() => window.open('https://calendly.com/thomas-bourque/appel-exploration-de-15-minutes', '_blank')}
                         >
-                          Contactez-nous pour passer à l'action
+                          Contactez-nous
                         </Button>
                       </div>
                     </div>
