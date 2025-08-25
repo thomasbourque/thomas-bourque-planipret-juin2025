@@ -118,8 +118,8 @@ const RefinancingCalculatorSteps = () => {
   const refinancingCapacity = calculateRefinancingCapacity(homeValue, currentBalance);
   const remainingAmortization = amortizationYears + amortizationMonths / 12;
   
-  // Set refinancing amount to max capacity if not set yet
-  const effectiveRefinancingAmount = refinancingAmount > 0 ? refinancingAmount : refinancingCapacity;
+  // Use the manually entered refinancing amount
+  const effectiveRefinancingAmount = refinancingAmount;
   
   const investmentStrategy = calculateInvestmentStrategy(
     effectiveRefinancingAmount,
@@ -307,18 +307,21 @@ const RefinancingCalculatorSteps = () => {
       title: "Montant de refinancement",
       content: (
         <div className="space-y-4">
+          <Label htmlFor="refinancingAmount" className="block text-lg font-medium text-slate-900">
+            Quel montant souhaitez-vous refinancer?
+          </Label>
           <div className="relative">
             <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500">$</span>
             <Input
               id="refinancingAmount"
               type="number"
-              value={refinancingAmount === 0 ? refinancingCapacity : refinancingAmount}
+              value={refinancingAmount === 0 ? '' : refinancingAmount}
               onChange={handleRefinancingAmountChange}
               step={1000}
               min={0}
               max={refinancingCapacity}
               className="text-lg pl-8"
-              placeholder={refinancingCapacity.toString()}
+              placeholder="0"
             />
           </div>
           <p className="text-sm text-slate-600">
