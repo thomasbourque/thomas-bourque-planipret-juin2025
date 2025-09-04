@@ -17,7 +17,7 @@ const RefinancingCalculatorSteps = () => {
   const [amortizationYears, setAmortizationYears] = useState(25);
   const [amortizationMonths, setAmortizationMonths] = useState(0);
   const [currentRate, setCurrentRate] = useState(5.5);
-  const [newRate, setNewRate] = useState(4.25);
+  const [newRate, setNewRate] = useState(4.14);
   const [refinancingAmount, setRefinancingAmount] = useState(0);
   const [showResults, setShowResults] = useState(false);
   const isMobile = useIsMobile();
@@ -292,12 +292,12 @@ const RefinancingCalculatorSteps = () => {
               min={3}
               max={8}
               className="text-lg pr-8"
-              placeholder="4.25"
+              placeholder="4.14"
             />
             <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-500">%</span>
           </div>
           <p className="text-sm text-slate-600">
-            * Le taux présenté par défaut (4,25 %) correspond à un taux compétitif actuellement sur le marché pour un prêt conventionnel fixe 5 ans.
+            * Le taux présenté par défaut (4,14 %) correspond à un taux compétitif actuellement sur le marché pour un prêt conventionnel fixe 5 ans.
           </p>
         </div>
       )
@@ -419,15 +419,9 @@ const RefinancingCalculatorSteps = () => {
               <div className="space-y-6" data-results="true">
                 <Card>
                       <CardHeader>
-                        <CardTitle className="text-xl text-slate-900">Économies de refinancement</CardTitle>
+                        <CardTitle className="text-xl text-slate-900">Économies grâce à la baisse de taux</CardTitle>
                       </CardHeader>
                       <CardContent className="space-y-4">
-                        <div className="text-center p-4 rounded-lg" style={{ backgroundColor: 'hsl(217, 91%, 95%)' }}>
-                          <p className="text-sm text-slate-600 mb-2">Économies d'ici la fin du terme</p>
-                          <p className="text-3xl font-bold" style={{ color: 'hsl(217, 91%, 60%)' }}>
-                            {savings.termSavings.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
-                          </p>
-                        </div>
                         
                         <div className="grid grid-cols-2 gap-4 text-center">
                           <div className="p-3 bg-slate-50 rounded-lg">
@@ -457,15 +451,9 @@ const RefinancingCalculatorSteps = () => {
 
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-xl text-slate-900">Stratégie d'investissement</CardTitle>
+                    <CardTitle className="text-xl text-slate-900">Stratégie de refinancement</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-6">
-                    <div className="text-center p-4 bg-blue-50 rounded-lg">
-                      <p className="text-sm text-slate-600 mb-2">Montant de refinancement</p>
-                      <p className="text-2xl font-bold text-blue-600">
-                        {effectiveRefinancingAmount.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
-                      </p>
-                    </div>
 
                     {/* Graphique adaptatif */}
                     <div className="mt-6">
@@ -636,18 +624,7 @@ const RefinancingCalculatorSteps = () => {
                            <span style={{ color: 'hsl(217, 91%, 60%)' }}>
                              {investmentStrategy.yearsMonthsSaved.years} {investmentStrategy.yearsMonthsSaved.years === 1 ? "an" : "ans"}
                            </span>{" "}
-                           plus vite… ou si vous préférez, pour commander une pizza par jour pendant{" "}
-                           <span style={{ color: 'hsl(217, 91%, 60%)' }}>
-                             {(() => {
-                               const dailyPizzaCost = 15;
-                               const totalSavings = investmentStrategy.netBenefit;
-                               const daysOfPizza = Math.floor(totalSavings / dailyPizzaCost);
-                               const years = Math.floor(daysOfPizza / 365);
-                               
-                               return `${years} ${years === 1 ? 'an' : 'ans'}`;
-                             })()}
-                           </span>
-                          ! 🏠🍕
+                           plus vite.
                         </p>
                       </div>
                       
