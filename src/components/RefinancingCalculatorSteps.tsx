@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle } from "lucide-react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useToast } from "@/hooks/use-toast";
 
 const RefinancingCalculatorSteps = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -20,7 +21,17 @@ const RefinancingCalculatorSteps = () => {
   const [newRate, setNewRate] = useState(4.14);
   const [refinancingAmount, setRefinancingAmount] = useState(0);
   const [showResults, setShowResults] = useState(false);
+  const [showContactForm, setShowContactForm] = useState(false);
+  const [contactForm, setContactForm] = useState({
+    nom: '',
+    email: '',
+    telephone: '',
+    meilleurMoment: 'journee'
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [webhookUrl, setWebhookUrl] = useState('');
   const isMobile = useIsMobile();
+  const { toast } = useToast();
 
   // Auto-scroll to calculator section on mobile when component mounts
   useEffect(() => {
@@ -628,21 +639,219 @@ const RefinancingCalculatorSteps = () => {
                         </p>
                       </div>
                       
-                      <div className="text-center mt-6">
-                         <Button 
-                           size="lg"
-                           style={{ backgroundColor: 'hsl(217, 91%, 60%)', color: 'white' }}
-                           className="hover:opacity-90 transition-opacity w-full max-w-sm md:max-w-md mx-auto flex items-center justify-center text-sm md:text-lg px-4 md:px-8 py-3 md:py-4"
-                           onClick={() => window.open('https://expertisegestionprivee.com/contact/', '_blank')}
-                         >
-                           Refinancez maintenant!
-                         </Button>
-                      </div>
+                       <div className="text-center mt-6">
+                          <Button 
+                            size="lg"
+                            style={{ backgroundColor: 'hsl(217, 91%, 60%)', color: 'white' }}
+                            className="hover:opacity-90 transition-opacity w-full max-w-sm md:max-w-md mx-auto flex items-center justify-center text-sm md:text-lg px-4 md:px-8 py-3 md:py-4"
+                            onClick={() => {
+                              setShowContactForm(true);
+                              // Auto-scroll to contact form after a short delay
+                              setTimeout(() => {
+                                const contactElement = document.querySelector('[data-contact-form="true"]');
+                                if (contactElement) {
+                                  contactElement.scrollIntoView({ 
+                                    behavior: 'smooth', 
+                                    block: 'start' 
+                                  });
+                                }
+                              }, 200);
+                            }}
+                          >
+                            Refinancez maintenant!
+                          </Button>
+                       </div>
                     </div>
                   </CardContent>
-                </Card>
-              </div>
-            )}
+                 </Card>
+               </div>
+             )}
+
+             {/* Contact Form Section */}
+             {showContactForm && (
+               <Card className="mt-8" data-contact-form="true">
+                 <CardHeader>
+                   <CardTitle className="text-xl text-slate-900 text-center">
+                     Parlons de votre projet de refinancement
+                   </CardTitle>
+                   <p className="text-slate-600 text-center">
+                     Laissez-nous vos coordonnées et nous vous contacterons pour finaliser votre stratégie de refinancement personnalisée.
+                   </p>
+                 </CardHeader>
+                 <CardContent className="space-y-6">
+                   {!webhookUrl && (
+                     <div className="space-y-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                       <Label htmlFor="webhookUrl" className="block text-sm font-medium text-blue-900">
+                         URL Zapier Webhook (optionnel)
+                       </Label>
+                       <Input
+                         id="webhookUrl"
+                         type="url"
+                         value={webhookUrl}
+                         onChange={(e) => setWebhookUrl(e.target.value)}
+                         placeholder="https://hooks.zapier.com/hooks/catch/..."
+                         className="text-sm"
+                       />
+                       <p className="text-xs text-blue-700">
+                         Si vous avez configuré un webhook Zapier pour recevoir les données dans Google Sheets, collez l'URL ici.
+                       </p>
+                     </div>
+                   )}
+
+                   <div className="grid md:grid-cols-2 gap-4">
+                     <div className="space-y-2">
+                       <Label htmlFor="nom" className="text-sm font-medium text-slate-700">
+                         Nom complet *
+                       </Label>
+                       <Input
+                         id="nom"
+                         type="text"
+                         value={contactForm.nom}
+                         onChange={(e) => setContactForm(prev => ({ ...prev, nom: e.target.value }))}
+                         placeholder="Votre nom complet"
+                         required
+                       />
+                     </div>
+
+                     <div className="space-y-2">
+                       <Label htmlFor="email" className="text-sm font-medium text-slate-700">
+                         Adresse courriel *
+                       </Label>
+                       <Input
+                         id="email"
+                         type="email"
+                         value={contactForm.email}
+                         onChange={(e) => setContactForm(prev => ({ ...prev, email: e.target.value }))}
+                         placeholder="votre@email.com"
+                         required
+                       />
+                     </div>
+
+                     <div className="space-y-2">
+                       <Label htmlFor="telephone" className="text-sm font-medium text-slate-700">
+                         Numéro de téléphone *
+                       </Label>
+                       <Input
+                         id="telephone"
+                         type="tel"
+                         value={contactForm.telephone}
+                         onChange={(e) => setContactForm(prev => ({ ...prev, telephone: e.target.value }))}
+                         placeholder="(000) 000-0000"
+                         required
+                       />
+                     </div>
+
+                     <div className="space-y-2">
+                       <Label className="text-sm font-medium text-slate-700">
+                         Meilleur moment pour vous joindre
+                       </Label>
+                       <Select 
+                         value={contactForm.meilleurMoment} 
+                         onValueChange={(value) => setContactForm(prev => ({ ...prev, meilleurMoment: value }))}
+                       >
+                         <SelectTrigger>
+                           <SelectValue />
+                         </SelectTrigger>
+                         <SelectContent>
+                           <SelectItem value="journee">Journée</SelectItem>
+                           <SelectItem value="soiree">Soirée</SelectItem>
+                         </SelectContent>
+                       </Select>
+                     </div>
+                   </div>
+
+                   <div className="text-center">
+                     <Button 
+                       size="lg"
+                       style={{ backgroundColor: 'hsl(217, 91%, 60%)', color: 'white' }}
+                       className="hover:opacity-90 transition-opacity px-8 py-3"
+                       disabled={isSubmitting || !contactForm.nom || !contactForm.email || !contactForm.telephone}
+                       onClick={async () => {
+                         if (!contactForm.nom || !contactForm.email || !contactForm.telephone) {
+                           toast({
+                             title: "Erreur",
+                             description: "Veuillez remplir tous les champs obligatoires",
+                             variant: "destructive",
+                           });
+                           return;
+                         }
+
+                         setIsSubmitting(true);
+
+                         try {
+                           const calculatorData = {
+                             soldeActuel: currentBalance,
+                             valeurMaison: homeValue,
+                             dateEcheance: termEndDate,
+                             amortissementAnnees: amortizationYears,
+                             amortissementMois: amortizationMonths,
+                             tauxActuel: currentRate,
+                             nouveauTaux: newRate,
+                             montantRefinancement: refinancingAmount,
+                             economiesTerme: savings.termSavings,
+                             paiementActuel: savings.currentMonthlyPayment,
+                             nouveauPaiement: savings.newMonthlyPayment,
+                             beneficeNet: investmentStrategy.netBenefit,
+                             anneesEconomisees: investmentStrategy.yearsMonthsSaved.years
+                           };
+
+                           const submissionData = {
+                             timestamp: new Date().toISOString(),
+                             contact: contactForm,
+                             calculateur: calculatorData,
+                             sourceUrl: window.location.href
+                           };
+
+                           if (webhookUrl) {
+                             await fetch(webhookUrl, {
+                               method: "POST",
+                               headers: {
+                                 "Content-Type": "application/json",
+                               },
+                               mode: "no-cors",
+                               body: JSON.stringify(submissionData),
+                             });
+
+                             toast({
+                               title: "Demande envoyée!",
+                               description: "Votre demande a été transmise avec succès. Nous vous contacterons sous peu.",
+                             });
+                           } else {
+                             // Log data to console for now if no webhook
+                             console.log("Données du formulaire:", submissionData);
+                             
+                             toast({
+                               title: "Formulaire complété!",
+                               description: "Vos informations ont été enregistrées. Configurez un webhook Zapier pour les transférer automatiquement.",
+                             });
+                           }
+
+                           // Reset form
+                           setContactForm({
+                             nom: '',
+                             email: '',
+                             telephone: '',
+                             meilleurMoment: 'journee'
+                           });
+
+                         } catch (error) {
+                           console.error("Erreur lors de l'envoi:", error);
+                           toast({
+                             title: "Erreur",
+                             description: "Une erreur s'est produite. Veuillez réessayer.",
+                             variant: "destructive",
+                           });
+                         } finally {
+                           setIsSubmitting(false);
+                         }
+                       }}
+                     >
+                       {isSubmitting ? "Envoi en cours..." : "Contactez-moi"}
+                     </Button>
+                   </div>
+                 </CardContent>
+               </Card>
+             )}
 
             {currentStep === steps.length && !showResults && (
               <div className="text-center">
