@@ -29,7 +29,7 @@ const RefinancingCalculatorSteps = () => {
     meilleurMoment: 'journee'
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [webhookUrl, setWebhookUrl] = useState('');
+  const webhookUrl = 'https://hooks.zapier.com/hooks/catch/24370861/udrlzz0/';
   const isMobile = useIsMobile();
   const { toast } = useToast();
 
@@ -679,24 +679,6 @@ const RefinancingCalculatorSteps = () => {
                    </p>
                  </CardHeader>
                  <CardContent className="space-y-6">
-                   {!webhookUrl && (
-                     <div className="space-y-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
-                       <Label htmlFor="webhookUrl" className="block text-sm font-medium text-blue-900">
-                         URL Zapier Webhook (optionnel)
-                       </Label>
-                       <Input
-                         id="webhookUrl"
-                         type="url"
-                         value={webhookUrl}
-                         onChange={(e) => setWebhookUrl(e.target.value)}
-                         placeholder="https://hooks.zapier.com/hooks/catch/..."
-                         className="text-sm"
-                       />
-                       <p className="text-xs text-blue-700">
-                         Si vous avez configuré un webhook Zapier pour recevoir les données dans Google Sheets, collez l'URL ici.
-                       </p>
-                     </div>
-                   )}
 
                    <div className="grid md:grid-cols-2 gap-4">
                      <div className="space-y-2">
