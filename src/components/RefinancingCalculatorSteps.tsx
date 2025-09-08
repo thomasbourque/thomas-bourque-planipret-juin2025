@@ -356,11 +356,11 @@ const RefinancingCalculatorSteps = () => {
     <section className="py-16 px-4 min-h-screen" style={{ backgroundColor: 'hsl(217, 91%, 60%)' }} data-calculator="refinancing">
       <div className="container max-w-4xl mx-auto">
         <div className="text-center mb-8">
-          <h1 className="text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight">
-            Faites travailler votre maison pour vous!
-          </h1>
-          <h2 className="text-2xl lg:text-3xl font-bold text-white mb-4">
+          <h1 className="text-5xl lg:text-6xl font-bold text-yellow-400 mb-4 leading-tight">
             Calculateur de refinancement
+          </h1>
+          <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
+            Faites travailler votre maison pour vous!
           </h2>
           <p className="text-blue-100 text-lg max-w-3xl mx-auto">
             Découvrez en quelques secondes combien vous pourriez économiser en faisant travailler la valeur de votre maison.
