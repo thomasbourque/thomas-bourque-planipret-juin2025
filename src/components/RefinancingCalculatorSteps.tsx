@@ -15,11 +15,12 @@ const RefinancingCalculatorSteps = () => {
   const [currentBalance, setCurrentBalance] = useState(400000);
   const [homeValue, setHomeValue] = useState(600000);
   const [termEndDate, setTermEndDate] = useState("2027-12-31");
-  const [amortizationYears, setAmortizationYears] = useState(25);
+  const [amortizationYears, setAmortizationYears] = useState(30);
   const [amortizationMonths, setAmortizationMonths] = useState(0);
   const [currentRate, setCurrentRate] = useState(5.5);
   const [newRate, setNewRate] = useState(4.14);
   const [refinancingAmount, setRefinancingAmount] = useState(0);
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
   const [showResults, setShowResults] = useState(false);
   const [showContactForm, setShowContactForm] = useState(false);
   const [contactForm, setContactForm] = useState({
@@ -128,6 +129,14 @@ const RefinancingCalculatorSteps = () => {
 
   const refinancingCapacity = calculateRefinancingCapacity(homeValue, currentBalance);
   const remainingAmortization = amortizationYears + amortizationMonths / 12;
+  
+  // Set refinancing amount to max capacity when first calculated
+  useEffect(() => {
+    if (isFirstLoad && refinancingCapacity > 0 && refinancingAmount === 0) {
+      setRefinancingAmount(refinancingCapacity);
+      setIsFirstLoad(false);
+    }
+  }, [refinancingCapacity, refinancingAmount, isFirstLoad]);
   
   // Use the manually entered refinancing amount
   const effectiveRefinancingAmount = refinancingAmount;
@@ -347,7 +356,10 @@ const RefinancingCalculatorSteps = () => {
     <section className="py-16 px-4 min-h-screen" style={{ backgroundColor: 'hsl(217, 91%, 60%)' }} data-calculator="refinancing">
       <div className="container max-w-4xl mx-auto">
         <div className="text-center mb-8">
-          <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
+          <h1 className="text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight">
+            Faites travailler votre maison pour vous!
+          </h1>
+          <h2 className="text-2xl lg:text-3xl font-bold text-white mb-4">
             Calculateur de refinancement
           </h2>
           <p className="text-blue-100 text-lg max-w-3xl mx-auto">
@@ -467,7 +479,7 @@ const RefinancingCalculatorSteps = () => {
                   <CardContent className="space-y-6">
 
                     {/* Graphique adaptatif */}
-                    <div className="mt-6">
+                    <div className="mt-3">
                       <h4 className="text-lg font-semibold text-slate-900 mb-4">Évolution financière</h4>
                       
                       {/* Version desktop - Graphique linéaire */}
@@ -586,23 +598,23 @@ const RefinancingCalculatorSteps = () => {
                           
                           return (
                             <>
-                                <div className="grid grid-cols-2 gap-3">
-                                  <div className="bg-green-50 p-2 rounded-lg text-center border border-green-200">
-                                    <div className="text-xs font-bold text-green-700 whitespace-nowrap">
-                                      {Math.round(investmentValue).toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
-                                    </div>
-                                    <div className="text-xs text-green-600 mt-1">Croissance des investissements</div>
-                                    <div className="text-xs" style={{ color: 'hsl(217, 91%, 60%)' }}>après {finalYear} ans</div>
-                                  </div>
-                                  
-                                  <div className="bg-red-50 p-2 rounded-lg text-center border border-red-200">
-                                    <div className="text-xs font-bold text-red-700 whitespace-nowrap">
-                                      {Math.round(mortgageCost).toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
-                                    </div>
-                                    <div className="text-xs text-red-600 mt-1">Coût hypothécaire</div>
-                                    <div className="text-xs" style={{ color: 'hsl(217, 91%, 60%)' }}>après {finalYear} ans</div>
-                                  </div>
-                               </div>
+                                 <div className="grid grid-cols-2 gap-3">
+                                   <div className="bg-green-50 p-3 rounded-lg text-center border border-green-200">
+                                     <div className="text-sm font-bold text-green-700 break-words">
+                                       {Math.round(investmentValue).toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
+                                     </div>
+                                     <div className="text-xs text-green-600 mt-1 leading-tight">Croissance des investissements</div>
+                                     <div className="text-xs" style={{ color: 'hsl(217, 91%, 60%)' }}>après {finalYear} ans</div>
+                                   </div>
+                                   
+                                   <div className="bg-red-50 p-3 rounded-lg text-center border border-red-200">
+                                     <div className="text-sm font-bold text-red-700 break-words">
+                                       {Math.round(mortgageCost).toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
+                                     </div>
+                                     <div className="text-xs text-red-600 mt-1 leading-tight">Coût hypothécaire</div>
+                                     <div className="text-xs" style={{ color: 'hsl(217, 91%, 60%)' }}>après {finalYear} ans</div>
+                                   </div>
+                                </div>
                               
                                {/* Show blue savings box only on desktop */}
                                <div className="hidden md:block bg-blue-50 p-4 rounded-lg text-center border border-blue-200">
