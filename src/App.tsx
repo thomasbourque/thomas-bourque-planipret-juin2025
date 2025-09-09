@@ -48,7 +48,7 @@ const App = () => (
           <Route path="/preview-ratios" element={<RatiosPreview />} />
           <Route path="/preview-fixe-variable" element={<FixedVariablePreview />} />
           <Route path="/preview-rpv-evolutif" element={<LtvPreview />} />
-          <Route path="/refinancement-secret" element={<RefinancingSecret />} />
+          <Route path="/calculateur-refinancement" element={<RefinancingSecret />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
