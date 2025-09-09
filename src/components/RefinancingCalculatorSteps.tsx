@@ -355,16 +355,7 @@ const RefinancingCalculatorSteps = () => {
   return (
     <section className="py-16 px-4 min-h-screen" style={{ backgroundColor: 'hsl(217, 91%, 60%)' }} data-calculator="refinancing">
       <div className="container max-w-4xl mx-auto">
-        <div className="text-center mb-8 relative">
-          {/* Logo en haut à droite */}
-          <div className="absolute top-0 right-0 w-16 h-16 md:w-20 md:h-20">
-            <img 
-              src="/lovable-uploads/37c6744f-f7ee-45a4-bc51-3038e397a017.png" 
-              alt="Logo refinancement" 
-              className="w-full h-full object-contain"
-            />
-          </div>
-          
+        <div className="text-center mb-8">
           <h1 className="text-5xl lg:text-6xl font-bold text-yellow-400 mb-4 leading-tight">
             Calculateur de refinancement
           </h1>
@@ -485,21 +476,35 @@ const RefinancingCalculatorSteps = () => {
                   <CardHeader>
                     <CardTitle className="text-xl text-slate-900">Stratégie de refinancement</CardTitle>
                   </CardHeader>
-                  <CardContent className="space-y-6">
-                    <div className="text-slate-700 space-y-3">
-                      <p>
-                        Vous pouvez utiliser la valeur prise par votre propriété pour en sortir des liquidités en la refinançant. C'est l'occasion de concrétiser un projet qui vous parle :
-                      </p>
-                      <ul className="list-disc list-inside space-y-1 ml-4">
-                        <li>Maximiser vos placements (CELI/REER)</li>
-                        <li>Payer des rénovations à venir</li>
-                        <li>Rembourser des dettes à taux d'intérêt élevé (carte de crédit, marge de crédit, prêt auto, etc.)</li>
-                        <li>Réaliser tout autre projet de votre choix nécessitant l'accès à des liquidités.</li>
-                      </ul>
-                      <p>
-                        Voici l'impact concret au fil du temps pour quelqu'un qui déciderait de prendre l'argent pour effectuer des placements à un rendement moyen de 6,5 % par année.
-                      </p>
-                    </div>
+                   <CardContent className="space-y-6">
+                     <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-lg border border-blue-100">
+                       <div className="text-slate-700 space-y-4">
+                         <p className="text-lg font-medium text-slate-800">
+                           Utilisez la valeur prise par votre maison pour sortir des liquidités. C'est l'occasion de concrétiser vos objectifs :
+                         </p>
+                         <div className="grid md:grid-cols-2 gap-3">
+                           <div className="flex items-center space-x-2">
+                             <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                             <span>Maximiser vos placements (CELI/REER)</span>
+                           </div>
+                           <div className="flex items-center space-x-2">
+                             <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                             <span>Payer des rénovations</span>
+                           </div>
+                           <div className="flex items-center space-x-2">
+                             <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                             <span>Rembourser des dettes à taux d'intérêt élevé</span>
+                           </div>
+                           <div className="flex items-center space-x-2">
+                             <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
+                             <span>Réaliser tout autre projet de votre choix</span>
+                           </div>
+                         </div>
+                         <p className="text-base font-medium text-slate-800 border-t border-blue-200 pt-4 mt-4">
+                           Voici l'impact d'un refinancement utilisé comme levier pour investir à un rendement moyen de 6,5 % par année,
+                         </p>
+                       </div>
+                     </div>
 
                     {/* Graphique adaptatif */}
                     <div className="mt-3">
@@ -509,11 +514,11 @@ const RefinancingCalculatorSteps = () => {
                       <div className="hidden md:block h-80">
                         <ResponsiveContainer width="100%" height="100%">
                          <LineChart 
-                           data={(() => {
-                             const chartData = [];
-                             const years = Math.ceil(remainingAmortization);
-                             const newTotalBalance = currentBalance + effectiveRefinancingAmount;
-                             const newAmortizationMonths = remainingAmortization * 12;
+                            data={(() => {
+                              const chartData = [];
+                              const years = 30; // Fixed to 30 years for refinancing chart
+                              const newTotalBalance = currentBalance + effectiveRefinancingAmount;
+                              const newAmortizationMonths = 30 * 12; // 30 years in months
                              
                              for (let year = 0; year <= years; year++) {
                                const investmentValue = effectiveRefinancingAmount * Math.pow(1 + 0.065/2, year * 2);
@@ -612,11 +617,11 @@ const RefinancingCalculatorSteps = () => {
                       </div>
                       
                       {/* Version mobile - Cartes de données */}
-                      <div className="md:hidden space-y-4">
-                        {(() => {
-                          const finalYear = Math.round(remainingAmortization);
-                          const investmentValue = effectiveRefinancingAmount * Math.pow(1 + 0.065/2, finalYear * 2);
-                          const mortgageCost = effectiveRefinancingAmount * Math.pow(1 + (newRate/100)/2, finalYear * 2);
+                       <div className="md:hidden space-y-4">
+                         {(() => {
+                           const finalYear = 30; // Fixed to 30 years for refinancing chart
+                           const investmentValue = effectiveRefinancingAmount * Math.pow(1 + 0.065/2, finalYear * 2);
+                           const mortgageCost = effectiveRefinancingAmount * Math.pow(1 + (newRate/100)/2, finalYear * 2);
                           const savings = investmentValue - mortgageCost;
                           
                           return (
