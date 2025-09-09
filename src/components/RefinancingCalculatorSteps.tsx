@@ -501,7 +501,7 @@ const RefinancingCalculatorSteps = () => {
                            </div>
                          </div>
                          <p className="text-base font-medium text-slate-800 border-t border-blue-200 pt-4 mt-4">
-                           Voici l'impact d'un refinancement utilisé comme levier pour investir à un rendement moyen de 6,5 % par année,
+                           Voici l'impact d'un refinancement utilisé comme levier pour investir à un rendement moyen de 6,5 % par année.
                          </p>
                        </div>
                      </div>
