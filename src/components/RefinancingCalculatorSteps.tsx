@@ -15,10 +15,10 @@ const RefinancingCalculatorSteps = () => {
   const [currentBalance, setCurrentBalance] = useState(400000);
   const [homeValue, setHomeValue] = useState(600000);
   const [termEndDate, setTermEndDate] = useState("2027-12-31");
-  const [amortizationYears, setAmortizationYears] = useState(30);
+  const [amortizationYears, setAmortizationYears] = useState(20);
   const [amortizationMonths, setAmortizationMonths] = useState(0);
   const [currentRate, setCurrentRate] = useState(5.5);
-  const [newRate, setNewRate] = useState(4.14);
+  const [newRate, setNewRate] = useState(4.15);
   const [refinancingAmount, setRefinancingAmount] = useState(0);
   const [isFirstLoad, setIsFirstLoad] = useState(true);
   const [showResults, setShowResults] = useState(false);
@@ -317,7 +317,7 @@ const RefinancingCalculatorSteps = () => {
             <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-500">%</span>
           </div>
           <p className="text-sm text-slate-600">
-            * Le taux présenté par défaut (4,14 %) correspond à un taux compétitif actuellement sur le marché pour un prêt conventionnel fixe 5 ans.
+            * Le taux présenté par défaut (4,15 %) correspond à un taux compétitif actuellement sur le marché pour un prêt conventionnel fixe 5 ans.
           </p>
         </div>
       )
@@ -355,7 +355,16 @@ const RefinancingCalculatorSteps = () => {
   return (
     <section className="py-16 px-4 min-h-screen" style={{ backgroundColor: 'hsl(217, 91%, 60%)' }} data-calculator="refinancing">
       <div className="container max-w-4xl mx-auto">
-        <div className="text-center mb-8">
+        <div className="text-center mb-8 relative">
+          {/* Logo en haut à droite */}
+          <div className="absolute top-0 right-0 w-16 h-16 md:w-20 md:h-20">
+            <img 
+              src="/lovable-uploads/37c6744f-f7ee-45a4-bc51-3038e397a017.png" 
+              alt="Logo refinancement" 
+              className="w-full h-full object-contain"
+            />
+          </div>
+          
           <h1 className="text-5xl lg:text-6xl font-bold text-yellow-400 mb-4 leading-tight">
             Calculateur de refinancement
           </h1>
@@ -477,6 +486,20 @@ const RefinancingCalculatorSteps = () => {
                     <CardTitle className="text-xl text-slate-900">Stratégie de refinancement</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-6">
+                    <div className="text-slate-700 space-y-3">
+                      <p>
+                        Vous pouvez utiliser la valeur prise par votre propriété pour en sortir des liquidités en la refinançant. C'est l'occasion de concrétiser un projet qui vous parle :
+                      </p>
+                      <ul className="list-disc list-inside space-y-1 ml-4">
+                        <li>Maximiser vos placements (CELI/REER)</li>
+                        <li>Payer des rénovations à venir</li>
+                        <li>Rembourser des dettes à taux d'intérêt élevé (carte de crédit, marge de crédit, prêt auto, etc.)</li>
+                        <li>Réaliser tout autre projet de votre choix nécessitant l'accès à des liquidités.</li>
+                      </ul>
+                      <p>
+                        Voici l'impact concret au fil du temps pour quelqu'un qui déciderait de prendre l'argent pour effectuer des placements à un rendement moyen de 6,5 % par année.
+                      </p>
+                    </div>
 
                     {/* Graphique adaptatif */}
                     <div className="mt-3">
@@ -640,16 +663,19 @@ const RefinancingCalculatorSteps = () => {
                         </p>
                       </div>
                       
-                      {/* Slogan punché en dehors de l'encadré */}
-                      <div className="mt-6 text-center">
-                        <p className="text-lg md:text-xl font-bold text-primary leading-tight">
-                          C'est assez pour payer votre maison{" "}
-                           <span style={{ color: 'hsl(217, 91%, 60%)' }}>
-                             {investmentStrategy.yearsMonthsSaved.years} {investmentStrategy.yearsMonthsSaved.years === 1 ? "an" : "ans"}
-                           </span>{" "}
-                           plus vite.
-                        </p>
-                      </div>
+                       {/* Slogan punché en dehors de l'encadré */}
+                       <div className="mt-6 text-center">
+                         <p className="text-lg md:text-xl font-bold text-primary leading-tight">
+                           C'est assez pour payer votre maison{" "}
+                            <span style={{ color: 'hsl(217, 91%, 60%)' }}>
+                              {investmentStrategy.yearsMonthsSaved.years} {investmentStrategy.yearsMonthsSaved.years === 1 ? "an" : "ans"}
+                            </span>{" "}
+                            plus vite.
+                         </p>
+                         <p className="text-base text-slate-700 mt-3">
+                           Vous souhaitez mettre cette stratégie en place facilement? Laissez-nous vous guider.
+                         </p>
+                       </div>
                       
                        <div className="text-center mt-6">
                           <Button 
