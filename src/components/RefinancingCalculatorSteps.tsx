@@ -144,7 +144,7 @@ const RefinancingCalculatorSteps = () => {
   const investmentStrategy = calculateInvestmentStrategy(
     effectiveRefinancingAmount,
     newRate,
-    remainingAmortization,
+    30, // Always use 30 years for investment strategy calculation to match graph
     currentBalance
   );
 
@@ -663,9 +663,9 @@ const RefinancingCalculatorSteps = () => {
                         <p className="text-lg font-semibold text-green-800 mb-3">
                           Vous pourriez avoir {investmentStrategy.netBenefit.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })} de plus dans vos poches
                         </p>
-                        <p className="text-green-700 mb-3">
-                          au bout de {Math.round(remainingAmortization)} ans avec cette stratégie d'investissement.
-                        </p>
+                         <p className="text-green-700 mb-3">
+                           au bout de 30 ans avec cette stratégie d'investissement.
+                         </p>
                       </div>
                       
                        {/* Slogan punché en dehors de l'encadré */}
