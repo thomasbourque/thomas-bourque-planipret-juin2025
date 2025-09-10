@@ -30,7 +30,8 @@ const RefinancingCalculatorSteps = () => {
     meilleurMoment: 'journee'
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const webhookUrl = 'https://hook.us2.make.com/svad6tr25febi23q8ja2t8a7jat3hnyk';
+  // Google Apps Script URL - Remplacez par votre URL Google Apps Script
+  const webhookUrl = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
   const isMobile = useIsMobile();
   const { toast } = useToast();
 
@@ -847,7 +848,7 @@ const RefinancingCalculatorSteps = () => {
                              
                               toast({
                                 title: "Formulaire complété!",
-                                description: "Vos informations ont été enregistrées. Configurez un webhook Make pour les transférer automatiquement.",
+                                description: "Vos informations ont été enregistrées. Configurez votre Google Apps Script pour les transférer vers Google Sheets.",
                               });
                            }
 
