@@ -30,7 +30,7 @@ const RefinancingCalculatorSteps = () => {
     meilleurMoment: 'journee'
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const webhookUrl = 'https://hooks.zapier.com/hooks/catch/24370861/udrlzz0/';
+  const webhookUrl = 'https://hook.us2.make.com/svad6tr25febi23q8ja2t8a7jat3hnyk';
   const isMobile = useIsMobile();
   const { toast } = useToast();
 
@@ -845,10 +845,10 @@ const RefinancingCalculatorSteps = () => {
                              // Log data to console for now if no webhook
                              console.log("Données du formulaire:", submissionData);
                              
-                             toast({
-                               title: "Formulaire complété!",
-                               description: "Vos informations ont été enregistrées. Configurez un webhook Zapier pour les transférer automatiquement.",
-                             });
+                              toast({
+                                title: "Formulaire complété!",
+                                description: "Vos informations ont été enregistrées. Configurez un webhook Make pour les transférer automatiquement.",
+                              });
                            }
 
                            // Reset form
