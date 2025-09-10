@@ -30,8 +30,8 @@ const RefinancingCalculatorSteps = () => {
     meilleurMoment: 'journee'
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  // Google Apps Script URL - Remplacez par votre URL Google Apps Script
-  const webhookUrl = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
+  // Google Apps Script URL configurée pour votre Google Sheets
+  const webhookUrl = 'https://script.google.com/macros/s/AKfycbxlHUOR-zSp7TCeX7HabGzB_WLXFJ5yl-cZSPyfPTz37owbiiRgZOAIsd8GAzVcuHYzUA/exec';
   const isMobile = useIsMobile();
   const { toast } = useToast();
 
