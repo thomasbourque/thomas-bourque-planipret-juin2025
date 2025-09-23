@@ -19,6 +19,8 @@ const RefinancingCalculatorSteps = () => {
   const [amortizationMonths, setAmortizationMonths] = useState(0);
   const [currentRate, setCurrentRate] = useState(5.5);
   const [newRate, setNewRate] = useState(4.09);
+  const [currentRateInput, setCurrentRateInput] = useState("5,50");
+  const [newRateInput, setNewRateInput] = useState("4,09");
   const [refinancingAmount, setRefinancingAmount] = useState(0);
   const [isFirstLoad, setIsFirstLoad] = useState(true);
   const [showResults, setShowResults] = useState(false);
@@ -76,33 +78,45 @@ const RefinancingCalculatorSteps = () => {
 
   const handleCurrentRateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
+    setCurrentRateInput(value);
     if (value === '') {
       setCurrentRate(0);
+      return;
+    }
+    const normalized = value.replace(',', '.');
+    const numValue = parseFloat(normalized);
+    if (!isNaN(numValue)) {
+      setCurrentRate(numValue);
+    }
+  };
+
+  const handleCurrentRateBlur = () => {
+    if (currentRate > 0) {
+      setCurrentRateInput(currentRate.toFixed(2).replace('.', ','));
     } else {
-      // Allow partial input during typing
-      const numValue = parseFloat(value);
-      if (!isNaN(numValue)) {
-        setCurrentRate(numValue);
-      } else {
-        // Keep current value if input is invalid during typing
-        setCurrentRate(currentRate);
-      }
+      setCurrentRateInput('');
     }
   };
 
   const handleNewRateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
+    setNewRateInput(value);
     if (value === '') {
       setNewRate(0);
+      return;
+    }
+    const normalized = value.replace(',', '.');
+    const numValue = parseFloat(normalized);
+    if (!isNaN(numValue)) {
+      setNewRate(numValue);
+    }
+  };
+
+  const handleNewRateBlur = () => {
+    if (newRate > 0) {
+      setNewRateInput(newRate.toFixed(2).replace('.', ','));
     } else {
-      // Allow partial input during typing
-      const numValue = parseFloat(value);
-      if (!isNaN(numValue)) {
-        setNewRate(numValue);
-      } else {
-        // Keep current value if input is invalid during typing
-        setNewRate(newRate);
-      }
+      setNewRateInput('');
     }
   };
 
@@ -313,10 +327,13 @@ const RefinancingCalculatorSteps = () => {
             <Input
               id="currentRate"
               type="text"
-              value={currentRate === 0 ? '' : currentRate.toString()}
+              inputMode="decimal"
+              value={currentRateInput}
               onChange={handleCurrentRateChange}
+              onBlur={handleCurrentRateBlur}
+              pattern="[0-9]+([,\.][0-9]{0,2})?"
               className="text-lg pr-8"
-              placeholder="5.50"
+              placeholder="5,50"
             />
             <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-500">%</span>
           </div>
@@ -335,10 +352,13 @@ const RefinancingCalculatorSteps = () => {
             <Input
               id="newRate"
               type="text"
-              value={newRate === 0 ? '' : newRate.toString()}
+              inputMode="decimal"
+              value={newRateInput}
               onChange={handleNewRateChange}
+              onBlur={handleNewRateBlur}
+              pattern="[0-9]+([,\.][0-9]{0,2})?"
               className="text-lg pr-8"
-              placeholder="4.09"
+              placeholder="4,09"
             />
             <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-500">%</span>
           </div>
