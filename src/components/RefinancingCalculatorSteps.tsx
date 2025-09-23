@@ -18,7 +18,7 @@ const RefinancingCalculatorSteps = () => {
   const [amortizationYears, setAmortizationYears] = useState(20);
   const [amortizationMonths, setAmortizationMonths] = useState(0);
   const [currentRate, setCurrentRate] = useState(5.5);
-  const [newRate, setNewRate] = useState(4.15);
+  const [newRate, setNewRate] = useState(4.09);
   const [refinancingAmount, setRefinancingAmount] = useState(0);
   const [isFirstLoad, setIsFirstLoad] = useState(true);
   const [showResults, setShowResults] = useState(false);
@@ -70,6 +70,30 @@ const RefinancingCalculatorSteps = () => {
       const numValue = Number(value);
       if (!isNaN(numValue)) {
         setHomeValue(numValue);
+      }
+    }
+  };
+
+  const handleCurrentRateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (value === '') {
+      setCurrentRate(0);
+    } else {
+      const numValue = Number(value);
+      if (!isNaN(numValue)) {
+        setCurrentRate(numValue);
+      }
+    }
+  };
+
+  const handleNewRateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (value === '') {
+      setNewRate(0);
+    } else {
+      const numValue = Number(value);
+      if (!isNaN(numValue)) {
+        setNewRate(numValue);
       }
     }
   };
@@ -131,13 +155,12 @@ const RefinancingCalculatorSteps = () => {
   const refinancingCapacity = calculateRefinancingCapacity(homeValue, currentBalance);
   const remainingAmortization = amortizationYears + amortizationMonths / 12;
   
-  // Set refinancing amount to max capacity when first calculated
+  // Set refinancing amount to max capacity when capacity changes
   useEffect(() => {
-    if (isFirstLoad && refinancingCapacity > 0 && refinancingAmount === 0) {
+    if (refinancingCapacity > 0) {
       setRefinancingAmount(refinancingCapacity);
-      setIsFirstLoad(false);
     }
-  }, [refinancingCapacity, refinancingAmount, isFirstLoad]);
+  }, [refinancingCapacity]);
   
   // Use the manually entered refinancing amount
   const effectiveRefinancingAmount = refinancingAmount;
@@ -282,10 +305,10 @@ const RefinancingCalculatorSteps = () => {
             <Input
               id="currentRate"
               type="number"
-              value={currentRate.toFixed(2)}
-              onChange={(e) => setCurrentRate(Number(e.target.value))}
+              value={currentRate === 0 ? '' : currentRate.toFixed(2)}
+              onChange={handleCurrentRateChange}
               step={0.01}
-              min={3}
+              min={0}
               max={8}
               className="text-lg pr-8"
               placeholder="5.50"
@@ -307,18 +330,18 @@ const RefinancingCalculatorSteps = () => {
             <Input
               id="newRate"
               type="number"
-              value={newRate}
-              onChange={(e) => setNewRate(Number(e.target.value))}
+              value={newRate === 0 ? '' : newRate.toFixed(2)}
+              onChange={handleNewRateChange}
               step={0.01}
-              min={3}
+              min={0}
               max={8}
               className="text-lg pr-8"
-              placeholder="4.14"
+              placeholder="4.09"
             />
             <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-500">%</span>
           </div>
           <p className="text-sm text-slate-600">
-            * Le taux présenté par défaut (4,15 %) correspond à un taux compétitif actuellement sur le marché pour un prêt conventionnel fixe 5 ans.
+            * Le taux présenté par défaut (4,09 %) correspond à un taux compétitif actuellement sur le marché pour un prêt conventionnel fixe 5 ans.
           </p>
         </div>
       )
