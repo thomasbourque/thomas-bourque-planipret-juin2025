@@ -79,9 +79,13 @@ const RefinancingCalculatorSteps = () => {
     if (value === '') {
       setCurrentRate(0);
     } else {
-      const numValue = Number(value);
+      // Allow partial input during typing
+      const numValue = parseFloat(value);
       if (!isNaN(numValue)) {
         setCurrentRate(numValue);
+      } else {
+        // Keep current value if input is invalid during typing
+        setCurrentRate(currentRate);
       }
     }
   };
@@ -91,9 +95,13 @@ const RefinancingCalculatorSteps = () => {
     if (value === '') {
       setNewRate(0);
     } else {
-      const numValue = Number(value);
+      // Allow partial input during typing
+      const numValue = parseFloat(value);
       if (!isNaN(numValue)) {
         setNewRate(numValue);
+      } else {
+        // Keep current value if input is invalid during typing
+        setNewRate(newRate);
       }
     }
   };
@@ -304,12 +312,9 @@ const RefinancingCalculatorSteps = () => {
           <div className="relative">
             <Input
               id="currentRate"
-              type="number"
-              value={currentRate === 0 ? '' : currentRate.toFixed(2)}
+              type="text"
+              value={currentRate === 0 ? '' : currentRate.toString()}
               onChange={handleCurrentRateChange}
-              step={0.01}
-              min={0}
-              max={8}
               className="text-lg pr-8"
               placeholder="5.50"
             />
@@ -329,12 +334,9 @@ const RefinancingCalculatorSteps = () => {
           <div className="relative">
             <Input
               id="newRate"
-              type="number"
-              value={newRate === 0 ? '' : newRate.toFixed(2)}
+              type="text"
+              value={newRate === 0 ? '' : newRate.toString()}
               onChange={handleNewRateChange}
-              step={0.01}
-              min={0}
-              max={8}
               className="text-lg pr-8"
               placeholder="4.09"
             />
