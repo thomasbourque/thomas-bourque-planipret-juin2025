@@ -402,7 +402,7 @@ const RefinancingCalculatorSteps = () => {
     <section className="py-16 px-4 min-h-screen" style={{ backgroundColor: 'hsl(217, 91%, 60%)' }} data-calculator="refinancing">
       <div className="container max-w-4xl mx-auto">
         <div className="text-center mb-8">
-          <h1 className="text-5xl lg:text-6xl font-bold text-yellow-400 mb-4 leading-tight">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-yellow-400 mb-4 leading-tight text-center">
             Calculateur de refinancement
           </h1>
           <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4">
@@ -673,13 +673,13 @@ const RefinancingCalculatorSteps = () => {
                           return (
                             <>
                                  <div className="grid grid-cols-2 gap-3">
-                                   <div className="bg-green-50 p-3 rounded-lg text-center border border-green-200">
-                                     <div className="text-sm font-bold text-green-700 break-words">
-                                       {Math.round(investmentValue).toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
-                                     </div>
-                                     <div className="text-xs text-green-600 mt-1 leading-tight">Croissance des investissements</div>
-                                     <div className="text-xs" style={{ color: 'hsl(217, 91%, 60%)' }}>après {finalYear} ans</div>
-                                   </div>
+                                    <div className="bg-green-50 p-3 rounded-lg text-center border border-green-200">
+                                      <div className="text-sm font-bold text-green-700 break-words">
+                                        {Math.round(investmentValue).toLocaleString('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 })}
+                                      </div>
+                                      <div className="text-xs text-green-600 mt-1 leading-tight">Croissance des placements</div>
+                                      <div className="text-xs" style={{ color: 'hsl(217, 91%, 60%)' }}>après {finalYear} ans</div>
+                                    </div>
                                    
                                    <div className="bg-red-50 p-3 rounded-lg text-center border border-red-200">
                                      <div className="text-sm font-bold text-red-700 break-words">
@@ -926,25 +926,25 @@ const RefinancingCalculatorSteps = () => {
 
             {currentStep === steps.length && !showResults && (
               <div className="text-center">
-                <Button 
-                  onClick={() => {
-                    setShowResults(true);
-                    // Auto-scroll to results after a short delay
-                    setTimeout(() => {
-                      const resultsElement = document.querySelector('[data-results="true"]');
-                      if (resultsElement) {
-                        resultsElement.scrollIntoView({ 
-                          behavior: 'smooth', 
-                          block: 'start' 
-                        });
-                      }
-                    }, 200);
-                  }}
-                  size="lg"
-                  style={{ backgroundColor: 'hsl(45, 93%, 47%)', color: 'hsl(217, 91%, 60%)' }}
-                >
-                  Calculer mes économies
-                </Button>
+                 <Button 
+                   onClick={() => {
+                     setShowResults(true);
+                     // Auto-scroll to results after a short delay
+                     setTimeout(() => {
+                       const resultsElement = document.querySelector('[data-results="true"]');
+                       if (resultsElement) {
+                         resultsElement.scrollIntoView({ 
+                           behavior: 'smooth', 
+                           block: 'start' 
+                         });
+                       }
+                     }, 200);
+                   }}
+                   size="lg"
+                   style={{ backgroundColor: 'hsl(45, 93%, 47%)', color: 'white' }}
+                 >
+                   Calculer mes économies
+                 </Button>
               </div>
             )}
           </div>
