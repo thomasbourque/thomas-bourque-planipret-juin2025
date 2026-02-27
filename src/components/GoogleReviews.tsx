@@ -40,7 +40,7 @@ const GoogleReviews = () => {
           <h2 className="heading-lg text-slate-900 mb-4">Avis de nos clients sur Google</h2>
           <div className="mb-4">
             <p className="text-lg font-semibold text-slate-900">Thomas Bourque - Courtier hypothécaire - Planiprêt</p>
-            <p className="text-sm text-slate-600">5055 Bd Wilfrid-Hamel #250, Québec, QC G2E 2G6, Canada</p>
+            <p className="text-sm text-slate-600">1041 rue de Grenoble, Québec, QC G1V 3A1, Canada</p>
           </div>
           <div className="flex items-center justify-center mb-6">
             <div className="flex items-center">

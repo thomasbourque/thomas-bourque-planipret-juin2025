@@ -76,12 +76,12 @@ const Contact = () => {
                   </div>
                   <div className="flex-1">
                     <h4 className="font-medium text-slate-900 mb-2">Bureau</h4>
-                    <p className="text-slate-700 mb-3">5055 Bd Wilfrid-Hamel #250, Québec, QC G2E 2G6</p>
+                    <p className="text-slate-700 mb-3">1041 rue de Grenoble, Québec, QC G1V 3A1</p>
                     
                     {/* Google Maps Preview */}
                     <div className="rounded-lg overflow-hidden shadow-sm border">
                       <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2745.123456789!2d-71.38246632471925!3d46.79584964391625!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cb8a3f4f4f4f4f4%3A0x4f4f4f4f4f4f4f4f!2s5055%20Bd%20Wilfrid-Hamel%20%23250%2C%20Qu%C3%A9bec%2C%20QC%20G2E%202G6!5e0!3m2!1sfr!2sca!4v1234567890123!5m2!1sfr!2sca"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2745.0!2d-71.28!3d46.78!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2s1041%20rue%20de%20Grenoble%2C%20Qu%C3%A9bec%2C%20QC%20G1V%203A1!5e0!3m2!1sfr!2sca!4v1234567890123!5m2!1sfr!2sca"
                         width="100%"
                         height="150"
                         style={{ border: 0 }}
