@@ -50,9 +50,23 @@ const MinimumDownPaymentCalculator = () => {
   };
 
   const minimumDownPaymentPercentage = getMinimumDownPaymentPercentage();
-  const minimumDownPayment = purchasePrice * (minimumDownPaymentPercentage / 100);
+  
+  // Calcul progressif: 5% sur premier 500k, 10% au-delà pour 1-2 logements proprio occupant
+  const calculateMinimumDownPayment = () => {
+    if (ownerOccupied === "yes" && numberOfUnits === "1-2") {
+      if (purchasePrice <= 500000) {
+        return purchasePrice * 0.05;
+      } else {
+        return 500000 * 0.05 + (purchasePrice - 500000) * 0.10;
+      }
+    }
+    return purchasePrice * (minimumDownPaymentPercentage / 100);
+  };
+
+  const minimumDownPayment = calculateMinimumDownPayment();
+  const effectivePercentage = purchasePrice > 0 ? (minimumDownPayment / purchasePrice) * 100 : minimumDownPaymentPercentage;
   const closingCosts = purchasePrice * 0.015;
-  const requiresClosingCosts = minimumDownPaymentPercentage < 20;
+  const requiresClosingCosts = effectivePercentage < 20;
   const totalRequiredFunds = minimumDownPayment + (requiresClosingCosts ? closingCosts : 0);
 
   const formatCurrency = (amount: number) => {
@@ -139,11 +153,14 @@ const MinimumDownPaymentCalculator = () => {
                 <CardContent>
                   <div className="space-y-3">
                     <div className="flex justify-between items-center">
-                      <span className="text-slate-700">Pourcentage minimum:</span>
+                      <span className="text-slate-700">Pourcentage effectif:</span>
                       <Badge variant="secondary" className="text-lg">
-                        {minimumDownPaymentPercentage}%
+                        {effectivePercentage.toFixed(1)}%
                       </Badge>
                     </div>
+                    {ownerOccupied === "yes" && numberOfUnits === "1-2" && purchasePrice > 500000 && (
+                      <p className="text-xs text-blue-700">5% sur le premier 500 000$ + 10% sur la portion excédentaire</p>
+                    )}
                     <div className="flex justify-between items-center">
                       <span className="text-slate-700">Montant minimum:</span>
                       <span className="text-xl font-bold text-blue-700">
